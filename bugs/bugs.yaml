@@ -1,10 +1,7 @@
-
-mfem issue3840:
-  name: issue3840
-  bug_sha: 664dfa2f625fbf3dcfee0b3b46d90da9f404a008
-  fix_sha: 8a9ca138551bb0b3668da6a40cd636985f21039e
-  testcase: tests/unit/mesh/test_psubmesh.cpp
-  testname: ParSubMesh
-  url: https://github.com/mfem/mfem/commit/8a9ca138551bb0b3668da6a40cd636985f21039e
-
-
+mfem issue1874:
+  name: issue1874
+  bug_sha: a078107c51e1a8c329496e8d1fa2c3f17ba85831,1b97908085547508bee5abe86eebcc579eda6c95
+  fix_sha: 6206c775cca216706276a92e33c4a9d772c4b1bd
+  testcase: tests/unit/fem/test_doftrans.cpp,tests/unit/fem/test_3d_bilininteg.cpp,tests/unit/fem/test_build_dof_to_arrays.cpp,tests/unit/fem/test_domain_int.cpp,tests/unit/fem/test_get_value.cpp,tests/unit/fem/test_lin_interp.cpp
+  testname: DoF Transformation Classes,DoF Transformation Functions,VDoF Transformation Class,3D Bilinear Weak Curl Integrators,3D Bilinear Weak Curl Cross Integrators,3D Bilinear Curl Curl Integrators,3D Bilinear Mixed Curl Curl Integrators,3D Bilinear Mixed Cross Curl Curl Integrators,3D Bilinear Mixed Cross Grad Curl Integrators,Build Dof To Arrays,Build Dof To Arrays (Parallel),Domain Integration (Vector Field),Domain Integration in Parallel (Vector Field),3D GetVectorValue in Parallel,Identity Linear Interpolators
+  url: https://github.com/mfem/mfem/commit/6206c775cca216706276a92e33c4a9d772c4b1bd

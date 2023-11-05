@@ -1,187 +1,37 @@
-2023-11-05 08:06:28,621:INFO:这是一条INFO级别的日志
-2023-11-05 08:06:28,621:DEBUG:这是一条DEBUG级别的日志
-2023-11-05 08:06:28,657:DEBUG:Processing mfem issue3712
-2023-11-05 08:06:28,838:DEBUG:Deleted old branch branch_92c765e
-2023-11-05 08:06:28,980:DEBUG:Switched to new branch branch_92c765e at 92c765ec9d6a6a2d1b895216dee70aa582bb23ee
-2023-11-05 08:06:28,980:DEBUG:Target directory: /root/mfem/mfem-code-analyzer/bugs/issue3712
-2023-11-05 08:06:28,980:DEBUG:Copied tests/unit/fem/test_pa_kernels.cpp to /root/mfem/mfem-code-analyzer/bugs/issue3712/test_pa_kernels.cpp
-2023-11-05 08:06:28,980:INFO:Processing issue: {'name': 'issue3712', 'bug_sha': '3625f4d3074d0e8f5e3b75925ff796951c70a832', 'fix_sha': '92c765ec9d6a6a2d1b895216dee70aa582bb23ee', 'testcase': 'tests/unit/fem/test_pa_kernels.cpp', 'testname': 'PA VectorDivergence', 'url': 'https://github.com/mfem/mfem/commit/92c765ec9d6a6a2d1b895216dee70aa582bb23ee'}
-2023-11-05 08:06:28,981:DEBUG:Copied fix file /root/mfem/mfem-code-analyzer/bugs/issue3712/test_pa_kernels.cpp to /root/mfem/mfem/tests/unit/fem/test_pa_kernels.cpp
-2023-11-05 08:06:28,981:INFO:Running bug version: 3625f4d3074d0e8f5e3b75925ff796951c70a832
-2023-11-05 08:06:29,179:DEBUG:Deleted old branch branch_3625f4d
-2023-11-05 08:06:29,299:DEBUG:Switched to new branch branch_3625f4d at 3625f4d3074d0e8f5e3b75925ff796951c70a832
-2023-11-05 08:06:29,300:DEBUG:Copied fix file /root/mfem/mfem-code-analyzer/bugs/issue3712/test_pa_kernels.cpp to /root/mfem/mfem/tests/unit/fem/test_pa_kernels.cpp
-2023-11-05 08:07:38,973:INFO:Running test case: PA VectorDivergence
-2023-11-05 08:07:38,973:INFO:开始运行测试用例 PA VectorDivergence ...
-PA VectorDivergence 存在于测试用例列表中
-INFO: Test filter: PA VectorDivergence ~[Parallel] ~[MFEMData] 
-Filters: PA VectorDivergence ~[Parallel] ~[MFEMData]
-===============================================================================
-All tests passed (6 assertions in 1 test case)
-
-
-2023-11-05 08:07:38,973:INFO:Running fix version: 92c765ec9d6a6a2d1b895216dee70aa582bb23ee
-2023-11-05 08:07:38,973:DEBUG:Processing issue:
-2023-11-05 08:07:39,178:DEBUG:Deleted old branch branch_92c765e
-2023-11-05 08:07:39,305:DEBUG:Switched to new branch branch_92c765e at 92c765ec9d6a6a2d1b895216dee70aa582bb23ee
-2023-11-05 08:08:48,414:INFO:Running test case: PA VectorDivergence
-2023-11-05 08:08:48,414:INFO:开始运行测试用例 PA VectorDivergence ...
-PA VectorDivergence 存在于测试用例列表中
-INFO: Test filter: PA VectorDivergence ~[Parallel] ~[MFEMData] 
-Filters: PA VectorDivergence ~[Parallel] ~[MFEMData]
-===============================================================================
-All tests passed (6 assertions in 1 test case)
-
-
-2023-11-05 08:08:48,414:DEBUG:---------------------------
-2023-11-05 08:08:48,414:DEBUG:Name: issue3712
-2023-11-05 08:08:48,414:DEBUG:Bug SHA: 3625f4d3074d0e8f5e3b75925ff796951c70a832
-2023-11-05 08:08:48,414:DEBUG:Fix SHA: 92c765ec9d6a6a2d1b895216dee70aa582bb23ee
-2023-11-05 08:08:48,415:DEBUG:Test Case: tests/unit/fem/test_pa_kernels.cpp
-2023-11-05 08:08:48,415:DEBUG:URL: https://github.com/mfem/mfem/commit/92c765ec9d6a6a2d1b895216dee70aa582bb23ee
-2023-11-05 08:08:48,415:DEBUG:---------------------------
-2023-11-05 08:08:48,415:DEBUG:Processing mfem issue3840
-2023-11-05 08:08:48,593:DEBUG:Deleted old branch branch_8a9ca13
-2023-11-05 08:08:48,679:DEBUG:Switched to new branch branch_8a9ca13 at 8a9ca138551bb0b3668da6a40cd636985f21039e
-2023-11-05 08:08:48,679:DEBUG:Target directory: /root/mfem/mfem-code-analyzer/bugs/issue3840
-2023-11-05 08:08:48,680:DEBUG:Copied tests/unit/mesh/test_psubmesh.cpp to /root/mfem/mfem-code-analyzer/bugs/issue3840/test_psubmesh.cpp
-2023-11-05 08:08:48,680:INFO:Processing issue: {'name': 'issue3840', 'bug_sha': '664dfa2f625fbf3dcfee0b3b46d90da9f404a008', 'fix_sha': '8a9ca138551bb0b3668da6a40cd636985f21039e', 'testcase': 'tests/unit/mesh/test_psubmesh.cpp', 'testname': 'ParSubMesh', 'url': 'https://github.com/mfem/mfem/commit/8a9ca138551bb0b3668da6a40cd636985f21039e'}
-2023-11-05 08:08:48,681:DEBUG:Copied fix file /root/mfem/mfem-code-analyzer/bugs/issue3840/test_psubmesh.cpp to /root/mfem/mfem/tests/unit/mesh/test_psubmesh.cpp
-2023-11-05 08:08:48,681:INFO:Running bug version: 664dfa2f625fbf3dcfee0b3b46d90da9f404a008
-2023-11-05 08:08:48,874:DEBUG:Deleted old branch branch_664dfa2
-2023-11-05 08:08:48,974:DEBUG:Switched to new branch branch_664dfa2 at 664dfa2f625fbf3dcfee0b3b46d90da9f404a008
-2023-11-05 08:08:48,974:DEBUG:Copied fix file /root/mfem/mfem-code-analyzer/bugs/issue3840/test_psubmesh.cpp to /root/mfem/mfem/tests/unit/mesh/test_psubmesh.cpp
-2023-11-05 08:10:02,661:INFO:Running test case: ParSubMesh
-2023-11-05 08:10:02,662:INFO:开始运行测试用例 ParSubMesh ...
-ParSubMesh 不存在于测试用例列表中
-INFO: Test filter: ParSubMesh ~[Parallel] ~[MFEMData] 
-Filters: ParSubMesh ~[Parallel] ~[MFEMData]
-No test cases matched 'ParSubMesh~[Parallel]~[MFEMData]'
-===============================================================================
-No tests ran
-
-
-2023-11-05 08:10:02,662:INFO:Running fix version: 8a9ca138551bb0b3668da6a40cd636985f21039e
-2023-11-05 08:10:02,662:DEBUG:Processing issue:
-2023-11-05 08:10:02,742:DEBUG:Deleted old branch branch_8a9ca13
-2023-11-05 08:10:02,810:DEBUG:Switched to new branch branch_8a9ca13 at 8a9ca138551bb0b3668da6a40cd636985f21039e
-2023-11-05 08:11:16,765:INFO:Running test case: ParSubMesh
-2023-11-05 08:11:16,766:INFO:开始运行测试用例 ParSubMesh ...
-ParSubMesh 不存在于测试用例列表中
-INFO: Test filter: ParSubMesh ~[Parallel] ~[MFEMData] 
-Filters: ParSubMesh ~[Parallel] ~[MFEMData]
-No test cases matched 'ParSubMesh~[Parallel]~[MFEMData]'
-===============================================================================
-No tests ran
-
-
-2023-11-05 08:11:16,766:DEBUG:---------------------------
-2023-11-05 08:11:16,766:DEBUG:Name: issue3840
-2023-11-05 08:11:16,766:DEBUG:Bug SHA: 664dfa2f625fbf3dcfee0b3b46d90da9f404a008
-2023-11-05 08:11:16,766:DEBUG:Fix SHA: 8a9ca138551bb0b3668da6a40cd636985f21039e
-2023-11-05 08:11:16,766:DEBUG:Test Case: tests/unit/mesh/test_psubmesh.cpp
-2023-11-05 08:11:16,766:DEBUG:URL: https://github.com/mfem/mfem/commit/8a9ca138551bb0b3668da6a40cd636985f21039e
-2023-11-05 08:11:16,767:DEBUG:---------------------------
-2023-11-05 08:11:16,767:DEBUG:Processing mfem issue3691
-2023-11-05 08:11:16,887:DEBUG:Deleted old branch branch_a15866e
-2023-11-05 08:11:16,970:DEBUG:Switched to new branch branch_a15866e at a15866e212b167ab83d5384e7326cdd3fa0723b2
-2023-11-05 08:11:16,970:DEBUG:Target directory: /root/mfem/mfem-code-analyzer/bugs/issue3691
-2023-11-05 08:11:16,971:DEBUG:Copied tests/unit/mesh/test_ncmesh.cpp to /root/mfem/mfem-code-analyzer/bugs/issue3691/test_ncmesh.cpp
-2023-11-05 08:11:16,971:INFO:Processing issue: {'name': 'issue3691', 'bug_sha': '4222287b02206e2a8b3979b9bb2b33a58a6ce148', 'fix_sha': 'a15866e212b167ab83d5384e7326cdd3fa0723b2', 'testcase': 'tests/unit/mesh/test_ncmesh.cpp', 'testname': 'FaceEdgeConstraint,P2Q1PureTetHexPri,PNQ2PureTetHexPri', 'url': 'https://github.com/mfem/mfem/commit/30ce09bf64a310ad3f5f1d2a0acf4722468b5dc4'}
-2023-11-05 08:11:16,971:DEBUG:Copied fix file /root/mfem/mfem-code-analyzer/bugs/issue3691/test_ncmesh.cpp to /root/mfem/mfem/tests/unit/mesh/test_ncmesh.cpp
-2023-11-05 08:11:16,971:INFO:Running bug version: 4222287b02206e2a8b3979b9bb2b33a58a6ce148
-2023-11-05 08:11:17,113:DEBUG:Deleted old branch branch_4222287
-2023-11-05 08:11:17,215:DEBUG:Switched to new branch branch_4222287 at 4222287b02206e2a8b3979b9bb2b33a58a6ce148
-2023-11-05 08:11:17,216:DEBUG:Copied fix file /root/mfem/mfem-code-analyzer/bugs/issue3691/test_ncmesh.cpp to /root/mfem/mfem/tests/unit/mesh/test_ncmesh.cpp
-2023-11-05 08:12:27,954:INFO:Running test case: FaceEdgeConstraint
-2023-11-05 08:12:27,954:INFO:开始运行测试用例 FaceEdgeConstraint ...
-FaceEdgeConstraint 不存在于测试用例列表中
-INFO: Test filter: FaceEdgeConstraint ~[Parallel] ~[MFEMData] 
-Filters: FaceEdgeConstraint ~[Parallel] ~[MFEMData]
-No test cases matched 'FaceEdgeConstraint~[Parallel]~[MFEMData]'
-===============================================================================
-No tests ran
-
-
-2023-11-05 08:12:27,978:INFO:Running test case: P2Q1PureTetHexPri
-2023-11-05 08:12:27,978:INFO:开始运行测试用例 P2Q1PureTetHexPri ...
-P2Q1PureTetHexPri 不存在于测试用例列表中
-INFO: Test filter: P2Q1PureTetHexPri ~[Parallel] ~[MFEMData] 
-Filters: P2Q1PureTetHexPri ~[Parallel] ~[MFEMData]
-No test cases matched 'P2Q1PureTetHexPri~[Parallel]~[MFEMData]'
-===============================================================================
-No tests ran
-
-
-2023-11-05 08:12:28,001:INFO:Running test case: PNQ2PureTetHexPri
-2023-11-05 08:12:28,001:INFO:开始运行测试用例 PNQ2PureTetHexPri ...
-PNQ2PureTetHexPri 不存在于测试用例列表中
-INFO: Test filter: PNQ2PureTetHexPri ~[Parallel] ~[MFEMData] 
-Filters: PNQ2PureTetHexPri ~[Parallel] ~[MFEMData]
-No test cases matched 'PNQ2PureTetHexPri~[Parallel]~[MFEMData]'
-===============================================================================
-No tests ran
-
-
-2023-11-05 08:12:28,001:INFO:Running fix version: a15866e212b167ab83d5384e7326cdd3fa0723b2
-2023-11-05 08:12:28,001:DEBUG:Processing issue:
-2023-11-05 08:12:28,150:DEBUG:Deleted old branch branch_a15866e
-2023-11-05 08:12:28,243:DEBUG:Switched to new branch branch_a15866e at a15866e212b167ab83d5384e7326cdd3fa0723b2
-2023-11-05 08:13:39,418:INFO:Running test case: FaceEdgeConstraint
-2023-11-05 08:13:39,419:INFO:开始运行测试用例 FaceEdgeConstraint ...
-FaceEdgeConstraint 不存在于测试用例列表中
-INFO: Test filter: FaceEdgeConstraint ~[Parallel] ~[MFEMData] 
-Filters: FaceEdgeConstraint ~[Parallel] ~[MFEMData]
-No test cases matched 'FaceEdgeConstraint~[Parallel]~[MFEMData]'
-===============================================================================
-No tests ran
-
-
-2023-11-05 08:13:39,448:INFO:Running test case: P2Q1PureTetHexPri
-2023-11-05 08:13:39,448:INFO:开始运行测试用例 P2Q1PureTetHexPri ...
-P2Q1PureTetHexPri 不存在于测试用例列表中
-INFO: Test filter: P2Q1PureTetHexPri ~[Parallel] ~[MFEMData] 
-Filters: P2Q1PureTetHexPri ~[Parallel] ~[MFEMData]
-No test cases matched 'P2Q1PureTetHexPri~[Parallel]~[MFEMData]'
-===============================================================================
-No tests ran
-
-
-2023-11-05 08:13:39,472:INFO:Running test case: PNQ2PureTetHexPri
-2023-11-05 08:13:39,472:INFO:开始运行测试用例 PNQ2PureTetHexPri ...
-PNQ2PureTetHexPri 不存在于测试用例列表中
-INFO: Test filter: PNQ2PureTetHexPri ~[Parallel] ~[MFEMData] 
-Filters: PNQ2PureTetHexPri ~[Parallel] ~[MFEMData]
-No test cases matched 'PNQ2PureTetHexPri~[Parallel]~[MFEMData]'
-===============================================================================
-No tests ran
-
-
-2023-11-05 08:13:39,473:DEBUG:---------------------------
-2023-11-05 08:13:39,473:DEBUG:Name: issue3691
-2023-11-05 08:13:39,473:DEBUG:Bug SHA: 4222287b02206e2a8b3979b9bb2b33a58a6ce148
-2023-11-05 08:13:39,473:DEBUG:Fix SHA: a15866e212b167ab83d5384e7326cdd3fa0723b2
-2023-11-05 08:13:39,473:DEBUG:Test Case: tests/unit/mesh/test_ncmesh.cpp
-2023-11-05 08:13:39,473:DEBUG:URL: https://github.com/mfem/mfem/commit/30ce09bf64a310ad3f5f1d2a0acf4722468b5dc4
-2023-11-05 08:13:39,473:DEBUG:---------------------------
-2023-11-05 08:13:39,473:DEBUG:Processing mfem issue3566
-2023-11-05 08:13:39,625:DEBUG:Deleted old branch branch_30ce09b
-2023-11-05 08:13:39,745:DEBUG:Switched to new branch branch_30ce09b at 30ce09bf64a310ad3f5f1d2a0acf4722468b5dc4
-2023-11-05 08:13:39,746:DEBUG:Source file tests/unit/mesh/test_submesh.cpp,tests/unit/mesh/test_psubmesh.cpp,tests/unit/fem/test_2d_bilininteg.cpp does not exist.
-2023-11-05 08:13:39,746:INFO:Processing issue: {'name': 'issue3566', 'bug_sha': '93393c5c58ecaa3eb6fb9bbd6a822e7c3fd96be5', 'fix_sha': '30ce09bf64a310ad3f5f1d2a0acf4722468b5dc4', 'testcase': 'tests/unit/mesh/test_submesh.cpp,tests/unit/mesh/test_psubmesh.cpp,tests/unit/fem/test_2d_bilininteg.cpp', 'testname': 'SubMesh,ParSubMesh,OperatorChebyshevSmoother,2D Bilinear Mass Integrators', 'url': 'https://github.com/mfem/mfem/commit/30ce09bf64a310ad3f5f1d2a0acf4722468b5dc4'}
-2023-11-05 08:13:39,746:ERROR:Traceback (most recent call last):
-2023-11-05 08:13:39,747:ERROR:  File "/root/mfem/mfem-code-analyzer/get_normal_testcase_covarage/run_mfme_testcase.py", line 270, in <module>
-2023-11-05 08:13:39,747:ERROR:processor.process_yaml_file()
-2023-11-05 08:13:39,747:ERROR:  File "/root/mfem/mfem-code-analyzer/get_normal_testcase_covarage/run_mfme_testcase.py", line 142, in process_yaml_file
-2023-11-05 08:13:39,748:ERROR:self.process_mfem_issue(issue_data)
-2023-11-05 08:13:39,748:ERROR:  File "/root/mfem/mfem-code-analyzer/get_normal_testcase_covarage/run_mfme_testcase.py", line 97, in process_mfem_issue
-2023-11-05 08:13:39,748:ERROR:self.copy_testcase(name, testcase)
-2023-11-05 08:13:39,748:ERROR:  File "/root/mfem/mfem-code-analyzer/get_normal_testcase_covarage/run_mfme_testcase.py", line 245, in copy_testcase
-2023-11-05 08:13:39,749:ERROR:shutil.copy(source_path, target_path)
-2023-11-05 08:13:39,749:ERROR:  File "/usr/lib/python3.10/shutil.py", line 417, in copy
-2023-11-05 08:13:39,750:ERROR:copyfile(src, dst, follow_symlinks=follow_symlinks)
-2023-11-05 08:13:39,750:ERROR:  File "/usr/lib/python3.10/shutil.py", line 254, in copyfile
-2023-11-05 08:13:39,750:ERROR:with open(src, 'rb') as fsrc:
-2023-11-05 08:13:39,750:ERROR:FileNotFoundError
-2023-11-05 08:13:39,750:ERROR::
-2023-11-05 08:13:39,750:ERROR:[Errno 2] No such file or directory: '/root/mfem/mfem-code-analyzer/bugs/issue3566/test_2d_bilininteg.cpp'
+2023-11-05 11:48:21,521:INFO:这是一条INFO级别的日志
+2023-11-05 11:48:21,521:DEBUG:这是一条DEBUG级别的日志
+2023-11-05 11:48:21,530:DEBUG:Processing mfem issue1874
+2023-11-05 11:48:21,742:DEBUG:Deleted old branch branch_6206c77
+2023-11-05 11:48:22,027:DEBUG:Switched to new branch branch_6206c77 at 6206c775cca216706276a92e33c4a9d772c4b1bd
+2023-11-05 11:48:22,028:DEBUG:Target directory: /root/mfem/mfem-code-analyzer/bugs/issue1874
+2023-11-05 11:48:22,029:DEBUG:Copied tests/unit/fem/test_doftrans.cpp to /root/mfem/mfem-code-analyzer/bugs/issue1874/test_doftrans.cpp
+2023-11-05 11:48:22,305:DEBUG:Deleted old branch branch_6206c77
+2023-11-05 11:48:22,556:DEBUG:Switched to new branch branch_6206c77 at 6206c775cca216706276a92e33c4a9d772c4b1bd
+2023-11-05 11:48:22,556:DEBUG:Target directory: /root/mfem/mfem-code-analyzer/bugs/issue1874
+2023-11-05 11:48:22,557:DEBUG:Copied tests/unit/fem/test_3d_bilininteg.cpp to /root/mfem/mfem-code-analyzer/bugs/issue1874/test_3d_bilininteg.cpp
+2023-11-05 11:48:22,912:DEBUG:Deleted old branch branch_6206c77
+2023-11-05 11:48:23,169:DEBUG:Switched to new branch branch_6206c77 at 6206c775cca216706276a92e33c4a9d772c4b1bd
+2023-11-05 11:48:23,169:DEBUG:Target directory: /root/mfem/mfem-code-analyzer/bugs/issue1874
+2023-11-05 11:48:23,170:DEBUG:Copied tests/unit/fem/test_build_dof_to_arrays.cpp to /root/mfem/mfem-code-analyzer/bugs/issue1874/test_build_dof_to_arrays.cpp
+2023-11-05 11:48:23,543:DEBUG:Deleted old branch branch_6206c77
+2023-11-05 11:48:23,786:DEBUG:Switched to new branch branch_6206c77 at 6206c775cca216706276a92e33c4a9d772c4b1bd
+2023-11-05 11:48:23,786:DEBUG:Target directory: /root/mfem/mfem-code-analyzer/bugs/issue1874
+2023-11-05 11:48:23,787:DEBUG:Copied tests/unit/fem/test_domain_int.cpp to /root/mfem/mfem-code-analyzer/bugs/issue1874/test_domain_int.cpp
+2023-11-05 11:48:24,142:DEBUG:Deleted old branch branch_6206c77
+2023-11-05 11:48:24,402:DEBUG:Switched to new branch branch_6206c77 at 6206c775cca216706276a92e33c4a9d772c4b1bd
+2023-11-05 11:48:24,402:DEBUG:Target directory: /root/mfem/mfem-code-analyzer/bugs/issue1874
+2023-11-05 11:48:24,403:DEBUG:Copied tests/unit/fem/test_get_value.cpp to /root/mfem/mfem-code-analyzer/bugs/issue1874/test_get_value.cpp
+2023-11-05 11:48:24,788:DEBUG:Deleted old branch branch_6206c77
+2023-11-05 11:48:25,041:DEBUG:Switched to new branch branch_6206c77 at 6206c775cca216706276a92e33c4a9d772c4b1bd
+2023-11-05 11:48:25,042:DEBUG:Target directory: /root/mfem/mfem-code-analyzer/bugs/issue1874
+2023-11-05 11:48:25,043:DEBUG:Copied tests/unit/fem/test_lin_interp.cpp to /root/mfem/mfem-code-analyzer/bugs/issue1874/test_lin_interp.cpp
+2023-11-05 11:48:25,043:INFO:Processing issue: {'name': 'issue1874', 'bug_sha': 'a078107c51e1a8c329496e8d1fa2c3f17ba85831,1b97908085547508bee5abe86eebcc579eda6c95', 'fix_sha': '6206c775cca216706276a92e33c4a9d772c4b1bd', 'testcase': 'tests/unit/fem/test_doftrans.cpp,tests/unit/fem/test_3d_bilininteg.cpp,tests/unit/fem/test_build_dof_to_arrays.cpp,tests/unit/fem/test_domain_int.cpp,tests/unit/fem/test_get_value.cpp,tests/unit/fem/test_lin_interp.cpp', 'testname': 'DoF Transformation Classes,DoF Transformation Functions,VDoF Transformation Class,3D Bilinear Weak Curl Integrators,3D Bilinear Weak Curl Cross Integrators,3D Bilinear Curl Curl Integrators,3D Bilinear Mixed Curl Curl Integrators,3D Bilinear Mixed Cross Curl Curl Integrators,3D Bilinear Mixed Cross Grad Curl Integrators,Build Dof To Arrays,Build Dof To Arrays (Parallel),Domain Integration (Vector Field),Domain Integration in Parallel (Vector Field),3D GetVectorValue in Parallel,Identity Linear Interpolators', 'url': 'https://github.com/mfem/mfem/commit/6206c775cca216706276a92e33c4a9d772c4b1bd'}
+2023-11-05 11:48:30,617:INFO:Running bug version: a078107c51e1a8c329496e8d1fa2c3f17ba85831
+2023-11-05 11:48:30,855:DEBUG:Deleted old branch branch_a078107
+2023-11-05 11:48:31,114:DEBUG:Switched to new branch branch_a078107 at a078107c51e1a8c329496e8d1fa2c3f17ba85831
+2023-11-05 11:48:31,115:DEBUG:Copied fix file /root/mfem/mfem-code-analyzer/bugs/issue1874/test_doftrans.cpp to /root/mfem/mfem/tests/unit/fem/test_doftrans.cpp
+2023-11-05 11:48:31,117:DEBUG:Copied fix file /root/mfem/mfem-code-analyzer/bugs/issue1874/test_3d_bilininteg.cpp to /root/mfem/mfem/tests/unit/fem/test_3d_bilininteg.cpp
+2023-11-05 11:48:31,117:DEBUG:Copied fix file /root/mfem/mfem-code-analyzer/bugs/issue1874/test_build_dof_to_arrays.cpp to /root/mfem/mfem/tests/unit/fem/test_build_dof_to_arrays.cpp
+2023-11-05 11:48:31,118:DEBUG:Copied fix file /root/mfem/mfem-code-analyzer/bugs/issue1874/test_domain_int.cpp to /root/mfem/mfem/tests/unit/fem/test_domain_int.cpp
+2023-11-05 11:48:31,119:DEBUG:Copied fix file /root/mfem/mfem-code-analyzer/bugs/issue1874/test_get_value.cpp to /root/mfem/mfem/tests/unit/fem/test_get_value.cpp
+2023-11-05 11:48:31,120:DEBUG:Copied fix file /root/mfem/mfem-code-analyzer/bugs/issue1874/test_lin_interp.cpp to /root/mfem/mfem/tests/unit/fem/test_lin_interp.cpp
