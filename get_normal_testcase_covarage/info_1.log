@@ -1,0 +1,976 @@
+2023-11-03 10:12:47,260:INFO:这是一条INFO级别的日志
+2023-11-03 10:12:47,807:INFO:Processing issue: {'name': 'issue3712', 'bug_sha': 'b5491f763085b3cc917fed34a58ee816c1bc0cc9,3625f4d3074d0e8f5e3b75925ff796951c70a832', 'fix_sha': '92c765ec9d6a6a2d1b895216dee70aa582bb23ee', 'testcase': 'tests/unit/fem/test_pa_kernels.cpp', 'testname': 'PA VectorDivergence', 'url': 'https://github.com/mfem/mfem/commit/92c765ec9d6a6a2d1b895216dee70aa582bb23ee'}
+2023-11-03 10:12:47,808:INFO:Running bug version: b5491f763085b3cc917fed34a58ee816c1bc0cc9
+2023-11-03 10:14:00,127:INFO:Running test case: PA VectorDivergence
+2023-11-03 10:14:00,127:INFO:开始运行测试用例 PA VectorDivergence ...
+PA VectorDivergence 存在于测试用例列表中
+INFO: Test filter: PA VectorDivergence ~[Parallel] ~[MFEMData] 
+Filters: PA VectorDivergence ~[Parallel] ~[MFEMData]
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+unit_tests is a Catch v2.13.9 host application.
+Run with -? for options
+
+-------------------------------------------------------------------------------
+PA VectorDivergence
+  2D
+-------------------------------------------------------------------------------
+/root/mfem/mfem/tests/unit/fem/test_pa_kernels.cpp:169
+...............................................................................
+
+/root/mfem/mfem/tests/unit/fem/test_pa_kernels.cpp:169: FAILED:
+  {Unknown expression after the reported line}
+due to a fatal error condition:
+  SIGABRT - Abort (abnormal termination) signal
+
+===============================================================================
+test cases: 1 | 1 failed
+assertions: 3 | 2 passed | 1 failed
+
+
+2023-11-03 10:14:00,127:ERROR:
+
+BilinearFormIntegrator::AssemblePA(fes, fes)
+   is not implemented for this class.
+/root/mfem/mfem-code-analyzer/get_normal_testcase_covarage/run_tesscase.sh: line 21: 429028 Aborted                 (core dumped) ./unit_tests "$test_case"
+
+2023-11-03 10:14:00,127:INFO:Running fix version: 92c765ec9d6a6a2d1b895216dee70aa582bb23ee
+2023-11-03 10:15:11,799:INFO:Running test case: PA VectorDivergence
+2023-11-03 10:15:11,800:INFO:开始运行测试用例 PA VectorDivergence ...
+PA VectorDivergence 存在于测试用例列表中
+INFO: Test filter: PA VectorDivergence ~[Parallel] ~[MFEMData] 
+Filters: PA VectorDivergence ~[Parallel] ~[MFEMData]
+===============================================================================
+All tests passed (6 assertions in 1 test case)
+
+
+2023-11-03 10:15:12,095:INFO:Processing issue: {'name': 'issue3840', 'bug_sha': '86ec2bfa8d4b38f06f8699ddd853f785f19aec91,664dfa2f625fbf3dcfee0b3b46d90da9f404a008', 'fix_sha': '8a9ca138551bb0b3668da6a40cd636985f21039e', 'testcase': 'tests/unit/mesh/test_psubmesh.cpp', 'testname': 'ParSubMesh', 'url': 'https://github.com/mfem/mfem/commit/8a9ca138551bb0b3668da6a40cd636985f21039e'}
+2023-11-03 10:15:12,096:INFO:Running bug version: 86ec2bfa8d4b38f06f8699ddd853f785f19aec91
+2023-11-03 10:16:27,559:INFO:Running test case: ParSubMesh
+2023-11-03 10:16:27,560:INFO:开始运行测试用例 ParSubMesh ...
+ParSubMesh 不存在于测试用例列表中
+INFO: Test filter: ParSubMesh ~[Parallel] ~[MFEMData] 
+Filters: ParSubMesh ~[Parallel] ~[MFEMData]
+No test cases matched 'ParSubMesh~[Parallel]~[MFEMData]'
+===============================================================================
+No tests ran
+
+
+2023-11-03 10:16:27,560:INFO:Running fix version: 8a9ca138551bb0b3668da6a40cd636985f21039e
+2023-11-03 10:17:43,191:INFO:Running test case: ParSubMesh
+2023-11-03 10:17:43,192:INFO:开始运行测试用例 ParSubMesh ...
+ParSubMesh 不存在于测试用例列表中
+INFO: Test filter: ParSubMesh ~[Parallel] ~[MFEMData] 
+Filters: ParSubMesh ~[Parallel] ~[MFEMData]
+No test cases matched 'ParSubMesh~[Parallel]~[MFEMData]'
+===============================================================================
+No tests ran
+
+
+2023-11-03 10:17:43,392:INFO:Processing issue: {'name': 'issue3691', 'bug_sha': 'd46c2cd5a732e65bd659ff89532ce058bfee31bc,4222287b02206e2a8b3979b9bb2b33a58a6ce148', 'fix_sha': 'a15866e212b167ab83d5384e7326cdd3fa0723b2', 'testcase': 'tests/unit/mesh/test_ncmesh.cpp', 'testname': 'FaceEdgeConstraint,P2Q1PureTetHexPri,PNQ2PureTetHexPri', 'url': 'https://github.com/mfem/mfem/commit/30ce09bf64a310ad3f5f1d2a0acf4722468b5dc4'}
+2023-11-03 10:17:43,393:INFO:Running bug version: d46c2cd5a732e65bd659ff89532ce058bfee31bc
+2023-11-03 10:18:56,660:INFO:Running test case: FaceEdgeConstraint
+2023-11-03 10:18:56,661:INFO:开始运行测试用例 FaceEdgeConstraint ...
+FaceEdgeConstraint 不存在于测试用例列表中
+INFO: Test filter: FaceEdgeConstraint ~[Parallel] ~[MFEMData] 
+Filters: FaceEdgeConstraint ~[Parallel] ~[MFEMData]
+No test cases matched 'FaceEdgeConstraint~[Parallel]~[MFEMData]'
+===============================================================================
+No tests ran
+
+
+2023-11-03 10:18:56,677:INFO:Running test case: P2Q1PureTetHexPri
+2023-11-03 10:18:56,678:INFO:开始运行测试用例 P2Q1PureTetHexPri ...
+P2Q1PureTetHexPri 不存在于测试用例列表中
+INFO: Test filter: P2Q1PureTetHexPri ~[Parallel] ~[MFEMData] 
+Filters: P2Q1PureTetHexPri ~[Parallel] ~[MFEMData]
+No test cases matched 'P2Q1PureTetHexPri~[Parallel]~[MFEMData]'
+===============================================================================
+No tests ran
+
+
+2023-11-03 10:18:56,702:INFO:Running test case: PNQ2PureTetHexPri
+2023-11-03 10:18:56,702:INFO:开始运行测试用例 PNQ2PureTetHexPri ...
+PNQ2PureTetHexPri 不存在于测试用例列表中
+INFO: Test filter: PNQ2PureTetHexPri ~[Parallel] ~[MFEMData] 
+Filters: PNQ2PureTetHexPri ~[Parallel] ~[MFEMData]
+No test cases matched 'PNQ2PureTetHexPri~[Parallel]~[MFEMData]'
+===============================================================================
+No tests ran
+
+
+2023-11-03 10:18:56,702:INFO:Running fix version: a15866e212b167ab83d5384e7326cdd3fa0723b2
+2023-11-03 10:20:10,275:INFO:Running test case: FaceEdgeConstraint
+2023-11-03 10:20:10,276:INFO:开始运行测试用例 FaceEdgeConstraint ...
+FaceEdgeConstraint 不存在于测试用例列表中
+INFO: Test filter: FaceEdgeConstraint ~[Parallel] ~[MFEMData] 
+Filters: FaceEdgeConstraint ~[Parallel] ~[MFEMData]
+No test cases matched 'FaceEdgeConstraint~[Parallel]~[MFEMData]'
+===============================================================================
+No tests ran
+
+
+2023-11-03 10:20:10,298:INFO:Running test case: P2Q1PureTetHexPri
+2023-11-03 10:20:10,299:INFO:开始运行测试用例 P2Q1PureTetHexPri ...
+P2Q1PureTetHexPri 不存在于测试用例列表中
+INFO: Test filter: P2Q1PureTetHexPri ~[Parallel] ~[MFEMData] 
+Filters: P2Q1PureTetHexPri ~[Parallel] ~[MFEMData]
+No test cases matched 'P2Q1PureTetHexPri~[Parallel]~[MFEMData]'
+===============================================================================
+No tests ran
+
+
+2023-11-03 10:20:10,323:INFO:Running test case: PNQ2PureTetHexPri
+2023-11-03 10:20:10,323:INFO:开始运行测试用例 PNQ2PureTetHexPri ...
+PNQ2PureTetHexPri 不存在于测试用例列表中
+INFO: Test filter: PNQ2PureTetHexPri ~[Parallel] ~[MFEMData] 
+Filters: PNQ2PureTetHexPri ~[Parallel] ~[MFEMData]
+No test cases matched 'PNQ2PureTetHexPri~[Parallel]~[MFEMData]'
+===============================================================================
+No tests ran
+
+
+2023-11-03 10:20:10,559:INFO:Processing issue: {'name': 'issue3566', 'bug_sha': '93393c5c58ecaa3eb6fb9bbd6a822e7c3fd96be5', 'fix_sha': '30ce09bf64a310ad3f5f1d2a0acf4722468b5dc4', 'testcase': 'tests/unit/mesh/test_submesh.cpp', 'testname': 'SubMesh', 'url': 'https://github.com/mfem/mfem/commit/30ce09bf64a310ad3f5f1d2a0acf4722468b5dc4'}
+2023-11-03 10:20:10,559:INFO:Running bug version: 93393c5c58ecaa3eb6fb9bbd6a822e7c3fd96be5
+2023-11-03 10:21:18,214:INFO:Running test case: SubMesh
+2023-11-03 10:21:18,214:INFO:开始运行测试用例 SubMesh ...
+SubMesh 存在于测试用例列表中
+INFO: Test filter: SubMesh ~[Parallel] ~[MFEMData] 
+Filters: SubMesh ~[Parallel] ~[MFEMData]
+===============================================================================
+All tests passed (160 assertions in 1 test case)
+
+
+2023-11-03 10:21:18,214:INFO:Running fix version: 30ce09bf64a310ad3f5f1d2a0acf4722468b5dc4
+2023-11-03 10:22:27,263:INFO:Running test case: SubMesh
+2023-11-03 10:22:27,264:INFO:开始运行测试用例 SubMesh ...
+SubMesh 存在于测试用例列表中
+INFO: Test filter: SubMesh ~[Parallel] ~[MFEMData] 
+Filters: SubMesh ~[Parallel] ~[MFEMData]
+===============================================================================
+All tests passed (160 assertions in 1 test case)
+
+
+2023-11-03 10:22:27,598:INFO:Processing issue: {'name': 'issue3463', 'bug_sha': 'edcf6b420517646c803d7c017940a7a77be7b40f,7ca6d4e124bb733e23d0e67768255c6f0f682f5f', 'fix_sha': '553dc3109f5ddb03505fc7abc54edd08f36d9b3e', 'testcase': 'tests/unit/linalg/test_direct_solvers.cpp', 'testname': 'Serial Direct Solvers,Parallel Direct Solvers', 'url': 'https://github.com/mfem/mfem/commit/553dc3109f5ddb03505fc7abc54edd08f36d9b3e'}
+2023-11-03 10:22:27,599:INFO:Running bug version: edcf6b420517646c803d7c017940a7a77be7b40f
+2023-11-03 10:23:38,624:INFO:Running test case: Serial Direct Solvers
+2023-11-03 10:23:38,624:INFO:开始运行测试用例 Serial Direct Solvers ...
+Serial Direct Solvers 不存在于测试用例列表中
+INFO: Test filter: Serial Direct Solvers ~[Parallel] ~[MFEMData] 
+Filters: Serial Direct Solvers ~[Parallel] ~[MFEMData]
+No test cases matched 'Serial Direct Solvers~[Parallel]~[MFEMData]'
+===============================================================================
+No tests ran
+
+
+2023-11-03 10:23:38,639:INFO:Running test case: Parallel Direct Solvers
+2023-11-03 10:23:38,639:INFO:开始运行测试用例 Parallel Direct Solvers ...
+Parallel Direct Solvers 不存在于测试用例列表中
+INFO: Test filter: Parallel Direct Solvers ~[Parallel] ~[MFEMData] 
+Filters: Parallel Direct Solvers ~[Parallel] ~[MFEMData]
+No test cases matched 'Parallel Direct Solvers~[Parallel]~[MFEMData]'
+===============================================================================
+No tests ran
+
+
+2023-11-03 10:23:38,639:INFO:Running fix version: 553dc3109f5ddb03505fc7abc54edd08f36d9b3e
+2023-11-03 10:24:54,286:INFO:Running test case: Serial Direct Solvers
+2023-11-03 10:24:54,287:INFO:开始运行测试用例 Serial Direct Solvers ...
+Serial Direct Solvers 不存在于测试用例列表中
+INFO: Test filter: Serial Direct Solvers ~[Parallel] ~[MFEMData] 
+Filters: Serial Direct Solvers ~[Parallel] ~[MFEMData]
+No test cases matched 'Serial Direct Solvers~[Parallel]~[MFEMData]'
+===============================================================================
+No tests ran
+
+
+2023-11-03 10:24:54,315:INFO:Running test case: Parallel Direct Solvers
+2023-11-03 10:24:54,316:INFO:开始运行测试用例 Parallel Direct Solvers ...
+Parallel Direct Solvers 不存在于测试用例列表中
+INFO: Test filter: Parallel Direct Solvers ~[Parallel] ~[MFEMData] 
+Filters: Parallel Direct Solvers ~[Parallel] ~[MFEMData]
+No test cases matched 'Parallel Direct Solvers~[Parallel]~[MFEMData]'
+===============================================================================
+No tests ran
+
+
+2023-11-03 10:24:54,740:INFO:Processing issue: {'name': 'issue3332', 'bug_sha': 'e6ba86462c0db85732c1ac33ce7615d79b555bfd,973b42c57a60ea4844dd09ff38e47ed89ead93ad', 'fix_sha': 'bf8ec1a218589c2eb3bdf3dfba9db7b44329620d', 'testcase': 'tests/unit/mesh/test_submesh.cpp', 'testname': 'SubMesh', 'url': 'https://github.com/mfem/mfem/commit/bf8ec1a218589c2eb3bdf3dfba9db7b44329620d'}
+2023-11-03 10:24:54,741:INFO:Running bug version: e6ba86462c0db85732c1ac33ce7615d79b555bfd
+2023-11-03 10:26:02,017:INFO:Running test case: SubMesh
+2023-11-03 10:26:02,017:INFO:开始运行测试用例 SubMesh ...
+SubMesh 存在于测试用例列表中
+INFO: Test filter: SubMesh ~[Parallel] ~[MFEMData] 
+Filters: SubMesh ~[Parallel] ~[MFEMData]
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+unit_tests is a Catch v2.13.9 host application.
+Run with -? for options
+
+-------------------------------------------------------------------------------
+SubMesh
+  2D
+-------------------------------------------------------------------------------
+/root/mfem/mfem/tests/unit/mesh/test_submesh.cpp:405
+...............................................................................
+
+/root/mfem/mfem/tests/unit/mesh/test_submesh.cpp:407: FAILED:
+  {Unknown expression after the reported line}
+due to a fatal error condition:
+  SIGSEGV - Segmentation violation signal
+
+===============================================================================
+test cases:   1 |   0 passed | 1 failed
+assertions: 132 | 131 passed | 1 failed
+
+
+2023-11-03 10:26:02,017:ERROR:/root/mfem/mfem-code-analyzer/get_normal_testcase_covarage/run_tesscase.sh: line 21: 128769 Segmentation fault      (core dumped) ./unit_tests "$test_case"
+
+2023-11-03 10:26:02,017:INFO:Running fix version: bf8ec1a218589c2eb3bdf3dfba9db7b44329620d
+2023-11-03 10:27:09,360:INFO:Running test case: SubMesh
+2023-11-03 10:27:09,360:INFO:开始运行测试用例 SubMesh ...
+SubMesh 存在于测试用例列表中
+INFO: Test filter: SubMesh ~[Parallel] ~[MFEMData] 
+Filters: SubMesh ~[Parallel] ~[MFEMData]
+===============================================================================
+All tests passed (160 assertions in 1 test case)
+
+
+2023-11-03 10:27:10,094:INFO:Processing issue: {'name': 'issue3328', 'bug_sha': 'ca6588da7df13b299609098685b8e384abeea4ac,7830ee78777b164877612ab61b61e815c79a0a18', 'fix_sha': 'acd46692a0270be8f9e255bbcb27e2a3f020199f', 'testcase': 'tests/unit/fem/test_datacollection.cpp', 'testname': 'Save and load from collections', 'url': 'https://github.com/mfem/mfem/commit/acd46692a0270be8f9e255bbcb27e2a3f020199f'}
+2023-11-03 10:27:10,094:INFO:Running bug version: ca6588da7df13b299609098685b8e384abeea4ac
+2023-11-03 10:28:16,437:INFO:Running test case: Save and load from collections
+2023-11-03 10:28:16,438:INFO:开始运行测试用例 Save and load from collections ...
+Save and load from collections 存在于测试用例列表中
+INFO: Test filter: Save and load from collections ~[Parallel] ~[MFEMData] 
+Filters: Save and load from collections ~[Parallel] ~[MFEMData]
+===============================================================================
+All tests passed (29 assertions in 1 test case)
+
+
+2023-11-03 10:28:16,438:INFO:Running fix version: acd46692a0270be8f9e255bbcb27e2a3f020199f
+2023-11-03 10:29:23,552:INFO:Running test case: Save and load from collections
+2023-11-03 10:29:23,553:INFO:开始运行测试用例 Save and load from collections ...
+Save and load from collections 存在于测试用例列表中
+INFO: Test filter: Save and load from collections ~[Parallel] ~[MFEMData] 
+Filters: Save and load from collections ~[Parallel] ~[MFEMData]
+===============================================================================
+All tests passed (29 assertions in 1 test case)
+
+
+2023-11-03 10:29:24,227:INFO:Processing issue: {'name': 'issue2884', 'bug_sha': '6da83899920e0e77d350d5399cb65eb0dbdf8db4,637849387ff1fa6a7bcfa6fbecafb98dedb84880', 'fix_sha': '987d2e043bad3a99841b88354dce0c0932cb8642', 'testcase': 'tests/unit/fem/test_pa_coeff.cpp', 'testname': 'H1 pa_coeff,Hcurl/Hdiv pa_coeff,Hcurl/Hdiv mixed pa_coeff', 'url': 'https://github.com/mfem/mfem/commit/987d2e043bad3a99841b88354dce0c0932cb8642'}
+2023-11-03 10:29:24,227:INFO:Running bug version: 6da83899920e0e77d350d5399cb65eb0dbdf8db4
+2023-11-03 10:30:27,452:ERROR:Failed to complete mfem: Command '['bash', '/root/mfem/mfem-code-analyzer/get_normal_testcase_covarage/compile_mfem.sh']' returned non-zero exit status 2.
+2023-11-03 10:30:27,459:INFO:Running test case: H1 pa_coeff
+2023-11-03 10:30:27,459:INFO:开始运行测试用例 H1 pa_coeff ...
+H1 pa_coeff 不存在于测试用例列表中
+
+2023-11-03 10:30:27,459:ERROR:/root/mfem/mfem-code-analyzer/get_normal_testcase_covarage/run_tesscase.sh: line 11: ./unit_tests: No such file or directory
+/root/mfem/mfem-code-analyzer/get_normal_testcase_covarage/run_tesscase.sh: line 21: ./unit_tests: No such file or directory
+
+2023-11-03 10:30:27,465:INFO:Running test case: Hcurl/Hdiv pa_coeff
+2023-11-03 10:30:27,465:INFO:开始运行测试用例 Hcurl/Hdiv pa_coeff ...
+Hcurl/Hdiv pa_coeff 不存在于测试用例列表中
+
+2023-11-03 10:30:27,465:ERROR:/root/mfem/mfem-code-analyzer/get_normal_testcase_covarage/run_tesscase.sh: line 11: ./unit_tests: No such file or directory
+/root/mfem/mfem-code-analyzer/get_normal_testcase_covarage/run_tesscase.sh: line 21: ./unit_tests: No such file or directory
+
+2023-11-03 10:30:27,471:INFO:Running test case: Hcurl/Hdiv mixed pa_coeff
+2023-11-03 10:30:27,471:INFO:开始运行测试用例 Hcurl/Hdiv mixed pa_coeff ...
+Hcurl/Hdiv mixed pa_coeff 不存在于测试用例列表中
+
+2023-11-03 10:30:27,471:ERROR:/root/mfem/mfem-code-analyzer/get_normal_testcase_covarage/run_tesscase.sh: line 11: ./unit_tests: No such file or directory
+/root/mfem/mfem-code-analyzer/get_normal_testcase_covarage/run_tesscase.sh: line 21: ./unit_tests: No such file or directory
+
+2023-11-03 10:30:27,471:INFO:Running fix version: 987d2e043bad3a99841b88354dce0c0932cb8642
+2023-11-03 10:31:35,341:ERROR:Failed to complete mfem: Command '['bash', '/root/mfem/mfem-code-analyzer/get_normal_testcase_covarage/compile_mfem.sh']' returned non-zero exit status 2.
+2023-11-03 10:31:35,347:INFO:Running test case: H1 pa_coeff
+2023-11-03 10:31:35,348:INFO:开始运行测试用例 H1 pa_coeff ...
+H1 pa_coeff 不存在于测试用例列表中
+
+2023-11-03 10:31:35,348:ERROR:/root/mfem/mfem-code-analyzer/get_normal_testcase_covarage/run_tesscase.sh: line 11: ./unit_tests: No such file or directory
+/root/mfem/mfem-code-analyzer/get_normal_testcase_covarage/run_tesscase.sh: line 21: ./unit_tests: No such file or directory
+
+2023-11-03 10:31:35,354:INFO:Running test case: Hcurl/Hdiv pa_coeff
+2023-11-03 10:31:35,354:INFO:开始运行测试用例 Hcurl/Hdiv pa_coeff ...
+Hcurl/Hdiv pa_coeff 不存在于测试用例列表中
+
+2023-11-03 10:31:35,354:ERROR:/root/mfem/mfem-code-analyzer/get_normal_testcase_covarage/run_tesscase.sh: line 11: ./unit_tests: No such file or directory
+/root/mfem/mfem-code-analyzer/get_normal_testcase_covarage/run_tesscase.sh: line 21: ./unit_tests: No such file or directory
+
+2023-11-03 10:31:35,360:INFO:Running test case: Hcurl/Hdiv mixed pa_coeff
+2023-11-03 10:31:35,360:INFO:开始运行测试用例 Hcurl/Hdiv mixed pa_coeff ...
+Hcurl/Hdiv mixed pa_coeff 不存在于测试用例列表中
+
+2023-11-03 10:31:35,361:ERROR:/root/mfem/mfem-code-analyzer/get_normal_testcase_covarage/run_tesscase.sh: line 11: ./unit_tests: No such file or directory
+/root/mfem/mfem-code-analyzer/get_normal_testcase_covarage/run_tesscase.sh: line 21: ./unit_tests: No such file or directory
+
+2023-11-03 10:31:36,095:INFO:Processing issue: {'name': 'issue2838', 'bug_sha': '5fe211e3aecf2560c2d1872af425e2ea37c1fa8a,5de22c21f9173739595d1a1d2c584c30289d5e14', 'fix_sha': '8554fcfa9cdb06c9f036ee0445611c71183738b6', 'testcase': 'tests/unit/fem/test_pa_kernels.cpp', 'testname': 'PA Convection advanced,PA Convection', 'url': 'https://github.com/mfem/mfem/commit/8554fcfa9cdb06c9f036ee0445611c71183738b6'}
+2023-11-03 10:31:36,095:INFO:Running bug version: 5fe211e3aecf2560c2d1872af425e2ea37c1fa8a
+2023-11-03 10:32:39,006:ERROR:Failed to complete mfem: Command '['bash', '/root/mfem/mfem-code-analyzer/get_normal_testcase_covarage/compile_mfem.sh']' returned non-zero exit status 2.
+2023-11-03 10:32:39,013:INFO:Running test case: PA Convection advanced
+2023-11-03 10:32:39,013:INFO:开始运行测试用例 PA Convection advanced ...
+PA Convection advanced 不存在于测试用例列表中
+
+2023-11-03 10:32:39,013:ERROR:/root/mfem/mfem-code-analyzer/get_normal_testcase_covarage/run_tesscase.sh: line 11: ./unit_tests: No such file or directory
+/root/mfem/mfem-code-analyzer/get_normal_testcase_covarage/run_tesscase.sh: line 21: ./unit_tests: No such file or directory
+
+2023-11-03 10:32:39,019:INFO:Running test case: PA Convection
+2023-11-03 10:32:39,020:INFO:开始运行测试用例 PA Convection ...
+PA Convection 不存在于测试用例列表中
+
+2023-11-03 10:32:39,020:ERROR:/root/mfem/mfem-code-analyzer/get_normal_testcase_covarage/run_tesscase.sh: line 11: ./unit_tests: No such file or directory
+/root/mfem/mfem-code-analyzer/get_normal_testcase_covarage/run_tesscase.sh: line 21: ./unit_tests: No such file or directory
+
+2023-11-03 10:32:39,020:INFO:Running fix version: 8554fcfa9cdb06c9f036ee0445611c71183738b6
+2023-11-03 10:33:45,662:ERROR:Failed to complete mfem: Command '['bash', '/root/mfem/mfem-code-analyzer/get_normal_testcase_covarage/compile_mfem.sh']' returned non-zero exit status 2.
+2023-11-03 10:33:45,668:INFO:Running test case: PA Convection advanced
+2023-11-03 10:33:45,669:INFO:开始运行测试用例 PA Convection advanced ...
+PA Convection advanced 不存在于测试用例列表中
+
+2023-11-03 10:33:45,669:ERROR:/root/mfem/mfem-code-analyzer/get_normal_testcase_covarage/run_tesscase.sh: line 11: ./unit_tests: No such file or directory
+/root/mfem/mfem-code-analyzer/get_normal_testcase_covarage/run_tesscase.sh: line 21: ./unit_tests: No such file or directory
+
+2023-11-03 10:33:45,675:INFO:Running test case: PA Convection
+2023-11-03 10:33:45,676:INFO:开始运行测试用例 PA Convection ...
+PA Convection 不存在于测试用例列表中
+
+2023-11-03 10:33:45,676:ERROR:/root/mfem/mfem-code-analyzer/get_normal_testcase_covarage/run_tesscase.sh: line 11: ./unit_tests: No such file or directory
+/root/mfem/mfem-code-analyzer/get_normal_testcase_covarage/run_tesscase.sh: line 21: ./unit_tests: No such file or directory
+
+2023-11-03 10:33:46,410:INFO:Processing issue: {'name': 'issue2779', 'bug_sha': '86cbbe9d92593f7c118ecf1668c8a27d16c2bc04,ba83d3f4f549a6421da2e12eefe260f36893096d', 'fix_sha': '2d89962838a5c6509123140d98c8329adc96bcdd', 'testcase': 'tests/unit/fem/test_var_order.cpp', 'testname': 'Variable Order FiniteElementSpace', 'url': 'https://github.com/mfem/mfem/commit/2d89962838a5c6509123140d98c8329adc96bcdd'}
+2023-11-03 10:33:46,411:INFO:Running bug version: 86cbbe9d92593f7c118ecf1668c8a27d16c2bc04
+2023-11-03 10:34:53,809:ERROR:Failed to complete mfem: Command '['bash', '/root/mfem/mfem-code-analyzer/get_normal_testcase_covarage/compile_mfem.sh']' returned non-zero exit status 2.
+2023-11-03 10:34:53,815:INFO:Running test case: Variable Order FiniteElementSpace
+2023-11-03 10:34:53,815:INFO:开始运行测试用例 Variable Order FiniteElementSpace ...
+Variable Order FiniteElementSpace 不存在于测试用例列表中
+
+2023-11-03 10:34:53,815:ERROR:/root/mfem/mfem-code-analyzer/get_normal_testcase_covarage/run_tesscase.sh: line 11: ./unit_tests: No such file or directory
+/root/mfem/mfem-code-analyzer/get_normal_testcase_covarage/run_tesscase.sh: line 21: ./unit_tests: No such file or directory
+
+2023-11-03 10:34:53,816:INFO:Running fix version: 2d89962838a5c6509123140d98c8329adc96bcdd
+2023-11-03 10:35:58,192:ERROR:Failed to complete mfem: Command '['bash', '/root/mfem/mfem-code-analyzer/get_normal_testcase_covarage/compile_mfem.sh']' returned non-zero exit status 2.
+2023-11-03 10:35:58,198:INFO:Running test case: Variable Order FiniteElementSpace
+2023-11-03 10:35:58,198:INFO:开始运行测试用例 Variable Order FiniteElementSpace ...
+Variable Order FiniteElementSpace 不存在于测试用例列表中
+
+2023-11-03 10:35:58,198:ERROR:/root/mfem/mfem-code-analyzer/get_normal_testcase_covarage/run_tesscase.sh: line 11: ./unit_tests: No such file or directory
+/root/mfem/mfem-code-analyzer/get_normal_testcase_covarage/run_tesscase.sh: line 21: ./unit_tests: No such file or directory
+
+2023-11-03 10:35:58,925:INFO:Processing issue: {'name': 'issue2699', 'bug_sha': '621081b3a8d388eee3716dee0e32ddf84e6ab504', 'fix_sha': '62eda9466d9daa0bbd7256bcf4f0631cb8c555e8', 'testcase': 'tests/unit/fem/test_assembly_levels.cpp', 'testname': 'Serial H1 Full Assembly,Parallel H1 Full Assembly', 'url': 'https://github.com/mfem/mfem/commit/62eda9466d9daa0bbd7256bcf4f0631cb8c555e8'}
+2023-11-03 10:35:58,925:INFO:Running bug version: 621081b3a8d388eee3716dee0e32ddf84e6ab504
+2023-11-03 10:37:03,898:INFO:Running test case: Serial H1 Full Assembly
+2023-11-03 10:37:03,898:INFO:开始运行测试用例 Serial H1 Full Assembly ...
+Serial H1 Full Assembly 不存在于测试用例列表中
+INFO: Test filter: Serial H1 Full Assembly ~[Parallel] ~[MFEMData] 
+Filters: Serial H1 Full Assembly ~[Parallel] ~[MFEMData]
+No test cases matched 'Serial H1 Full Assembly~[Parallel]~[MFEMData]'
+===============================================================================
+No tests ran
+
+
+2023-11-03 10:37:03,926:INFO:Running test case: Parallel H1 Full Assembly
+2023-11-03 10:37:03,926:INFO:开始运行测试用例 Parallel H1 Full Assembly ...
+Parallel H1 Full Assembly 不存在于测试用例列表中
+INFO: Test filter: Parallel H1 Full Assembly ~[Parallel] ~[MFEMData] 
+Filters: Parallel H1 Full Assembly ~[Parallel] ~[MFEMData]
+No test cases matched 'Parallel H1 Full Assembly~[Parallel]~[MFEMData]'
+===============================================================================
+No tests ran
+
+
+2023-11-03 10:37:03,927:INFO:Running fix version: 62eda9466d9daa0bbd7256bcf4f0631cb8c555e8
+2023-11-03 10:38:08,546:INFO:Running test case: Serial H1 Full Assembly
+2023-11-03 10:38:08,546:INFO:开始运行测试用例 Serial H1 Full Assembly ...
+Serial H1 Full Assembly 不存在于测试用例列表中
+INFO: Test filter: Serial H1 Full Assembly ~[Parallel] ~[MFEMData] 
+Filters: Serial H1 Full Assembly ~[Parallel] ~[MFEMData]
+No test cases matched 'Serial H1 Full Assembly~[Parallel]~[MFEMData]'
+===============================================================================
+No tests ran
+
+
+2023-11-03 10:38:08,568:INFO:Running test case: Parallel H1 Full Assembly
+2023-11-03 10:38:08,569:INFO:开始运行测试用例 Parallel H1 Full Assembly ...
+Parallel H1 Full Assembly 不存在于测试用例列表中
+INFO: Test filter: Parallel H1 Full Assembly ~[Parallel] ~[MFEMData] 
+Filters: Parallel H1 Full Assembly ~[Parallel] ~[MFEMData]
+No test cases matched 'Parallel H1 Full Assembly~[Parallel]~[MFEMData]'
+===============================================================================
+No tests ran
+
+
+2023-11-03 10:38:09,185:INFO:Processing issue: {'name': 'issue2666', 'bug_sha': '58db0c0d65ed78228fce4980c07fc084f0deb88c,0f5d34b2b490819789d6c85546e17724ff37f021', 'fix_sha': 'f1c83d85cb933b526fd9ddb3a077f3f30e4f56a4', 'testcase': 'tests/unit/mesh/test_ncmesh.cpp', 'testname': 'FaceEdgeConstraint', 'url': 'https://github.com/mfem/mfem/commit/f1c83d85cb933b526fd9ddb3a077f3f30e4f56a4'}
+2023-11-03 10:38:09,185:INFO:Running bug version: 58db0c0d65ed78228fce4980c07fc084f0deb88c
+2023-11-03 10:39:20,993:INFO:Running test case: FaceEdgeConstraint
+2023-11-03 10:39:20,993:INFO:开始运行测试用例 FaceEdgeConstraint ...
+FaceEdgeConstraint 不存在于测试用例列表中
+INFO: Test filter: FaceEdgeConstraint ~[Parallel] ~[MFEMData] 
+Filters: FaceEdgeConstraint ~[Parallel] ~[MFEMData]
+No test cases matched 'FaceEdgeConstraint~[Parallel]~[MFEMData]'
+===============================================================================
+No tests ran
+
+
+2023-11-03 10:39:20,993:INFO:Running fix version: f1c83d85cb933b526fd9ddb3a077f3f30e4f56a4
+2023-11-03 10:40:32,733:INFO:Running test case: FaceEdgeConstraint
+2023-11-03 10:40:32,734:INFO:开始运行测试用例 FaceEdgeConstraint ...
+FaceEdgeConstraint 不存在于测试用例列表中
+INFO: Test filter: FaceEdgeConstraint ~[Parallel] ~[MFEMData] 
+Filters: FaceEdgeConstraint ~[Parallel] ~[MFEMData]
+No test cases matched 'FaceEdgeConstraint~[Parallel]~[MFEMData]'
+===============================================================================
+No tests ran
+
+
+2023-11-03 10:40:33,118:INFO:Processing issue: {'name': 'issue2492', 'bug_sha': '4937ee34faac8bfbf1b17cfcadc252f3ef238ec6,7c5d9d4a1e0faa465b1652762a3c603c583b7d5c', 'fix_sha': 'db6f2b3ce64ea02183679223e4c108a617c62d07', 'testcase': 'tests/unit/fem/test_project_bdr.cpp', 'testname': '3D ProjectBdrCoefficientTangent', 'url': 'https://github.com/mfem/mfem/commit/db6f2b3ce64ea02183679223e4c108a617c62d07'}
+2023-11-03 10:40:33,119:INFO:Running bug version: 4937ee34faac8bfbf1b17cfcadc252f3ef238ec6
+2023-11-03 10:41:36,037:ERROR:Failed to complete mfem: Command '['bash', '/root/mfem/mfem-code-analyzer/get_normal_testcase_covarage/compile_mfem.sh']' returned non-zero exit status 2.
+2023-11-03 10:41:36,044:INFO:Running test case: 3D ProjectBdrCoefficientTangent
+2023-11-03 10:41:36,044:INFO:开始运行测试用例 3D ProjectBdrCoefficientTangent ...
+3D ProjectBdrCoefficientTangent 不存在于测试用例列表中
+
+2023-11-03 10:41:36,044:ERROR:/root/mfem/mfem-code-analyzer/get_normal_testcase_covarage/run_tesscase.sh: line 11: ./unit_tests: No such file or directory
+/root/mfem/mfem-code-analyzer/get_normal_testcase_covarage/run_tesscase.sh: line 21: ./unit_tests: No such file or directory
+
+2023-11-03 10:41:36,044:INFO:Running fix version: db6f2b3ce64ea02183679223e4c108a617c62d07
+2023-11-03 10:42:42,094:ERROR:Failed to complete mfem: Command '['bash', '/root/mfem/mfem-code-analyzer/get_normal_testcase_covarage/compile_mfem.sh']' returned non-zero exit status 2.
+2023-11-03 10:42:42,100:INFO:Running test case: 3D ProjectBdrCoefficientTangent
+2023-11-03 10:42:42,101:INFO:开始运行测试用例 3D ProjectBdrCoefficientTangent ...
+3D ProjectBdrCoefficientTangent 不存在于测试用例列表中
+
+2023-11-03 10:42:42,101:ERROR:/root/mfem/mfem-code-analyzer/get_normal_testcase_covarage/run_tesscase.sh: line 11: ./unit_tests: No such file or directory
+/root/mfem/mfem-code-analyzer/get_normal_testcase_covarage/run_tesscase.sh: line 21: ./unit_tests: No such file or directory
+
+2023-11-03 10:42:42,810:INFO:Processing issue: {'name': 'issue2490', 'bug_sha': '0b6f29ac676207544f4f2a9334733e974971be7c,5361848341535527ccdf2ba973733ef91dde8c01', 'fix_sha': '0a9ec5bcf913ab149dfeebac98754a735e8b2388', 'testcase': 'tests/unit/mesh/test_pmesh.cpp', 'testname': 'ParMeshGlobalIndices', 'url': 'https://github.com/mfem/mfem/commit/0a9ec5bcf913ab149dfeebac98754a735e8b2388'}
+2023-11-03 10:42:42,810:INFO:Running bug version: 0b6f29ac676207544f4f2a9334733e974971be7c
+2023-11-03 10:43:45,420:ERROR:Failed to complete mfem: Command '['bash', '/root/mfem/mfem-code-analyzer/get_normal_testcase_covarage/compile_mfem.sh']' returned non-zero exit status 2.
+2023-11-03 10:43:45,427:INFO:Running test case: ParMeshGlobalIndices
+2023-11-03 10:43:45,427:INFO:开始运行测试用例 ParMeshGlobalIndices ...
+ParMeshGlobalIndices 不存在于测试用例列表中
+
+2023-11-03 10:43:45,427:ERROR:/root/mfem/mfem-code-analyzer/get_normal_testcase_covarage/run_tesscase.sh: line 11: ./unit_tests: No such file or directory
+/root/mfem/mfem-code-analyzer/get_normal_testcase_covarage/run_tesscase.sh: line 21: ./unit_tests: No such file or directory
+
+2023-11-03 10:43:45,427:INFO:Running fix version: 0a9ec5bcf913ab149dfeebac98754a735e8b2388
+2023-11-03 10:44:47,953:ERROR:Failed to complete mfem: Command '['bash', '/root/mfem/mfem-code-analyzer/get_normal_testcase_covarage/compile_mfem.sh']' returned non-zero exit status 2.
+2023-11-03 10:44:47,960:INFO:Running test case: ParMeshGlobalIndices
+2023-11-03 10:44:47,960:INFO:开始运行测试用例 ParMeshGlobalIndices ...
+ParMeshGlobalIndices 不存在于测试用例列表中
+
+2023-11-03 10:44:47,960:ERROR:/root/mfem/mfem-code-analyzer/get_normal_testcase_covarage/run_tesscase.sh: line 11: ./unit_tests: No such file or directory
+/root/mfem/mfem-code-analyzer/get_normal_testcase_covarage/run_tesscase.sh: line 21: ./unit_tests: No such file or directory
+
+2023-11-03 10:44:48,688:INFO:Processing issue: {'name': 'issue2413', 'bug_sha': '22f385cff3104929ca9e57f3085d31d1a30bcb63,e654f4c60780b2d920a0adf708244e05e0122374', 'fix_sha': '3ce96b71c05c93ca5329bb7d6927acf3c78a57c8', 'testcase': 'examples/superlu/ex1p.cpp', 'url': 'https://github.com/mfem/mfem/commit/3ce96b71c05c93ca5329bb7d6927acf3c78a57c8'}
+2023-11-03 10:44:48,689:INFO:Running bug version: 22f385cff3104929ca9e57f3085d31d1a30bcb63
+2023-11-03 10:45:50,492:ERROR:Failed to complete mfem: Command '['bash', '/root/mfem/mfem-code-analyzer/get_normal_testcase_covarage/compile_mfem.sh']' returned non-zero exit status 2.
+2023-11-03 10:45:50,498:INFO:Running test case: 
+2023-11-03 10:45:50,499:INFO:开始运行测试用例 PA VectorDivergence ...
+PA VectorDivergence 不存在于测试用例列表中
+
+2023-11-03 10:45:50,499:ERROR:/root/mfem/mfem-code-analyzer/get_normal_testcase_covarage/run_tesscase.sh: line 11: ./unit_tests: No such file or directory
+/root/mfem/mfem-code-analyzer/get_normal_testcase_covarage/run_tesscase.sh: line 21: ./unit_tests: No such file or directory
+
+2023-11-03 10:45:50,499:INFO:Running fix version: 3ce96b71c05c93ca5329bb7d6927acf3c78a57c8
+2023-11-03 10:46:52,621:ERROR:Failed to complete mfem: Command '['bash', '/root/mfem/mfem-code-analyzer/get_normal_testcase_covarage/compile_mfem.sh']' returned non-zero exit status 2.
+2023-11-03 10:46:52,628:INFO:Running test case: 
+2023-11-03 10:46:52,628:INFO:开始运行测试用例 PA VectorDivergence ...
+PA VectorDivergence 不存在于测试用例列表中
+
+2023-11-03 10:46:52,628:ERROR:/root/mfem/mfem-code-analyzer/get_normal_testcase_covarage/run_tesscase.sh: line 11: ./unit_tests: No such file or directory
+/root/mfem/mfem-code-analyzer/get_normal_testcase_covarage/run_tesscase.sh: line 21: ./unit_tests: No such file or directory
+
+2023-11-03 10:46:53,224:INFO:Processing issue: {'name': 'issue2343', 'bug_sha': '34ad9fca157368768af1869e9821876cf259f940,f68365a0a0536026679be476fb8c3f327af9310c', 'fix_sha': 'd4bc14a48a1781ae4f7a16855f98c491f1e98389', 'testcase': 'tests/unit/linalg/test_ode.cpp', 'testname': 'First order ODE methods', 'url': 'https://github.com/mfem/mfem/commit/d4bc14a48a1781ae4f7a16855f98c491f1e98389'}
+2023-11-03 10:46:53,225:INFO:Running bug version: 34ad9fca157368768af1869e9821876cf259f940
+2023-11-03 10:48:04,391:INFO:Running test case: First order ODE methods
+2023-11-03 10:48:04,391:INFO:开始运行测试用例 First order ODE methods ...
+First order ODE methods 存在于测试用例列表中
+INFO: Test filter: First order ODE methods ~[Parallel] ~[MFEMData] 
+Filters: First order ODE methods ~[Parallel] ~[MFEMData]
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+unit_tests is a Catch v2.13.9 host application.
+Run with -? for options
+
+-------------------------------------------------------------------------------
+First order ODE methods
+  AB2Solver()
+-------------------------------------------------------------------------------
+/root/mfem/mfem/tests/unit/linalg/test_ode.cpp:303
+...............................................................................
+
+/root/mfem/mfem/tests/unit/linalg/test_ode.cpp:306: FAILED:
+  REQUIRE( conv_rate + tol > 2.0 )
+with expansion:
+  1.004674203339746 > 2
+
+-------------------------------------------------------------------------------
+First order ODE methods
+  AB3Solver()
+-------------------------------------------------------------------------------
+/root/mfem/mfem/tests/unit/linalg/test_ode.cpp:315
+...............................................................................
+
+/root/mfem/mfem/tests/unit/linalg/test_ode.cpp:318: FAILED:
+  REQUIRE( conv_rate + tol > 3.0 )
+with expansion:
+  1.097019196313348 > 3
+
+-------------------------------------------------------------------------------
+First order ODE methods
+  AB4Solver()
+-------------------------------------------------------------------------------
+/root/mfem/mfem/tests/unit/linalg/test_ode.cpp:321
+...............................................................................
+
+/root/mfem/mfem/tests/unit/linalg/test_ode.cpp:324: FAILED:
+  REQUIRE( conv_rate + tol > 4.0 )
+with expansion:
+  1.096418543144751 > 4
+
+-------------------------------------------------------------------------------
+First order ODE methods
+  AB5Solver()
+-------------------------------------------------------------------------------
+/root/mfem/mfem/tests/unit/linalg/test_ode.cpp:327
+...............................................................................
+
+/root/mfem/mfem/tests/unit/linalg/test_ode.cpp:330: FAILED:
+  REQUIRE( conv_rate + tol > 5.0 )
+with expansion:
+  1.093047012642808 > 5
+
+-------------------------------------------------------------------------------
+First order ODE methods
+  AM2Solver()
+-------------------------------------------------------------------------------
+/root/mfem/mfem/tests/unit/linalg/test_ode.cpp:358
+...............................................................................
+
+/root/mfem/mfem/tests/unit/linalg/test_ode.cpp:361: FAILED:
+  REQUIRE( conv_rate + tol > 3.0 )
+with expansion:
+  1.099700679809844 > 3
+
+-------------------------------------------------------------------------------
+First order ODE methods
+  AM3Solver()
+-------------------------------------------------------------------------------
+/root/mfem/mfem/tests/unit/linalg/test_ode.cpp:370
+...............................................................................
+
+/root/mfem/mfem/tests/unit/linalg/test_ode.cpp:373: FAILED:
+  REQUIRE( conv_rate + tol > 4.0 )
+with expansion:
+  1.098198954704418 > 4
+
+-------------------------------------------------------------------------------
+First order ODE methods
+  AM4Solver()
+-------------------------------------------------------------------------------
+/root/mfem/mfem/tests/unit/linalg/test_ode.cpp:376
+...............................................................................
+
+/root/mfem/mfem/tests/unit/linalg/test_ode.cpp:379: FAILED:
+  REQUIRE( conv_rate + tol > 5.0 )
+with expansion:
+  1.096064884932531 > 5
+
+===============================================================================
+test cases:  1 |  0 passed | 1 failed
+assertions: 33 | 26 passed | 7 failed
+
+
+2023-11-03 10:48:04,391:INFO:Running fix version: d4bc14a48a1781ae4f7a16855f98c491f1e98389
+2023-11-03 10:49:11,537:INFO:Running test case: First order ODE methods
+2023-11-03 10:49:11,537:INFO:开始运行测试用例 First order ODE methods ...
+First order ODE methods 存在于测试用例列表中
+INFO: Test filter: First order ODE methods ~[Parallel] ~[MFEMData] 
+Filters: First order ODE methods ~[Parallel] ~[MFEMData]
+===============================================================================
+All tests passed (33 assertions in 1 test case)
+
+
+2023-11-03 10:49:11,984:INFO:Processing issue: {'name': 'issue2287', 'bug_sha': 'e8c0fc212ad7dec1a3f90addfd2603675d99e1bb,9ba4c181a17fdbf7d97a263653db1543e3730ebf', 'fix_sha': 'f5df8b683113107d167880604a16630e139e4345', 'testcase': 'examples/hiop/ex9p.cpp', 'url': 'https://github.com/mfem/mfem/commit/f5df8b683113107d167880604a16630e139e4345'}
+2023-11-03 10:49:11,985:INFO:Running bug version: e8c0fc212ad7dec1a3f90addfd2603675d99e1bb
+2023-11-03 10:50:13,332:ERROR:Failed to complete mfem: Command '['bash', '/root/mfem/mfem-code-analyzer/get_normal_testcase_covarage/compile_mfem.sh']' returned non-zero exit status 2.
+2023-11-03 10:50:13,339:INFO:Running test case: 
+2023-11-03 10:50:13,340:INFO:开始运行测试用例 PA VectorDivergence ...
+PA VectorDivergence 不存在于测试用例列表中
+
+2023-11-03 10:50:13,340:ERROR:/root/mfem/mfem-code-analyzer/get_normal_testcase_covarage/run_tesscase.sh: line 11: ./unit_tests: No such file or directory
+/root/mfem/mfem-code-analyzer/get_normal_testcase_covarage/run_tesscase.sh: line 21: ./unit_tests: No such file or directory
+
+2023-11-03 10:50:13,340:INFO:Running fix version: f5df8b683113107d167880604a16630e139e4345
+2023-11-03 10:51:13,811:ERROR:Failed to complete mfem: Command '['bash', '/root/mfem/mfem-code-analyzer/get_normal_testcase_covarage/compile_mfem.sh']' returned non-zero exit status 2.
+2023-11-03 10:51:13,817:INFO:Running test case: 
+2023-11-03 10:51:13,817:INFO:开始运行测试用例 PA VectorDivergence ...
+PA VectorDivergence 不存在于测试用例列表中
+
+2023-11-03 10:51:13,817:ERROR:/root/mfem/mfem-code-analyzer/get_normal_testcase_covarage/run_tesscase.sh: line 11: ./unit_tests: No such file or directory
+/root/mfem/mfem-code-analyzer/get_normal_testcase_covarage/run_tesscase.sh: line 21: ./unit_tests: No such file or directory
+
+2023-11-03 10:51:14,464:INFO:Processing issue: {'name': 'issue2231', 'bug_sha': '68b1955b99942f5bd8422c5aaf51c78ee9ef5ffc', 'fix_sha': 'dd94dc9d1475e22116eedf5a9c803f452e9b6baa', 'testcase': 'examples/ex9.cpp', 'url': 'https://github.com/mfem/mfem/commit/dd94dc9d1475e22116eedf5a9c803f452e9b6baa'}
+2023-11-03 10:51:14,465:INFO:Running bug version: 68b1955b99942f5bd8422c5aaf51c78ee9ef5ffc
+2023-11-03 10:52:10,700:ERROR:Failed to complete mfem: Command '['bash', '/root/mfem/mfem-code-analyzer/get_normal_testcase_covarage/compile_mfem.sh']' returned non-zero exit status 2.
+2023-11-03 10:52:10,707:INFO:Running test case: 
+2023-11-03 10:52:10,707:INFO:开始运行测试用例 PA VectorDivergence ...
+PA VectorDivergence 不存在于测试用例列表中
+
+2023-11-03 10:52:10,707:ERROR:/root/mfem/mfem-code-analyzer/get_normal_testcase_covarage/run_tesscase.sh: line 11: ./unit_tests: No such file or directory
+/root/mfem/mfem-code-analyzer/get_normal_testcase_covarage/run_tesscase.sh: line 21: ./unit_tests: No such file or directory
+
+2023-11-03 10:52:10,707:INFO:Running fix version: dd94dc9d1475e22116eedf5a9c803f452e9b6baa
+2023-11-03 10:53:07,643:ERROR:Failed to complete mfem: Command '['bash', '/root/mfem/mfem-code-analyzer/get_normal_testcase_covarage/compile_mfem.sh']' returned non-zero exit status 2.
+2023-11-03 10:53:07,649:INFO:Running test case: 
+2023-11-03 10:53:07,649:INFO:开始运行测试用例 PA VectorDivergence ...
+PA VectorDivergence 不存在于测试用例列表中
+
+2023-11-03 10:53:07,650:ERROR:/root/mfem/mfem-code-analyzer/get_normal_testcase_covarage/run_tesscase.sh: line 11: ./unit_tests: No such file or directory
+/root/mfem/mfem-code-analyzer/get_normal_testcase_covarage/run_tesscase.sh: line 21: ./unit_tests: No such file or directory
+
+2023-11-03 10:53:08,290:INFO:Processing issue: {'name': 'issue2152', 'bug_sha': '72f7f26e08d740f861fa8ade08430c0a55dd5654', 'fix_sha': '5335439a711bf589857651a4ef6bdf927567d83d', 'testcase': 'tests/unit/fem/test_build_dof_to_arrays.cpp', 'testname': 'Build Dof To Arrays,Build Dof To Arrays (Parallel)', 'url': 'https://github.com/mfem/mfem/commit/5335439a711bf589857651a4ef6bdf927567d83d'}
+2023-11-03 10:53:08,290:INFO:Running bug version: 72f7f26e08d740f861fa8ade08430c0a55dd5654
+2023-11-03 10:54:03,456:ERROR:Failed to complete mfem: Command '['bash', '/root/mfem/mfem-code-analyzer/get_normal_testcase_covarage/compile_mfem.sh']' returned non-zero exit status 2.
+2023-11-03 10:54:03,463:INFO:Running test case: Build Dof To Arrays
+2023-11-03 10:54:03,463:INFO:开始运行测试用例 Build Dof To Arrays ...
+Build Dof To Arrays 不存在于测试用例列表中
+
+2023-11-03 10:54:03,463:ERROR:/root/mfem/mfem-code-analyzer/get_normal_testcase_covarage/run_tesscase.sh: line 11: ./unit_tests: No such file or directory
+/root/mfem/mfem-code-analyzer/get_normal_testcase_covarage/run_tesscase.sh: line 21: ./unit_tests: No such file or directory
+
+2023-11-03 10:54:03,469:INFO:Running test case: Build Dof To Arrays (Parallel)
+2023-11-03 10:54:03,469:INFO:开始运行测试用例 Build Dof To Arrays (Parallel) ...
+Build Dof To Arrays (Parallel) 不存在于测试用例列表中
+
+2023-11-03 10:54:03,469:ERROR:/root/mfem/mfem-code-analyzer/get_normal_testcase_covarage/run_tesscase.sh: line 11: ./unit_tests: No such file or directory
+/root/mfem/mfem-code-analyzer/get_normal_testcase_covarage/run_tesscase.sh: line 21: ./unit_tests: No such file or directory
+
+2023-11-03 10:54:03,470:INFO:Running fix version: 5335439a711bf589857651a4ef6bdf927567d83d
+2023-11-03 10:54:59,471:ERROR:Failed to complete mfem: Command '['bash', '/root/mfem/mfem-code-analyzer/get_normal_testcase_covarage/compile_mfem.sh']' returned non-zero exit status 2.
+2023-11-03 10:54:59,476:INFO:Running test case: Build Dof To Arrays
+2023-11-03 10:54:59,476:INFO:开始运行测试用例 Build Dof To Arrays ...
+Build Dof To Arrays 不存在于测试用例列表中
+
+2023-11-03 10:54:59,477:ERROR:/root/mfem/mfem-code-analyzer/get_normal_testcase_covarage/run_tesscase.sh: line 11: ./unit_tests: No such file or directory
+/root/mfem/mfem-code-analyzer/get_normal_testcase_covarage/run_tesscase.sh: line 21: ./unit_tests: No such file or directory
+
+2023-11-03 10:54:59,481:INFO:Running test case: Build Dof To Arrays (Parallel)
+2023-11-03 10:54:59,481:INFO:开始运行测试用例 Build Dof To Arrays (Parallel) ...
+Build Dof To Arrays (Parallel) 不存在于测试用例列表中
+
+2023-11-03 10:54:59,481:ERROR:/root/mfem/mfem-code-analyzer/get_normal_testcase_covarage/run_tesscase.sh: line 11: ./unit_tests: No such file or directory
+/root/mfem/mfem-code-analyzer/get_normal_testcase_covarage/run_tesscase.sh: line 21: ./unit_tests: No such file or directory
+
+2023-11-03 10:55:00,077:INFO:Processing issue: {'name': 'issue1874', 'bug_sha': 'a078107c51e1a8c329496e8d1fa2c3f17ba85831,1b97908085547508bee5abe86eebcc579eda6c95', 'fix_sha': '6206c775cca216706276a92e33c4a9d772c4b1bd', 'testcase': 'tests/unit/fem/test_doftrans.cpp', 'testname': 'DoF Transformation Classes,DoF Transformation Functions,VDoF Transformation Class', 'url': 'https://github.com/mfem/mfem/commit/6206c775cca216706276a92e33c4a9d772c4b1bd'}
+2023-11-03 10:55:00,078:INFO:Running bug version: a078107c51e1a8c329496e8d1fa2c3f17ba85831
+2023-11-03 10:56:02,670:ERROR:Failed to complete mfem: Command '['bash', '/root/mfem/mfem-code-analyzer/get_normal_testcase_covarage/compile_mfem.sh']' returned non-zero exit status 2.
+2023-11-03 10:56:02,677:INFO:Running test case: DoF Transformation Classes
+2023-11-03 10:56:02,677:INFO:开始运行测试用例 DoF Transformation Classes ...
+DoF Transformation Classes 不存在于测试用例列表中
+
+2023-11-03 10:56:02,677:ERROR:/root/mfem/mfem-code-analyzer/get_normal_testcase_covarage/run_tesscase.sh: line 11: ./unit_tests: No such file or directory
+/root/mfem/mfem-code-analyzer/get_normal_testcase_covarage/run_tesscase.sh: line 21: ./unit_tests: No such file or directory
+
+2023-11-03 10:56:02,684:INFO:Running test case: DoF Transformation Functions
+2023-11-03 10:56:02,684:INFO:开始运行测试用例 DoF Transformation Functions ...
+DoF Transformation Functions 不存在于测试用例列表中
+
+2023-11-03 10:56:02,685:ERROR:/root/mfem/mfem-code-analyzer/get_normal_testcase_covarage/run_tesscase.sh: line 11: ./unit_tests: No such file or directory
+/root/mfem/mfem-code-analyzer/get_normal_testcase_covarage/run_tesscase.sh: line 21: ./unit_tests: No such file or directory
+
+2023-11-03 10:56:02,691:INFO:Running test case: VDoF Transformation Class
+2023-11-03 10:56:02,691:INFO:开始运行测试用例 VDoF Transformation Class ...
+VDoF Transformation Class 不存在于测试用例列表中
+
+2023-11-03 10:56:02,691:ERROR:/root/mfem/mfem-code-analyzer/get_normal_testcase_covarage/run_tesscase.sh: line 11: ./unit_tests: No such file or directory
+/root/mfem/mfem-code-analyzer/get_normal_testcase_covarage/run_tesscase.sh: line 21: ./unit_tests: No such file or directory
+
+2023-11-03 10:56:02,691:INFO:Running fix version: 6206c775cca216706276a92e33c4a9d772c4b1bd
+2023-11-03 10:57:05,116:ERROR:Failed to complete mfem: Command '['bash', '/root/mfem/mfem-code-analyzer/get_normal_testcase_covarage/compile_mfem.sh']' returned non-zero exit status 2.
+2023-11-03 10:57:05,123:INFO:Running test case: DoF Transformation Classes
+2023-11-03 10:57:05,123:INFO:开始运行测试用例 DoF Transformation Classes ...
+DoF Transformation Classes 不存在于测试用例列表中
+
+2023-11-03 10:57:05,123:ERROR:/root/mfem/mfem-code-analyzer/get_normal_testcase_covarage/run_tesscase.sh: line 11: ./unit_tests: No such file or directory
+/root/mfem/mfem-code-analyzer/get_normal_testcase_covarage/run_tesscase.sh: line 21: ./unit_tests: No such file or directory
+
+2023-11-03 10:57:05,131:INFO:Running test case: DoF Transformation Functions
+2023-11-03 10:57:05,131:INFO:开始运行测试用例 DoF Transformation Functions ...
+DoF Transformation Functions 不存在于测试用例列表中
+
+2023-11-03 10:57:05,131:ERROR:/root/mfem/mfem-code-analyzer/get_normal_testcase_covarage/run_tesscase.sh: line 11: ./unit_tests: No such file or directory
+/root/mfem/mfem-code-analyzer/get_normal_testcase_covarage/run_tesscase.sh: line 21: ./unit_tests: No such file or directory
+
+2023-11-03 10:57:05,136:INFO:Running test case: VDoF Transformation Class
+2023-11-03 10:57:05,136:INFO:开始运行测试用例 VDoF Transformation Class ...
+VDoF Transformation Class 不存在于测试用例列表中
+
+2023-11-03 10:57:05,136:ERROR:/root/mfem/mfem-code-analyzer/get_normal_testcase_covarage/run_tesscase.sh: line 11: ./unit_tests: No such file or directory
+/root/mfem/mfem-code-analyzer/get_normal_testcase_covarage/run_tesscase.sh: line 21: ./unit_tests: No such file or directory
+
+2023-11-03 10:57:05,899:INFO:Processing issue: {'name': 'issue1769', 'bug_sha': '1cd7ef1599d4a3db0e773da10432d6cff0a32379,efebb2ceb3cb339f51504bdc00be33933ebb8775', 'fix_sha': '27acd4f56df4dc24481dcd24e239effe23541f1e', 'testcase': 'tests/unit/mesh/test_mesh.cpp', 'testname': 'Element-wise construction', 'url': 'https://github.com/mfem/mfem/commit/27acd4f56df4dc24481dcd24e239effe23541f1e'}
+2023-11-03 10:57:05,900:INFO:Running bug version: 1cd7ef1599d4a3db0e773da10432d6cff0a32379
+2023-11-03 10:57:55,065:ERROR:Failed to complete mfem: Command '['bash', '/root/mfem/mfem-code-analyzer/get_normal_testcase_covarage/compile_mfem.sh']' returned non-zero exit status 2.
+2023-11-03 10:57:55,071:INFO:Running test case: Element-wise construction
+2023-11-03 10:57:55,071:INFO:开始运行测试用例 Element-wise construction ...
+Element-wise construction 不存在于测试用例列表中
+
+2023-11-03 10:57:55,071:ERROR:/root/mfem/mfem-code-analyzer/get_normal_testcase_covarage/run_tesscase.sh: line 11: ./unit_tests: No such file or directory
+/root/mfem/mfem-code-analyzer/get_normal_testcase_covarage/run_tesscase.sh: line 21: ./unit_tests: No such file or directory
+
+2023-11-03 10:57:55,071:INFO:Running fix version: 27acd4f56df4dc24481dcd24e239effe23541f1e
+2023-11-03 10:58:43,961:ERROR:Failed to complete mfem: Command '['bash', '/root/mfem/mfem-code-analyzer/get_normal_testcase_covarage/compile_mfem.sh']' returned non-zero exit status 2.
+2023-11-03 10:58:43,967:INFO:Running test case: Element-wise construction
+2023-11-03 10:58:43,968:INFO:开始运行测试用例 Element-wise construction ...
+Element-wise construction 不存在于测试用例列表中
+
+2023-11-03 10:58:43,968:ERROR:/root/mfem/mfem-code-analyzer/get_normal_testcase_covarage/run_tesscase.sh: line 11: ./unit_tests: No such file or directory
+/root/mfem/mfem-code-analyzer/get_normal_testcase_covarage/run_tesscase.sh: line 21: ./unit_tests: No such file or directory
+
+2023-11-03 10:58:44,681:INFO:Processing issue: {'name': 'issue1601', 'bug_sha': '438a458c3f1893e59930bc97df71d907ddffcade,3213213f00a791bf55fcc5810c18bf9c203ab643', 'fix_sha': '3454f1061d9bd1c3a4c36baf401c7c6dd435fab8', 'testcase': 'examples/ex6p.cpp', 'url': 'https://github.com/mfem/mfem/commit/3454f1061d9bd1c3a4c36baf401c7c6dd435fab8'}
+2023-11-03 10:58:44,681:INFO:Running bug version: 438a458c3f1893e59930bc97df71d907ddffcade
+2023-11-03 10:59:37,696:ERROR:Failed to complete mfem: Command '['bash', '/root/mfem/mfem-code-analyzer/get_normal_testcase_covarage/compile_mfem.sh']' returned non-zero exit status 2.
+2023-11-03 10:59:37,703:INFO:Running test case: 
+2023-11-03 10:59:37,703:INFO:开始运行测试用例 PA VectorDivergence ...
+PA VectorDivergence 不存在于测试用例列表中
+
+2023-11-03 10:59:37,703:ERROR:/root/mfem/mfem-code-analyzer/get_normal_testcase_covarage/run_tesscase.sh: line 11: ./unit_tests: No such file or directory
+/root/mfem/mfem-code-analyzer/get_normal_testcase_covarage/run_tesscase.sh: line 21: ./unit_tests: No such file or directory
+
+2023-11-03 10:59:37,704:INFO:Running fix version: 3454f1061d9bd1c3a4c36baf401c7c6dd435fab8
+2023-11-03 11:00:30,407:ERROR:Failed to complete mfem: Command '['bash', '/root/mfem/mfem-code-analyzer/get_normal_testcase_covarage/compile_mfem.sh']' returned non-zero exit status 2.
+2023-11-03 11:00:30,414:INFO:Running test case: 
+2023-11-03 11:00:30,414:INFO:开始运行测试用例 PA VectorDivergence ...
+PA VectorDivergence 不存在于测试用例列表中
+
+2023-11-03 11:00:30,414:ERROR:/root/mfem/mfem-code-analyzer/get_normal_testcase_covarage/run_tesscase.sh: line 11: ./unit_tests: No such file or directory
+/root/mfem/mfem-code-analyzer/get_normal_testcase_covarage/run_tesscase.sh: line 21: ./unit_tests: No such file or directory
+
+2023-11-03 11:00:31,135:INFO:Processing issue: {'name': 'issue1585', 'bug_sha': '83d34459e8dac3049a374dd13e1992e5c232de4f,b0f72994441a4713548ab378714b96a33563d865', 'fix_sha': 'cb276c033a623a4b3395c9e22a18e9c03b4d762c', 'testcase': 'tests/unit/fem/test_get_value.cpp', 'testname': '1D GetValue,1D GetValue in Parallel,2D GetValue,2D GetValue in Parallel,3D GetValue,3D GetValue in Parallel', 'url': 'https://github.com/mfem/mfem/commit/cb276c033a623a4b3395c9e22a18e9c03b4d762c'}
+2023-11-03 11:00:31,136:INFO:Running bug version: 83d34459e8dac3049a374dd13e1992e5c232de4f
+2023-11-03 11:01:14,926:INFO:Running test case: 1D GetValue
+2023-11-03 11:01:14,926:INFO:开始运行测试用例 1D GetValue ...
+1D GetValue 不存在于测试用例列表中
+===============================================================================
+No tests ran
+
+
+2023-11-03 11:01:14,949:INFO:Running test case: 1D GetValue in Parallel
+2023-11-03 11:01:14,950:INFO:开始运行测试用例 1D GetValue in Parallel ...
+1D GetValue in Parallel 不存在于测试用例列表中
+===============================================================================
+No tests ran
+
+
+2023-11-03 11:01:14,974:INFO:Running test case: 2D GetValue
+2023-11-03 11:01:14,974:INFO:开始运行测试用例 2D GetValue ...
+2D GetValue 不存在于测试用例列表中
+===============================================================================
+No tests ran
+
+
+2023-11-03 11:01:14,998:INFO:Running test case: 2D GetValue in Parallel
+2023-11-03 11:01:14,999:INFO:开始运行测试用例 2D GetValue in Parallel ...
+2D GetValue in Parallel 不存在于测试用例列表中
+===============================================================================
+No tests ran
+
+
+2023-11-03 11:01:15,023:INFO:Running test case: 3D GetValue
+2023-11-03 11:01:15,023:INFO:开始运行测试用例 3D GetValue ...
+3D GetValue 不存在于测试用例列表中
+===============================================================================
+No tests ran
+
+
+2023-11-03 11:01:15,043:INFO:Running test case: 3D GetValue in Parallel
+2023-11-03 11:01:15,044:INFO:开始运行测试用例 3D GetValue in Parallel ...
+3D GetValue in Parallel 不存在于测试用例列表中
+===============================================================================
+No tests ran
+
+
+2023-11-03 11:01:15,044:INFO:Running fix version: cb276c033a623a4b3395c9e22a18e9c03b4d762c
+2023-11-03 11:01:58,329:INFO:Running test case: 1D GetValue
+2023-11-03 11:01:58,329:INFO:开始运行测试用例 1D GetValue ...
+1D GetValue 不存在于测试用例列表中
+===============================================================================
+No tests ran
+
+
+2023-11-03 11:01:58,351:INFO:Running test case: 1D GetValue in Parallel
+2023-11-03 11:01:58,351:INFO:开始运行测试用例 1D GetValue in Parallel ...
+1D GetValue in Parallel 不存在于测试用例列表中
+===============================================================================
+No tests ran
+
+
+2023-11-03 11:01:58,371:INFO:Running test case: 2D GetValue
+2023-11-03 11:01:58,371:INFO:开始运行测试用例 2D GetValue ...
+2D GetValue 不存在于测试用例列表中
+===============================================================================
+No tests ran
+
+
+2023-11-03 11:01:58,392:INFO:Running test case: 2D GetValue in Parallel
+2023-11-03 11:01:58,392:INFO:开始运行测试用例 2D GetValue in Parallel ...
+2D GetValue in Parallel 不存在于测试用例列表中
+===============================================================================
+No tests ran
+
+
+2023-11-03 11:01:58,407:INFO:Running test case: 3D GetValue
+2023-11-03 11:01:58,407:INFO:开始运行测试用例 3D GetValue ...
+3D GetValue 不存在于测试用例列表中
+===============================================================================
+No tests ran
+
+
+2023-11-03 11:01:58,433:INFO:Running test case: 3D GetValue in Parallel
+2023-11-03 11:01:58,434:INFO:开始运行测试用例 3D GetValue in Parallel ...
+3D GetValue in Parallel 不存在于测试用例列表中
+===============================================================================
+No tests ran
+
+
+2023-11-03 11:01:59,147:INFO:Processing issue: {'name': 'issue1546', 'bug_sha': '87e11ed0b941408e197394e5a9836b06fc9bed48,8518e8899e51ea1b1f45b7d1e134dfaf45cb1fc2', 'fix_sha': '551f5077091db02fae54773728d13eb8f4b67c76', 'testcase': 'tests/unit/fem/test_get_value.cpp', 'testname': '1D GetValue in Parallel', 'url': 'https://github.com/mfem/mfem/commit/551f5077091db02fae54773728d13eb8f4b67c76'}
+2023-11-03 11:01:59,149:INFO:Running bug version: 87e11ed0b941408e197394e5a9836b06fc9bed48
+2023-11-03 11:02:42,996:INFO:Running test case: 1D GetValue in Parallel
+2023-11-03 11:02:42,997:INFO:开始运行测试用例 1D GetValue in Parallel ...
+1D GetValue in Parallel 不存在于测试用例列表中
+===============================================================================
+No tests ran
+
+
+2023-11-03 11:02:42,997:INFO:Running fix version: 551f5077091db02fae54773728d13eb8f4b67c76
+2023-11-03 11:03:26,647:INFO:Running test case: 1D GetValue in Parallel
+2023-11-03 11:03:26,647:INFO:开始运行测试用例 1D GetValue in Parallel ...
+1D GetValue in Parallel 不存在于测试用例列表中
+===============================================================================
+No tests ran
+
+
+2023-11-03 11:03:27,346:INFO:Processing issue: {'name': 'issue1413', 'bug_sha': 'cc49757166a5a1b5b6aa26dc20364881d6d33999,53278144c3e74000749af559f12112f392bef67f', 'fix_sha': '4fc13517f5e8d91ec9c6b0c0d12d4daafb18e316', 'testcase': 'tests/unit/fem/test_face_elem_trans.cpp', 'testname': '3D FaceElementTransformations', 'url': 'https://github.com/mfem/mfem/commit/4fc13517f5e8d91ec9c6b0c0d12d4daafb18e316'}
+2023-11-03 11:03:27,346:INFO:Running bug version: cc49757166a5a1b5b6aa26dc20364881d6d33999
+2023-11-03 11:04:10,821:INFO:Running test case: 3D FaceElementTransformations
+2023-11-03 11:04:10,821:INFO:开始运行测试用例 3D FaceElementTransformations ...
+3D FaceElementTransformations 不存在于测试用例列表中
+===============================================================================
+No tests ran
+
+
+2023-11-03 11:04:10,821:INFO:Running fix version: 4fc13517f5e8d91ec9c6b0c0d12d4daafb18e316
+2023-11-03 11:04:55,026:INFO:Running test case: 3D FaceElementTransformations
+2023-11-03 11:04:55,027:INFO:开始运行测试用例 3D FaceElementTransformations ...
+3D FaceElementTransformations 不存在于测试用例列表中
+===============================================================================
+No tests ran
+
+
+2023-11-03 11:04:55,850:INFO:Processing issue: {'name': 'issue1326', 'bug_sha': '438a458c3f1893e59930bc97df71d907ddffcade,3213213f00a791bf55fcc5810c18bf9c203ab643', 'fix_sha': '3454f1061d9bd1c3a4c36baf401c7c6dd435fab8', 'testcase': 'examples/ex6p.cpp', 'url': 'https://github.com/mfem/mfem/commit/3454f1061d9bd1c3a4c36baf401c7c6dd435fab8'}
+2023-11-03 11:04:55,850:INFO:Running bug version: 438a458c3f1893e59930bc97df71d907ddffcade
+2023-11-03 11:05:48,665:ERROR:Failed to complete mfem: Command '['bash', '/root/mfem/mfem-code-analyzer/get_normal_testcase_covarage/compile_mfem.sh']' returned non-zero exit status 2.
+2023-11-03 11:05:48,672:INFO:Running test case: 
+2023-11-03 11:05:48,672:INFO:开始运行测试用例 PA VectorDivergence ...
+PA VectorDivergence 不存在于测试用例列表中
+
+2023-11-03 11:05:48,672:ERROR:/root/mfem/mfem-code-analyzer/get_normal_testcase_covarage/run_tesscase.sh: line 11: ./unit_tests: No such file or directory
+/root/mfem/mfem-code-analyzer/get_normal_testcase_covarage/run_tesscase.sh: line 21: ./unit_tests: No such file or directory
+
+2023-11-03 11:05:48,672:INFO:Running fix version: 3454f1061d9bd1c3a4c36baf401c7c6dd435fab8
+2023-11-03 11:06:40,976:ERROR:Failed to complete mfem: Command '['bash', '/root/mfem/mfem-code-analyzer/get_normal_testcase_covarage/compile_mfem.sh']' returned non-zero exit status 2.
+2023-11-03 11:06:40,983:INFO:Running test case: 
+2023-11-03 11:06:40,983:INFO:开始运行测试用例 PA VectorDivergence ...
+PA VectorDivergence 不存在于测试用例列表中
+
+2023-11-03 11:06:40,983:ERROR:/root/mfem/mfem-code-analyzer/get_normal_testcase_covarage/run_tesscase.sh: line 11: ./unit_tests: No such file or directory
+/root/mfem/mfem-code-analyzer/get_normal_testcase_covarage/run_tesscase.sh: line 21: ./unit_tests: No such file or directory
+
+2023-11-03 11:06:41,633:INFO:Processing issue: {'name': 'issue1284', 'bug_sha': 'f0553ab5b16cbdb9ad17a3d18a06480396d05141,e6385f2992b9c2d9001265fe3283403bec30b417', 'fix_sha': 'ae38fca215904de81204d946baf412177a51de93', 'testcase': 'examples/ex5.cpp', 'url': 'https://github.com/mfem/mfem/commit/ae38fca215904de81204d946baf412177a51de93'}
+2023-11-03 11:06:41,634:INFO:Running bug version: f0553ab5b16cbdb9ad17a3d18a06480396d05141
+2023-11-03 11:07:12,977:INFO:Running test case: 
+2023-11-03 11:07:12,977:INFO:开始运行测试用例 PA VectorDivergence ...
+PA VectorDivergence 存在于测试用例列表中
+===============================================================================
+All tests passed (4 assertions in 1 test case)
+
+
+2023-11-03 11:07:12,977:INFO:Running fix version: ae38fca215904de81204d946baf412177a51de93
+2023-11-03 11:07:44,492:INFO:Running test case: 
+2023-11-03 11:07:44,492:INFO:开始运行测试用例 PA VectorDivergence ...
+PA VectorDivergence 存在于测试用例列表中
+===============================================================================
+All tests passed (4 assertions in 1 test case)
+
+
+2023-11-03 11:07:45,175:INFO:Processing issue: {'name': 'issue1230', 'bug_sha': '438a458c3f1893e59930bc97df71d907ddffcade,3213213f00a791bf55fcc5810c18bf9c203ab643', 'fix_sha': '3454f1061d9bd1c3a4c36baf401c7c6dd435fab8', 'testcase': 'examples/ex6p.cpp', 'url': 'https://github.com/mfem/mfem/commit/3454f1061d9bd1c3a4c36baf401c7c6dd435fab8'}
+2023-11-03 11:07:45,175:INFO:Running bug version: 438a458c3f1893e59930bc97df71d907ddffcade
+2023-11-03 11:08:38,257:ERROR:Failed to complete mfem: Command '['bash', '/root/mfem/mfem-code-analyzer/get_normal_testcase_covarage/compile_mfem.sh']' returned non-zero exit status 2.
+2023-11-03 11:08:38,264:INFO:Running test case: 
+2023-11-03 11:08:38,264:INFO:开始运行测试用例 PA VectorDivergence ...
+PA VectorDivergence 不存在于测试用例列表中
+
+2023-11-03 11:08:38,264:ERROR:/root/mfem/mfem-code-analyzer/get_normal_testcase_covarage/run_tesscase.sh: line 11: ./unit_tests: No such file or directory
+/root/mfem/mfem-code-analyzer/get_normal_testcase_covarage/run_tesscase.sh: line 21: ./unit_tests: No such file or directory
+
+2023-11-03 11:08:38,264:INFO:Running fix version: 3454f1061d9bd1c3a4c36baf401c7c6dd435fab8
+2023-11-03 11:09:31,688:ERROR:Failed to complete mfem: Command '['bash', '/root/mfem/mfem-code-analyzer/get_normal_testcase_covarage/compile_mfem.sh']' returned non-zero exit status 2.
+2023-11-03 11:09:31,694:INFO:Running test case: 
+2023-11-03 11:09:31,695:INFO:开始运行测试用例 PA VectorDivergence ...
+PA VectorDivergence 不存在于测试用例列表中
+
+2023-11-03 11:09:31,695:ERROR:/root/mfem/mfem-code-analyzer/get_normal_testcase_covarage/run_tesscase.sh: line 11: ./unit_tests: No such file or directory
+/root/mfem/mfem-code-analyzer/get_normal_testcase_covarage/run_tesscase.sh: line 21: ./unit_tests: No such file or directory
+
+2023-11-03 11:09:32,229:INFO:Processing issue: {'name': 'issue512', 'bug_sha': 'bfdf9efe313ae21c6bcb73a04eeb7f19ff05f854,eea8eb2185c5b6368ca2c1c15414344549e67b63', 'fix_sha': '761a9269c2d01b5a6c60726f34946c8b03b4633b', 'testcase': 'examples/ex13p.cpp', 'url': 'https://github.com/mfem/mfem/commit/761a9269c2d01b5a6c60726f34946c8b03b4633b'}
+2023-11-03 11:09:32,230:INFO:Running bug version: bfdf9efe313ae21c6bcb73a04eeb7f19ff05f854
+2023-11-03 11:09:53,308:ERROR:Failed to complete mfem: Command '['bash', '/root/mfem/mfem-code-analyzer/get_normal_testcase_covarage/compile_mfem.sh']' returned non-zero exit status 2.
+2023-11-03 11:09:53,315:INFO:Running test case: 
+2023-11-03 11:09:53,315:INFO:开始运行测试用例 PA VectorDivergence ...
+PA VectorDivergence 不存在于测试用例列表中
+
+2023-11-03 11:09:53,315:ERROR:/root/mfem/mfem-code-analyzer/get_normal_testcase_covarage/run_tesscase.sh: line 11: ./unit_tests: No such file or directory
+/root/mfem/mfem-code-analyzer/get_normal_testcase_covarage/run_tesscase.sh: line 21: ./unit_tests: No such file or directory
+
+2023-11-03 11:09:53,315:INFO:Running fix version: 761a9269c2d01b5a6c60726f34946c8b03b4633b
+2023-11-03 11:10:14,089:ERROR:Failed to complete mfem: Command '['bash', '/root/mfem/mfem-code-analyzer/get_normal_testcase_covarage/compile_mfem.sh']' returned non-zero exit status 2.
+2023-11-03 11:10:14,095:INFO:Running test case: 
+2023-11-03 11:10:14,095:INFO:开始运行测试用例 PA VectorDivergence ...
+PA VectorDivergence 不存在于测试用例列表中
+
+2023-11-03 11:10:14,095:ERROR:/root/mfem/mfem-code-analyzer/get_normal_testcase_covarage/run_tesscase.sh: line 11: ./unit_tests: No such file or directory
+/root/mfem/mfem-code-analyzer/get_normal_testcase_covarage/run_tesscase.sh: line 21: ./unit_tests: No such file or directory
+
+2023-11-03 11:10:14,643:INFO:Processing issue: {'name': 'issue443', 'bug_sha': '0b2a456137c59db27b8ad26d4b4f0dd6763b2c09,902f34a4fd5aabec1da9bdb239e06735ef122095', 'fix_sha': '274bc26e0e22b53548f10afd3640f608cc0d7d05', 'testcase': 'examples/ex19.cpp', 'url': 'https://github.com/mfem/mfem/commit/274bc26e0e22b53548f10afd3640f608cc0d7d05'}
+2023-11-03 11:10:14,644:INFO:Running bug version: 0b2a456137c59db27b8ad26d4b4f0dd6763b2c09
+2023-11-03 11:10:43,421:INFO:Running test case: 
+2023-11-03 11:10:43,421:INFO:开始运行测试用例 PA VectorDivergence ...
+PA VectorDivergence 不存在于测试用例列表中
+===============================================================================
+No tests ran
+
+
+2023-11-03 11:10:43,421:INFO:Running fix version: 274bc26e0e22b53548f10afd3640f608cc0d7d05
+2023-11-03 11:11:15,594:INFO:Running test case: 
+2023-11-03 11:11:15,594:INFO:开始运行测试用例 PA VectorDivergence ...
+PA VectorDivergence 不存在于测试用例列表中
+===============================================================================
+No tests ran
+
+
+2023-11-03 11:11:16,106:INFO:Processing issue: {'name': 'issue64', 'bug_sha': 'f0553ab5b16cbdb9ad17a3d18a06480396d05141,e6385f2992b9c2d9001265fe3283403bec30b417', 'fix_sha': 'ae38fca215904de81204d946baf412177a51de93', 'testcase': 'examples/ex5.cpp', 'url': 'https://github.com/mfem/mfem/commit/ae38fca215904de81204d946baf412177a51de93'}
+2023-11-03 11:11:16,107:INFO:Running bug version: f0553ab5b16cbdb9ad17a3d18a06480396d05141
+2023-11-03 11:11:47,220:INFO:Running test case: 
+2023-11-03 11:11:47,221:INFO:开始运行测试用例 PA VectorDivergence ...
+PA VectorDivergence 存在于测试用例列表中
+===============================================================================
+All tests passed (4 assertions in 1 test case)
+
+
+2023-11-03 11:11:47,221:INFO:Running fix version: ae38fca215904de81204d946baf412177a51de93
+2023-11-03 11:12:18,686:INFO:Running test case: 
+2023-11-03 11:12:18,686:INFO:开始运行测试用例 PA VectorDivergence ...
+PA VectorDivergence 存在于测试用例列表中
+===============================================================================
+All tests passed (4 assertions in 1 test case)
+
+
