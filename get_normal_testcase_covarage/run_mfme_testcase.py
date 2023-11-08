@@ -9,6 +9,7 @@ import sys
 import logging
 import sys
 import os
+from tqdm import tqdm
 
 # 设定日志文件的路径
 log_file_path = os.path.join(
@@ -133,13 +134,13 @@ class MFEMIssueProcessor:
             return
 
         # 遍历每个mfem issue部分并处理
-        for issue_name, issue_data in data.items():
+        for issue_name, issue_data in tqdm(data.items(), desc="Processing issues"):
             if issue_name.startswith("mfem issue"):
                 print(f"Processing {issue_name}")
                 if self.is_get_normal_testcase:
                     # 提取测试用例
                     testcase_paths = issue_data.get("testcase", "").split(",")
-                    for testcase_path in testcase_paths:
+                    for testcase_path in tqdm(testcase_paths, desc=f"Processing test cases for {issue_name}", leave=False):
                         self.pre_issue_file(
                             issue_name, issue_data, testcase_path)
                 # 将issue_name和issue_data传递给process_mfem_issue函数
@@ -230,7 +231,11 @@ class MFEMIssueProcessor:
             self.root_path, "get_normal_testcase_covarage", "compile_mfem.sh")
 
         try:
-            subprocess.check_call(["bash", bash_path])
+            result = subprocess.run(["bash", bash_path], capture_output=True, text=True)
+            print(result.stdout)
+            if result.stderr:
+                    logger.error(result.stderr)
+            logger.debug(result.stdout)
         except subprocess.CalledProcessError as e:
             print(f"Failed to complete mfem: {e}")
             logger.error(f"Failed to complete mfem: {e}")
@@ -251,21 +256,42 @@ class MFEMIssueProcessor:
     # 运行unit test中的测试用例
 
     def run_unit_test(self, testname):
-        cmd_path = os.path.join(self.mfem_path, "build/tests/unit")
-        os.chdir(cmd_path)
+        result = None
+        # 如果testname为空，则是运行examples中的测试用例,否则是运行unit test中的测试用例
+        if testname.startswith("ex"):
+            cmd_path = os.path.join(self.mfem_path, "build/examples")
+            os.chdir(cmd_path)
+            try:
+                # 使用capture_output来捕获输出
+                result = subprocess.run(
+                    ["/root/mfem/mfem-code-analyzer/get_normal_testcase_covarage/run_exp_tesscase.sh", testname], capture_output=True, text=True)
+                # 将标准输出和错误输出记录到日志
+                print(result.stdout)
+                logger.info(f"Running test case: {testname}")
+                logger.info(f"CWD: {cmd_path}")
+                logger.info(result.stdout)
+                if result.stderr:
+                    logger.error(result.stderr)
+            except Exception as e:
+                logger.error(
+                    f"An error occurred while running the test case '{testname}': {e}")
 
-        try:
-            # 使用capture_output来捕获输出
-            result = subprocess.run(
-                ["/root/mfem/mfem-code-analyzer/get_normal_testcase_covarage/run_tesscase.sh", testname], capture_output=True, text=True)
-            # 将标准输出和错误输出记录到日志
-            logger.info(f"Running test case: {testname}")
-            logger.info(result.stdout)
-            if result.stderr:
-                logger.error(result.stderr)
-        except Exception as e:
-            logger.error(
-                f"An error occurred while running the test case '{testname}': {e}")
+        else:
+            cmd_path = os.path.join(self.mfem_path, "build/tests/unit")
+            os.chdir(cmd_path)
+            try:
+                # 使用capture_output来捕获输出
+                result = subprocess.run(
+                    ["/root/mfem/mfem-code-analyzer/get_normal_testcase_covarage/run_tesscase.sh", testname], capture_output=True, text=True)
+                # 将标准输出和错误输出记录到日志
+                logger.info(f"Running test case: {testname}")
+                logger.info(f"CWD: {cmd_path}")
+                logger.info(result.stdout)
+                if result.stderr:
+                    logger.error(result.stderr)
+            except Exception as e:
+                logger.error(
+                    f"An error occurred while running the test case '{testname}': {e}")
 
 
 if __name__ == "__main__":
