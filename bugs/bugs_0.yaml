@@ -26,8 +26,8 @@ mfem issue3566:
   name: issue3566
   bug_sha: 93393c5c58ecaa3eb6fb9bbd6a822e7c3fd96be5
   fix_sha: 30ce09bf64a310ad3f5f1d2a0acf4722468b5dc4
-  testcase: tests/unit/mesh/test_submesh.cpp,tests/unit/mesh/test_psubmesh.cpp,tests/unit/fem/test_2d_bilininteg.cpp
-  testname: SubMesh,ParSubMesh,OperatorChebyshevSmoother,2D Bilinear Mass Integrators
+  testcase: tests/unit/mesh/test_submesh.cpp
+  testname: SubMesh
   url: https://github.com/mfem/mfem/commit/30ce09bf64a310ad3f5f1d2a0acf4722468b5dc4
 
 mfem issue3463:

@@ -5,7 +5,7 @@ test_case="${1:-"PA VectorDivergence"}"
 echo "开始运行测试用例 $test_case ..."
 
 # 进入测试用例的目录
-cd /root/mfem/mfem/build/tests/unit
+cd /root/mfem/build/tests/unit
 
 # 获取测试用例列表并将其存储到变量 test_case_list 中
 test_case_list=$(./unit_tests --list-test-names-only)

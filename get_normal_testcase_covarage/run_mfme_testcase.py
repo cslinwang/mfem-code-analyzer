@@ -13,9 +13,9 @@ from tqdm import tqdm
 
 # 设定日志文件的路径
 log_file_path = os.path.join(
-    '/root/mfem/mfem-code-analyzer/get_normal_testcase_covarage', 'log.log')
+    '/root/mfem-code-analyzer/get_normal_testcase_covarage', 'log.log')
 info_log_file_path = os.path.join(
-    '/root/mfem/mfem-code-analyzer/get_normal_testcase_covarage', 'info.log')
+    '/root/mfem-code-analyzer/get_normal_testcase_covarage', 'info.log')
 
 # 如果文件存在，则移除
 if os.path.exists(log_file_path):
@@ -264,7 +264,7 @@ class MFEMIssueProcessor:
             try:
                 # 使用capture_output来捕获输出
                 result = subprocess.run(
-                    ["/root/mfem/mfem-code-analyzer/get_normal_testcase_covarage/run_exp_tesscase.sh", testname], capture_output=True, text=True)
+                    ["/root/mfem-code-analyzer/get_normal_testcase_covarage/run_exp_tesscase.sh", testname], capture_output=True, text=True)
                 # 将标准输出和错误输出记录到日志
                 print(result.stdout)
                 logger.info(f"Running test case: {testname}")
@@ -282,7 +282,7 @@ class MFEMIssueProcessor:
             try:
                 # 使用capture_output来捕获输出
                 result = subprocess.run(
-                    ["/root/mfem/mfem-code-analyzer/get_normal_testcase_covarage/run_tesscase.sh", testname], capture_output=True, text=True)
+                    ["/root/mfem-code-analyzer/get_normal_testcase_covarage/run_tesscase.sh", testname], capture_output=True, text=True)
                 # 将标准输出和错误输出记录到日志
                 logger.info(f"Running test case: {testname}")
                 logger.info(f"CWD: {cmd_path}")

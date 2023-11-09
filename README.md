@@ -29,3 +29,65 @@ mfem issue3840:
 将每个测试用例的修复版本放到指定文件夹下，即bugs。后续直接读取。
 
 - bug的文件夹名字是bugsha-fixsha。
+
+### 如何运行
+
+记得先清空所有git无效文件
+
+```
+
+git clean -fd
+
+```
+
+#### 覆盖率
+
+```
+
+# 添加覆盖率标志
+
+CXXFLAGS += -fprofile-arcs -ftest-coverage
+
+LDFLAGS += -lgcov
+
+# Replace the default implicit rule for *.cpp files
+
+%: $(SRC)%.cpp $(MFEM_LIB_FILE) $(CONFIG_MK)
+
+    $(MFEM_CXX) $(MFEM_FLAGS) $(CXXFLAGS) $< -o $@ $(MFEM_LIBS) $(LDFLAGS)
+
+
+
+    @find . -type f -name '*.gcno' -delete
+
+    @find . -type f -name '*.gcda' -delete
+
+```
+
+
+如何运行单个测试用例
+
+```
+export OMPI_ALLOW_RUN_AS_ROOT=1
+export OMPI_ALLOW_RUN_AS_ROOT_CONFIRM=1
+
+cd mfem/examples
+
+# 并行
+make ex0p
+mpirun -np 4 ./ex0p
+
+# 串行
+
+make ex0
+./ex0
+
+# 收集覆盖率
+
+fastcov --gcov gcov --exclude /usr/include --include /root/mfem coverage.json
+fastcov --lcov -o coverage.info
+genhtml coverage.info --output-directory coverage_report
+
+
+
+```

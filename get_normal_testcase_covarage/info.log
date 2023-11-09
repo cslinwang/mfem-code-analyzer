@@ -1,402 +1,87 @@
-2023-11-09 07:27:22,116:INFO:这是一条INFO级别的日志
-2023-11-09 07:27:22,128:ERROR:
-2023-11-09 07:27:22,128:ERROR:Processing issues:   0%|          | 0/1 [00:00<?, ?it/s]
-2023-11-09 07:27:22,128:ERROR:
-2023-11-09 07:27:22,128:ERROR:Processing test cases for mfem issue2884:   0%|          | 0/2 [00:00<?, ?it/s]
-2023-11-09 07:27:22,128:ERROR:[A
-2023-11-09 07:27:22,690:ERROR:
-2023-11-09 07:27:22,690:ERROR:Processing test cases for mfem issue2884:  50%|#####     | 1/2 [00:00<00:00,  1.78it/s]
-2023-11-09 07:27:22,690:ERROR:[A
-2023-11-09 07:27:23,334:ERROR:
-2023-11-09 07:27:23,334:ERROR:Processing test cases for mfem issue2884: 100%|##########| 2/2 [00:01<00:00,  1.64it/s]
-2023-11-09 07:27:23,334:ERROR:[A
-2023-11-09 07:27:23,334:ERROR:[A
-2023-11-09 07:27:23,335:INFO:Processing issue: {'name': 'issue2884', 'bug_sha': '637849387ff1fa6a7bcfa6fbecafb98dedb84880', 'fix_sha': '987d2e043bad3a99841b88354dce0c0932cb8642', 'testcase': 'tests/unit/fem/test_pa_coeff.cpp,tests/unit/fem/test_pa_grad.cpp', 'testname': 'H1 pa_coeff,Hcurl/Hdiv pa_coeff,Hcurl/Hdiv mixed pa_coeff,ParallelPAGradient,PA Gradient,Nonlinear Convection', 'url': 'https://github.com/mfem/mfem/commit/987d2e043bad3a99841b88354dce0c0932cb8642'}
-2023-11-09 07:27:23,335:INFO:Running bug version: 637849387ff1fa6a7bcfa6fbecafb98dedb84880
-2023-11-09 07:28:26,734:ERROR:/root/mfem/mfem/fem/intrules.cpp: In member function ‘mfem::IntegrationRule* mfem::IntegrationRules::SegmentIntegrationRule(int)’:
-/root/mfem/mfem/fem/intrules.cpp:1145:11: warning: function may return address of local variable [-Wreturn-local-addr]
- 1145 |    return ir;
-      |           ^~
-/root/mfem/mfem/fem/intrules.cpp:1084:20: note: declared here
- 1084 |    IntegrationRule tmp, *ir;
-      |                    ^~~
-In file included from /usr/include/signal.h:328,
-                 from /root/mfem/mfem/tests/unit/catch.hpp:8030,
-                 from /root/mfem/mfem/tests/unit/unit_tests.hpp:15,
-                 from /root/mfem/mfem/tests/unit/run_unit_tests.hpp:15,
-                 from /root/mfem/mfem/tests/unit/unit_test_main.cpp:14:
-/root/mfem/mfem/tests/unit/catch.hpp:10818:58: error: call to non-‘constexpr’ function ‘long int sysconf(int)’
-10818 |     static constexpr std::size_t sigStackSize = 32768 >= MINSIGSTKSZ ? 32768 : MINSIGSTKSZ;
-      |                                                          ^~~~~~~~~~~
-In file included from /usr/include/x86_64-linux-gnu/bits/sigstksz.h:24,
-                 from /usr/include/signal.h:328,
-                 from /root/mfem/mfem/tests/unit/catch.hpp:8030,
-                 from /root/mfem/mfem/tests/unit/unit_tests.hpp:15,
-                 from /root/mfem/mfem/tests/unit/run_unit_tests.hpp:15,
-                 from /root/mfem/mfem/tests/unit/unit_test_main.cpp:14:
-/usr/include/unistd.h:640:17: note: ‘long int sysconf(int)’ declared here
-  640 | extern long int sysconf (int __name) __THROW;
-      |                 ^~~~~~~
-In file included from /root/mfem/mfem/tests/unit/unit_tests.hpp:15,
-                 from /root/mfem/mfem/tests/unit/run_unit_tests.hpp:15,
-                 from /root/mfem/mfem/tests/unit/unit_test_main.cpp:14:
-/root/mfem/mfem/tests/unit/catch.hpp:10877:45: error: size of array ‘altStackMem’ is not an integral constant-expression
-10877 |     char FatalConditionHandler::altStackMem[sigStackSize] = {};
-      |                                             ^~~~~~~~~~~~
-In file included from /usr/include/signal.h:328,
-                 from /root/mfem/mfem/tests/unit/catch.hpp:8030,
-                 from /root/mfem/mfem/tests/unit/unit_tests.hpp:15,
-                 from /root/mfem/mfem/tests/unit/run_unit_tests.hpp:15,
-                 from /root/mfem/mfem/tests/unit/unit_test_main.cpp:14:
-/root/mfem/mfem/tests/unit/catch.hpp:10818:58: error: call to non-‘constexpr’ function ‘long int sysconf(int)’
-10818 |     static constexpr std::size_t sigStackSize = 32768 >= MINSIGSTKSZ ? 32768 : MINSIGSTKSZ;
-      |                                                          ^~~~~~~~~~~
-In file included from /usr/include/x86_64-linux-gnu/bits/sigstksz.h:24,
-                 from /usr/include/signal.h:328,
-                 from /root/mfem/mfem/tests/unit/catch.hpp:8030,
-                 from /root/mfem/mfem/tests/unit/unit_tests.hpp:15,
-                 from /root/mfem/mfem/tests/unit/run_unit_tests.hpp:15,
-                 from /root/mfem/mfem/tests/unit/unit_test_main.cpp:14:
-/usr/include/unistd.h:640:17: note: ‘long int sysconf(int)’ declared here
-  640 | extern long int sysconf (int __name) __THROW;
-      |                 ^~~~~~~
-In file included from /root/mfem/mfem/tests/unit/unit_tests.hpp:15,
-                 from /root/mfem/mfem/tests/unit/run_unit_tests.hpp:15,
-                 from /root/mfem/mfem/tests/unit/unit_test_main.cpp:14:
-/root/mfem/mfem/tests/unit/catch.hpp:10877:45: error: size of array ‘altStackMem’ is not an integral constant-expression
-10877 |     char FatalConditionHandler::altStackMem[sigStackSize] = {};
-      |                                             ^~~~~~~~~~~~
-In file included from /usr/include/signal.h:328,
-                 from /root/mfem/mfem/tests/unit/catch.hpp:8030,
-                 from /root/mfem/mfem/tests/unit/unit_tests.hpp:15,
-                 from /root/mfem/mfem/tests/unit/run_unit_tests.hpp:15,
-                 from /root/mfem/mfem/tests/unit/unit_test_main.cpp:14:
-/root/mfem/mfem/tests/unit/catch.hpp:10818:58: error: call to non-‘constexpr’ function ‘long int sysconf(int)’
-10818 |     static constexpr std::size_t sigStackSize = 32768 >= MINSIGSTKSZ ? 32768 : MINSIGSTKSZ;
-      |                                                          ^~~~~~~~~~~
-In file included from /usr/include/x86_64-linux-gnu/bits/sigstksz.h:24,
-                 from /usr/include/signal.h:328,
-                 from /root/mfem/mfem/tests/unit/catch.hpp:8030,
-                 from /root/mfem/mfem/tests/unit/unit_tests.hpp:15,
-                 from /root/mfem/mfem/tests/unit/run_unit_tests.hpp:15,
-                 from /root/mfem/mfem/tests/unit/unit_test_main.cpp:14:
-/usr/include/unistd.h:640:17: note: ‘long int sysconf(int)’ declared here
-  640 | extern long int sysconf (int __name) __THROW;
-      |                 ^~~~~~~
-In file included from /root/mfem/mfem/tests/unit/unit_tests.hpp:15,
-                 from /root/mfem/mfem/tests/unit/run_unit_tests.hpp:15,
-                 from /root/mfem/mfem/tests/unit/unit_test_main.cpp:14:
-/root/mfem/mfem/tests/unit/catch.hpp:10877:45: error: size of array ‘altStackMem’ is not an integral constant-expression
-10877 |     char FatalConditionHandler::altStackMem[sigStackSize] = {};
-      |                                             ^~~~~~~~~~~~
-In file included from /usr/include/signal.h:328,
-                 from /root/mfem/mfem/tests/unit/catch.hpp:8030,
-                 from /root/mfem/mfem/tests/unit/unit_tests.hpp:15,
-                 from /root/mfem/mfem/tests/unit/run_unit_tests.hpp:15,
-                 from /root/mfem/mfem/tests/unit/unit_test_main.cpp:14:
-/root/mfem/mfem/tests/unit/catch.hpp:10818:58: error: call to non-‘constexpr’ function ‘long int sysconf(int)’
-10818 |     static constexpr std::size_t sigStackSize = 32768 >= MINSIGSTKSZ ? 32768 : MINSIGSTKSZ;
-      |                                                          ^~~~~~~~~~~
-In file included from /usr/include/x86_64-linux-gnu/bits/sigstksz.h:24,
-                 from /usr/include/signal.h:328,
-                 from /root/mfem/mfem/tests/unit/catch.hpp:8030,
-                 from /root/mfem/mfem/tests/unit/unit_tests.hpp:15,
-                 from /root/mfem/mfem/tests/unit/run_unit_tests.hpp:15,
-                 from /root/mfem/mfem/tests/unit/unit_test_main.cpp:14:
-/usr/include/unistd.h:640:17: note: ‘long int sysconf(int)’ declared here
-  640 | extern long int sysconf (int __name) __THROW;
-      |                 ^~~~~~~
-In file included from /root/mfem/mfem/tests/unit/unit_tests.hpp:15,
-                 from /root/mfem/mfem/tests/unit/run_unit_tests.hpp:15,
-                 from /root/mfem/mfem/tests/unit/unit_test_main.cpp:14:
-/root/mfem/mfem/tests/unit/catch.hpp:10877:45: error: size of array ‘altStackMem’ is not an integral constant-expression
-10877 |     char FatalConditionHandler::altStackMem[sigStackSize] = {};
-      |                                             ^~~~~~~~~~~~
-In file included from /usr/include/signal.h:328,
-                 from /root/mfem/mfem/tests/unit/catch.hpp:8030,
-                 from /root/mfem/mfem/tests/unit/unit_tests.hpp:15,
-                 from /root/mfem/mfem/tests/unit/run_unit_tests.hpp:15,
-                 from /root/mfem/mfem/tests/unit/unit_test_main.cpp:14:
-/root/mfem/mfem/tests/unit/catch.hpp:10818:58: error: call to non-‘constexpr’ function ‘long int sysconf(int)’
-10818 |     static constexpr std::size_t sigStackSize = 32768 >= MINSIGSTKSZ ? 32768 : MINSIGSTKSZ;
-      |                                                          ^~~~~~~~~~~
-In file included from /usr/include/x86_64-linux-gnu/bits/sigstksz.h:24,
-                 from /usr/include/signal.h:328,
-                 from /root/mfem/mfem/tests/unit/catch.hpp:8030,
-                 from /root/mfem/mfem/tests/unit/unit_tests.hpp:15,
-                 from /root/mfem/mfem/tests/unit/run_unit_tests.hpp:15,
-                 from /root/mfem/mfem/tests/unit/unit_test_main.cpp:14:
-/usr/include/unistd.h:640:17: note: ‘long int sysconf(int)’ declared here
-  640 | extern long int sysconf (int __name) __THROW;
-      |                 ^~~~~~~
-In file included from /root/mfem/mfem/tests/unit/unit_tests.hpp:15,
-                 from /root/mfem/mfem/tests/unit/run_unit_tests.hpp:15,
-                 from /root/mfem/mfem/tests/unit/unit_test_main.cpp:14:
-/root/mfem/mfem/tests/unit/catch.hpp:10877:45: error: size of array ‘altStackMem’ is not an integral constant-expression
-10877 |     char FatalConditionHandler::altStackMem[sigStackSize] = {};
-      |                                             ^~~~~~~~~~~~
-In file included from /usr/include/signal.h:328,
-                 from /root/mfem/mfem/tests/unit/catch.hpp:8030,
-                 from /root/mfem/mfem/tests/unit/unit_tests.hpp:15,
-                 from /root/mfem/mfem/tests/unit/run_unit_tests.hpp:15,
-                 from /root/mfem/mfem/tests/unit/unit_test_main.cpp:14:
-/root/mfem/mfem/tests/unit/catch.hpp:10818:58: error: call to non-‘constexpr’ function ‘long int sysconf(int)’
-10818 |     static constexpr std::size_t sigStackSize = 32768 >= MINSIGSTKSZ ? 32768 : MINSIGSTKSZ;
-      |                                                          ^~~~~~~~~~~
-In file included from /usr/include/x86_64-linux-gnu/bits/sigstksz.h:24,
-                 from /usr/include/signal.h:328,
-                 from /root/mfem/mfem/tests/unit/catch.hpp:8030,
-                 from /root/mfem/mfem/tests/unit/unit_tests.hpp:15,
-                 from /root/mfem/mfem/tests/unit/run_unit_tests.hpp:15,
-                 from /root/mfem/mfem/tests/unit/unit_test_main.cpp:14:
-/usr/include/unistd.h:640:17: note: ‘long int sysconf(int)’ declared here
-  640 | extern long int sysconf (int __name) __THROW;
-      |                 ^~~~~~~
-In file included from /root/mfem/mfem/tests/unit/unit_tests.hpp:15,
-                 from /root/mfem/mfem/tests/unit/run_unit_tests.hpp:15,
-                 from /root/mfem/mfem/tests/unit/unit_test_main.cpp:14:
-/root/mfem/mfem/tests/unit/catch.hpp:10877:45: error: size of array ‘altStackMem’ is not an integral constant-expression
-10877 |     char FatalConditionHandler::altStackMem[sigStackSize] = {};
-      |                                             ^~~~~~~~~~~~
-make[3]: *** [tests/unit/CMakeFiles/debug_device_tests.dir/build.make:76: tests/unit/CMakeFiles/debug_device_tests.dir/unit_test_main.cpp.o] Error 1
-make[2]: *** [CMakeFiles/Makefile2:1062: tests/unit/CMakeFiles/debug_device_tests.dir/all] Error 2
-make[2]: *** Waiting for unfinished jobs....
-make[3]: *** [tests/unit/CMakeFiles/sedov_tests_cpu.dir/build.make:76: tests/unit/CMakeFiles/sedov_tests_cpu.dir/unit_test_main.cpp.o] Error 1
-make[3]: *** Waiting for unfinished jobs....
-make[3]: *** [tests/unit/CMakeFiles/tmop_pa_tests_cpu.dir/build.make:76: tests/unit/CMakeFiles/tmop_pa_tests_cpu.dir/unit_test_main.cpp.o] Error 1
-make[3]: *** Waiting for unfinished jobs....
-make[3]: *** [tests/unit/CMakeFiles/sedov_tests_debug.dir/build.make:76: tests/unit/CMakeFiles/sedov_tests_debug.dir/unit_test_main.cpp.o] Error 1
-make[3]: *** Waiting for unfinished jobs....
-make[3]: *** [tests/unit/CMakeFiles/tmop_pa_tests_debug.dir/build.make:76: tests/unit/CMakeFiles/tmop_pa_tests_debug.dir/unit_test_main.cpp.o] Error 1
-make[3]: *** Waiting for unfinished jobs....
-make[3]: *** [tests/unit/CMakeFiles/unit_tests.dir/build.make:76: tests/unit/CMakeFiles/unit_tests.dir/unit_test_main.cpp.o] Error 1
-make[3]: *** Waiting for unfinished jobs....
-make[2]: *** [CMakeFiles/Makefile2:1010: tests/unit/CMakeFiles/tmop_pa_tests_cpu.dir/all] Error 2
-make[2]: *** [CMakeFiles/Makefile2:983: tests/unit/CMakeFiles/sedov_tests_debug.dir/all] Error 2
-make[2]: *** [CMakeFiles/Makefile2:957: tests/unit/CMakeFiles/sedov_tests_cpu.dir/all] Error 2
-make[2]: *** [CMakeFiles/Makefile2:1036: tests/unit/CMakeFiles/tmop_pa_tests_debug.dir/all] Error 2
-make[2]: *** [CMakeFiles/Makefile2:931: tests/unit/CMakeFiles/unit_tests.dir/all] Error 2
-make[1]: *** [CMakeFiles/Makefile2:859: CMakeFiles/exec.dir/rule] Error 2
-make: *** [Makefile:257: exec] Error 2
-In file included from /usr/include/signal.h:328,
-                 from /root/mfem/mfem/tests/unit/catch.hpp:8030,
-                 from /root/mfem/mfem/tests/unit/unit_tests.hpp:15,
-                 from /root/mfem/mfem/tests/unit/run_unit_tests.hpp:15,
-                 from /root/mfem/mfem/tests/unit/unit_test_main.cpp:14:
-/root/mfem/mfem/tests/unit/catch.hpp:10818:58: error: call to non-‘constexpr’ function ‘long int sysconf(int)’
-10818 |     static constexpr std::size_t sigStackSize = 32768 >= MINSIGSTKSZ ? 32768 : MINSIGSTKSZ;
-      |                                                          ^~~~~~~~~~~
-In file included from /usr/include/x86_64-linux-gnu/bits/sigstksz.h:24,
-                 from /usr/include/signal.h:328,
-                 from /root/mfem/mfem/tests/unit/catch.hpp:8030,
-                 from /root/mfem/mfem/tests/unit/unit_tests.hpp:15,
-                 from /root/mfem/mfem/tests/unit/run_unit_tests.hpp:15,
-                 from /root/mfem/mfem/tests/unit/unit_test_main.cpp:14:
-/usr/include/unistd.h:640:17: note: ‘long int sysconf(int)’ declared here
-  640 | extern long int sysconf (int __name) __THROW;
-      |                 ^~~~~~~
-In file included from /root/mfem/mfem/tests/unit/unit_tests.hpp:15,
-                 from /root/mfem/mfem/tests/unit/run_unit_tests.hpp:15,
-                 from /root/mfem/mfem/tests/unit/unit_test_main.cpp:14:
-/root/mfem/mfem/tests/unit/catch.hpp:10877:45: error: size of array ‘altStackMem’ is not an integral constant-expression
-10877 |     char FatalConditionHandler::altStackMem[sigStackSize] = {};
-      |                                             ^~~~~~~~~~~~
-In file included from /usr/include/signal.h:328,
-                 from /root/mfem/mfem/tests/unit/catch.hpp:8030,
-                 from /root/mfem/mfem/tests/unit/unit_tests.hpp:15,
-                 from /root/mfem/mfem/tests/unit/run_unit_tests.hpp:15,
-                 from /root/mfem/mfem/tests/unit/unit_test_main.cpp:14:
-/root/mfem/mfem/tests/unit/catch.hpp:10818:58: error: call to non-‘constexpr’ function ‘long int sysconf(int)’
-10818 |     static constexpr std::size_t sigStackSize = 32768 >= MINSIGSTKSZ ? 32768 : MINSIGSTKSZ;
-      |                                                          ^~~~~~~~~~~
-In file included from /usr/include/x86_64-linux-gnu/bits/sigstksz.h:24,
-                 from /usr/include/signal.h:328,
-                 from /root/mfem/mfem/tests/unit/catch.hpp:8030,
-                 from /root/mfem/mfem/tests/unit/unit_tests.hpp:15,
-                 from /root/mfem/mfem/tests/unit/run_unit_tests.hpp:15,
-                 from /root/mfem/mfem/tests/unit/unit_test_main.cpp:14:
-/usr/include/unistd.h:640:17: note: ‘long int sysconf(int)’ declared here
-  640 | extern long int sysconf (int __name) __THROW;
-      |                 ^~~~~~~
-In file included from /root/mfem/mfem/tests/unit/unit_tests.hpp:15,
-                 from /root/mfem/mfem/tests/unit/run_unit_tests.hpp:15,
-                 from /root/mfem/mfem/tests/unit/unit_test_main.cpp:14:
-/root/mfem/mfem/tests/unit/catch.hpp:10877:45: error: size of array ‘altStackMem’ is not an integral constant-expression
-10877 |     char FatalConditionHandler::altStackMem[sigStackSize] = {};
-      |                                             ^~~~~~~~~~~~
-In file included from /usr/include/signal.h:328,
-                 from /root/mfem/mfem/tests/unit/catch.hpp:8030,
-                 from /root/mfem/mfem/tests/unit/unit_tests.hpp:15,
-                 from /root/mfem/mfem/tests/unit/run_unit_tests.hpp:15,
-                 from /root/mfem/mfem/tests/unit/unit_test_main.cpp:14:
-/root/mfem/mfem/tests/unit/catch.hpp:10818:58: error: call to non-‘constexpr’ function ‘long int sysconf(int)’
-10818 |     static constexpr std::size_t sigStackSize = 32768 >= MINSIGSTKSZ ? 32768 : MINSIGSTKSZ;
-      |                                                          ^~~~~~~~~~~
-In file included from /usr/include/x86_64-linux-gnu/bits/sigstksz.h:24,
-                 from /usr/include/signal.h:328,
-                 from /root/mfem/mfem/tests/unit/catch.hpp:8030,
-                 from /root/mfem/mfem/tests/unit/unit_tests.hpp:15,
-                 from /root/mfem/mfem/tests/unit/run_unit_tests.hpp:15,
-                 from /root/mfem/mfem/tests/unit/unit_test_main.cpp:14:
-/usr/include/unistd.h:640:17: note: ‘long int sysconf(int)’ declared here
-  640 | extern long int sysconf (int __name) __THROW;
-      |                 ^~~~~~~
-In file included from /root/mfem/mfem/tests/unit/unit_tests.hpp:15,
-                 from /root/mfem/mfem/tests/unit/run_unit_tests.hpp:15,
-                 from /root/mfem/mfem/tests/unit/unit_test_main.cpp:14:
-/root/mfem/mfem/tests/unit/catch.hpp:10877:45: error: size of array ‘altStackMem’ is not an integral constant-expression
-10877 |     char FatalConditionHandler::altStackMem[sigStackSize] = {};
-      |                                             ^~~~~~~~~~~~
-In file included from /usr/include/signal.h:328,
-                 from /root/mfem/mfem/tests/unit/catch.hpp:8030,
-                 from /root/mfem/mfem/tests/unit/unit_tests.hpp:15,
-                 from /root/mfem/mfem/tests/unit/run_unit_tests.hpp:15,
-                 from /root/mfem/mfem/tests/unit/unit_test_main.cpp:14:
-/root/mfem/mfem/tests/unit/catch.hpp:10818:58: error: call to non-‘constexpr’ function ‘long int sysconf(int)’
-10818 |     static constexpr std::size_t sigStackSize = 32768 >= MINSIGSTKSZ ? 32768 : MINSIGSTKSZ;
-      |                                                          ^~~~~~~~~~~
-In file included from /usr/include/x86_64-linux-gnu/bits/sigstksz.h:24,
-                 from /usr/include/signal.h:328,
-                 from /root/mfem/mfem/tests/unit/catch.hpp:8030,
-                 from /root/mfem/mfem/tests/unit/unit_tests.hpp:15,
-                 from /root/mfem/mfem/tests/unit/run_unit_tests.hpp:15,
-                 from /root/mfem/mfem/tests/unit/unit_test_main.cpp:14:
-/usr/include/unistd.h:640:17: note: ‘long int sysconf(int)’ declared here
-  640 | extern long int sysconf (int __name) __THROW;
-      |                 ^~~~~~~
-In file included from /root/mfem/mfem/tests/unit/unit_tests.hpp:15,
-                 from /root/mfem/mfem/tests/unit/run_unit_tests.hpp:15,
-                 from /root/mfem/mfem/tests/unit/unit_test_main.cpp:14:
-/root/mfem/mfem/tests/unit/catch.hpp:10877:45: error: size of array ‘altStackMem’ is not an integral constant-expression
-10877 |     char FatalConditionHandler::altStackMem[sigStackSize] = {};
-      |                                             ^~~~~~~~~~~~
-In file included from /usr/include/signal.h:328,
-                 from /root/mfem/mfem/tests/unit/catch.hpp:8030,
-                 from /root/mfem/mfem/tests/unit/unit_tests.hpp:15,
-                 from /root/mfem/mfem/tests/unit/run_unit_tests.hpp:15,
-                 from /root/mfem/mfem/tests/unit/unit_test_main.cpp:14:
-/root/mfem/mfem/tests/unit/catch.hpp:10818:58: error: call to non-‘constexpr’ function ‘long int sysconf(int)’
-10818 |     static constexpr std::size_t sigStackSize = 32768 >= MINSIGSTKSZ ? 32768 : MINSIGSTKSZ;
-      |                                                          ^~~~~~~~~~~
-In file included from /usr/include/x86_64-linux-gnu/bits/sigstksz.h:24,
-                 from /usr/include/signal.h:328,
-                 from /root/mfem/mfem/tests/unit/catch.hpp:8030,
-                 from /root/mfem/mfem/tests/unit/unit_tests.hpp:15,
-                 from /root/mfem/mfem/tests/unit/run_unit_tests.hpp:15,
-                 from /root/mfem/mfem/tests/unit/unit_test_main.cpp:14:
-/usr/include/unistd.h:640:17: note: ‘long int sysconf(int)’ declared here
-  640 | extern long int sysconf (int __name) __THROW;
-      |                 ^~~~~~~
-In file included from /root/mfem/mfem/tests/unit/unit_tests.hpp:15,
-                 from /root/mfem/mfem/tests/unit/run_unit_tests.hpp:15,
-                 from /root/mfem/mfem/tests/unit/unit_test_main.cpp:14:
-/root/mfem/mfem/tests/unit/catch.hpp:10877:45: error: size of array ‘altStackMem’ is not an integral constant-expression
-10877 |     char FatalConditionHandler::altStackMem[sigStackSize] = {};
-      |                                             ^~~~~~~~~~~~
-In file included from /usr/include/signal.h:328,
-                 from /root/mfem/mfem/tests/unit/catch.hpp:8030,
-                 from /root/mfem/mfem/tests/unit/unit_tests.hpp:15,
-                 from /root/mfem/mfem/tests/unit/run_unit_tests.hpp:15,
-                 from /root/mfem/mfem/tests/unit/unit_test_main.cpp:14:
-/root/mfem/mfem/tests/unit/catch.hpp:10818:58: error: call to non-‘constexpr’ function ‘long int sysconf(int)’
-10818 |     static constexpr std::size_t sigStackSize = 32768 >= MINSIGSTKSZ ? 32768 : MINSIGSTKSZ;
-      |                                                          ^~~~~~~~~~~
-In file included from /usr/include/x86_64-linux-gnu/bits/sigstksz.h:24,
-                 from /usr/include/signal.h:328,
-                 from /root/mfem/mfem/tests/unit/catch.hpp:8030,
-                 from /root/mfem/mfem/tests/unit/unit_tests.hpp:15,
-                 from /root/mfem/mfem/tests/unit/run_unit_tests.hpp:15,
-                 from /root/mfem/mfem/tests/unit/unit_test_main.cpp:14:
-/usr/include/unistd.h:640:17: note: ‘long int sysconf(int)’ declared here
-  640 | extern long int sysconf (int __name) __THROW;
-      |                 ^~~~~~~
-In file included from /root/mfem/mfem/tests/unit/unit_tests.hpp:15,
-                 from /root/mfem/mfem/tests/unit/run_unit_tests.hpp:15,
-                 from /root/mfem/mfem/tests/unit/unit_test_main.cpp:14:
-/root/mfem/mfem/tests/unit/catch.hpp:10877:45: error: size of array ‘altStackMem’ is not an integral constant-expression
-10877 |     char FatalConditionHandler::altStackMem[sigStackSize] = {};
-      |                                             ^~~~~~~~~~~~
-make[2]: *** [tests/unit/CMakeFiles/unit_tests.dir/build.make:76: tests/unit/CMakeFiles/unit_tests.dir/unit_test_main.cpp.o] Error 1
-make[1]: *** [CMakeFiles/Makefile2:931: tests/unit/CMakeFiles/unit_tests.dir/all] Error 2
-make[1]: *** Waiting for unfinished jobs....
-make[2]: *** [tests/unit/CMakeFiles/sedov_tests_cpu.dir/build.make:76: tests/unit/CMakeFiles/sedov_tests_cpu.dir/unit_test_main.cpp.o] Error 1
-make[1]: *** [CMakeFiles/Makefile2:957: tests/unit/CMakeFiles/sedov_tests_cpu.dir/all] Error 2
-make[2]: *** [tests/unit/CMakeFiles/sedov_tests_debug.dir/build.make:76: tests/unit/CMakeFiles/sedov_tests_debug.dir/unit_test_main.cpp.o] Error 1
-make[1]: *** [CMakeFiles/Makefile2:983: tests/unit/CMakeFiles/sedov_tests_debug.dir/all] Error 2
-make[2]: *** [tests/unit/CMakeFiles/tmop_pa_tests_debug.dir/build.make:76: tests/unit/CMakeFiles/tmop_pa_tests_debug.dir/unit_test_main.cpp.o] Error 1
-make[1]: *** [CMakeFiles/Makefile2:1036: tests/unit/CMakeFiles/tmop_pa_tests_debug.dir/all] Error 2
-make[2]: *** [tests/unit/CMakeFiles/debug_device_tests.dir/build.make:76: tests/unit/CMakeFiles/debug_device_tests.dir/unit_test_main.cpp.o] Error 1
-make[1]: *** [CMakeFiles/Makefile2:1062: tests/unit/CMakeFiles/debug_device_tests.dir/all] Error 2
-make[2]: *** [tests/unit/CMakeFiles/tmop_pa_tests_cpu.dir/build.make:76: tests/unit/CMakeFiles/tmop_pa_tests_cpu.dir/unit_test_main.cpp.o] Error 1
-make[1]: *** [CMakeFiles/Makefile2:1010: tests/unit/CMakeFiles/tmop_pa_tests_cpu.dir/all] Error 2
-make: *** [Makefile:146: all] Error 2
+2023-11-09 09:09:03,226:INFO:这是一条INFO级别的日志
+2023-11-09 09:09:03,238:ERROR:
+2023-11-09 09:09:03,238:ERROR:Processing issues:   0%|          | 0/1 [00:00<?, ?it/s]
+2023-11-09 09:09:03,238:ERROR:
+2023-11-09 09:09:03,238:ERROR:Processing test cases for mfem issue3691:   0%|          | 0/1 [00:00<?, ?it/s]
+2023-11-09 09:09:03,238:ERROR:[A
+2023-11-09 09:09:03,541:ERROR:
+2023-11-09 09:09:03,541:ERROR:Processing test cases for mfem issue3691: 100%|##########| 1/1 [00:00<00:00,  3.31it/s]
+2023-11-09 09:09:03,541:ERROR:[A
+2023-11-09 09:09:03,541:ERROR:[A
+2023-11-09 09:09:03,541:INFO:Processing issue: {'name': 'issue3691', 'bug_sha': '4222287b02206e2a8b3979b9bb2b33a58a6ce148', 'fix_sha': 'a15866e212b167ab83d5384e7326cdd3fa0723b2', 'testcase': 'tests/unit/mesh/test_ncmesh.cpp', 'testname': 'FaceEdgeConstraint,P2Q1PureTetHexPri,PNQ2PureTetHexPri', 'url': 'https://github.com/mfem/mfem/commit/30ce09bf64a310ad3f5f1d2a0acf4722468b5dc4'}
+2023-11-09 09:09:03,542:INFO:Running bug version: 4222287b02206e2a8b3979b9bb2b33a58a6ce148
+2023-11-09 09:10:25,515:ERROR:This miniapp requires MPI to be enabled.Please compile with MFEM_USE_MPI.
 
-2023-11-09 07:28:26,741:INFO:Running test case: H1 pa_coeff
-2023-11-09 07:28:26,741:INFO:CWD: /root/mfem/mfem/build/tests/unit
-2023-11-09 07:28:26,741:INFO:开始运行测试用例 H1 pa_coeff ...
-H1 pa_coeff 不存在于测试用例列表中
+2023-11-09 09:10:25,529:INFO:Running test case: FaceEdgeConstraint
+2023-11-09 09:10:25,529:INFO:CWD: /root/mfem/build/tests/unit
+2023-11-09 09:10:25,529:INFO:开始运行测试用例 FaceEdgeConstraint ...
+FaceEdgeConstraint 不存在于测试用例列表中
+INFO: Test filter: FaceEdgeConstraint ~[Parallel] ~[MFEMData] 
+Filters: FaceEdgeConstraint ~[Parallel] ~[MFEMData]
+No test cases matched 'FaceEdgeConstraint~[Parallel]~[MFEMData]'
+===============================================================================
+No tests ran
 
-2023-11-09 07:28:26,741:ERROR:/root/mfem/mfem-code-analyzer/get_normal_testcase_covarage/run_tesscase.sh: line 11: ./unit_tests: No such file or directory
-/root/mfem/mfem-code-analyzer/get_normal_testcase_covarage/run_tesscase.sh: line 21: ./unit_tests: No such file or directory
 
-2023-11-09 07:28:26,747:INFO:Running test case: Hcurl/Hdiv pa_coeff
-2023-11-09 07:28:26,747:INFO:CWD: /root/mfem/mfem/build/tests/unit
-2023-11-09 07:28:26,747:INFO:开始运行测试用例 Hcurl/Hdiv pa_coeff ...
-Hcurl/Hdiv pa_coeff 不存在于测试用例列表中
+2023-11-09 09:10:25,543:INFO:Running test case: P2Q1PureTetHexPri
+2023-11-09 09:10:25,543:INFO:CWD: /root/mfem/build/tests/unit
+2023-11-09 09:10:25,543:INFO:开始运行测试用例 P2Q1PureTetHexPri ...
+P2Q1PureTetHexPri 不存在于测试用例列表中
+INFO: Test filter: P2Q1PureTetHexPri ~[Parallel] ~[MFEMData] 
+Filters: P2Q1PureTetHexPri ~[Parallel] ~[MFEMData]
+No test cases matched 'P2Q1PureTetHexPri~[Parallel]~[MFEMData]'
+===============================================================================
+No tests ran
 
-2023-11-09 07:28:26,747:ERROR:/root/mfem/mfem-code-analyzer/get_normal_testcase_covarage/run_tesscase.sh: line 11: ./unit_tests: No such file or directory
-/root/mfem/mfem-code-analyzer/get_normal_testcase_covarage/run_tesscase.sh: line 21: ./unit_tests: No such file or directory
 
-2023-11-09 07:28:26,752:INFO:Running test case: Hcurl/Hdiv mixed pa_coeff
-2023-11-09 07:28:26,753:INFO:CWD: /root/mfem/mfem/build/tests/unit
-2023-11-09 07:28:26,753:INFO:开始运行测试用例 Hcurl/Hdiv mixed pa_coeff ...
-Hcurl/Hdiv mixed pa_coeff 不存在于测试用例列表中
+2023-11-09 09:10:25,557:INFO:Running test case: PNQ2PureTetHexPri
+2023-11-09 09:10:25,558:INFO:CWD: /root/mfem/build/tests/unit
+2023-11-09 09:10:25,558:INFO:开始运行测试用例 PNQ2PureTetHexPri ...
+PNQ2PureTetHexPri 不存在于测试用例列表中
+INFO: Test filter: PNQ2PureTetHexPri ~[Parallel] ~[MFEMData] 
+Filters: PNQ2PureTetHexPri ~[Parallel] ~[MFEMData]
+No test cases matched 'PNQ2PureTetHexPri~[Parallel]~[MFEMData]'
+===============================================================================
+No tests ran
 
-2023-11-09 07:28:26,753:ERROR:/root/mfem/mfem-code-analyzer/get_normal_testcase_covarage/run_tesscase.sh: line 11: ./unit_tests: No such file or directory
-/root/mfem/mfem-code-analyzer/get_normal_testcase_covarage/run_tesscase.sh: line 21: ./unit_tests: No such file or directory
 
-2023-11-09 07:28:26,758:INFO:Running test case: ParallelPAGradient
-2023-11-09 07:28:26,758:INFO:CWD: /root/mfem/mfem/build/tests/unit
-2023-11-09 07:28:26,759:INFO:开始运行测试用例 ParallelPAGradient ...
-ParallelPAGradient 不存在于测试用例列表中
+2023-11-09 09:10:25,558:INFO:Running fix version: a15866e212b167ab83d5384e7326cdd3fa0723b2
+2023-11-09 09:11:48,039:ERROR:This miniapp requires MPI to be enabled.Please compile with MFEM_USE_MPI.
 
-2023-11-09 07:28:26,759:ERROR:/root/mfem/mfem-code-analyzer/get_normal_testcase_covarage/run_tesscase.sh: line 11: ./unit_tests: No such file or directory
-/root/mfem/mfem-code-analyzer/get_normal_testcase_covarage/run_tesscase.sh: line 21: ./unit_tests: No such file or directory
+2023-11-09 09:11:48,062:INFO:Running test case: FaceEdgeConstraint
+2023-11-09 09:11:48,062:INFO:CWD: /root/mfem/build/tests/unit
+2023-11-09 09:11:48,062:INFO:开始运行测试用例 FaceEdgeConstraint ...
+FaceEdgeConstraint 不存在于测试用例列表中
+INFO: Test filter: FaceEdgeConstraint ~[Parallel] ~[MFEMData] 
+Filters: FaceEdgeConstraint ~[Parallel] ~[MFEMData]
+No test cases matched 'FaceEdgeConstraint~[Parallel]~[MFEMData]'
+===============================================================================
+No tests ran
 
-2023-11-09 07:28:26,764:INFO:Running test case: PA Gradient
-2023-11-09 07:28:26,764:INFO:CWD: /root/mfem/mfem/build/tests/unit
-2023-11-09 07:28:26,765:INFO:开始运行测试用例 PA Gradient ...
-PA Gradient 不存在于测试用例列表中
 
-2023-11-09 07:28:26,765:ERROR:/root/mfem/mfem-code-analyzer/get_normal_testcase_covarage/run_tesscase.sh: line 11: ./unit_tests: No such file or directory
-/root/mfem/mfem-code-analyzer/get_normal_testcase_covarage/run_tesscase.sh: line 21: ./unit_tests: No such file or directory
+2023-11-09 09:11:48,085:INFO:Running test case: P2Q1PureTetHexPri
+2023-11-09 09:11:48,086:INFO:CWD: /root/mfem/build/tests/unit
+2023-11-09 09:11:48,086:INFO:开始运行测试用例 P2Q1PureTetHexPri ...
+P2Q1PureTetHexPri 不存在于测试用例列表中
+INFO: Test filter: P2Q1PureTetHexPri ~[Parallel] ~[MFEMData] 
+Filters: P2Q1PureTetHexPri ~[Parallel] ~[MFEMData]
+No test cases matched 'P2Q1PureTetHexPri~[Parallel]~[MFEMData]'
+===============================================================================
+No tests ran
 
-2023-11-09 07:28:26,770:INFO:Running test case: Nonlinear Convection
-2023-11-09 07:28:26,771:INFO:CWD: /root/mfem/mfem/build/tests/unit
-2023-11-09 07:28:26,771:INFO:开始运行测试用例 Nonlinear Convection ...
-Nonlinear Convection 不存在于测试用例列表中
 
-2023-11-09 07:28:26,771:ERROR:/root/mfem/mfem-code-analyzer/get_normal_testcase_covarage/run_tesscase.sh: line 11: ./unit_tests: No such file or directory
-/root/mfem/mfem-code-analyzer/get_normal_testcase_covarage/run_tesscase.sh: line 21: ./unit_tests: No such file or directory
+2023-11-09 09:11:48,100:INFO:Running test case: PNQ2PureTetHexPri
+2023-11-09 09:11:48,100:INFO:CWD: /root/mfem/build/tests/unit
+2023-11-09 09:11:48,100:INFO:开始运行测试用例 PNQ2PureTetHexPri ...
+PNQ2PureTetHexPri 不存在于测试用例列表中
+INFO: Test filter: PNQ2PureTetHexPri ~[Parallel] ~[MFEMData] 
+Filters: PNQ2PureTetHexPri ~[Parallel] ~[MFEMData]
+No test cases matched 'PNQ2PureTetHexPri~[Parallel]~[MFEMData]'
+===============================================================================
+No tests ran
 
-2023-11-09 07:28:26,771:INFO:Running fix version: 987d2e043bad3a99841b88354dce0c0932cb8642
-2023-11-09 07:28:49,670:ERROR:
-2023-11-09 07:28:49,670:ERROR:Processing issues:   0%|          | 0/1 [01:27<?, ?it/s]
-2023-11-09 07:28:49,670:ERROR:Traceback (most recent call last):
-2023-11-09 07:28:49,670:ERROR:  File "/root/mfem/mfem-code-analyzer/get_normal_testcase_covarage/run_mfme_testcase.py", line 299, in <module>
-2023-11-09 07:28:49,671:ERROR:processor.process_yaml_file()
-2023-11-09 07:28:49,671:ERROR:  File "/root/mfem/mfem-code-analyzer/get_normal_testcase_covarage/run_mfme_testcase.py", line 147, in process_yaml_file
-2023-11-09 07:28:49,672:ERROR:self.process_mfem_issue(issue_data)
-2023-11-09 07:28:49,672:ERROR:  File "/root/mfem/mfem-code-analyzer/get_normal_testcase_covarage/run_mfme_testcase.py", line 113, in process_mfem_issue
-2023-11-09 07:28:49,672:ERROR:self.compile_mfem()
-2023-11-09 07:28:49,672:ERROR:  File "/root/mfem/mfem-code-analyzer/get_normal_testcase_covarage/run_mfme_testcase.py", line 234, in compile_mfem
-2023-11-09 07:28:49,673:ERROR:result = subprocess.run(["bash", bash_path], capture_output=True, text=True)
-2023-11-09 07:28:49,673:ERROR:  File "/usr/lib/python3.10/subprocess.py", line 505, in run
-2023-11-09 07:28:49,673:ERROR:stdout, stderr = process.communicate(input, timeout=timeout)
-2023-11-09 07:28:49,674:ERROR:  File "/usr/lib/python3.10/subprocess.py", line 1154, in communicate
-2023-11-09 07:28:49,674:ERROR:stdout, stderr = self._communicate(input, endtime, timeout)
-2023-11-09 07:28:49,675:ERROR:  File "/usr/lib/python3.10/subprocess.py", line 2021, in _communicate
-2023-11-09 07:28:49,676:ERROR:ready = selector.select(timeout)
-2023-11-09 07:28:49,676:ERROR:  File "/usr/lib/python3.10/selectors.py", line 416, in select
-2023-11-09 07:28:49,676:ERROR:fd_event_list = self._selector.poll(timeout)
-2023-11-09 07:28:49,677:ERROR:KeyboardInterrupt
+
+2023-11-09 09:11:48,102:ERROR:
+2023-11-09 09:11:48,102:ERROR:Processing issues: 100%|##########| 1/1 [02:44<00:00, 164.86s/it]
+2023-11-09 09:11:48,102:ERROR:
+2023-11-09 09:11:48,102:ERROR:Processing issues: 100%|##########| 1/1 [02:44<00:00, 164.86s/it]
