@@ -80,7 +80,7 @@ mfem issue2779:
 
 mfem issue2699:
   name: issue2699
-  bug_sha: 621081b3a8d388eee3716dee0e32ddf84e6ab504
+  bug_sha: caa79bf80147c2b36b3f1070ec890221cbe2f11d
   fix_sha: 62eda9466d9daa0bbd7256bcf4f0631cb8c555e8
   testcase: tests/unit/fem/test_assembly_levels.cpp
   testname: Serial H1 Full Assembly,Parallel H1 Full Assembly

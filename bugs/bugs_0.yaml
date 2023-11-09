@@ -80,7 +80,7 @@ mfem issue2779:
 
 mfem issue2699:
   name: issue2699
-  bug_sha: 621081b3a8d388eee3716dee0e32ddf84e6ab504
+  bug_sha: 621081b3a8d388eee3716dee0e32ddf84e6ab504,caa79bf80147c2b36b3f1070ec890221cbe2f11d
   fix_sha: 62eda9466d9daa0bbd7256bcf4f0631cb8c555e8
   testcase: tests/unit/fem/test_assembly_levels.cpp
   testname: Serial H1 Full Assembly,Parallel H1 Full Assembly
@@ -134,6 +134,14 @@ mfem issue2152:
   testcase: tests/unit/fem/test_build_dof_to_arrays.cpp
   testname: Build Dof To Arrays,Build Dof To Arrays (Parallel)
   url: https://github.com/mfem/mfem/commit/5335439a711bf589857651a4ef6bdf927567d83d
+
+mfem issue1887:
+  name: issue1887
+  bug_sha: ffc0a9ee7d837d07a54b3519fcd3507dbe7ae856
+  fix_sha: 1b2f6d28725de63cd27a062537bfc574af80a445
+  testcase: examples/ex1.cpp
+  testname: ex1
+  url: https://github.com/mfem/mfem/commit/1b2f6d28725de63cd27a062537bfc574af80a445
 
 mfem issue1874:
   name: issue1874
@@ -209,7 +217,7 @@ mfem issue512:
 
 mfem issue443:
   name: issue443
-  bug_sha: 0b2a456137c59db27b8ad26d4b4f0dd6763b2c09,902f34a4fd5aabec1da9bdb239e06735ef122095
+  bug_sha: 902f34a4fd5aabec1da9bdb239e06735ef122095
   fix_sha: 274bc26e0e22b53548f10afd3640f608cc0d7d05
   testcase: examples/ex19.cpp
   testname: ex19
