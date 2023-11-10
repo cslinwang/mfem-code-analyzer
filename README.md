@@ -99,15 +99,42 @@ genhtml coverage.info --output-directory coverage_report
 
 ```
 
-## BUG具体复现
+## BUG复现命令
 
-### issue 7902
+### issue 3691
 
-sha:a15866e212b167ab83d5384e7326cdd3fa0723b2
-
+fix sha:a15866e212b167ab83d5384e7326cdd3fa0723b2
+reset current branch to previous commit,hard reset
 cd ~
 cd mfem
 make clean
 make all -j
 cd examples
 mpirun -np 24 ex6p -m /root/mfem-code-analyzer/bugs/issue3691/p1_prism.msh -o 2
+
+### issue 2884
+(未复现) 编译就过不去。 修复版本编译也过不去。
+url: https://github.com/mfem/mfem/issues/2884
+修改test_pa_coeff.cpp中的测试用例Hcurl/Hdiv pa_coeff的299行的if语句为：mesh = Mesh::LoadFromFile("/root/mfem/data/star.mesh");
+fix sha: 987d2e043bad3a99841b88354dce0c0932cb8642
+cd ~
+cd mfem
+make clean
+make unittest -j
+cd tests/unit
+./unit_tests --list-test-names-only
+./unit_tests "Hcurl/Hdiv pa_coeff"
+
+### issue 2878
+
+url: https://github.com/mfem/mfem/issues/2878
+修改ex3p.cpp中204行a->AddDomainIntegrator(new VectorFEMassIntegrator(*sigma)); 为：
+a->AddDomainIntegrator(new VectorFEMassIntegrator(*sigma));
+a->AddBoundaryIntegrator(new VectorFEMassIntegrator(*sigma));
+
+fix sha: a4504c3c083e8d13c89c0cf72f8eb36ef3aed642
+cd ~
+cd mfem
+make clean
+make all -j
+cd examples
