@@ -71,11 +71,20 @@ LDFLAGS += -lgcov
 export OMPI_ALLOW_RUN_AS_ROOT=1
 export OMPI_ALLOW_RUN_AS_ROOT_CONFIRM=1
 
+# 先编译全部
+
+cd mefm
+
+make all -j
+
+# 如果需要重新编译
+
 cd mfem/examples
 
 # 并行
 make ex0p
-mpirun -np 4 ./ex0p
+mpirun -np 24 ./ex0p
+mpirun -np 3 ex6p -m /root/mfem-code-analyzer/bugs/issue3691/p1_prism.msh -o 2 -h1
 
 # 串行
 
@@ -88,6 +97,17 @@ fastcov --gcov gcov --exclude /usr/include --include /root/mfem coverage.json
 fastcov --lcov -o coverage.info
 genhtml coverage.info --output-directory coverage_report
 
-
-
 ```
+
+## BUG具体复现
+
+### issue 7902
+
+sha:a15866e212b167ab83d5384e7326cdd3fa0723b2
+
+cd ~
+cd mfem
+make clean
+make all -j
+cd examples
+mpirun -np 24 ex6p -m /root/mfem-code-analyzer/bugs/issue3691/p1_prism.msh -o 2
