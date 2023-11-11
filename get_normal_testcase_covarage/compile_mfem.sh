@@ -11,6 +11,6 @@ cd build
 cmake ..
 make exec -j $(nproc)
 make install
-# 编译测试用例
+
 cd tests
 make -j $(nproc)

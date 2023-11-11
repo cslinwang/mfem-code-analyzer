@@ -1,7 +1,7 @@
-mfem issue3691:
-  name: issue3691
-  bug_sha: 4222287b02206e2a8b3979b9bb2b33a58a6ce148
-  fix_sha: a15866e212b167ab83d5384e7326cdd3fa0723b2
-  testcase: tests/unit/mesh/test_ncmesh.cpp
-  testname: FaceEdgeConstraint,P2Q1PureTetHexPri,PNQ2PureTetHexPri
-  url: https://github.com/mfem/mfem/commit/30ce09bf64a310ad3f5f1d2a0acf4722468b5dc4
+mfem issue2878:
+  name: issue2878
+  bug_sha: 6206c775cca216706276a92e33c4a9d772c4b1bd
+  fix_sha: a078107c51e1a8c329496e8d1fa2c3f17ba85831
+  testcase: tests/unit/fem/test_pa_coeff.cpp,tests/unit/fem/test_pa_grad.cpp
+  testname: H1 pa_coeff,Hcurl/Hdiv pa_coeff,Hcurl/Hdiv mixed pa_coeff,ParallelPAGradient,PA Gradient,Nonlinear Convection
+  url: https://github.com/mfem/mfem/commit/987d2e043bad3a99841b88354dce0c0932cb8642

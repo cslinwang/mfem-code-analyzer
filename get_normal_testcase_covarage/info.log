@@ -1,87 +1,946 @@
-2023-11-09 09:09:03,226:INFO:这是一条INFO级别的日志
-2023-11-09 09:09:03,238:ERROR:
-2023-11-09 09:09:03,238:ERROR:Processing issues:   0%|          | 0/1 [00:00<?, ?it/s]
-2023-11-09 09:09:03,238:ERROR:
-2023-11-09 09:09:03,238:ERROR:Processing test cases for mfem issue3691:   0%|          | 0/1 [00:00<?, ?it/s]
-2023-11-09 09:09:03,238:ERROR:[A
-2023-11-09 09:09:03,541:ERROR:
-2023-11-09 09:09:03,541:ERROR:Processing test cases for mfem issue3691: 100%|##########| 1/1 [00:00<00:00,  3.31it/s]
-2023-11-09 09:09:03,541:ERROR:[A
-2023-11-09 09:09:03,541:ERROR:[A
-2023-11-09 09:09:03,541:INFO:Processing issue: {'name': 'issue3691', 'bug_sha': '4222287b02206e2a8b3979b9bb2b33a58a6ce148', 'fix_sha': 'a15866e212b167ab83d5384e7326cdd3fa0723b2', 'testcase': 'tests/unit/mesh/test_ncmesh.cpp', 'testname': 'FaceEdgeConstraint,P2Q1PureTetHexPri,PNQ2PureTetHexPri', 'url': 'https://github.com/mfem/mfem/commit/30ce09bf64a310ad3f5f1d2a0acf4722468b5dc4'}
-2023-11-09 09:09:03,542:INFO:Running bug version: 4222287b02206e2a8b3979b9bb2b33a58a6ce148
-2023-11-09 09:10:25,515:ERROR:This miniapp requires MPI to be enabled.Please compile with MFEM_USE_MPI.
+2023-11-10 09:27:37,672:INFO:这是一条INFO级别的日志
+2023-11-10 09:27:37,684:ERROR:
+2023-11-10 09:27:37,684:ERROR:Processing issues:   0%|          | 0/1 [00:00<?, ?it/s]
+2023-11-10 09:27:37,684:ERROR:
+2023-11-10 09:27:37,684:ERROR:Processing test cases for mfem issue2878:   0%|          | 0/2 [00:00<?, ?it/s]
+2023-11-10 09:27:37,685:ERROR:[A
+2023-11-10 09:27:38,329:ERROR:
+2023-11-10 09:27:38,329:ERROR:Processing test cases for mfem issue2878:  50%|#####     | 1/2 [00:00<00:00,  1.55it/s]
+2023-11-10 09:27:38,329:ERROR:[A
+2023-11-10 09:27:39,070:ERROR:
+2023-11-10 09:27:39,070:ERROR:Processing test cases for mfem issue2878: 100%|##########| 2/2 [00:01<00:00,  1.43it/s]
+2023-11-10 09:27:39,071:ERROR:[A
+2023-11-10 09:27:39,071:ERROR:[A
+2023-11-10 09:27:39,071:INFO:Processing issue: {'name': 'issue2878', 'bug_sha': '6206c775cca216706276a92e33c4a9d772c4b1bd', 'fix_sha': 'a078107c51e1a8c329496e8d1fa2c3f17ba85831', 'testcase': 'tests/unit/fem/test_pa_coeff.cpp,tests/unit/fem/test_pa_grad.cpp', 'testname': 'H1 pa_coeff,Hcurl/Hdiv pa_coeff,Hcurl/Hdiv mixed pa_coeff,ParallelPAGradient,PA Gradient,Nonlinear Convection', 'url': 'https://github.com/mfem/mfem/commit/987d2e043bad3a99841b88354dce0c0932cb8642'}
+2023-11-10 09:27:39,071:INFO:Running bug version: 6206c775cca216706276a92e33c4a9d772c4b1bd
+2023-11-10 09:28:45,720:ERROR:/root/mfem/fem/intrules.cpp: In member function ‘mfem::IntegrationRule* mfem::IntegrationRules::SegmentIntegrationRule(int)’:
+/root/mfem/fem/intrules.cpp:1137:11: warning: function may return address of local variable [-Wreturn-local-addr]
+ 1137 |    return ir;
+      |           ^~
+/root/mfem/fem/intrules.cpp:1076:20: note: declared here
+ 1076 |    IntegrationRule tmp, *ir;
+      |                    ^~~
+In file included from /root/mfem/fem/bilininteg_hcurl.cpp:12:
+In lambda function,
+    inlined from ‘void mfem::SmemPAHcurlL2Apply3DTranspose(int, int, int, int, const mfem::Array<double>&, const mfem::Array<double>&, const mfem::Array<double>&, const mfem::Vector&, const mfem::Vector&, mfem::Vector&) [with int MAX_D1D = 2; int MAX_Q1D = 3]’ at /root/mfem/fem/../general/forall.hpp:474:40:
+/root/mfem/fem/bilininteg_hcurl.cpp:4476:26: warning: ‘void* __builtin_memcpy(void*, const void*, long unsigned int)’ writing between 8 and 34359738368 bytes into a region of size 0 overflows the destination [-Wstringop-overflow=]
+ 4476 |                sBc[d][q] = Bc(q,d);
+      |                ~~~~~~~~~~^~~~~~~~~
+/root/mfem/fem/../general/forall.hpp:65:43: note: in definition of macro ‘MFEM_FORALL_3D’
+   65 |                  [&] MFEM_LAMBDA (int i) {__VA_ARGS__},\
+      |                                           ^~~~~~~~~~~
+/root/mfem/fem/bilininteg_hcurl.cpp:4477:26: warning: ‘void* __builtin_memcpy(void*, const void*, long unsigned int)’ writing between 8 and 34359738368 bytes into a region of size 0 overflows the destination [-Wstringop-overflow=]
+ 4477 |                sGc[d][q] = Gc(q,d);
+      |                ~~~~~~~~~~^~~~~~~~~
+/root/mfem/fem/../general/forall.hpp:65:43: note: in definition of macro ‘MFEM_FORALL_3D’
+   65 |                  [&] MFEM_LAMBDA (int i) {__VA_ARGS__},\
+      |                                           ^~~~~~~~~~~
+/root/mfem/fem/bilininteg_hcurl.cpp:4480:29: warning: ‘void* __builtin_memcpy(void*, const void*, long unsigned int)’ writing between 8 and 34359738368 bytes into a region of size 0 overflows the destination [-Wstringop-overflow=]
+ 4480 |                   sBo[d][q] = Bo(q,d);
+      |                   ~~~~~~~~~~^~~~~~~~~
+/root/mfem/fem/../general/forall.hpp:65:43: note: in definition of macro ‘MFEM_FORALL_3D’
+   65 |                  [&] MFEM_LAMBDA (int i) {__VA_ARGS__},\
+      |                                           ^~~~~~~~~~~
+/root/mfem/fem/bilininteg_hcurl.cpp:4476:26: warning: ‘void* __builtin_memcpy(void*, const void*, long unsigned int)’ writing between 8 and 34359738368 bytes into a region of size 0 overflows the destination [-Wstringop-overflow=]
+ 4476 |                sBc[d][q] = Bc(q,d);
+      |                ~~~~~~~~~~^~~~~~~~~
+/root/mfem/fem/../general/forall.hpp:65:43: note: in definition of macro ‘MFEM_FORALL_3D’
+   65 |                  [&] MFEM_LAMBDA (int i) {__VA_ARGS__},\
+      |                                           ^~~~~~~~~~~
+/root/mfem/fem/bilininteg_hcurl.cpp:4477:26: warning: ‘void* __builtin_memcpy(void*, const void*, long unsigned int)’ writing between 8 and 34359738368 bytes into a region of size 0 overflows the destination [-Wstringop-overflow=]
+ 4477 |                sGc[d][q] = Gc(q,d);
+      |                ~~~~~~~~~~^~~~~~~~~
+/root/mfem/fem/../general/forall.hpp:65:43: note: in definition of macro ‘MFEM_FORALL_3D’
+   65 |                  [&] MFEM_LAMBDA (int i) {__VA_ARGS__},\
+      |                                           ^~~~~~~~~~~
+In lambda function,
+    inlined from ‘void mfem::SmemPAHcurlL2Apply3D(int, int, int, int, const mfem::Array<double>&, const mfem::Array<double>&, const mfem::Array<double>&, const mfem::Vector&, const mfem::Vector&, mfem::Vector&) [with int MAX_D1D = 2; int MAX_Q1D = 3]’ at /root/mfem/fem/../general/forall.hpp:474:40:
+/root/mfem/fem/bilininteg_hcurl.cpp:3360:26: warning: ‘void* __builtin_memcpy(void*, const void*, long unsigned int)’ writing between 8 and 34359738368 bytes into a region of size 0 overflows the destination [-Wstringop-overflow=]
+ 3360 |                sBc[d][q] = Bc(q,d);
+      |                ~~~~~~~~~~^~~~~~~~~
+/root/mfem/fem/../general/forall.hpp:65:43: note: in definition of macro ‘MFEM_FORALL_3D’
+   65 |                  [&] MFEM_LAMBDA (int i) {__VA_ARGS__},\
+      |                                           ^~~~~~~~~~~
+/root/mfem/fem/bilininteg_hcurl.cpp:3361:26: warning: ‘void* __builtin_memcpy(void*, const void*, long unsigned int)’ writing between 8 and 34359738368 bytes into a region of size 0 overflows the destination [-Wstringop-overflow=]
+ 3361 |                sGc[d][q] = Gc(q,d);
+      |                ~~~~~~~~~~^~~~~~~~~
+/root/mfem/fem/../general/forall.hpp:65:43: note: in definition of macro ‘MFEM_FORALL_3D’
+   65 |                  [&] MFEM_LAMBDA (int i) {__VA_ARGS__},\
+      |                                           ^~~~~~~~~~~
+/root/mfem/fem/bilininteg_hcurl.cpp:3364:29: warning: ‘void* __builtin_memcpy(void*, const void*, long unsigned int)’ writing between 8 and 34359738368 bytes into a region of size 0 overflows the destination [-Wstringop-overflow=]
+ 3364 |                   sBo[d][q] = Bo(q,d);
+      |                   ~~~~~~~~~~^~~~~~~~~
+/root/mfem/fem/../general/forall.hpp:65:43: note: in definition of macro ‘MFEM_FORALL_3D’
+   65 |                  [&] MFEM_LAMBDA (int i) {__VA_ARGS__},\
+      |                                           ^~~~~~~~~~~
+/root/mfem/fem/bilininteg_hcurl.cpp:3360:26: warning: ‘void* __builtin_memcpy(void*, const void*, long unsigned int)’ writing between 8 and 34359738368 bytes into a region of size 0 overflows the destination [-Wstringop-overflow=]
+ 3360 |                sBc[d][q] = Bc(q,d);
+      |                ~~~~~~~~~~^~~~~~~~~
+/root/mfem/fem/../general/forall.hpp:65:43: note: in definition of macro ‘MFEM_FORALL_3D’
+   65 |                  [&] MFEM_LAMBDA (int i) {__VA_ARGS__},\
+      |                                           ^~~~~~~~~~~
+/root/mfem/fem/bilininteg_hcurl.cpp:3361:26: warning: ‘void* __builtin_memcpy(void*, const void*, long unsigned int)’ writing between 8 and 34359738368 bytes into a region of size 0 overflows the destination [-Wstringop-overflow=]
+ 3361 |                sGc[d][q] = Gc(q,d);
+      |                ~~~~~~~~~~^~~~~~~~~
+/root/mfem/fem/../general/forall.hpp:65:43: note: in definition of macro ‘MFEM_FORALL_3D’
+   65 |                  [&] MFEM_LAMBDA (int i) {__VA_ARGS__},\
+      |                                           ^~~~~~~~~~~
+In lambda function,
+    inlined from ‘void mfem::SmemPACurlCurlApply3D(int, int, bool, int, const mfem::Array<double>&, const mfem::Array<double>&, const mfem::Array<double>&, const mfem::Array<double>&, const mfem::Array<double>&, const mfem::Array<double>&, const mfem::Vector&, const mfem::Vector&, mfem::Vector&) [with int MAX_D1D = 2; int MAX_Q1D = 3]’ at /root/mfem/fem/../general/forall.hpp:474:40:
+/root/mfem/fem/bilininteg_hcurl.cpp:1749:26: warning: ‘void* __builtin_memcpy(void*, const void*, long unsigned int)’ writing between 8 and 34359738368 bytes into a region of size 0 overflows the destination [-Wstringop-overflow=]
+ 1749 |                sBc[d][q] = Bc(q,d);
+      |                ~~~~~~~~~~^~~~~~~~~
+/root/mfem/fem/../general/forall.hpp:65:43: note: in definition of macro ‘MFEM_FORALL_3D’
+   65 |                  [&] MFEM_LAMBDA (int i) {__VA_ARGS__},\
+      |                                           ^~~~~~~~~~~
+/root/mfem/fem/bilininteg_hcurl.cpp:1750:26: warning: ‘void* __builtin_memcpy(void*, const void*, long unsigned int)’ writing between 8 and 34359738368 bytes into a region of size 0 overflows the destination [-Wstringop-overflow=]
+ 1750 |                sGc[d][q] = Gc(q,d);
+      |                ~~~~~~~~~~^~~~~~~~~
+/root/mfem/fem/../general/forall.hpp:65:43: note: in definition of macro ‘MFEM_FORALL_3D’
+   65 |                  [&] MFEM_LAMBDA (int i) {__VA_ARGS__},\
+      |                                           ^~~~~~~~~~~
+/root/mfem/fem/bilininteg_hcurl.cpp:1753:29: warning: ‘void* __builtin_memcpy(void*, const void*, long unsigned int)’ writing between 8 and 34359738368 bytes into a region of size 0 overflows the destination [-Wstringop-overflow=]
+ 1753 |                   sBo[d][q] = Bo(q,d);
+      |                   ~~~~~~~~~~^~~~~~~~~
+/root/mfem/fem/../general/forall.hpp:65:43: note: in definition of macro ‘MFEM_FORALL_3D’
+   65 |                  [&] MFEM_LAMBDA (int i) {__VA_ARGS__},\
+      |                                           ^~~~~~~~~~~
+/root/mfem/fem/bilininteg_hcurl.cpp:1749:26: warning: ‘void* __builtin_memcpy(void*, const void*, long unsigned int)’ writing between 8 and 34359738368 bytes into a region of size 0 overflows the destination [-Wstringop-overflow=]
+ 1749 |                sBc[d][q] = Bc(q,d);
+      |                ~~~~~~~~~~^~~~~~~~~
+/root/mfem/fem/../general/forall.hpp:65:43: note: in definition of macro ‘MFEM_FORALL_3D’
+   65 |                  [&] MFEM_LAMBDA (int i) {__VA_ARGS__},\
+      |                                           ^~~~~~~~~~~
+/root/mfem/fem/bilininteg_hcurl.cpp:1750:26: warning: ‘void* __builtin_memcpy(void*, const void*, long unsigned int)’ writing between 8 and 34359738368 bytes into a region of size 0 overflows the destination [-Wstringop-overflow=]
+ 1750 |                sGc[d][q] = Gc(q,d);
+      |                ~~~~~~~~~~^~~~~~~~~
+/root/mfem/fem/../general/forall.hpp:65:43: note: in definition of macro ‘MFEM_FORALL_3D’
+   65 |                  [&] MFEM_LAMBDA (int i) {__VA_ARGS__},\
+      |                                           ^~~~~~~~~~~
+In file included from /usr/include/signal.h:328,
+                 from /root/mfem/tests/unit/catch.hpp:8030,
+                 from /root/mfem/tests/unit/unit_tests.hpp:15,
+                 from /root/mfem/tests/unit/run_unit_tests.hpp:15,
+                 from /root/mfem/tests/unit/unit_test_main.cpp:14:
+/root/mfem/tests/unit/catch.hpp:10818:58: error: call to non-‘constexpr’ function ‘long int sysconf(int)’
+10818 |     static constexpr std::size_t sigStackSize = 32768 >= MINSIGSTKSZ ? 32768 : MINSIGSTKSZ;
+      |                                                          ^~~~~~~~~~~
+In file included from /usr/include/x86_64-linux-gnu/bits/sigstksz.h:24,
+                 from /usr/include/signal.h:328,
+                 from /root/mfem/tests/unit/catch.hpp:8030,
+                 from /root/mfem/tests/unit/unit_tests.hpp:15,
+                 from /root/mfem/tests/unit/run_unit_tests.hpp:15,
+                 from /root/mfem/tests/unit/unit_test_main.cpp:14:
+/usr/include/unistd.h:640:17: note: ‘long int sysconf(int)’ declared here
+  640 | extern long int sysconf (int __name) __THROW;
+      |                 ^~~~~~~
+In file included from /root/mfem/tests/unit/unit_tests.hpp:15,
+                 from /root/mfem/tests/unit/run_unit_tests.hpp:15,
+                 from /root/mfem/tests/unit/unit_test_main.cpp:14:
+/root/mfem/tests/unit/catch.hpp:10877:45: error: size of array ‘altStackMem’ is not an integral constant-expression
+10877 |     char FatalConditionHandler::altStackMem[sigStackSize] = {};
+      |                                             ^~~~~~~~~~~~
+In file included from /usr/include/signal.h:328,
+                 from /root/mfem/tests/unit/catch.hpp:8030,
+                 from /root/mfem/tests/unit/unit_tests.hpp:15,
+                 from /root/mfem/tests/unit/run_unit_tests.hpp:15,
+                 from /root/mfem/tests/unit/unit_test_main.cpp:14:
+/root/mfem/tests/unit/catch.hpp:10818:58: error: call to non-‘constexpr’ function ‘long int sysconf(int)’
+10818 |     static constexpr std::size_t sigStackSize = 32768 >= MINSIGSTKSZ ? 32768 : MINSIGSTKSZ;
+      |                                                          ^~~~~~~~~~~
+In file included from /usr/include/x86_64-linux-gnu/bits/sigstksz.h:24,
+                 from /usr/include/signal.h:328,
+                 from /root/mfem/tests/unit/catch.hpp:8030,
+                 from /root/mfem/tests/unit/unit_tests.hpp:15,
+                 from /root/mfem/tests/unit/run_unit_tests.hpp:15,
+                 from /root/mfem/tests/unit/unit_test_main.cpp:14:
+/usr/include/unistd.h:640:17: note: ‘long int sysconf(int)’ declared here
+  640 | extern long int sysconf (int __name) __THROW;
+      |                 ^~~~~~~
+In file included from /root/mfem/tests/unit/unit_tests.hpp:15,
+                 from /root/mfem/tests/unit/run_unit_tests.hpp:15,
+                 from /root/mfem/tests/unit/unit_test_main.cpp:14:
+/root/mfem/tests/unit/catch.hpp:10877:45: error: size of array ‘altStackMem’ is not an integral constant-expression
+10877 |     char FatalConditionHandler::altStackMem[sigStackSize] = {};
+      |                                             ^~~~~~~~~~~~
+In file included from /usr/include/signal.h:328,
+                 from /root/mfem/tests/unit/catch.hpp:8030,
+                 from /root/mfem/tests/unit/unit_tests.hpp:15,
+                 from /root/mfem/tests/unit/run_unit_tests.hpp:15,
+                 from /root/mfem/tests/unit/unit_test_main.cpp:14:
+/root/mfem/tests/unit/catch.hpp:10818:58: error: call to non-‘constexpr’ function ‘long int sysconf(int)’
+10818 |     static constexpr std::size_t sigStackSize = 32768 >= MINSIGSTKSZ ? 32768 : MINSIGSTKSZ;
+      |                                                          ^~~~~~~~~~~
+In file included from /usr/include/x86_64-linux-gnu/bits/sigstksz.h:24,
+                 from /usr/include/signal.h:328,
+                 from /root/mfem/tests/unit/catch.hpp:8030,
+                 from /root/mfem/tests/unit/unit_tests.hpp:15,
+                 from /root/mfem/tests/unit/run_unit_tests.hpp:15,
+                 from /root/mfem/tests/unit/unit_test_main.cpp:14:
+/usr/include/unistd.h:640:17: note: ‘long int sysconf(int)’ declared here
+  640 | extern long int sysconf (int __name) __THROW;
+      |                 ^~~~~~~
+In file included from /root/mfem/tests/unit/unit_tests.hpp:15,
+                 from /root/mfem/tests/unit/run_unit_tests.hpp:15,
+                 from /root/mfem/tests/unit/unit_test_main.cpp:14:
+/root/mfem/tests/unit/catch.hpp:10877:45: error: size of array ‘altStackMem’ is not an integral constant-expression
+10877 |     char FatalConditionHandler::altStackMem[sigStackSize] = {};
+      |                                             ^~~~~~~~~~~~
+In file included from /usr/include/signal.h:328,
+                 from /root/mfem/tests/unit/catch.hpp:8030,
+                 from /root/mfem/tests/unit/unit_tests.hpp:15,
+                 from /root/mfem/tests/unit/run_unit_tests.hpp:15,
+                 from /root/mfem/tests/unit/unit_test_main.cpp:14:
+/root/mfem/tests/unit/catch.hpp:10818:58: error: call to non-‘constexpr’ function ‘long int sysconf(int)’
+10818 |     static constexpr std::size_t sigStackSize = 32768 >= MINSIGSTKSZ ? 32768 : MINSIGSTKSZ;
+      |                                                          ^~~~~~~~~~~
+In file included from /usr/include/x86_64-linux-gnu/bits/sigstksz.h:24,
+                 from /usr/include/signal.h:328,
+                 from /root/mfem/tests/unit/catch.hpp:8030,
+                 from /root/mfem/tests/unit/unit_tests.hpp:15,
+                 from /root/mfem/tests/unit/run_unit_tests.hpp:15,
+                 from /root/mfem/tests/unit/unit_test_main.cpp:14:
+/usr/include/unistd.h:640:17: note: ‘long int sysconf(int)’ declared here
+  640 | extern long int sysconf (int __name) __THROW;
+      |                 ^~~~~~~
+In file included from /root/mfem/tests/unit/unit_tests.hpp:15,
+                 from /root/mfem/tests/unit/run_unit_tests.hpp:15,
+                 from /root/mfem/tests/unit/unit_test_main.cpp:14:
+/root/mfem/tests/unit/catch.hpp:10877:45: error: size of array ‘altStackMem’ is not an integral constant-expression
+10877 |     char FatalConditionHandler::altStackMem[sigStackSize] = {};
+      |                                             ^~~~~~~~~~~~
+In file included from /usr/include/signal.h:328,
+                 from /root/mfem/tests/unit/catch.hpp:8030,
+                 from /root/mfem/tests/unit/unit_tests.hpp:15,
+                 from /root/mfem/tests/unit/run_unit_tests.hpp:15,
+                 from /root/mfem/tests/unit/unit_test_main.cpp:14:
+/root/mfem/tests/unit/catch.hpp:10818:58: error: call to non-‘constexpr’ function ‘long int sysconf(int)’
+10818 |     static constexpr std::size_t sigStackSize = 32768 >= MINSIGSTKSZ ? 32768 : MINSIGSTKSZ;
+      |                                                          ^~~~~~~~~~~
+In file included from /usr/include/x86_64-linux-gnu/bits/sigstksz.h:24,
+                 from /usr/include/signal.h:328,
+                 from /root/mfem/tests/unit/catch.hpp:8030,
+                 from /root/mfem/tests/unit/unit_tests.hpp:15,
+                 from /root/mfem/tests/unit/run_unit_tests.hpp:15,
+                 from /root/mfem/tests/unit/unit_test_main.cpp:14:
+/usr/include/unistd.h:640:17: note: ‘long int sysconf(int)’ declared here
+  640 | extern long int sysconf (int __name) __THROW;
+      |                 ^~~~~~~
+In file included from /root/mfem/tests/unit/unit_tests.hpp:15,
+                 from /root/mfem/tests/unit/run_unit_tests.hpp:15,
+                 from /root/mfem/tests/unit/unit_test_main.cpp:14:
+/root/mfem/tests/unit/catch.hpp:10877:45: error: size of array ‘altStackMem’ is not an integral constant-expression
+10877 |     char FatalConditionHandler::altStackMem[sigStackSize] = {};
+      |                                             ^~~~~~~~~~~~
+In file included from /usr/include/signal.h:328,
+                 from /root/mfem/tests/unit/catch.hpp:8030,
+                 from /root/mfem/tests/unit/unit_tests.hpp:15,
+                 from /root/mfem/tests/unit/run_unit_tests.hpp:15,
+                 from /root/mfem/tests/unit/unit_test_main.cpp:14:
+/root/mfem/tests/unit/catch.hpp:10818:58: error: call to non-‘constexpr’ function ‘long int sysconf(int)’
+10818 |     static constexpr std::size_t sigStackSize = 32768 >= MINSIGSTKSZ ? 32768 : MINSIGSTKSZ;
+      |                                                          ^~~~~~~~~~~
+In file included from /usr/include/x86_64-linux-gnu/bits/sigstksz.h:24,
+                 from /usr/include/signal.h:328,
+                 from /root/mfem/tests/unit/catch.hpp:8030,
+                 from /root/mfem/tests/unit/unit_tests.hpp:15,
+                 from /root/mfem/tests/unit/run_unit_tests.hpp:15,
+                 from /root/mfem/tests/unit/unit_test_main.cpp:14:
+/usr/include/unistd.h:640:17: note: ‘long int sysconf(int)’ declared here
+  640 | extern long int sysconf (int __name) __THROW;
+      |                 ^~~~~~~
+In file included from /root/mfem/tests/unit/unit_tests.hpp:15,
+                 from /root/mfem/tests/unit/run_unit_tests.hpp:15,
+                 from /root/mfem/tests/unit/unit_test_main.cpp:14:
+/root/mfem/tests/unit/catch.hpp:10877:45: error: size of array ‘altStackMem’ is not an integral constant-expression
+10877 |     char FatalConditionHandler::altStackMem[sigStackSize] = {};
+      |                                             ^~~~~~~~~~~~
+make[3]: *** [tests/unit/CMakeFiles/unit_tests.dir/build.make:76: tests/unit/CMakeFiles/unit_tests.dir/unit_test_main.cpp.o] Error 1
+make[3]: *** Waiting for unfinished jobs....
+make[3]: *** [tests/unit/CMakeFiles/sedov_tests_debug.dir/build.make:76: tests/unit/CMakeFiles/sedov_tests_debug.dir/unit_test_main.cpp.o] Error 1
+make[3]: *** Waiting for unfinished jobs....
+make[3]: *** [tests/unit/CMakeFiles/tmop_pa_tests_cpu.dir/build.make:76: tests/unit/CMakeFiles/tmop_pa_tests_cpu.dir/unit_test_main.cpp.o] Error 1
+make[2]: *** [CMakeFiles/Makefile2:923: tests/unit/CMakeFiles/tmop_pa_tests_cpu.dir/all] Error 2
+make[2]: *** Waiting for unfinished jobs....
+make[3]: *** [tests/unit/CMakeFiles/tmop_pa_tests_debug.dir/build.make:76: tests/unit/CMakeFiles/tmop_pa_tests_debug.dir/unit_test_main.cpp.o] Error 1
+make[3]: *** Waiting for unfinished jobs....
+make[3]: *** [tests/unit/CMakeFiles/debug_device_tests.dir/build.make:76: tests/unit/CMakeFiles/debug_device_tests.dir/unit_test_main.cpp.o] Error 1
+make[2]: *** [CMakeFiles/Makefile2:975: tests/unit/CMakeFiles/debug_device_tests.dir/all] Error 2
+make[3]: *** [tests/unit/CMakeFiles/sedov_tests_cpu.dir/build.make:76: tests/unit/CMakeFiles/sedov_tests_cpu.dir/unit_test_main.cpp.o] Error 1
+make[3]: *** Waiting for unfinished jobs....
+make[2]: *** [CMakeFiles/Makefile2:949: tests/unit/CMakeFiles/tmop_pa_tests_debug.dir/all] Error 2
+make[2]: *** [CMakeFiles/Makefile2:896: tests/unit/CMakeFiles/sedov_tests_debug.dir/all] Error 2
+make[2]: *** [CMakeFiles/Makefile2:870: tests/unit/CMakeFiles/sedov_tests_cpu.dir/all] Error 2
+make[2]: *** [CMakeFiles/Makefile2:844: tests/unit/CMakeFiles/unit_tests.dir/all] Error 2
+make[1]: *** [CMakeFiles/Makefile2:772: CMakeFiles/exec.dir/rule] Error 2
+make: *** [Makefile:244: exec] Error 2
+In file included from /usr/include/signal.h:328,
+                 from /root/mfem/tests/unit/catch.hpp:8030,
+                 from /root/mfem/tests/unit/unit_tests.hpp:15,
+                 from /root/mfem/tests/unit/run_unit_tests.hpp:15,
+                 from /root/mfem/tests/unit/unit_test_main.cpp:14:
+/root/mfem/tests/unit/catch.hpp:10818:58: error: call to non-‘constexpr’ function ‘long int sysconf(int)’
+10818 |     static constexpr std::size_t sigStackSize = 32768 >= MINSIGSTKSZ ? 32768 : MINSIGSTKSZ;
+      |                                                          ^~~~~~~~~~~
+In file included from /usr/include/x86_64-linux-gnu/bits/sigstksz.h:24,
+                 from /usr/include/signal.h:328,
+                 from /root/mfem/tests/unit/catch.hpp:8030,
+                 from /root/mfem/tests/unit/unit_tests.hpp:15,
+                 from /root/mfem/tests/unit/run_unit_tests.hpp:15,
+                 from /root/mfem/tests/unit/unit_test_main.cpp:14:
+/usr/include/unistd.h:640:17: note: ‘long int sysconf(int)’ declared here
+  640 | extern long int sysconf (int __name) __THROW;
+      |                 ^~~~~~~
+In file included from /root/mfem/tests/unit/unit_tests.hpp:15,
+                 from /root/mfem/tests/unit/run_unit_tests.hpp:15,
+                 from /root/mfem/tests/unit/unit_test_main.cpp:14:
+/root/mfem/tests/unit/catch.hpp:10877:45: error: size of array ‘altStackMem’ is not an integral constant-expression
+10877 |     char FatalConditionHandler::altStackMem[sigStackSize] = {};
+      |                                             ^~~~~~~~~~~~
+In file included from /usr/include/signal.h:328,
+                 from /root/mfem/tests/unit/catch.hpp:8030,
+                 from /root/mfem/tests/unit/unit_tests.hpp:15,
+                 from /root/mfem/tests/unit/run_unit_tests.hpp:15,
+                 from /root/mfem/tests/unit/unit_test_main.cpp:14:
+/root/mfem/tests/unit/catch.hpp:10818:58: error: call to non-‘constexpr’ function ‘long int sysconf(int)’
+10818 |     static constexpr std::size_t sigStackSize = 32768 >= MINSIGSTKSZ ? 32768 : MINSIGSTKSZ;
+      |                                                          ^~~~~~~~~~~
+In file included from /usr/include/x86_64-linux-gnu/bits/sigstksz.h:24,
+                 from /usr/include/signal.h:328,
+                 from /root/mfem/tests/unit/catch.hpp:8030,
+                 from /root/mfem/tests/unit/unit_tests.hpp:15,
+                 from /root/mfem/tests/unit/run_unit_tests.hpp:15,
+                 from /root/mfem/tests/unit/unit_test_main.cpp:14:
+/usr/include/unistd.h:640:17: note: ‘long int sysconf(int)’ declared here
+  640 | extern long int sysconf (int __name) __THROW;
+      |                 ^~~~~~~
+In file included from /root/mfem/tests/unit/unit_tests.hpp:15,
+                 from /root/mfem/tests/unit/run_unit_tests.hpp:15,
+                 from /root/mfem/tests/unit/unit_test_main.cpp:14:
+/root/mfem/tests/unit/catch.hpp:10877:45: error: size of array ‘altStackMem’ is not an integral constant-expression
+10877 |     char FatalConditionHandler::altStackMem[sigStackSize] = {};
+      |                                             ^~~~~~~~~~~~
+In file included from /usr/include/signal.h:328,
+                 from /root/mfem/tests/unit/catch.hpp:8030,
+                 from /root/mfem/tests/unit/unit_tests.hpp:15,
+                 from /root/mfem/tests/unit/run_unit_tests.hpp:15,
+                 from /root/mfem/tests/unit/unit_test_main.cpp:14:
+/root/mfem/tests/unit/catch.hpp:10818:58: error: call to non-‘constexpr’ function ‘long int sysconf(int)’
+10818 |     static constexpr std::size_t sigStackSize = 32768 >= MINSIGSTKSZ ? 32768 : MINSIGSTKSZ;
+      |                                                          ^~~~~~~~~~~
+In file included from /usr/include/x86_64-linux-gnu/bits/sigstksz.h:24,
+                 from /usr/include/signal.h:328,
+                 from /root/mfem/tests/unit/catch.hpp:8030,
+                 from /root/mfem/tests/unit/unit_tests.hpp:15,
+                 from /root/mfem/tests/unit/run_unit_tests.hpp:15,
+                 from /root/mfem/tests/unit/unit_test_main.cpp:14:
+/usr/include/unistd.h:640:17: note: ‘long int sysconf(int)’ declared here
+  640 | extern long int sysconf (int __name) __THROW;
+      |                 ^~~~~~~
+In file included from /root/mfem/tests/unit/unit_tests.hpp:15,
+                 from /root/mfem/tests/unit/run_unit_tests.hpp:15,
+                 from /root/mfem/tests/unit/unit_test_main.cpp:14:
+/root/mfem/tests/unit/catch.hpp:10877:45: error: size of array ‘altStackMem’ is not an integral constant-expression
+10877 |     char FatalConditionHandler::altStackMem[sigStackSize] = {};
+      |                                             ^~~~~~~~~~~~
+In file included from /usr/include/signal.h:328,
+                 from /root/mfem/tests/unit/catch.hpp:8030,
+                 from /root/mfem/tests/unit/unit_tests.hpp:15,
+                 from /root/mfem/tests/unit/run_unit_tests.hpp:15,
+                 from /root/mfem/tests/unit/unit_test_main.cpp:14:
+/root/mfem/tests/unit/catch.hpp:10818:58: error: call to non-‘constexpr’ function ‘long int sysconf(int)’
+10818 |     static constexpr std::size_t sigStackSize = 32768 >= MINSIGSTKSZ ? 32768 : MINSIGSTKSZ;
+      |                                                          ^~~~~~~~~~~
+In file included from /usr/include/x86_64-linux-gnu/bits/sigstksz.h:24,
+                 from /usr/include/signal.h:328,
+                 from /root/mfem/tests/unit/catch.hpp:8030,
+                 from /root/mfem/tests/unit/unit_tests.hpp:15,
+                 from /root/mfem/tests/unit/run_unit_tests.hpp:15,
+                 from /root/mfem/tests/unit/unit_test_main.cpp:14:
+/usr/include/unistd.h:640:17: note: ‘long int sysconf(int)’ declared here
+  640 | extern long int sysconf (int __name) __THROW;
+      |                 ^~~~~~~
+In file included from /root/mfem/tests/unit/unit_tests.hpp:15,
+                 from /root/mfem/tests/unit/run_unit_tests.hpp:15,
+                 from /root/mfem/tests/unit/unit_test_main.cpp:14:
+/root/mfem/tests/unit/catch.hpp:10877:45: error: size of array ‘altStackMem’ is not an integral constant-expression
+10877 |     char FatalConditionHandler::altStackMem[sigStackSize] = {};
+      |                                             ^~~~~~~~~~~~
+In file included from /usr/include/signal.h:328,
+                 from /root/mfem/tests/unit/catch.hpp:8030,
+                 from /root/mfem/tests/unit/unit_tests.hpp:15,
+                 from /root/mfem/tests/unit/run_unit_tests.hpp:15,
+                 from /root/mfem/tests/unit/unit_test_main.cpp:14:
+/root/mfem/tests/unit/catch.hpp:10818:58: error: call to non-‘constexpr’ function ‘long int sysconf(int)’
+10818 |     static constexpr std::size_t sigStackSize = 32768 >= MINSIGSTKSZ ? 32768 : MINSIGSTKSZ;
+      |                                                          ^~~~~~~~~~~
+In file included from /usr/include/x86_64-linux-gnu/bits/sigstksz.h:24,
+                 from /usr/include/signal.h:328,
+                 from /root/mfem/tests/unit/catch.hpp:8030,
+                 from /root/mfem/tests/unit/unit_tests.hpp:15,
+                 from /root/mfem/tests/unit/run_unit_tests.hpp:15,
+                 from /root/mfem/tests/unit/unit_test_main.cpp:14:
+/usr/include/unistd.h:640:17: note: ‘long int sysconf(int)’ declared here
+  640 | extern long int sysconf (int __name) __THROW;
+      |                 ^~~~~~~
+In file included from /root/mfem/tests/unit/unit_tests.hpp:15,
+                 from /root/mfem/tests/unit/run_unit_tests.hpp:15,
+                 from /root/mfem/tests/unit/unit_test_main.cpp:14:
+/root/mfem/tests/unit/catch.hpp:10877:45: error: size of array ‘altStackMem’ is not an integral constant-expression
+10877 |     char FatalConditionHandler::altStackMem[sigStackSize] = {};
+      |                                             ^~~~~~~~~~~~
+In file included from /usr/include/signal.h:328,
+                 from /root/mfem/tests/unit/catch.hpp:8030,
+                 from /root/mfem/tests/unit/unit_tests.hpp:15,
+                 from /root/mfem/tests/unit/run_unit_tests.hpp:15,
+                 from /root/mfem/tests/unit/unit_test_main.cpp:14:
+/root/mfem/tests/unit/catch.hpp:10818:58: error: call to non-‘constexpr’ function ‘long int sysconf(int)’
+10818 |     static constexpr std::size_t sigStackSize = 32768 >= MINSIGSTKSZ ? 32768 : MINSIGSTKSZ;
+      |                                                          ^~~~~~~~~~~
+In file included from /usr/include/x86_64-linux-gnu/bits/sigstksz.h:24,
+                 from /usr/include/signal.h:328,
+                 from /root/mfem/tests/unit/catch.hpp:8030,
+                 from /root/mfem/tests/unit/unit_tests.hpp:15,
+                 from /root/mfem/tests/unit/run_unit_tests.hpp:15,
+                 from /root/mfem/tests/unit/unit_test_main.cpp:14:
+/usr/include/unistd.h:640:17: note: ‘long int sysconf(int)’ declared here
+  640 | extern long int sysconf (int __name) __THROW;
+      |                 ^~~~~~~
+In file included from /root/mfem/tests/unit/unit_tests.hpp:15,
+                 from /root/mfem/tests/unit/run_unit_tests.hpp:15,
+                 from /root/mfem/tests/unit/unit_test_main.cpp:14:
+/root/mfem/tests/unit/catch.hpp:10877:45: error: size of array ‘altStackMem’ is not an integral constant-expression
+10877 |     char FatalConditionHandler::altStackMem[sigStackSize] = {};
+      |                                             ^~~~~~~~~~~~
+make[2]: *** [tests/unit/CMakeFiles/sedov_tests_cpu.dir/build.make:76: tests/unit/CMakeFiles/sedov_tests_cpu.dir/unit_test_main.cpp.o] Error 1
+make[1]: *** [CMakeFiles/Makefile2:870: tests/unit/CMakeFiles/sedov_tests_cpu.dir/all] Error 2
+make[1]: *** Waiting for unfinished jobs....
+make[2]: *** [tests/unit/CMakeFiles/tmop_pa_tests_cpu.dir/build.make:76: tests/unit/CMakeFiles/tmop_pa_tests_cpu.dir/unit_test_main.cpp.o] Error 1
+make[1]: *** [CMakeFiles/Makefile2:923: tests/unit/CMakeFiles/tmop_pa_tests_cpu.dir/all] Error 2
+make[2]: *** [tests/unit/CMakeFiles/debug_device_tests.dir/build.make:76: tests/unit/CMakeFiles/debug_device_tests.dir/unit_test_main.cpp.o] Error 1
+make[1]: *** [CMakeFiles/Makefile2:975: tests/unit/CMakeFiles/debug_device_tests.dir/all] Error 2
+make[2]: *** [tests/unit/CMakeFiles/tmop_pa_tests_debug.dir/build.make:76: tests/unit/CMakeFiles/tmop_pa_tests_debug.dir/unit_test_main.cpp.o] Error 1
+make[1]: *** [CMakeFiles/Makefile2:949: tests/unit/CMakeFiles/tmop_pa_tests_debug.dir/all] Error 2
+make[2]: *** [tests/unit/CMakeFiles/sedov_tests_debug.dir/build.make:76: tests/unit/CMakeFiles/sedov_tests_debug.dir/unit_test_main.cpp.o] Error 1
+make[1]: *** [CMakeFiles/Makefile2:896: tests/unit/CMakeFiles/sedov_tests_debug.dir/all] Error 2
+make[2]: *** [tests/unit/CMakeFiles/unit_tests.dir/build.make:76: tests/unit/CMakeFiles/unit_tests.dir/unit_test_main.cpp.o] Error 1
+make[2]: *** Waiting for unfinished jobs....
+make[1]: *** [CMakeFiles/Makefile2:844: tests/unit/CMakeFiles/unit_tests.dir/all] Error 2
+make: *** [Makefile:146: all] Error 2
 
-2023-11-09 09:10:25,529:INFO:Running test case: FaceEdgeConstraint
-2023-11-09 09:10:25,529:INFO:CWD: /root/mfem/build/tests/unit
-2023-11-09 09:10:25,529:INFO:开始运行测试用例 FaceEdgeConstraint ...
-FaceEdgeConstraint 不存在于测试用例列表中
-INFO: Test filter: FaceEdgeConstraint ~[Parallel] ~[MFEMData] 
-Filters: FaceEdgeConstraint ~[Parallel] ~[MFEMData]
-No test cases matched 'FaceEdgeConstraint~[Parallel]~[MFEMData]'
-===============================================================================
-No tests ran
+2023-11-10 09:28:45,727:INFO:Running test case: H1 pa_coeff
+2023-11-10 09:28:45,727:INFO:CWD: /root/mfem/build/tests/unit
+2023-11-10 09:28:45,727:INFO:开始运行测试用例 H1 pa_coeff ...
+H1 pa_coeff 不存在于测试用例列表中
 
+2023-11-10 09:28:45,727:ERROR:/root/mfem-code-analyzer/get_normal_testcase_covarage/run_tesscase.sh: line 11: ./unit_tests: No such file or directory
+/root/mfem-code-analyzer/get_normal_testcase_covarage/run_tesscase.sh: line 21: ./unit_tests: No such file or directory
 
-2023-11-09 09:10:25,543:INFO:Running test case: P2Q1PureTetHexPri
-2023-11-09 09:10:25,543:INFO:CWD: /root/mfem/build/tests/unit
-2023-11-09 09:10:25,543:INFO:开始运行测试用例 P2Q1PureTetHexPri ...
-P2Q1PureTetHexPri 不存在于测试用例列表中
-INFO: Test filter: P2Q1PureTetHexPri ~[Parallel] ~[MFEMData] 
-Filters: P2Q1PureTetHexPri ~[Parallel] ~[MFEMData]
-No test cases matched 'P2Q1PureTetHexPri~[Parallel]~[MFEMData]'
-===============================================================================
-No tests ran
+2023-11-10 09:28:45,734:INFO:Running test case: Hcurl/Hdiv pa_coeff
+2023-11-10 09:28:45,734:INFO:CWD: /root/mfem/build/tests/unit
+2023-11-10 09:28:45,734:INFO:开始运行测试用例 Hcurl/Hdiv pa_coeff ...
+Hcurl/Hdiv pa_coeff 不存在于测试用例列表中
 
+2023-11-10 09:28:45,734:ERROR:/root/mfem-code-analyzer/get_normal_testcase_covarage/run_tesscase.sh: line 11: ./unit_tests: No such file or directory
+/root/mfem-code-analyzer/get_normal_testcase_covarage/run_tesscase.sh: line 21: ./unit_tests: No such file or directory
 
-2023-11-09 09:10:25,557:INFO:Running test case: PNQ2PureTetHexPri
-2023-11-09 09:10:25,558:INFO:CWD: /root/mfem/build/tests/unit
-2023-11-09 09:10:25,558:INFO:开始运行测试用例 PNQ2PureTetHexPri ...
-PNQ2PureTetHexPri 不存在于测试用例列表中
-INFO: Test filter: PNQ2PureTetHexPri ~[Parallel] ~[MFEMData] 
-Filters: PNQ2PureTetHexPri ~[Parallel] ~[MFEMData]
-No test cases matched 'PNQ2PureTetHexPri~[Parallel]~[MFEMData]'
-===============================================================================
-No tests ran
+2023-11-10 09:28:45,740:INFO:Running test case: Hcurl/Hdiv mixed pa_coeff
+2023-11-10 09:28:45,741:INFO:CWD: /root/mfem/build/tests/unit
+2023-11-10 09:28:45,741:INFO:开始运行测试用例 Hcurl/Hdiv mixed pa_coeff ...
+Hcurl/Hdiv mixed pa_coeff 不存在于测试用例列表中
 
+2023-11-10 09:28:45,741:ERROR:/root/mfem-code-analyzer/get_normal_testcase_covarage/run_tesscase.sh: line 11: ./unit_tests: No such file or directory
+/root/mfem-code-analyzer/get_normal_testcase_covarage/run_tesscase.sh: line 21: ./unit_tests: No such file or directory
 
-2023-11-09 09:10:25,558:INFO:Running fix version: a15866e212b167ab83d5384e7326cdd3fa0723b2
-2023-11-09 09:11:48,039:ERROR:This miniapp requires MPI to be enabled.Please compile with MFEM_USE_MPI.
+2023-11-10 09:28:45,747:INFO:Running test case: ParallelPAGradient
+2023-11-10 09:28:45,747:INFO:CWD: /root/mfem/build/tests/unit
+2023-11-10 09:28:45,747:INFO:开始运行测试用例 ParallelPAGradient ...
+ParallelPAGradient 不存在于测试用例列表中
 
-2023-11-09 09:11:48,062:INFO:Running test case: FaceEdgeConstraint
-2023-11-09 09:11:48,062:INFO:CWD: /root/mfem/build/tests/unit
-2023-11-09 09:11:48,062:INFO:开始运行测试用例 FaceEdgeConstraint ...
-FaceEdgeConstraint 不存在于测试用例列表中
-INFO: Test filter: FaceEdgeConstraint ~[Parallel] ~[MFEMData] 
-Filters: FaceEdgeConstraint ~[Parallel] ~[MFEMData]
-No test cases matched 'FaceEdgeConstraint~[Parallel]~[MFEMData]'
-===============================================================================
-No tests ran
+2023-11-10 09:28:45,748:ERROR:/root/mfem-code-analyzer/get_normal_testcase_covarage/run_tesscase.sh: line 11: ./unit_tests: No such file or directory
+/root/mfem-code-analyzer/get_normal_testcase_covarage/run_tesscase.sh: line 21: ./unit_tests: No such file or directory
 
+2023-11-10 09:28:45,753:INFO:Running test case: PA Gradient
+2023-11-10 09:28:45,754:INFO:CWD: /root/mfem/build/tests/unit
+2023-11-10 09:28:45,754:INFO:开始运行测试用例 PA Gradient ...
+PA Gradient 不存在于测试用例列表中
 
-2023-11-09 09:11:48,085:INFO:Running test case: P2Q1PureTetHexPri
-2023-11-09 09:11:48,086:INFO:CWD: /root/mfem/build/tests/unit
-2023-11-09 09:11:48,086:INFO:开始运行测试用例 P2Q1PureTetHexPri ...
-P2Q1PureTetHexPri 不存在于测试用例列表中
-INFO: Test filter: P2Q1PureTetHexPri ~[Parallel] ~[MFEMData] 
-Filters: P2Q1PureTetHexPri ~[Parallel] ~[MFEMData]
-No test cases matched 'P2Q1PureTetHexPri~[Parallel]~[MFEMData]'
-===============================================================================
-No tests ran
+2023-11-10 09:28:45,754:ERROR:/root/mfem-code-analyzer/get_normal_testcase_covarage/run_tesscase.sh: line 11: ./unit_tests: No such file or directory
+/root/mfem-code-analyzer/get_normal_testcase_covarage/run_tesscase.sh: line 21: ./unit_tests: No such file or directory
 
+2023-11-10 09:28:45,760:INFO:Running test case: Nonlinear Convection
+2023-11-10 09:28:45,760:INFO:CWD: /root/mfem/build/tests/unit
+2023-11-10 09:28:45,760:INFO:开始运行测试用例 Nonlinear Convection ...
+Nonlinear Convection 不存在于测试用例列表中
 
-2023-11-09 09:11:48,100:INFO:Running test case: PNQ2PureTetHexPri
-2023-11-09 09:11:48,100:INFO:CWD: /root/mfem/build/tests/unit
-2023-11-09 09:11:48,100:INFO:开始运行测试用例 PNQ2PureTetHexPri ...
-PNQ2PureTetHexPri 不存在于测试用例列表中
-INFO: Test filter: PNQ2PureTetHexPri ~[Parallel] ~[MFEMData] 
-Filters: PNQ2PureTetHexPri ~[Parallel] ~[MFEMData]
-No test cases matched 'PNQ2PureTetHexPri~[Parallel]~[MFEMData]'
-===============================================================================
-No tests ran
+2023-11-10 09:28:45,760:ERROR:/root/mfem-code-analyzer/get_normal_testcase_covarage/run_tesscase.sh: line 11: ./unit_tests: No such file or directory
+/root/mfem-code-analyzer/get_normal_testcase_covarage/run_tesscase.sh: line 21: ./unit_tests: No such file or directory
 
+2023-11-10 09:28:45,761:INFO:Running fix version: a078107c51e1a8c329496e8d1fa2c3f17ba85831
+2023-11-10 09:29:49,899:ERROR:/root/mfem/fem/intrules.cpp: In member function ‘mfem::IntegrationRule* mfem::IntegrationRules::SegmentIntegrationRule(int)’:
+/root/mfem/fem/intrules.cpp:1137:11: warning: function may return address of local variable [-Wreturn-local-addr]
+ 1137 |    return ir;
+      |           ^~
+/root/mfem/fem/intrules.cpp:1076:20: note: declared here
+ 1076 |    IntegrationRule tmp, *ir;
+      |                    ^~~
+In file included from /root/mfem/fem/bilininteg_hcurl.cpp:12:
+In lambda function,
+    inlined from ‘void mfem::SmemPAHcurlL2Apply3DTranspose(int, int, int, int, const mfem::Array<double>&, const mfem::Array<double>&, const mfem::Array<double>&, const mfem::Vector&, const mfem::Vector&, mfem::Vector&) [with int MAX_D1D = 2; int MAX_Q1D = 3]’ at /root/mfem/fem/../general/forall.hpp:474:40:
+/root/mfem/fem/bilininteg_hcurl.cpp:4476:26: warning: ‘void* __builtin_memcpy(void*, const void*, long unsigned int)’ writing between 8 and 34359738368 bytes into a region of size 0 overflows the destination [-Wstringop-overflow=]
+ 4476 |                sBc[d][q] = Bc(q,d);
+      |                ~~~~~~~~~~^~~~~~~~~
+/root/mfem/fem/../general/forall.hpp:65:43: note: in definition of macro ‘MFEM_FORALL_3D’
+   65 |                  [&] MFEM_LAMBDA (int i) {__VA_ARGS__},\
+      |                                           ^~~~~~~~~~~
+/root/mfem/fem/bilininteg_hcurl.cpp:4477:26: warning: ‘void* __builtin_memcpy(void*, const void*, long unsigned int)’ writing between 8 and 34359738368 bytes into a region of size 0 overflows the destination [-Wstringop-overflow=]
+ 4477 |                sGc[d][q] = Gc(q,d);
+      |                ~~~~~~~~~~^~~~~~~~~
+/root/mfem/fem/../general/forall.hpp:65:43: note: in definition of macro ‘MFEM_FORALL_3D’
+   65 |                  [&] MFEM_LAMBDA (int i) {__VA_ARGS__},\
+      |                                           ^~~~~~~~~~~
+/root/mfem/fem/bilininteg_hcurl.cpp:4480:29: warning: ‘void* __builtin_memcpy(void*, const void*, long unsigned int)’ writing between 8 and 34359738368 bytes into a region of size 0 overflows the destination [-Wstringop-overflow=]
+ 4480 |                   sBo[d][q] = Bo(q,d);
+      |                   ~~~~~~~~~~^~~~~~~~~
+/root/mfem/fem/../general/forall.hpp:65:43: note: in definition of macro ‘MFEM_FORALL_3D’
+   65 |                  [&] MFEM_LAMBDA (int i) {__VA_ARGS__},\
+      |                                           ^~~~~~~~~~~
+/root/mfem/fem/bilininteg_hcurl.cpp:4476:26: warning: ‘void* __builtin_memcpy(void*, const void*, long unsigned int)’ writing between 8 and 34359738368 bytes into a region of size 0 overflows the destination [-Wstringop-overflow=]
+ 4476 |                sBc[d][q] = Bc(q,d);
+      |                ~~~~~~~~~~^~~~~~~~~
+/root/mfem/fem/../general/forall.hpp:65:43: note: in definition of macro ‘MFEM_FORALL_3D’
+   65 |                  [&] MFEM_LAMBDA (int i) {__VA_ARGS__},\
+      |                                           ^~~~~~~~~~~
+/root/mfem/fem/bilininteg_hcurl.cpp:4477:26: warning: ‘void* __builtin_memcpy(void*, const void*, long unsigned int)’ writing between 8 and 34359738368 bytes into a region of size 0 overflows the destination [-Wstringop-overflow=]
+ 4477 |                sGc[d][q] = Gc(q,d);
+      |                ~~~~~~~~~~^~~~~~~~~
+/root/mfem/fem/../general/forall.hpp:65:43: note: in definition of macro ‘MFEM_FORALL_3D’
+   65 |                  [&] MFEM_LAMBDA (int i) {__VA_ARGS__},\
+      |                                           ^~~~~~~~~~~
+In lambda function,
+    inlined from ‘void mfem::SmemPAHcurlL2Apply3D(int, int, int, int, const mfem::Array<double>&, const mfem::Array<double>&, const mfem::Array<double>&, const mfem::Vector&, const mfem::Vector&, mfem::Vector&) [with int MAX_D1D = 2; int MAX_Q1D = 3]’ at /root/mfem/fem/../general/forall.hpp:474:40:
+/root/mfem/fem/bilininteg_hcurl.cpp:3360:26: warning: ‘void* __builtin_memcpy(void*, const void*, long unsigned int)’ writing between 8 and 34359738368 bytes into a region of size 0 overflows the destination [-Wstringop-overflow=]
+ 3360 |                sBc[d][q] = Bc(q,d);
+      |                ~~~~~~~~~~^~~~~~~~~
+/root/mfem/fem/../general/forall.hpp:65:43: note: in definition of macro ‘MFEM_FORALL_3D’
+   65 |                  [&] MFEM_LAMBDA (int i) {__VA_ARGS__},\
+      |                                           ^~~~~~~~~~~
+/root/mfem/fem/bilininteg_hcurl.cpp:3361:26: warning: ‘void* __builtin_memcpy(void*, const void*, long unsigned int)’ writing between 8 and 34359738368 bytes into a region of size 0 overflows the destination [-Wstringop-overflow=]
+ 3361 |                sGc[d][q] = Gc(q,d);
+      |                ~~~~~~~~~~^~~~~~~~~
+/root/mfem/fem/../general/forall.hpp:65:43: note: in definition of macro ‘MFEM_FORALL_3D’
+   65 |                  [&] MFEM_LAMBDA (int i) {__VA_ARGS__},\
+      |                                           ^~~~~~~~~~~
+/root/mfem/fem/bilininteg_hcurl.cpp:3364:29: warning: ‘void* __builtin_memcpy(void*, const void*, long unsigned int)’ writing between 8 and 34359738368 bytes into a region of size 0 overflows the destination [-Wstringop-overflow=]
+ 3364 |                   sBo[d][q] = Bo(q,d);
+      |                   ~~~~~~~~~~^~~~~~~~~
+/root/mfem/fem/../general/forall.hpp:65:43: note: in definition of macro ‘MFEM_FORALL_3D’
+   65 |                  [&] MFEM_LAMBDA (int i) {__VA_ARGS__},\
+      |                                           ^~~~~~~~~~~
+/root/mfem/fem/bilininteg_hcurl.cpp:3360:26: warning: ‘void* __builtin_memcpy(void*, const void*, long unsigned int)’ writing between 8 and 34359738368 bytes into a region of size 0 overflows the destination [-Wstringop-overflow=]
+ 3360 |                sBc[d][q] = Bc(q,d);
+      |                ~~~~~~~~~~^~~~~~~~~
+/root/mfem/fem/../general/forall.hpp:65:43: note: in definition of macro ‘MFEM_FORALL_3D’
+   65 |                  [&] MFEM_LAMBDA (int i) {__VA_ARGS__},\
+      |                                           ^~~~~~~~~~~
+/root/mfem/fem/bilininteg_hcurl.cpp:3361:26: warning: ‘void* __builtin_memcpy(void*, const void*, long unsigned int)’ writing between 8 and 34359738368 bytes into a region of size 0 overflows the destination [-Wstringop-overflow=]
+ 3361 |                sGc[d][q] = Gc(q,d);
+      |                ~~~~~~~~~~^~~~~~~~~
+/root/mfem/fem/../general/forall.hpp:65:43: note: in definition of macro ‘MFEM_FORALL_3D’
+   65 |                  [&] MFEM_LAMBDA (int i) {__VA_ARGS__},\
+      |                                           ^~~~~~~~~~~
+In lambda function,
+    inlined from ‘void mfem::SmemPACurlCurlApply3D(int, int, bool, int, const mfem::Array<double>&, const mfem::Array<double>&, const mfem::Array<double>&, const mfem::Array<double>&, const mfem::Array<double>&, const mfem::Array<double>&, const mfem::Vector&, const mfem::Vector&, mfem::Vector&) [with int MAX_D1D = 2; int MAX_Q1D = 3]’ at /root/mfem/fem/../general/forall.hpp:474:40:
+/root/mfem/fem/bilininteg_hcurl.cpp:1749:26: warning: ‘void* __builtin_memcpy(void*, const void*, long unsigned int)’ writing between 8 and 34359738368 bytes into a region of size 0 overflows the destination [-Wstringop-overflow=]
+ 1749 |                sBc[d][q] = Bc(q,d);
+      |                ~~~~~~~~~~^~~~~~~~~
+/root/mfem/fem/../general/forall.hpp:65:43: note: in definition of macro ‘MFEM_FORALL_3D’
+   65 |                  [&] MFEM_LAMBDA (int i) {__VA_ARGS__},\
+      |                                           ^~~~~~~~~~~
+/root/mfem/fem/bilininteg_hcurl.cpp:1750:26: warning: ‘void* __builtin_memcpy(void*, const void*, long unsigned int)’ writing between 8 and 34359738368 bytes into a region of size 0 overflows the destination [-Wstringop-overflow=]
+ 1750 |                sGc[d][q] = Gc(q,d);
+      |                ~~~~~~~~~~^~~~~~~~~
+/root/mfem/fem/../general/forall.hpp:65:43: note: in definition of macro ‘MFEM_FORALL_3D’
+   65 |                  [&] MFEM_LAMBDA (int i) {__VA_ARGS__},\
+      |                                           ^~~~~~~~~~~
+/root/mfem/fem/bilininteg_hcurl.cpp:1753:29: warning: ‘void* __builtin_memcpy(void*, const void*, long unsigned int)’ writing between 8 and 34359738368 bytes into a region of size 0 overflows the destination [-Wstringop-overflow=]
+ 1753 |                   sBo[d][q] = Bo(q,d);
+      |                   ~~~~~~~~~~^~~~~~~~~
+/root/mfem/fem/../general/forall.hpp:65:43: note: in definition of macro ‘MFEM_FORALL_3D’
+   65 |                  [&] MFEM_LAMBDA (int i) {__VA_ARGS__},\
+      |                                           ^~~~~~~~~~~
+/root/mfem/fem/bilininteg_hcurl.cpp:1749:26: warning: ‘void* __builtin_memcpy(void*, const void*, long unsigned int)’ writing between 8 and 34359738368 bytes into a region of size 0 overflows the destination [-Wstringop-overflow=]
+ 1749 |                sBc[d][q] = Bc(q,d);
+      |                ~~~~~~~~~~^~~~~~~~~
+/root/mfem/fem/../general/forall.hpp:65:43: note: in definition of macro ‘MFEM_FORALL_3D’
+   65 |                  [&] MFEM_LAMBDA (int i) {__VA_ARGS__},\
+      |                                           ^~~~~~~~~~~
+/root/mfem/fem/bilininteg_hcurl.cpp:1750:26: warning: ‘void* __builtin_memcpy(void*, const void*, long unsigned int)’ writing between 8 and 34359738368 bytes into a region of size 0 overflows the destination [-Wstringop-overflow=]
+ 1750 |                sGc[d][q] = Gc(q,d);
+      |                ~~~~~~~~~~^~~~~~~~~
+/root/mfem/fem/../general/forall.hpp:65:43: note: in definition of macro ‘MFEM_FORALL_3D’
+   65 |                  [&] MFEM_LAMBDA (int i) {__VA_ARGS__},\
+      |                                           ^~~~~~~~~~~
+In file included from /usr/include/signal.h:328,
+                 from /root/mfem/tests/unit/catch.hpp:8030,
+                 from /root/mfem/tests/unit/unit_tests.hpp:15,
+                 from /root/mfem/tests/unit/run_unit_tests.hpp:15,
+                 from /root/mfem/tests/unit/unit_test_main.cpp:14:
+/root/mfem/tests/unit/catch.hpp:10818:58: error: call to non-‘constexpr’ function ‘long int sysconf(int)’
+10818 |     static constexpr std::size_t sigStackSize = 32768 >= MINSIGSTKSZ ? 32768 : MINSIGSTKSZ;
+      |                                                          ^~~~~~~~~~~
+In file included from /usr/include/x86_64-linux-gnu/bits/sigstksz.h:24,
+                 from /usr/include/signal.h:328,
+                 from /root/mfem/tests/unit/catch.hpp:8030,
+                 from /root/mfem/tests/unit/unit_tests.hpp:15,
+                 from /root/mfem/tests/unit/run_unit_tests.hpp:15,
+                 from /root/mfem/tests/unit/unit_test_main.cpp:14:
+/usr/include/unistd.h:640:17: note: ‘long int sysconf(int)’ declared here
+  640 | extern long int sysconf (int __name) __THROW;
+      |                 ^~~~~~~
+In file included from /root/mfem/tests/unit/unit_tests.hpp:15,
+                 from /root/mfem/tests/unit/run_unit_tests.hpp:15,
+                 from /root/mfem/tests/unit/unit_test_main.cpp:14:
+/root/mfem/tests/unit/catch.hpp:10877:45: error: size of array ‘altStackMem’ is not an integral constant-expression
+10877 |     char FatalConditionHandler::altStackMem[sigStackSize] = {};
+      |                                             ^~~~~~~~~~~~
+In file included from /usr/include/signal.h:328,
+                 from /root/mfem/tests/unit/catch.hpp:8030,
+                 from /root/mfem/tests/unit/unit_tests.hpp:15,
+                 from /root/mfem/tests/unit/run_unit_tests.hpp:15,
+                 from /root/mfem/tests/unit/unit_test_main.cpp:14:
+/root/mfem/tests/unit/catch.hpp:10818:58: error: call to non-‘constexpr’ function ‘long int sysconf(int)’
+10818 |     static constexpr std::size_t sigStackSize = 32768 >= MINSIGSTKSZ ? 32768 : MINSIGSTKSZ;
+      |                                                          ^~~~~~~~~~~
+In file included from /usr/include/x86_64-linux-gnu/bits/sigstksz.h:24,
+                 from /usr/include/signal.h:328,
+                 from /root/mfem/tests/unit/catch.hpp:8030,
+                 from /root/mfem/tests/unit/unit_tests.hpp:15,
+                 from /root/mfem/tests/unit/run_unit_tests.hpp:15,
+                 from /root/mfem/tests/unit/unit_test_main.cpp:14:
+/usr/include/unistd.h:640:17: note: ‘long int sysconf(int)’ declared here
+  640 | extern long int sysconf (int __name) __THROW;
+      |                 ^~~~~~~
+In file included from /root/mfem/tests/unit/unit_tests.hpp:15,
+                 from /root/mfem/tests/unit/run_unit_tests.hpp:15,
+                 from /root/mfem/tests/unit/unit_test_main.cpp:14:
+/root/mfem/tests/unit/catch.hpp:10877:45: error: size of array ‘altStackMem’ is not an integral constant-expression
+10877 |     char FatalConditionHandler::altStackMem[sigStackSize] = {};
+      |                                             ^~~~~~~~~~~~
+In file included from /usr/include/signal.h:328,
+                 from /root/mfem/tests/unit/catch.hpp:8030,
+                 from /root/mfem/tests/unit/unit_tests.hpp:15,
+                 from /root/mfem/tests/unit/run_unit_tests.hpp:15,
+                 from /root/mfem/tests/unit/unit_test_main.cpp:14:
+/root/mfem/tests/unit/catch.hpp:10818:58: error: call to non-‘constexpr’ function ‘long int sysconf(int)’
+10818 |     static constexpr std::size_t sigStackSize = 32768 >= MINSIGSTKSZ ? 32768 : MINSIGSTKSZ;
+      |                                                          ^~~~~~~~~~~
+In file included from /usr/include/x86_64-linux-gnu/bits/sigstksz.h:24,
+                 from /usr/include/signal.h:328,
+                 from /root/mfem/tests/unit/catch.hpp:8030,
+                 from /root/mfem/tests/unit/unit_tests.hpp:15,
+                 from /root/mfem/tests/unit/run_unit_tests.hpp:15,
+                 from /root/mfem/tests/unit/unit_test_main.cpp:14:
+/usr/include/unistd.h:640:17: note: ‘long int sysconf(int)’ declared here
+  640 | extern long int sysconf (int __name) __THROW;
+      |                 ^~~~~~~
+In file included from /root/mfem/tests/unit/unit_tests.hpp:15,
+                 from /root/mfem/tests/unit/run_unit_tests.hpp:15,
+                 from /root/mfem/tests/unit/unit_test_main.cpp:14:
+/root/mfem/tests/unit/catch.hpp:10877:45: error: size of array ‘altStackMem’ is not an integral constant-expression
+10877 |     char FatalConditionHandler::altStackMem[sigStackSize] = {};
+      |                                             ^~~~~~~~~~~~
+In file included from /usr/include/signal.h:328,
+                 from /root/mfem/tests/unit/catch.hpp:8030,
+                 from /root/mfem/tests/unit/unit_tests.hpp:15,
+                 from /root/mfem/tests/unit/run_unit_tests.hpp:15,
+                 from /root/mfem/tests/unit/unit_test_main.cpp:14:
+/root/mfem/tests/unit/catch.hpp:10818:58: error: call to non-‘constexpr’ function ‘long int sysconf(int)’
+10818 |     static constexpr std::size_t sigStackSize = 32768 >= MINSIGSTKSZ ? 32768 : MINSIGSTKSZ;
+      |                                                          ^~~~~~~~~~~
+In file included from /usr/include/x86_64-linux-gnu/bits/sigstksz.h:24,
+                 from /usr/include/signal.h:328,
+                 from /root/mfem/tests/unit/catch.hpp:8030,
+                 from /root/mfem/tests/unit/unit_tests.hpp:15,
+                 from /root/mfem/tests/unit/run_unit_tests.hpp:15,
+                 from /root/mfem/tests/unit/unit_test_main.cpp:14:
+/usr/include/unistd.h:640:17: note: ‘long int sysconf(int)’ declared here
+  640 | extern long int sysconf (int __name) __THROW;
+      |                 ^~~~~~~
+In file included from /root/mfem/tests/unit/unit_tests.hpp:15,
+                 from /root/mfem/tests/unit/run_unit_tests.hpp:15,
+                 from /root/mfem/tests/unit/unit_test_main.cpp:14:
+/root/mfem/tests/unit/catch.hpp:10877:45: error: size of array ‘altStackMem’ is not an integral constant-expression
+10877 |     char FatalConditionHandler::altStackMem[sigStackSize] = {};
+      |                                             ^~~~~~~~~~~~
+In file included from /usr/include/signal.h:328,
+                 from /root/mfem/tests/unit/catch.hpp:8030,
+                 from /root/mfem/tests/unit/unit_tests.hpp:15,
+                 from /root/mfem/tests/unit/run_unit_tests.hpp:15,
+                 from /root/mfem/tests/unit/unit_test_main.cpp:14:
+/root/mfem/tests/unit/catch.hpp:10818:58: error: call to non-‘constexpr’ function ‘long int sysconf(int)’
+10818 |     static constexpr std::size_t sigStackSize = 32768 >= MINSIGSTKSZ ? 32768 : MINSIGSTKSZ;
+      |                                                          ^~~~~~~~~~~
+In file included from /usr/include/x86_64-linux-gnu/bits/sigstksz.h:24,
+                 from /usr/include/signal.h:328,
+                 from /root/mfem/tests/unit/catch.hpp:8030,
+                 from /root/mfem/tests/unit/unit_tests.hpp:15,
+                 from /root/mfem/tests/unit/run_unit_tests.hpp:15,
+                 from /root/mfem/tests/unit/unit_test_main.cpp:14:
+/usr/include/unistd.h:640:17: note: ‘long int sysconf(int)’ declared here
+  640 | extern long int sysconf (int __name) __THROW;
+      |                 ^~~~~~~
+In file included from /root/mfem/tests/unit/unit_tests.hpp:15,
+                 from /root/mfem/tests/unit/run_unit_tests.hpp:15,
+                 from /root/mfem/tests/unit/unit_test_main.cpp:14:
+/root/mfem/tests/unit/catch.hpp:10877:45: error: size of array ‘altStackMem’ is not an integral constant-expression
+10877 |     char FatalConditionHandler::altStackMem[sigStackSize] = {};
+      |                                             ^~~~~~~~~~~~
+In file included from /usr/include/signal.h:328,
+                 from /root/mfem/tests/unit/catch.hpp:8030,
+                 from /root/mfem/tests/unit/unit_tests.hpp:15,
+                 from /root/mfem/tests/unit/run_unit_tests.hpp:15,
+                 from /root/mfem/tests/unit/unit_test_main.cpp:14:
+/root/mfem/tests/unit/catch.hpp:10818:58: error: call to non-‘constexpr’ function ‘long int sysconf(int)’
+10818 |     static constexpr std::size_t sigStackSize = 32768 >= MINSIGSTKSZ ? 32768 : MINSIGSTKSZ;
+      |                                                          ^~~~~~~~~~~
+In file included from /usr/include/x86_64-linux-gnu/bits/sigstksz.h:24,
+                 from /usr/include/signal.h:328,
+                 from /root/mfem/tests/unit/catch.hpp:8030,
+                 from /root/mfem/tests/unit/unit_tests.hpp:15,
+                 from /root/mfem/tests/unit/run_unit_tests.hpp:15,
+                 from /root/mfem/tests/unit/unit_test_main.cpp:14:
+/usr/include/unistd.h:640:17: note: ‘long int sysconf(int)’ declared here
+  640 | extern long int sysconf (int __name) __THROW;
+      |                 ^~~~~~~
+In file included from /root/mfem/tests/unit/unit_tests.hpp:15,
+                 from /root/mfem/tests/unit/run_unit_tests.hpp:15,
+                 from /root/mfem/tests/unit/unit_test_main.cpp:14:
+/root/mfem/tests/unit/catch.hpp:10877:45: error: size of array ‘altStackMem’ is not an integral constant-expression
+10877 |     char FatalConditionHandler::altStackMem[sigStackSize] = {};
+      |                                             ^~~~~~~~~~~~
+make[3]: *** [tests/unit/CMakeFiles/sedov_tests_debug.dir/build.make:76: tests/unit/CMakeFiles/sedov_tests_debug.dir/unit_test_main.cpp.o] Error 1
+make[3]: *** Waiting for unfinished jobs....
+make[3]: *** [tests/unit/CMakeFiles/sedov_tests_cpu.dir/build.make:76: tests/unit/CMakeFiles/sedov_tests_cpu.dir/unit_test_main.cpp.o] Error 1
+make[3]: *** Waiting for unfinished jobs....
+make[3]: *** [tests/unit/CMakeFiles/tmop_pa_tests_cpu.dir/build.make:76: tests/unit/CMakeFiles/tmop_pa_tests_cpu.dir/unit_test_main.cpp.o] Error 1
+make[3]: *** Waiting for unfinished jobs....
+make[3]: *** [tests/unit/CMakeFiles/debug_device_tests.dir/build.make:76: tests/unit/CMakeFiles/debug_device_tests.dir/unit_test_main.cpp.o] Error 1
+make[2]: *** [CMakeFiles/Makefile2:975: tests/unit/CMakeFiles/debug_device_tests.dir/all] Error 2
+make[2]: *** Waiting for unfinished jobs....
+make[3]: *** [tests/unit/CMakeFiles/tmop_pa_tests_debug.dir/build.make:76: tests/unit/CMakeFiles/tmop_pa_tests_debug.dir/unit_test_main.cpp.o] Error 1
+make[3]: *** Waiting for unfinished jobs....
+make[3]: *** [tests/unit/CMakeFiles/unit_tests.dir/build.make:76: tests/unit/CMakeFiles/unit_tests.dir/unit_test_main.cpp.o] Error 1
+make[3]: *** Waiting for unfinished jobs....
+make[2]: *** [CMakeFiles/Makefile2:896: tests/unit/CMakeFiles/sedov_tests_debug.dir/all] Error 2
+make[2]: *** [CMakeFiles/Makefile2:870: tests/unit/CMakeFiles/sedov_tests_cpu.dir/all] Error 2
+make[2]: *** [CMakeFiles/Makefile2:923: tests/unit/CMakeFiles/tmop_pa_tests_cpu.dir/all] Error 2
+make[2]: *** [CMakeFiles/Makefile2:949: tests/unit/CMakeFiles/tmop_pa_tests_debug.dir/all] Error 2
+make[2]: *** [CMakeFiles/Makefile2:844: tests/unit/CMakeFiles/unit_tests.dir/all] Error 2
+make[1]: *** [CMakeFiles/Makefile2:772: CMakeFiles/exec.dir/rule] Error 2
+make: *** [Makefile:244: exec] Error 2
+In file included from /usr/include/signal.h:328,
+                 from /root/mfem/tests/unit/catch.hpp:8030,
+                 from /root/mfem/tests/unit/unit_tests.hpp:15,
+                 from /root/mfem/tests/unit/run_unit_tests.hpp:15,
+                 from /root/mfem/tests/unit/unit_test_main.cpp:14:
+/root/mfem/tests/unit/catch.hpp:10818:58: error: call to non-‘constexpr’ function ‘long int sysconf(int)’
+10818 |     static constexpr std::size_t sigStackSize = 32768 >= MINSIGSTKSZ ? 32768 : MINSIGSTKSZ;
+      |                                                          ^~~~~~~~~~~
+In file included from /usr/include/x86_64-linux-gnu/bits/sigstksz.h:24,
+                 from /usr/include/signal.h:328,
+                 from /root/mfem/tests/unit/catch.hpp:8030,
+                 from /root/mfem/tests/unit/unit_tests.hpp:15,
+                 from /root/mfem/tests/unit/run_unit_tests.hpp:15,
+                 from /root/mfem/tests/unit/unit_test_main.cpp:14:
+/usr/include/unistd.h:640:17: note: ‘long int sysconf(int)’ declared here
+  640 | extern long int sysconf (int __name) __THROW;
+      |                 ^~~~~~~
+In file included from /root/mfem/tests/unit/unit_tests.hpp:15,
+                 from /root/mfem/tests/unit/run_unit_tests.hpp:15,
+                 from /root/mfem/tests/unit/unit_test_main.cpp:14:
+/root/mfem/tests/unit/catch.hpp:10877:45: error: size of array ‘altStackMem’ is not an integral constant-expression
+10877 |     char FatalConditionHandler::altStackMem[sigStackSize] = {};
+      |                                             ^~~~~~~~~~~~
+In file included from /usr/include/signal.h:328,
+                 from /root/mfem/tests/unit/catch.hpp:8030,
+                 from /root/mfem/tests/unit/unit_tests.hpp:15,
+                 from /root/mfem/tests/unit/run_unit_tests.hpp:15,
+                 from /root/mfem/tests/unit/unit_test_main.cpp:14:
+/root/mfem/tests/unit/catch.hpp:10818:58: error: call to non-‘constexpr’ function ‘long int sysconf(int)’
+10818 |     static constexpr std::size_t sigStackSize = 32768 >= MINSIGSTKSZ ? 32768 : MINSIGSTKSZ;
+      |                                                          ^~~~~~~~~~~
+In file included from /usr/include/x86_64-linux-gnu/bits/sigstksz.h:24,
+                 from /usr/include/signal.h:328,
+                 from /root/mfem/tests/unit/catch.hpp:8030,
+                 from /root/mfem/tests/unit/unit_tests.hpp:15,
+                 from /root/mfem/tests/unit/run_unit_tests.hpp:15,
+                 from /root/mfem/tests/unit/unit_test_main.cpp:14:
+/usr/include/unistd.h:640:17: note: ‘long int sysconf(int)’ declared here
+  640 | extern long int sysconf (int __name) __THROW;
+      |                 ^~~~~~~
+In file included from /root/mfem/tests/unit/unit_tests.hpp:15,
+                 from /root/mfem/tests/unit/run_unit_tests.hpp:15,
+                 from /root/mfem/tests/unit/unit_test_main.cpp:14:
+/root/mfem/tests/unit/catch.hpp:10877:45: error: size of array ‘altStackMem’ is not an integral constant-expression
+10877 |     char FatalConditionHandler::altStackMem[sigStackSize] = {};
+      |                                             ^~~~~~~~~~~~
+In file included from /usr/include/signal.h:328,
+                 from /root/mfem/tests/unit/catch.hpp:8030,
+                 from /root/mfem/tests/unit/unit_tests.hpp:15,
+                 from /root/mfem/tests/unit/run_unit_tests.hpp:15,
+                 from /root/mfem/tests/unit/unit_test_main.cpp:14:
+/root/mfem/tests/unit/catch.hpp:10818:58: error: call to non-‘constexpr’ function ‘long int sysconf(int)’
+10818 |     static constexpr std::size_t sigStackSize = 32768 >= MINSIGSTKSZ ? 32768 : MINSIGSTKSZ;
+      |                                                          ^~~~~~~~~~~
+In file included from /usr/include/x86_64-linux-gnu/bits/sigstksz.h:24,
+                 from /usr/include/signal.h:328,
+                 from /root/mfem/tests/unit/catch.hpp:8030,
+                 from /root/mfem/tests/unit/unit_tests.hpp:15,
+                 from /root/mfem/tests/unit/run_unit_tests.hpp:15,
+                 from /root/mfem/tests/unit/unit_test_main.cpp:14:
+/usr/include/unistd.h:640:17: note: ‘long int sysconf(int)’ declared here
+  640 | extern long int sysconf (int __name) __THROW;
+      |                 ^~~~~~~
+In file included from /root/mfem/tests/unit/unit_tests.hpp:15,
+                 from /root/mfem/tests/unit/run_unit_tests.hpp:15,
+                 from /root/mfem/tests/unit/unit_test_main.cpp:14:
+/root/mfem/tests/unit/catch.hpp:10877:45: error: size of array ‘altStackMem’ is not an integral constant-expression
+10877 |     char FatalConditionHandler::altStackMem[sigStackSize] = {};
+      |                                             ^~~~~~~~~~~~
+In file included from /usr/include/signal.h:328,
+                 from /root/mfem/tests/unit/catch.hpp:8030,
+                 from /root/mfem/tests/unit/unit_tests.hpp:15,
+                 from /root/mfem/tests/unit/run_unit_tests.hpp:15,
+                 from /root/mfem/tests/unit/unit_test_main.cpp:14:
+/root/mfem/tests/unit/catch.hpp:10818:58: error: call to non-‘constexpr’ function ‘long int sysconf(int)’
+10818 |     static constexpr std::size_t sigStackSize = 32768 >= MINSIGSTKSZ ? 32768 : MINSIGSTKSZ;
+      |                                                          ^~~~~~~~~~~
+In file included from /usr/include/x86_64-linux-gnu/bits/sigstksz.h:24,
+                 from /usr/include/signal.h:328,
+                 from /root/mfem/tests/unit/catch.hpp:8030,
+                 from /root/mfem/tests/unit/unit_tests.hpp:15,
+                 from /root/mfem/tests/unit/run_unit_tests.hpp:15,
+                 from /root/mfem/tests/unit/unit_test_main.cpp:14:
+/usr/include/unistd.h:640:17: note: ‘long int sysconf(int)’ declared here
+  640 | extern long int sysconf (int __name) __THROW;
+      |                 ^~~~~~~
+In file included from /root/mfem/tests/unit/unit_tests.hpp:15,
+                 from /root/mfem/tests/unit/run_unit_tests.hpp:15,
+                 from /root/mfem/tests/unit/unit_test_main.cpp:14:
+/root/mfem/tests/unit/catch.hpp:10877:45: error: size of array ‘altStackMem’ is not an integral constant-expression
+10877 |     char FatalConditionHandler::altStackMem[sigStackSize] = {};
+      |                                             ^~~~~~~~~~~~
+In file included from /usr/include/signal.h:328,
+                 from /root/mfem/tests/unit/catch.hpp:8030,
+                 from /root/mfem/tests/unit/unit_tests.hpp:15,
+                 from /root/mfem/tests/unit/run_unit_tests.hpp:15,
+                 from /root/mfem/tests/unit/unit_test_main.cpp:14:
+/root/mfem/tests/unit/catch.hpp:10818:58: error: call to non-‘constexpr’ function ‘long int sysconf(int)’
+10818 |     static constexpr std::size_t sigStackSize = 32768 >= MINSIGSTKSZ ? 32768 : MINSIGSTKSZ;
+      |                                                          ^~~~~~~~~~~
+In file included from /usr/include/x86_64-linux-gnu/bits/sigstksz.h:24,
+                 from /usr/include/signal.h:328,
+                 from /root/mfem/tests/unit/catch.hpp:8030,
+                 from /root/mfem/tests/unit/unit_tests.hpp:15,
+                 from /root/mfem/tests/unit/run_unit_tests.hpp:15,
+                 from /root/mfem/tests/unit/unit_test_main.cpp:14:
+/usr/include/unistd.h:640:17: note: ‘long int sysconf(int)’ declared here
+  640 | extern long int sysconf (int __name) __THROW;
+      |                 ^~~~~~~
+In file included from /root/mfem/tests/unit/unit_tests.hpp:15,
+                 from /root/mfem/tests/unit/run_unit_tests.hpp:15,
+                 from /root/mfem/tests/unit/unit_test_main.cpp:14:
+/root/mfem/tests/unit/catch.hpp:10877:45: error: size of array ‘altStackMem’ is not an integral constant-expression
+10877 |     char FatalConditionHandler::altStackMem[sigStackSize] = {};
+      |                                             ^~~~~~~~~~~~
+In file included from /usr/include/signal.h:328,
+                 from /root/mfem/tests/unit/catch.hpp:8030,
+                 from /root/mfem/tests/unit/unit_tests.hpp:15,
+                 from /root/mfem/tests/unit/run_unit_tests.hpp:15,
+                 from /root/mfem/tests/unit/unit_test_main.cpp:14:
+/root/mfem/tests/unit/catch.hpp:10818:58: error: call to non-‘constexpr’ function ‘long int sysconf(int)’
+10818 |     static constexpr std::size_t sigStackSize = 32768 >= MINSIGSTKSZ ? 32768 : MINSIGSTKSZ;
+      |                                                          ^~~~~~~~~~~
+In file included from /usr/include/x86_64-linux-gnu/bits/sigstksz.h:24,
+                 from /usr/include/signal.h:328,
+                 from /root/mfem/tests/unit/catch.hpp:8030,
+                 from /root/mfem/tests/unit/unit_tests.hpp:15,
+                 from /root/mfem/tests/unit/run_unit_tests.hpp:15,
+                 from /root/mfem/tests/unit/unit_test_main.cpp:14:
+/usr/include/unistd.h:640:17: note: ‘long int sysconf(int)’ declared here
+  640 | extern long int sysconf (int __name) __THROW;
+      |                 ^~~~~~~
+In file included from /root/mfem/tests/unit/unit_tests.hpp:15,
+                 from /root/mfem/tests/unit/run_unit_tests.hpp:15,
+                 from /root/mfem/tests/unit/unit_test_main.cpp:14:
+/root/mfem/tests/unit/catch.hpp:10877:45: error: size of array ‘altStackMem’ is not an integral constant-expression
+10877 |     char FatalConditionHandler::altStackMem[sigStackSize] = {};
+      |                                             ^~~~~~~~~~~~
+make[2]: *** [tests/unit/CMakeFiles/unit_tests.dir/build.make:76: tests/unit/CMakeFiles/unit_tests.dir/unit_test_main.cpp.o] Error 1
+make[1]: *** [CMakeFiles/Makefile2:844: tests/unit/CMakeFiles/unit_tests.dir/all] Error 2
+make[1]: *** Waiting for unfinished jobs....
+make[2]: *** [tests/unit/CMakeFiles/debug_device_tests.dir/build.make:76: tests/unit/CMakeFiles/debug_device_tests.dir/unit_test_main.cpp.o] Error 1
+make[1]: *** [CMakeFiles/Makefile2:975: tests/unit/CMakeFiles/debug_device_tests.dir/all] Error 2
+make[2]: *** [tests/unit/CMakeFiles/sedov_tests_debug.dir/build.make:76: tests/unit/CMakeFiles/sedov_tests_debug.dir/unit_test_main.cpp.o] Error 1
+make[1]: *** [CMakeFiles/Makefile2:896: tests/unit/CMakeFiles/sedov_tests_debug.dir/all] Error 2
+make[2]: *** [tests/unit/CMakeFiles/tmop_pa_tests_cpu.dir/build.make:76: tests/unit/CMakeFiles/tmop_pa_tests_cpu.dir/unit_test_main.cpp.o] Error 1
+make[1]: *** [CMakeFiles/Makefile2:923: tests/unit/CMakeFiles/tmop_pa_tests_cpu.dir/all] Error 2
+make[2]: *** [tests/unit/CMakeFiles/sedov_tests_cpu.dir/build.make:76: tests/unit/CMakeFiles/sedov_tests_cpu.dir/unit_test_main.cpp.o] Error 1
+make[1]: *** [CMakeFiles/Makefile2:870: tests/unit/CMakeFiles/sedov_tests_cpu.dir/all] Error 2
+make[2]: *** [tests/unit/CMakeFiles/tmop_pa_tests_debug.dir/build.make:76: tests/unit/CMakeFiles/tmop_pa_tests_debug.dir/unit_test_main.cpp.o] Error 1
+make[1]: *** [CMakeFiles/Makefile2:949: tests/unit/CMakeFiles/tmop_pa_tests_debug.dir/all] Error 2
+make: *** [Makefile:146: all] Error 2
 
-2023-11-09 09:11:48,102:ERROR:
-2023-11-09 09:11:48,102:ERROR:Processing issues: 100%|##########| 1/1 [02:44<00:00, 164.86s/it]
-2023-11-09 09:11:48,102:ERROR:
-2023-11-09 09:11:48,102:ERROR:Processing issues: 100%|##########| 1/1 [02:44<00:00, 164.86s/it]
+2023-11-10 09:29:49,903:INFO:Running test case: H1 pa_coeff
+2023-11-10 09:29:49,903:INFO:CWD: /root/mfem/build/tests/unit
+2023-11-10 09:29:49,903:INFO:开始运行测试用例 H1 pa_coeff ...
+H1 pa_coeff 不存在于测试用例列表中
+
+2023-11-10 09:29:49,903:ERROR:/root/mfem-code-analyzer/get_normal_testcase_covarage/run_tesscase.sh: line 11: ./unit_tests: No such file or directory
+/root/mfem-code-analyzer/get_normal_testcase_covarage/run_tesscase.sh: line 21: ./unit_tests: No such file or directory
+
+2023-11-10 09:29:49,909:INFO:Running test case: Hcurl/Hdiv pa_coeff
+2023-11-10 09:29:49,909:INFO:CWD: /root/mfem/build/tests/unit
+2023-11-10 09:29:49,909:INFO:开始运行测试用例 Hcurl/Hdiv pa_coeff ...
+Hcurl/Hdiv pa_coeff 不存在于测试用例列表中
+
+2023-11-10 09:29:49,909:ERROR:/root/mfem-code-analyzer/get_normal_testcase_covarage/run_tesscase.sh: line 11: ./unit_tests: No such file or directory
+/root/mfem-code-analyzer/get_normal_testcase_covarage/run_tesscase.sh: line 21: ./unit_tests: No such file or directory
+
+2023-11-10 09:29:49,915:INFO:Running test case: Hcurl/Hdiv mixed pa_coeff
+2023-11-10 09:29:49,915:INFO:CWD: /root/mfem/build/tests/unit
+2023-11-10 09:29:49,916:INFO:开始运行测试用例 Hcurl/Hdiv mixed pa_coeff ...
+Hcurl/Hdiv mixed pa_coeff 不存在于测试用例列表中
+
+2023-11-10 09:29:49,916:ERROR:/root/mfem-code-analyzer/get_normal_testcase_covarage/run_tesscase.sh: line 11: ./unit_tests: No such file or directory
+/root/mfem-code-analyzer/get_normal_testcase_covarage/run_tesscase.sh: line 21: ./unit_tests: No such file or directory
+
+2023-11-10 09:29:49,922:INFO:Running test case: ParallelPAGradient
+2023-11-10 09:29:49,922:INFO:CWD: /root/mfem/build/tests/unit
+2023-11-10 09:29:49,922:INFO:开始运行测试用例 ParallelPAGradient ...
+ParallelPAGradient 不存在于测试用例列表中
+
+2023-11-10 09:29:49,922:ERROR:/root/mfem-code-analyzer/get_normal_testcase_covarage/run_tesscase.sh: line 11: ./unit_tests: No such file or directory
+/root/mfem-code-analyzer/get_normal_testcase_covarage/run_tesscase.sh: line 21: ./unit_tests: No such file or directory
+
+2023-11-10 09:29:49,928:INFO:Running test case: PA Gradient
+2023-11-10 09:29:49,929:INFO:CWD: /root/mfem/build/tests/unit
+2023-11-10 09:29:49,929:INFO:开始运行测试用例 PA Gradient ...
+PA Gradient 不存在于测试用例列表中
+
+2023-11-10 09:29:49,929:ERROR:/root/mfem-code-analyzer/get_normal_testcase_covarage/run_tesscase.sh: line 11: ./unit_tests: No such file or directory
+/root/mfem-code-analyzer/get_normal_testcase_covarage/run_tesscase.sh: line 21: ./unit_tests: No such file or directory
+
+2023-11-10 09:29:49,935:INFO:Running test case: Nonlinear Convection
+2023-11-10 09:29:49,935:INFO:CWD: /root/mfem/build/tests/unit
+2023-11-10 09:29:49,935:INFO:开始运行测试用例 Nonlinear Convection ...
+Nonlinear Convection 不存在于测试用例列表中
+
+2023-11-10 09:29:49,935:ERROR:/root/mfem-code-analyzer/get_normal_testcase_covarage/run_tesscase.sh: line 11: ./unit_tests: No such file or directory
+/root/mfem-code-analyzer/get_normal_testcase_covarage/run_tesscase.sh: line 21: ./unit_tests: No such file or directory
+
+2023-11-10 09:29:49,936:ERROR:
+2023-11-10 09:29:49,937:ERROR:Processing issues: 100%|##########| 1/1 [02:12<00:00, 132.25s/it]
+2023-11-10 09:29:49,937:ERROR:
+2023-11-10 09:29:49,937:ERROR:Processing issues: 100%|##########| 1/1 [02:12<00:00, 132.25s/it]

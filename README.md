@@ -128,6 +128,7 @@ cd tests/unit
 ### issue 2878
 
 url: https://github.com/mfem/mfem/issues/2878
+bug sha:使用的是50cd7da165999d4c65a6875a24c39317acaa2c3e
 修改ex3p.cpp中204行a->AddDomainIntegrator(new VectorFEMassIntegrator(*sigma)); 为：
 a->AddDomainIntegrator(new VectorFEMassIntegrator(*sigma));
 a->AddBoundaryIntegrator(new VectorFEMassIntegrator(*sigma));
@@ -138,3 +139,15 @@ cd mfem
 make clean
 make all -j
 cd examples
+mpirun -np 5 ex3p -m /root/mfem/data/beam-tet.mesh -o 1
+
+### issue 2666
+
+url: https://github.com/mfem/mfem/issues/2666
+作者可以在以下两个版本复现0843a87d7953cf23e556dcfd426d27bd9cfb3e21，9d8043b9e78dcdcd86639bbb28d3bd7b514fb5e2(这个编译不过去，这个是V4.3),我不行呜呜。修复版本跑了没问题，没复现出bug
+cd mfem
+make clean
+make all -j
+cd examples
+mpirun -np 2 ex15p -m /root/mfem/data/escher.mesh -r 2 -tf 0.3 -est 1
+
