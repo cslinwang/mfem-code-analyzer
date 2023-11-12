@@ -148,7 +148,7 @@ genhtml coverage.info --output-directory coverage_report
 
 ## BUG复现命令
 
-### issue 3691
+### issue 3691成功
 
 fix sha:a15866e212b167ab83d5384e7326cdd3fa0723b2
 reset current branch to previous commit,hard reset
@@ -172,7 +172,7 @@ cd tests/unit
 ./unit_tests --list-test-names-only
 ./unit_tests "Hcurl/Hdiv pa_coeff"
 
-### issue 2878
+### issue 2878成功
 
 url: https://github.com/mfem/mfem/issues/2878
 bug sha:使用的是50cd7da165999d4c65a6875a24c39317acaa2c3e
@@ -189,12 +189,79 @@ cd examples
 mpirun -np 5 ex3p -m /root/mfem/data/beam-tet.mesh -o 1
 
 ### issue 2666
+（未复现）
 
 url: https://github.com/mfem/mfem/issues/2666
-作者可以在以下两个版本复现0843a87d7953cf23e556dcfd426d27bd9cfb3e21，9d8043b9e78dcdcd86639bbb28d3bd7b514fb5e2(这个编译不过去，这个是V4.3),我不行呜呜。修复版本跑了没问题，没复现出bug
+第一种：运行ex15p
+作者可以在以下两个版本复现0843a87d7953cf23e556dcfd426d27bd9cfb3e21，9d8043b9e78dcdcd86639bbb28d3bd7b514fb5e2(这个编译不过去，这个是V4.3),我不行呜呜。修复版本跑了没问题，bug版本卡在一个地方不跑了。
 cd mfem
 make clean
 make all -j
 cd examples
 mpirun -np 2 ex15p -m /root/mfem/data/escher.mesh -r 2 -tf 0.3 -est 1
 
+第二种：运行作者提供的测试用例，已放入2666
+报错：root@eaa7a2b03f3a:~/mfem/examples# mpirun -np 2 nc-tet-mwe -m /root/mfem/data/escher.mesh
+--------------------------------------------------------------------------
+mpirun was unable to find the specified executable file, and therefore
+did not launch the job.  This error was first reported for process
+rank 0; it may have occurred for other processes as well.
+
+NOTE: A common cause for this error is misspelling a mpirun command
+      line parameter option (remember that mpirun interprets the first
+      unrecognized command line token as the executable).
+
+Node:       eaa7a2b03f3a
+Executable: nc-tet-mwe
+--------------------------------------------------------------------------
+2 total processes failed to start
+
+cd mfem
+make clean
+make all -j
+cd examples
+mpicxx -O3 -std=c++11 -I.. -I../../hypre/src/hypre/include 2666.cpp -o 2666 -L.. -lmfem -L../../hypre/src/hypre/lib -lHYPRE -L../../metis-4.0 -lmetis -lrt
+mpirun -np 2 nc-tet-mwe -m /root/mfem/data/escher.mesh
+
+### 2982
+（未复现）编译出错
+cd mfem
+make clean
+make all -j
+cd examples
+mpicxx -O3 -std=c++11 -I.. -I../../hypre/src/hypre/include 2982.cpp -o 2982 -L.. -lmfem -L../../hypre/src/hypre/lib -lHYPRE -L../../metis-4.0 -lmetis -lrt
+mpicxx -O3 -std=c++11 -I.. -I../../hypre/src/hypre/include ex1.cpp -o ex1 -L.. -lmfem -L../../hypre/src/hypre/lib -lHYPRE -L../../metis-4.0 -lmetis -lrt
+报错：
+root@eaa7a2b03f3a:~/mfem/examples# mpicxx -O3 -std=c++11 -I.. -I../../hypre/src/hypre/include 2982.cpp -o 2982 -L.. -lmfem -L../../hypre/src/hypre/lib -lHYPRE -L../../metis-4.0 -lmetis -lrt
+2982.cpp: In function ‘void transfer_field_distributed(mfem::ParGridFunction*, mfem::ParGridFunction*, double)’:
+2982.cpp:46:5: error: ‘FindPointsGSLIB’ was not declared in this scope
+   46 |     FindPointsGSLIB finder(MPI_COMM_WORLD);
+      |     ^~~~~~~~~~~~~~~
+2982.cpp:47:5: error: ‘finder’ was not declared in this scope; did you mean ‘rindex’?
+   47 |     finder.SetDefaultInterpolationValue(NAN);
+      |     ^~~~~~
+      |     rindex
+可能是FindPointsGSLIB依赖于外部库或模块,FindPointsGSLIB位于miniapps/gslib中的pfindpts和field-interp，应该要编译miniapps
+
+### 2779成功
+reset current branch to previous commit,hard reset
+cd mfem
+make clean
+make all -j
+cd examples
+mpicxx -O3 -std=c++11 -I.. -I../../hypre/src/hypre/include 2779.cpp -o 2779 -L.. -lmfem -L../../hypre/src/hypre/lib -lHYPRE -L../../metis-4.0 -lmetis -lrt
+./2779
+
+### 2559成功
+reset current branch to previous commit,hard reset
+去掉头文件#include "stokes.hpp"，因为编译不过去，然后把tst.cpp放入examples，把manifold.msh放入data
+cd mfem
+make clean
+make all -j
+cd examples
+mpicxx -O3 -std=c++11 -I.. -I../../hypre/src/hypre/include tst.cpp -o tst -L.. -lmfem -L../../hypre/src/hypre/lib -lHYPRE -L../../metis-4.0 -lmetis -lrt
+mpirun -np 4 tst -m /root/mfem/data/manifold.msh
+
+
+### 2413
+mpicxx -O3 -std=c++11 -I.. -I../../hypre/src/hypre/include 2413.cpp -o 2413 -L.. -lmfem -L../../hypre/src/hypre/lib -lHYPRE -L../../metis-4.0 -lmetis -lrt
