@@ -1,7 +1,7 @@
 mfem issue2878:
   name: issue2878
-  bug_sha: 6206c775cca216706276a92e33c4a9d772c4b1bd
-  fix_sha: a078107c51e1a8c329496e8d1fa2c3f17ba85831
+  bug_sha: 4bc51ae3b85d91e6d51320236101b9b815742b0d
+  fix_sha: d9275d734e060fc653236ab4901b370cbb6dd7ad
   testcase: tests/unit/fem/test_pa_coeff.cpp,tests/unit/fem/test_pa_grad.cpp
   testname: H1 pa_coeff,Hcurl/Hdiv pa_coeff,Hcurl/Hdiv mixed pa_coeff,ParallelPAGradient,PA Gradient,Nonlinear Convection
   url: https://github.com/mfem/mfem/commit/987d2e043bad3a99841b88354dce0c0932cb8642

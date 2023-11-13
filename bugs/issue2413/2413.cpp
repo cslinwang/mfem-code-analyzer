@@ -1,45 +1,3 @@
-//                       MFEM Example 1 - Parallel Version
-//                             SuperLU Modification
-//
-// Compile with: make ex1p
-//
-// Sample runs:  mpirun -np 4 ex1p -m ../../data/square-disc.mesh
-//               mpirun -np 4 ex1p -m ../../data/star.mesh
-//               mpirun -np 4 ex1p -m ../../data/star-mixed.mesh
-//               mpirun -np 4 ex1p -m ../../data/escher.mesh
-//               mpirun -np 4 ex1p -m ../../data/fichera.mesh
-//               mpirun -np 4 ex1p -m ../../data/fichera-mixed.mesh
-//               mpirun -np 4 ex1p -m ../../data/toroid-wedge.mesh
-//               mpirun -np 4 ex1p -m ../../data/periodic-annulus-sector.msh
-//               mpirun -np 4 ex1p -m ../../data/periodic-torus-sector.msh
-//               mpirun -np 4 ex1p -m ../../data/square-disc-p2.vtk -o 2
-//               mpirun -np 4 ex1p -m ../../data/square-disc-nurbs.mesh -o -1
-//               mpirun -np 4 ex1p -m ../../data/star-mixed-p2.mesh -o 2
-//               mpirun -np 4 ex1p -m ../../data/disc-nurbs.mesh -o -1
-//               mpirun -np 4 ex1p -m ../../data/pipe-nurbs.mesh -o -1
-//               mpirun -np 4 ex1p -m ../../data/ball-nurbs.mesh -o 2
-//               mpirun -np 4 ex1p -m ../../data/star-surf.mesh
-//               mpirun -np 4 ex1p -m ../../data/square-disc-surf.mesh
-//               mpirun -np 4 ex1p -m ../../data/inline-segment.mesh
-//               mpirun -np 4 ex1p -m ../../data/amr-quad.mesh
-//               mpirun -np 4 ex1p -m ../../data/amr-hex.mesh
-//               mpirun -np 4 ex1p -m ../../data/mobius-strip.mesh
-//
-// Description:  This example code demonstrates the use of MFEM to define a
-//               simple finite element discretization of the Laplace problem
-//               -Delta u = 1 with homogeneous Dirichlet boundary conditions.
-//               Specifically, we discretize using a FE space of the specified
-//               order, or if order < 1 using an isoparametric/isogeometric
-//               space (i.e. quadratic for quadratic curvilinear mesh, NURBS for
-//               NURBS mesh, etc.)
-//
-//               The example highlights the use of mesh refinement, finite
-//               element grid functions, as well as linear and bilinear forms
-//               corresponding to the left-hand side and right-hand side of the
-//               discrete linear system. We also cover the explicit elimination
-//               of essential boundary conditions, static condensation, and the
-//               optional connection to the GLVis tool for visualization.
-
 #include "mfem.hpp"
 #include <fstream>
 #include <iostream>
@@ -60,7 +18,7 @@ int main(int argc, char *argv[])
    MPI_Comm_rank(MPI_COMM_WORLD, &myid);
 
    // 2. Parse command-line options.
-   const char *mesh_file = "../../data/star.mesh";
+   const char *mesh_file = "mesh.msh";
    int order = 1;
    const char *device_config = "cpu";
    bool visualization = true;
@@ -166,7 +124,7 @@ int main(int argc, char *argv[])
       delete_fec = true;
    }
    ParFiniteElementSpace fespace(&pmesh, fec);
-   HYPRE_BigInt size = fespace.GlobalTrueVSize();
+   HYPRE_Int size = fespace.GlobalTrueVSize();
    if (myid == 0)
    {
       cout << "Number of finite element unknowns: " << size << endl;
@@ -215,77 +173,80 @@ int main(int argc, char *argv[])
    a.FormLinearSystem(ess_tdof_list, x, b, A, X, B);
 
    // 13. Solve the linear system A X = B utilizing SuperLU.
-   SuperLUSolver *superlu = new SuperLUSolver(MPI_COMM_WORLD);
-   Operator *SLU_A = new SuperLURowLocMatrix(*A.As<HypreParMatrix>());
-   superlu->SetPrintStatistics(true);
-   superlu->SetSymmetricPattern(false);
+   for(int i=0; i<1000000; i++)
+     {
+       SuperLUSolver *superlu = new SuperLUSolver(MPI_COMM_WORLD);
+       Operator *SLU_A = new SuperLURowLocMatrix(*A.As<HypreParMatrix>());
+       superlu->SetPrintStatistics(true);
+       superlu->SetSymmetricPattern(false);
 
-   if (slu_colperm == 0)
-   {
-      superlu->SetColumnPermutation(superlu::NATURAL);
-   }
-   else if (slu_colperm == 1)
-   {
-      superlu->SetColumnPermutation(superlu::MMD_ATA);
-   }
-   else if (slu_colperm == 2)
-   {
-      superlu->SetColumnPermutation(superlu::MMD_AT_PLUS_A);
-   }
-   else if (slu_colperm == 3)
-   {
-      superlu->SetColumnPermutation(superlu::COLAMD);
-   }
-   else if (slu_colperm == 4)
-   {
-      superlu->SetColumnPermutation(superlu::METIS_AT_PLUS_A);
-   }
-   else if (slu_colperm == 5)
-   {
-      superlu->SetColumnPermutation(superlu::PARMETIS);
-   }
-   else if (slu_colperm == 6)
-   {
+       if (slu_colperm == 0)
+	 {
+	   superlu->SetColumnPermutation(superlu::NATURAL);
+	 }
+       else if (slu_colperm == 1)
+	 {
+	   superlu->SetColumnPermutation(superlu::MMD_ATA);
+	 }
+       else if (slu_colperm == 2)
+	 {
+	   superlu->SetColumnPermutation(superlu::MMD_AT_PLUS_A);
+	 }
+       else if (slu_colperm == 3)
+	 {
+	   superlu->SetColumnPermutation(superlu::COLAMD);
+	 }
+       else if (slu_colperm == 4)
+	 {
+	   superlu->SetColumnPermutation(superlu::METIS_AT_PLUS_A);
+	 }
+       else if (slu_colperm == 5)
+	 {
+	   superlu->SetColumnPermutation(superlu::PARMETIS);
+	 }
+       else if (slu_colperm == 6)
+	 {
       superlu->SetColumnPermutation(superlu::ZOLTAN);
-   }
+	 }
 
-   if (slu_rowperm == 0)
-   {
+       if (slu_rowperm == 0)
+	 {
       superlu->SetRowPermutation(superlu::NOROWPERM);
-   }
-   else if (slu_rowperm == 1)
-   {
+	 }
+       else if (slu_rowperm == 1)
+	 {
 #ifdef MFEM_USE_SUPERLU5
-      superlu->SetRowPermutation(superlu::LargeDiag);
+	   superlu->SetRowPermutation(superlu::LargeDiag);
 #else
-      superlu->SetRowPermutation(superlu::LargeDiag_MC64);
+	   superlu->SetRowPermutation(superlu::LargeDiag_MC64);
 #endif
-   }
+	 }
 
-   if (slu_iterref == 0)
-   {
-      superlu->SetIterativeRefine(superlu::NOREFINE);
-   }
-   else if (slu_iterref == 1)
-   {
-      superlu->SetIterativeRefine(superlu::SLU_SINGLE);
-   }
-   else if (slu_iterref == 2)
-   {
-      superlu->SetIterativeRefine(superlu::SLU_DOUBLE);
-   }
-   else if (slu_iterref == 3)
-   {
-      superlu->SetIterativeRefine(superlu::SLU_EXTRA);
-   }
+       if (slu_iterref == 0)
+	 {
+	   superlu->SetIterativeRefine(superlu::NOREFINE);
+	 }
+       else if (slu_iterref == 1)
+	 {
+	   superlu->SetIterativeRefine(superlu::SLU_SINGLE);
+	 }
+       else if (slu_iterref == 2)
+	 {
+	   superlu->SetIterativeRefine(superlu::SLU_DOUBLE);
+	 }
+       else if (slu_iterref == 3)
+	 {
+	   superlu->SetIterativeRefine(superlu::SLU_EXTRA);
+	 }
+       superlu->SetOperator(*SLU_A);
+       superlu->SetPrintStatistics(true);
+       superlu->Mult(B, X);
+       superlu ->DismantleGrid();
 
-   superlu->SetOperator(*SLU_A);
-   superlu->SetPrintStatistics(true);
-   superlu->Mult(B, X);
-   superlu->DismantleGrid();
 
-   delete SLU_A;
-   delete superlu;
+       delete superlu;
+       delete SLU_A;
+     }
 
    // 14. Recover the parallel grid function corresponding to X. This is the
    //     local finite element solution on each processor.
