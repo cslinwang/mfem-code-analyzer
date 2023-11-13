@@ -42,12 +42,22 @@ git clean -fd
 
 #### 覆盖率
 
+覆盖率(example)
+原文
+
+```
+# Replace the default implicit rule for *.cpp files
+
+%: $(SRC)%.cpp $(MFEM_LIB_FILE) $(CONFIG_MK)
+
+    $(MFEM_CXX) $(MFEM_FLAGS) $< -o $@ $(MFEM_LIBS)
 ```
 
+替换
+```
 # 添加覆盖率标志
 
 CXXFLAGS += -fprofile-arcs -ftest-coverage
-
 LDFLAGS += -lgcov
 
 # Replace the default implicit rule for *.cpp files
@@ -56,14 +66,51 @@ LDFLAGS += -lgcov
 
     $(MFEM_CXX) $(MFEM_FLAGS) $(CXXFLAGS) $< -o $@ $(MFEM_LIBS) $(LDFLAGS)
 
-
-
-    @find . -type f -name '*.gcno' -delete
-
-    @find . -type f -name '*.gcda' -delete
-
 ```
 
+覆盖率（unitest）
+
+原文
+```
+# Flags used for compiling all source files.
+
+MFEM_BUILD_FLAGS = $(MFEM_PICFLAG) $(MFEM_CPPFLAGS) $(MFEM_CXXFLAGS)\
+
+ $(MFEM_TPLFLAGS) $(CONFIG_FILE_DEF)
+
+
+
+# Rules for compiling all source files.
+
+$(OBJECT_FILES): $(BLD)%.o: $(SRC)%.cpp $(CONFIG_MK)
+
+    $(MFEM_CXX) $(MFEM_BUILD_FLAGS) -c $(<) -o $(@)
+```
+
+替换
+```
+CXXFLAGS += -fprofile-arcs -ftest-coverage
+LDFLAGS += -lgcov
+
+# Flags used for compiling all source files.
+
+MFEM_BUILD_FLAGS = $(MFEM_PICFLAG) $(MFEM_CPPFLAGS) $(MFEM_CXXFLAGS)\
+
+ $(MFEM_TPLFLAGS) $(CONFIG_FILE_DEF) $(CXXFLAGS)
+
+# Rules for compiling all source files.
+
+$(OBJECT_FILES): $(BLD)%.o: $(SRC)%.cpp $(CONFIG_MK)
+
+    $(MFEM_CXX) $(MFEM_BUILD_FLAGS) -c $(<) -o $(@) $(LDFLAGS)
+```
+
+
+### 覆盖率增加脚本
+
+/root/mfem-code-analyzer/get_normal_testcase_covarage/add_coverage.sh
+
+```
 
 如何运行单个测试用例
 
