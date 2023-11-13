@@ -225,6 +225,7 @@ mpirun -np 2 nc-tet-mwe -m /root/mfem/data/escher.mesh
 
 ### 2982
 （未复现）编译出错
+url: https://github.com/mfem/mfem/issues/2982
 cd mfem
 make clean
 make all -j
@@ -264,4 +265,9 @@ mpirun -np 4 tst -m /root/mfem/data/manifold.msh
 
 
 ### 2413
+（未复现）编译失败
+url: https://github.com/mfem/mfem/issues/2413
+作者提供的网格和用例都放入issues2413中了
 mpicxx -O3 -std=c++11 -I.. -I../../hypre/src/hypre/include 2413.cpp -o 2413 -L.. -lmfem -L../../hypre/src/hypre/lib -lHYPRE -L../../metis-4.0 -lmetis -lrt
+
+
