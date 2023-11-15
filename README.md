@@ -266,7 +266,7 @@ url: https://github.com/mfem/mfem/issues/2413
 mpicxx -O3 -std=c++11 -I.. -I../../hypre/src/hypre/include 2413.cpp -o 2413 -L.. -lmfem -L../../hypre/src/hypre/lib -lHYPRE -L../../metis-4.0 -lmetis -lrt
 
 ### 2144成功
-切换privious commit
+切换privious commit和bug sha都可
 make clean
 make all -j
 cd examples
@@ -288,34 +288,15 @@ Nodes on W face: 0 2
 [row 3]
  (1,1) (0,1) (3,1)
 
-96fc6f177ea8f2174676e7dc6d5c9ec1a08a4d60
- root@d8f6458e7cf3:~/mfem/mfem/examples# ./2144
-***********************************************************
-Nodes on N face: 2 3
-Nodes on S face: 0 1
-Nodes on E face: 1 3
-Nodes on W face: 0 2
-***********************************************************
-[row 0]
- (2,1) (3,1) (0,1)
-[row 1]
-[row 2]
- (2,1) (3,1) (0,1)
-[row 3]
- (2,1) (3,1) (0,1)
-
-913361dd0db723d07e9c7492102f8b887acabc48
- root@d8f6458e7cf3:~/mfem/mfem/examples# ./2144
-***********************************************************
-Nodes on N face: 2 3
-Nodes on S face: 0 1
-Nodes on E face: 1 3
-Nodes on W face: 0 2
-***********************************************************
-[row 0]
- (1,1) (0,1) (3,1)
-[row 1]
- (1,1) (0,1) (3,1)
-[row 2]
-[row 3]
- (1,1) (0,1) (3,1)
+### 1937成功
+切换privious commit和bug sha都可
+root@d8f6458e7cf3:~/mfem/mfem/examples# ./ex1
+Options used:
+   --mesh /root/mfem/mfem/data/periodic_no_affine.msh
+   --order 1
+   --no-static-condensation
+   --no-partial-assembly
+   --device cpu
+   --visualization
+Device configuration: cpu
+Memory configuration: host-std
