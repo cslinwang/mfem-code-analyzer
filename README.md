@@ -290,6 +290,12 @@ Nodes on W face: 0 2
 
 ### 1937成功
 切换privious commit和bug sha都可
+把1937issue中的msh文件复制到data中，让ex1.cpp读取，运行会卡到这里不动，修复版本会跑出结果
+make clean
+make all -j
+cd examples
+./ex1
+结果：
 root@d8f6458e7cf3:~/mfem/mfem/examples# ./ex1
 Options used:
    --mesh /root/mfem/mfem/data/periodic_no_affine.msh
@@ -300,3 +306,22 @@ Options used:
    --visualization
 Device configuration: cpu
 Memory configuration: host-std
+
+### 1930成功
+issue中的1930放入examples中
+bug sha:4bc51ae3b85d91e6d51320236101b9b815742b0d
+make clean
+make all -j
+cd examples
+make 1930
+./1930
+结果：
+root@d8f6458e7cf3:~/mfem/mfem/examples# ./1930
+[row +0]
++1.100000e+01 +1.200000e+01 +2.100000e+01 +2.200000e+01
+
+[row +1]
++1.300000e+01 +1.400000e+01
+
+BlockMatrix::Elem
+Aborted (core dumped)
