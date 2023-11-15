@@ -325,3 +325,39 @@ root@d8f6458e7cf3:~/mfem/mfem/examples# ./1930
 
 BlockMatrix::Elem
 Aborted (core dumped)
+
+### 1928成功
+privious commit
+将square_2mat_per.msh放入data，将test_full_periodic放入examples
+make clean
+make all -j
+cd examples
+make test_full_periodic
+./test_full_periodic
+root@d8f6458e7cf3:~/mfem/mfem/examples# ./test_full_periodic
+Options used:
+   --mesh /root/mfem/mfem/data/square_2mat_per.msh
+   --order 1
+   --tcase 1
+Number of finite element unknowns: 34 ndof: 17 dim: 2
+Assembling: Size of linear system: 34
+   Iteration :   0  (B r, r) = 55.2655
+   Iteration :   1  (B r, r) = 0.236595
+   Iteration :   2  (B r, r) = 0.211833
+   Iteration :   3  (B r, r) = 0.192955
+   Iteration :   4  (B r, r) = 0.0125361
+   Iteration :   5  (B r, r) = 0.00605776
+   Iteration :   6  (B r, r) = 0.00605607
+   Iteration :   7  (B r, r) = 0.000233384
+   Iteration :   8  (B r, r) = 2.66252e-06
+   Iteration :   9  (B r, r) = 7.90989e-08
+   Iteration :  10  (B r, r) = 1.66475e-09
+   Iteration :  11  (B r, r) = 1.21259e-11
+   Iteration :  12  (B r, r) = 8.69257e-14
+   Iteration :  13  (B r, r) = 1.36064e-16
+   Iteration :  14  (B r, r) = 4.44607e-19
+Average reduction factor = 0.191576
+
+tcase 1 -- L2 norm: 0.151905
+Fail
+

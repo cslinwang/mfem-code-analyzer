@@ -1,4 +1,4 @@
-//                                      
+//
 // Compile with: make test_full_periodic
 //
 // Author: Guillaume Latu
@@ -12,9 +12,9 @@
 //               follows:
 //
 //                           x2=1  +----------+----------+
-//                                 | material | material |      
-//                                 |    1     |    2     |      
-//                           x2=0  +----------+----------+      
+//                                 | material | material |
+//                                 |    1     |    2     |
+//                           x2=0  +----------+----------+
 //                               x1=0                   x1=1
 //
 //
@@ -28,19 +28,19 @@
 //                               eps = E + grad_s v
 //
 //                         with  E the given macrocoscopic strain
-//                               v the periodic displacement fluctuation 
+//                               v the periodic displacement fluctuation
 //               Displacement:
 //                                 u = U + v
 //
 //                         with  U the given displacement associated to E
 //                                 E = grad_s U
 //
-//               The local microscopic strain is equal, on average, to the macroscopic strain: 
+//               The local microscopic strain is equal, on average, to the macroscopic strain:
 //                         <eps> = <E>
-//                    
+//
 //               Equation to be solved:   div(C grad_s v)= - div(C grad_s U)
 //
-//               Thus, we introduce the force term -div(C grad_s U) in addition to the 
+//               Thus, we introduce the force term -div(C grad_s U) in addition to the
 //               classical elasticity problem.
 //
 
@@ -76,20 +76,20 @@ public:
   {
     int dof = el.GetDof();
     int spaceDim = Tr.GetSpaceDim();
-    
+
     dshape.SetSize(dof, spaceDim);
     Qvec.SetSize(3);
     Svec.SetSize(3);
     elvect.SetSize(dof*spaceDim);
     elvect = 0.0;
-    
+
     const IntegrationRule *ir = IntRule;
     if (ir == NULL)
       {
 	int intorder = 2 * el.GetOrder();
 	ir = &IntRules.Get(el.GetGeomType(), intorder);
       }
-    
+
     for (int i = 0; i < ir->GetNPoints(); i++)
       {
 	const IntegrationPoint &ip = ir->IntPoint(i);
@@ -131,8 +131,8 @@ public:
 	  break;
 	}
 	Qvec *= ip.weight * Tr.Weight();
-	for (int k = 0; k < spaceDim; k++) 
-	  {	
+	for (int k = 0; k < spaceDim; k++)
+	  {
 	    for (int s = 0; s < dof; s++)
 	      {
 		elvect(dof*k+s)	+= Qvec[k]*dshape(s,Svec[k]);
@@ -140,8 +140,8 @@ public:
 	  }
       }
   }
-  
-  
+
+
 };
 
 void sol_exact1(const Vector &x, Vector &u);
@@ -154,7 +154,7 @@ void sol_exact6(const Vector &x, Vector &u);
 int main(int argc, char *argv[])
 {
    //    Parse command-line options.
-   const char *mesh_file = "ybiper.msh";
+   const char *mesh_file = "/root/mfem/mfem/data/square_2mat_per.msh";
    //   const char *mesh_file = "yper.mesh";
    int order = 1;
    int tcase = 1;
@@ -194,7 +194,7 @@ int main(int argc, char *argv[])
    //    Define a finite element space on the mesh. Here we use vector finite
    //    elements, i.e. dim copies of a scalar finite element space. The vector
    //    dimension is specified by the last argument of the FiniteElementSpace
-   //    constructor. 
+   //    constructor.
    FiniteElementCollection *fec;
    FiniteElementSpace *fespace;
    fec = new H1_FECollection(order, dim);
@@ -208,7 +208,7 @@ int main(int argc, char *argv[])
    //    corresponding to fespace. Initialize x with initial guess of zero,
    //    which satisfies the boundary conditions.
    GridFunction x(fespace);
-   x = 0.; 
+   x = 0.;
 
    // Set up the bilinear form a(.,.) on the finite element space
    //    corresponding to the linear elasticity integrator with piece-wise
@@ -217,7 +217,7 @@ int main(int argc, char *argv[])
    lambda = 100.0;
    if (mesh->attributes.Max() > 1)
      lambda(1) = lambda(0)*2;
-   PWConstCoefficient lambda_func(lambda); 
+   PWConstCoefficient lambda_func(lambda);
    Vector mu(mesh->attributes.Max());
    mu = 75.0;
    if (mesh->attributes.Max() > 1)
@@ -230,17 +230,17 @@ int main(int argc, char *argv[])
    // ux=0, uy=0, uz=0 on this point.
    Array<int> ess_tdof_list;
    ess_tdof_list.SetSize(dim);
-   for (int k = 0; k < dim; k++) 
+   for (int k = 0; k < dim; k++)
      {
        int tgdof = 0+k*ndof;
        ess_tdof_list[k] = tgdof;
        x(tgdof) = 0.0;
      }
-   
+
    BilinearForm *a = new BilinearForm(fespace);
    a->AddDomainIntegrator(new ElasticityIntegrator(lambda_func,mu_func));
    a->Assemble();
-  
+
    // Set up the right-hand side of the FEM linear system.
    LinearForm rhs(fespace);
    rhs.AddDomainIntegrator(new DomainLFGrad2Integrator(lambda_func,mu_func,tcase));
@@ -309,7 +309,7 @@ int main(int argc, char *argv[])
        cout << "Fail" << endl;
        exit(1);
      }
-	
+
    return 0;
 }
 
