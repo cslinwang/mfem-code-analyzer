@@ -112,31 +112,26 @@ $(OBJECT_FILES): $(BLD)%.o: $(SRC)%.cpp $(CONFIG_MK)
 
 ```
 
-如何运行单个测试用例
+# 如何运行单个测试用例
 
-```
-export OMPI_ALLOW_RUN_AS_ROOT=1
-export OMPI_ALLOW_RUN_AS_ROOT_CONFIRM=1
 
 # 先编译全部
 
-cd mefm
+  cd mefm
+  make all -j
 
-make all -j
+        # 并行
+        export OMPI_ALLOW_RUN_AS_ROOT=1
+        export OMPI_ALLOW_RUN_AS_ROOT_CONFIRM=1
 
-# 如果需要重新编译
+        cd mfem/mefem/examples
+        mpicxx -O3 -std=c++11 -I.. -I../../hypre/src/hypre/include 2413.cpp -o 2413 -L.. -lmfem -L../../hypre/src/hypre/lib -lHYPRE -L../../metis-4.0 -lmetis -lrt
 
-cd mfem/examples
 
-# 并行
-make ex0p
-mpirun -np 24 ./ex0p
-mpirun -np 3 ex6p -m /root/mfem-code-analyzer/bugs/issue3691/p1_prism.msh -o 2 -h1
-
-# 串行
-
-make ex0
-./ex0
+        # 串行
+        cd examples
+        make ex0
+        ./ex0
 
 # 收集覆盖率
 

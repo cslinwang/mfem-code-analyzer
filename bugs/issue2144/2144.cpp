@@ -29,7 +29,7 @@ public:
 int main(int argc, char *argv[]){
 
 	// read mesh
-  string mesh_file = "./tri-square-bug.mesh";
+  string mesh_file = "/root/mfem/mfem/data/tri-square-bug.mesh";
 
   Mesh *mesh = new Mesh( mesh_file.c_str(), 1, 1 );
 
