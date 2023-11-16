@@ -414,7 +414,7 @@ root@d8f6458e7cf3:~/mfem/mfem/examples# ./516
 munmap_chunk(): invalid pointer
 Aborted (core dumped)
 
-### 512
+### 512成功
 privious commit
 修改ex6,在140行的for循环内插入：
       Vector v1, v2;
@@ -442,3 +442,59 @@ cd examples
 41.3223
 41.3223
 42.2025
+
+### 310成功
+privious commit
+将310.cpp放入examples
+make clean
+make all -j
+cd examples
+make 310
+./310
+
+root@d8f6458e7cf3:~/mfem/mfem/examples# ./310
+Simple reproducer for Lagrange 1D bug
+Sampling Lagrange1DFiniteElement of order 1
+         for sample -5 with isopar -0.5 weights are {1.5,-0.5} -- sum is 1
+         for sample -4 with isopar -0.4 weights are {1.4,-0.4} -- sum is 1
+         for sample -3 with isopar -0.3 weights are {1.3,-0.3} -- sum is 1
+         for sample -2 with isopar -0.2 weights are {1.2,-0.2} -- sum is 1
+         for sample -1 with isopar -0.1 weights are {1.1,-0.1} -- sum is 1
+         for sample 0 with isopar 0 weights are {1,0} -- sum is 1
+         for sample 1 with isopar 0.1 weights are {0.9,0.1} -- sum is 1
+         for sample 2 with isopar 0.2 weights are {0.8,0.2} -- sum is 1
+         for sample 3 with isopar 0.3 weights are {0.7,0.3} -- sum is 1
+         for sample 4 with isopar 0.4 weights are {0.6,0.4} -- sum is 1
+         for sample 5 with isopar 0.5 weights are {0.5,0.5} -- sum is 1
+         for sample 6 with isopar 0.6 weights are {0.4,0.6} -- sum is 1
+         for sample 7 with isopar 0.7 weights are {0.3,0.7} -- sum is 1
+         for sample 8 with isopar 0.8 weights are {0.2,0.8} -- sum is 1
+         for sample 9 with isopar 0.9 weights are {0.1,0.9} -- sum is 1
+         for sample 10 with isopar 1 weights are {-0,1} -- sum is 1
+         for sample 11 with isopar 1.1 weights are {-0.1,1.1} -- sum is 1
+         for sample 12 with isopar 1.2 weights are {-0.2,1.2} -- sum is 1
+         for sample 13 with isopar 1.3 weights are {-0.3,1.3} -- sum is 1
+         for sample 14 with isopar 1.4 weights are {-0.4,1.4} -- sum is 1
+         for sample 15 with isopar 1.5 weights are {0.25,-0.75} -- sum is -0.5
+Sampling Lagrange1DFiniteElement of order 2
+         for sample -5 with isopar -0.5 weights are {0,0,-0} -- sum is 0
+         for sample -4 with isopar -0.4 weights are {0.252,0.072,-0.224} -- sum is 0.1
+         for sample -3 with isopar -0.3 weights are {0.416,0.096,-0.312} -- sum is 0.2
+         for sample -2 with isopar -0.2 weights are {1.68,0.28,-0.96} -- sum is 1
+         for sample -1 with isopar -0.1 weights are {1.32,0.12,-0.44} -- sum is 1
+         for sample 0 with isopar 0 weights are {1,-0,0} -- sum is 1
+         for sample 1 with isopar 0.1 weights are {0.72,-0.08,0.36} -- sum is 1
+         for sample 2 with isopar 0.2 weights are {0.48,-0.12,0.64} -- sum is 1
+         for sample 3 with isopar 0.3 weights are {0.28,-0.12,0.84} -- sum is 1
+         for sample 4 with isopar 0.4 weights are {0.12,-0.08,0.96} -- sum is 1
+         for sample 5 with isopar 0.5 weights are {-0,0,1} -- sum is 1
+         for sample 6 with isopar 0.6 weights are {-0.08,0.12,0.96} -- sum is 1
+         for sample 7 with isopar 0.7 weights are {-0.12,0.28,0.84} -- sum is 1
+         for sample 8 with isopar 0.8 weights are {-0.12,0.48,0.64} -- sum is 1
+         for sample 9 with isopar 0.9 weights are {-0.08,0.72,0.36} -- sum is 1
+         for sample 10 with isopar 1 weights are {0,1,-0} -- sum is 1
+         for sample 11 with isopar 1.1 weights are {0.12,1.32,-0.44} -- sum is 1
+         for sample 12 with isopar 1.2 weights are {0.28,1.68,-0.96} -- sum is 1
+         for sample 13 with isopar 1.3 weights are {-0.096,-0.416,0.312} -- sum is -0.2
+free(): invalid size
+Aborted (core dumped)
