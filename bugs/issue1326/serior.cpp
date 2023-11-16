@@ -16,7 +16,7 @@ double InitialPsi(const Vector &x)
 int main(int argc, char *argv[])
 {
    //++++Parse command-line options.
-   const char *mesh_file = "./amr-periodic.mesh";
+   const char *mesh_file = "/root/mfem/mfem/data/amr-mesh-new.mesh";
    int ser_ref_levels = 2;
    int order = 2;
 

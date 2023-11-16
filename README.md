@@ -361,3 +361,43 @@ Average reduction factor = 0.191576
 tcase 1 -- L2 norm: 0.151905
 Fail
 
+### 1413失败
+privious commit
+将1413_2放入examples
+make clean
+make all -j
+cd examples
+make 1413_2
+for i in {1..10000}; do ./1413_2; done
+
+### 1326失败
+privious commit
+将serior放入examples
+make clean
+make all -j
+cd examples
+make serior
+./serior
+
+### 1322失败
+无论哪个sha都是以下结果：
+root@d8f6458e7cf3:~/mfem/mfem/examples# ./1322
+Options used:
+   --device cpu
+Device configuration: cpu
+0 0 0 0 0 0 0 0
+1 1 1 1 1 1 1 1
+2 2 2 2 2 2 2 2
+
+### 685成功
+privious commit
+将685.cpp放入examples
+make clean
+make all -j
+cd examples
+make 685
+./685
+[row +1]
++3.026530e-02 -4.801480e-01 +4.820680e-01 +4.719240e-01
+修复版本下[row +1]
++3.026530e-02 +1.198990e-03 +4.820680e-01 +4.719240e-01

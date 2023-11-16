@@ -6,11 +6,10 @@ using namespace mfem;
 
 int main(int argc, char *argv[])
 {
-    // 1. Initialize MFEM
-    InitMFEM();
+
 
     // 2. Load the high-order quad mesh
-    const char *mesh_file = "star-q2.mesh";
+    const char *mesh_file = "/root/mfem/mfem/data/star-q2.mesh";
     Mesh mesh(mesh_file, 1, 1);
 
     // 3. Look at element 0's element transformation's point matrix
@@ -41,8 +40,6 @@ int main(int argc, char *argv[])
         iso_elem_trans->GetPointMat().Print();
     }
 
-    // 6. Finalize MFEM
-    FinalizeMFEM();
 
     return 0;
 }
