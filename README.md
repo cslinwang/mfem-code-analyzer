@@ -401,3 +401,15 @@ make 685
 +3.026530e-02 -4.801480e-01 +4.820680e-01 +4.719240e-01
 修复版本下[row +1]
 +3.026530e-02 +1.198990e-03 +4.820680e-01 +4.719240e-01
+
+### 516成功
+privious commit
+将516.cpp放入examples
+make clean
+make all -j
+cd examples
+make 516
+./516
+root@d8f6458e7cf3:~/mfem/mfem/examples# ./516
+munmap_chunk(): invalid pointer
+Aborted (core dumped)
