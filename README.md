@@ -413,3 +413,32 @@ make 516
 root@d8f6458e7cf3:~/mfem/mfem/examples# ./516
 munmap_chunk(): invalid pointer
 Aborted (core dumped)
+
+### 512
+privious commit
+修改ex6,在140行的for循环内插入：
+      Vector v1, v2;
+      mesh.PrintCharacteristics(&v1, &v2, std::cout);
+且修改为const int max_dofs = 500000;
+网格文件替换：const char *mesh_file = "/root/mfem/mfem/data/inline-tet.mesh";
+make clean
+make all -j
+cd examples
+./ex6
+结果：kappa max：
+2.56155
+3.94272
+6.24804
+6.98736
+6.98736
+9.44001
+11.4124
+29.8203
+29.8203
+29.8203
+34.5041
+34.5041
+41.3223
+41.3223
+41.3223
+42.2025
