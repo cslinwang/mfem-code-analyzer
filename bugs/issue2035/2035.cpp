@@ -4,7 +4,7 @@ using namespace mfem;
 int main(int argc, char *argv[])
 {
    MPI_Init(&argc, &argv);
-   const char *mesh_file = "../data/star.mesh";
+   const char *mesh_file = "/root/mfem/data/star.mesh";
    Mesh mesh(mesh_file, 1, 1);
    int dim = mesh.Dimension();
    ParMesh pmesh(MPI_COMM_WORLD, mesh);

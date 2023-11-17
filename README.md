@@ -183,40 +183,17 @@ make all -j
 cd examples
 mpirun -np 5 ex3p -m /root/mfem/data/beam-tet.mesh -o 1
 
-### issue 2666
-（未复现）
+### issue 2666成功
 
 url: https://github.com/mfem/mfem/issues/2666
 第一种：运行ex15p
-作者可以在以下两个版本复现0843a87d7953cf23e556dcfd426d27bd9cfb3e21，9d8043b9e78dcdcd86639bbb28d3bd7b514fb5e2(这个编译不过去，这个是V4.3),我不行呜呜。修复版本跑了没问题，bug版本卡在一个地方不跑了。
+bug sha: 0843a87d7953cf23e556dcfd426d27bd9cfb3e21。
+修复版本跑了没问题，bug版本卡在一个地方不跑了。
 cd mfem
 make clean
 make all -j
 cd examples
 mpirun -np 2 ex15p -m /root/mfem/data/escher.mesh -r 2 -tf 0.3 -est 1
-
-第二种：运行作者提供的测试用例，已放入2666
-报错：root@eaa7a2b03f3a:~/mfem/examples# mpirun -np 2 nc-tet-mwe -m /root/mfem/data/escher.mesh
---------------------------------------------------------------------------
-mpirun was unable to find the specified executable file, and therefore
-did not launch the job.  This error was first reported for process
-rank 0; it may have occurred for other processes as well.
-
-NOTE: A common cause for this error is misspelling a mpirun command
-      line parameter option (remember that mpirun interprets the first
-      unrecognized command line token as the executable).
-
-Node:       eaa7a2b03f3a
-Executable: nc-tet-mwe
---------------------------------------------------------------------------
-2 total processes failed to start
-
-cd mfem
-make clean
-make all -j
-cd examples
-mpicxx -O3 -std=c++11 -I.. -I../../hypre/src/hypre/include 2666.cpp -o 2666 -L.. -lmfem -L../../hypre/src/hypre/lib -lHYPRE -L../../metis-4.0 -lmetis -lrt
-mpirun -np 2 nc-tet-mwe -m /root/mfem/data/escher.mesh
 
 ### 2982
 （未复现）编译出错
@@ -498,3 +475,48 @@ Sampling Lagrange1DFiniteElement of order 2
          for sample 13 with isopar 1.3 weights are {-0.096,-0.416,0.312} -- sum is -0.2
 free(): invalid size
 Aborted (core dumped)
+
+## v2101:
+
+### 2494失败
+cd mfem
+make clean
+make all -j
+cd examples
+mpirun -np 5 ex13p -o 2 > /root/mfem-code-analyzer/get_normal_testcase_covarage/log.txt
+
+### 2413失败
+cd mfem
+make clean
+make all -j
+cd examples
+mpicxx -O3 -std=c++11 -I.. -I../../hypre/src/hypre/include 2413.cpp -o 2413 -L.. -lmfem -L../../hypre/src/hypre/lib -lHYPRE -L../../metis-4.0 -lmetis -lrt
+
+### 2062失败
+mesh-explorer.cpp中修改mesh路径
+cd mfem
+make clean
+make all -j
+cd examples
+/root/mfem/miniapps/meshing/mesh-explorer -np 16 -m /root/mfem/data/beam-hex
+报错：
+root@8403300dc1d0:~/mfem# /root/mfem/miniapps/meshing/mesh-explorer -np 16 -m beam-hex
+Options used:
+   --mesh beam-hex
+   --num-proc 16
+   --refinement
+Can not open mesh file: beam-hex.000000!
+
+### 2035成功
+cd mfem
+make clean
+make all -j
+cd examples
+mpicxx -O3 -std=c++11 -I.. -I../../hypre/src/hypre/include 2035.cpp -o 2035 -L.. -lmfem -L../../hypre/src/hypre/lib -lHYPRE -L../../metis-4.0 -lmetis -lrt
+valgrind --leak-check=full mpirun -np 5 2035
+结果：
+==423008== LEAK SUMMARY:
+==423008==    definitely lost: 6,905 bytes in 26 blocks
+==423008==    indirectly lost: 101,467 bytes in 1,585 blocks
+==423008==      possibly lost: 0 bytes in 0 blocks
+==423008==    still reachable: 116,312 bytes in 147 blocks
