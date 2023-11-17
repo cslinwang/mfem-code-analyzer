@@ -508,6 +508,7 @@ Options used:
 Can not open mesh file: beam-hex.000000!
 
 ### 2035成功
+privious commit
 cd mfem
 make clean
 make all -j
@@ -520,3 +521,16 @@ valgrind --leak-check=full mpirun -np 5 2035
 ==423008==    indirectly lost: 101,467 bytes in 1,585 blocks
 ==423008==      possibly lost: 0 bytes in 0 blocks
 ==423008==    still reachable: 116,312 bytes in 147 blocks
+
+## 1874成功
+privious commit
+在ex3p.cpp,在//4最后面添加：mesh->EnsureNCMesh(true);
+cd mfem
+make clean
+make all -j
+cd examples
+mpirun -n 2 ./ex3p -m ../data/inline-tet.mesh -o 2
+结果：
+MFEM abort: triangle face orientation 1 is not supported! Use Mesh::ReorientTetMesh to fix it.
+ ... in function: virtual const int* mfem::ND_FECollection::DofOrderForOrientation(mfem::Geometry::Type, int) const
+ ... in file: fem/fe_coll.cpp:2697
