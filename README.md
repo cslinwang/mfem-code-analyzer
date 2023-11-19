@@ -563,3 +563,16 @@ After refinement : Boundary attribute size: 4
 After derefinement : Boundary attribute size: 3
 After derefinement : Boundary attribute size: 3
 
+
+## 413成功
+v2101，修复版本也有这个段错误
+privious commit
+413.cpp放入examples
+cd mfem
+make clean
+make all -j
+cd examples
+mpicxx -O3 -std=c++11 -I.. -I../../hypre/src/hypre/include 413.cpp -o 413 -L.. -lmfem -L../../hypre/src/hypre/lib -lHYPRE -L../../metis-4.0 -lmetis -lrt
+mpirun -n 2 ./413
+结果：
+mpirun noticed that process rank 0 with PID 0 on node 8403300dc1d0 exited on signal 11 (Segmentation fault).
