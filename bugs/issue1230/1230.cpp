@@ -20,7 +20,7 @@ int main(int argc, char *argv[])
    MPI_Init(&argc,&argv);
 
    ParMesh *pmesh = NULL;
-   Mesh mesh("./test.mesh.txt", 1, 1);
+   Mesh mesh("/root/mfem-code-analyzer/bugs/issue1230/test.mesh", 1, 1);
    mesh.UniformRefinement();
    // if EnsureNCMesh is not called, everything is ok
    mesh.EnsureNCMesh();

@@ -522,7 +522,7 @@ valgrind --leak-check=full mpirun -np 5 2035
 ==423008==      possibly lost: 0 bytes in 0 blocks
 ==423008==    still reachable: 116,312 bytes in 147 blocks
 
-## 1874成功
+### 1874成功
 privious commit
 在ex3p.cpp,在//4最后面添加：mesh->EnsureNCMesh(true);
 cd mfem
@@ -534,3 +534,32 @@ mpirun -n 2 ./ex3p -m ../data/inline-tet.mesh -o 2
 MFEM abort: triangle face orientation 1 is not supported! Use Mesh::ReorientTetMesh to fix it.
  ... in function: virtual const int* mfem::ND_FECollection::DofOrderForOrientation(mfem::Geometry::Type, int) const
  ... in file: fem/fe_coll.cpp:2697
+
+ ### 1578失败
+ 需要确保使用了cuda
+privious commit
+1578.cpp放入examples
+cd mfem
+make clean
+make all -j
+cd examples
+mpicxx -O3 -std=c++11 -I.. -I../../hypre/src/hypre/include 1578.cpp -o 1578 -L.. -lmfem -L../../hypre/src/hypre/lib -lHYPRE -L../../metis-4.0 -lmetis -lrt
+
+### 463成功
+v2101
+privious commit
+463.cpp放入examples
+cd mfem
+make clean
+make all -j
+cd examples
+mpicxx -O3 -std=c++11 -I.. -I../../hypre/src/hypre/include 463.cpp -o 463 -L.. -lmfem -L../../hypre/src/hypre/lib -lHYPRE -L../../metis-4.0 -lmetis -lrt
+mpirun -n 2 ./463
+结果：
+After creation : Boundary attribute size: 4
+After creation : Boundary attribute size: 4
+After refinement : Boundary attribute size: 4
+After refinement : Boundary attribute size: 4
+After derefinement : Boundary attribute size: 3
+After derefinement : Boundary attribute size: 3
+

@@ -6,7 +6,7 @@ using namespace std;
 using namespace mfem;
 int main(int argc, char *argv[])
 {
-    const char *mesh_file = "../data/beam-quad.mesh";
+    const char *mesh_file = "/root/mfem/data/beam-quad.mesh";
 
     Mesh *mesh = new Mesh(mesh_file, 1, 1);
     int dim = mesh->Dimension();
