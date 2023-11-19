@@ -42,8 +42,8 @@ git clean -fd
 
 #### 覆盖率
 
-覆盖率(example)
-原文
+1. 覆盖率(example)
+将原文
 
 ```
 # Replace the default implicit rule for *.cpp files
@@ -53,7 +53,7 @@ git clean -fd
     $(MFEM_CXX) $(MFEM_FLAGS) $< -o $@ $(MFEM_LIBS)
 ```
 
-替换
+替换为
 ```
 # 添加覆盖率标志
 
@@ -70,24 +70,18 @@ LDFLAGS += -lgcov
 
 覆盖率（unitest）
 
-原文
+将原文
 ```
 # Flags used for compiling all source files.
-
 MFEM_BUILD_FLAGS = $(MFEM_PICFLAG) $(MFEM_CPPFLAGS) $(MFEM_CXXFLAGS)\
-
  $(MFEM_TPLFLAGS) $(CONFIG_FILE_DEF)
 
-
-
 # Rules for compiling all source files.
-
 $(OBJECT_FILES): $(BLD)%.o: $(SRC)%.cpp $(CONFIG_MK)
-
     $(MFEM_CXX) $(MFEM_BUILD_FLAGS) -c $(<) -o $(@)
 ```
 
-替换
+替换为（$(MFEM_CXX)前面是tab空格）
 ```
 CXXFLAGS += -fprofile-arcs -ftest-coverage
 LDFLAGS += -lgcov
@@ -95,23 +89,22 @@ LDFLAGS += -lgcov
 # Flags used for compiling all source files.
 
 MFEM_BUILD_FLAGS = $(MFEM_PICFLAG) $(MFEM_CPPFLAGS) $(MFEM_CXXFLAGS)\
-
  $(MFEM_TPLFLAGS) $(CONFIG_FILE_DEF) $(CXXFLAGS)
 
 # Rules for compiling all source files.
-
 $(OBJECT_FILES): $(BLD)%.o: $(SRC)%.cpp $(CONFIG_MK)
-
     $(MFEM_CXX) $(MFEM_BUILD_FLAGS) -c $(<) -o $(@) $(LDFLAGS)
 ```
-
+复现bug后收集覆盖率命令：
+fastcov --gcov gcov --exclude /usr/include --include /root/mfem coverage.json
+fastcov --lcov -o coverage.info
+genhtml coverage.info --output-directory coverage_report
 
 ### 覆盖率增加脚本
 
 /root/mfem-code-analyzer/get_normal_testcase_covarage/add_coverage.sh
 
 ```
-
 # 如何运行单个测试用例
 
 
@@ -132,12 +125,6 @@ $(OBJECT_FILES): $(BLD)%.o: $(SRC)%.cpp $(CONFIG_MK)
         cd examples
         make ex0
         ./ex0
-
-# 收集覆盖率
-
-fastcov --gcov gcov --exclude /usr/include --include /root/mfem coverage.json
-fastcov --lcov -o coverage.info
-genhtml coverage.info --output-directory coverage_report
 
 ```
 
@@ -475,6 +462,15 @@ Sampling Lagrange1DFiniteElement of order 2
          for sample 13 with isopar 1.3 weights are {-0.096,-0.416,0.312} -- sum is -0.2
 free(): invalid size
 Aborted (core dumped)
+
+### 64成功
+privious commit
+将64.cpp放入examples
+make clean
+make all -j
+cd examples
+g++  -O3 -std=c++11 -I..  64.cpp -o 64 -L.. -lmfem -lrt
+./64
 
 ## v2101:
 
