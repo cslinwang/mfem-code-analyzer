@@ -36,7 +36,8 @@ mfem issue3840:
 
 ```
 
-git clean -fd
+git clean -fdx
+make clean
 
 ```
 
@@ -55,6 +56,7 @@ git clean -fd
 
 替换为
 ```
+
 # 添加覆盖率标志
 
 CXXFLAGS += -fprofile-arcs -ftest-coverage
@@ -68,7 +70,7 @@ LDFLAGS += -lgcov
 
 ```
 
-覆盖率（unitest）
+覆盖率（mfem）
 
 将原文
 ```
@@ -103,6 +105,49 @@ genhtml coverage.info --output-directory coverage_report
 ### 覆盖率增加脚本
 
 /root/mfem-code-analyzer/get_normal_testcase_covarage/add_coverage.sh
+
+### 覆盖率增加2.0
+
+先清空历史
+
+make clean
+git clean -fdx
+git reset --hard
+
+原文：
+
+```
+
+# The default value of CXXFLAGS is based on the value of MFEM_DEBUG
+ifeq ($(MFEM_DEBUG),YES)
+   CXXFLAGS ?= $(DEBUG_FLAGS)
+endif
+CXXFLAGS ?= $(OPTIM_FLAGS)
+
+
+```
+
+替换：
+
+```
+
+# 添加覆盖率标志
+COVERAGE_FLAGS := -fprofile-arcs -ftest-coverage
+
+# The default value of CXXFLAGS is based on the value of MFEM_DEBUG
+ifeq ($(MFEM_DEBUG),YES)
+   CXXFLAGS ?= $(DEBUG_FLAGS) $(COVERAGE_FLAGS)
+endif
+CXXFLAGS ?= $(OPTIM_FLAGS) $(COVERAGE_FLAGS)
+
+LDFLAGS += -lgcov
+
+```
+
+然后运行命令
+
+make config
+make all -j
 
 ```
 # 如何运行单个测试用例
@@ -570,5 +615,7 @@ make all -j
 cd examples
 mpicxx -O3 -std=c++11 -I.. -I../../hypre/src/hypre/include 413.cpp -o 413 -L.. -lmfem -L../../hypre/src/hypre/lib -lHYPRE -L../../metis-4.0 -lmetis -lrt
 mpirun -n 2 ./413
+包含覆盖率的命令：mpicxx -O3 -std=c++11 --coverage -I.. -I../../hypre/src/hypre/include 413.cpp -o 413 -L.. -lmfem -L../../hypre/src/hypre/lib -lHYPRE -L../../metis-4.0 -lmetis -lrt
+
 结果：
 mpirun noticed that process rank 0 with PID 0 on node 8403300dc1d0 exited on signal 11 (Segmentation fault).
