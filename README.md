@@ -176,8 +176,8 @@ make all -j
 ## BUG复现命令
 
 # v201
-### issue 3691成功
 
+### issue 3691成功
 fix sha:a15866e212b167ab83d5384e7326cdd3fa0723b2
 reset current branch to previous commit,hard reset
 cd ~
@@ -187,7 +187,19 @@ make all -j
 cd examples
 mpirun -np 24 ex6p -m /root/mfem-code-analyzer/bugs/issue3691/p1_prism.msh -o 2
 
-### issue 2884
+### issue 3566成功.
+内存泄漏问题，不报错：
+切换分支
+编译：/root/mfem/mfem-code-analyzer/get_normal_testcase_covarage/compile_mfem.sh 93393c5c58ecaa3eb6fb9bbd6a822e7c3fd96be5：
+查看是否内存泄漏cd ~/mfem/mfem/build/tests/unit
+valgrind --leak-check=full ./unit_tests SubMesh
+Valgrind的输出显示存在内存泄漏。以下是报告的主要信息：
+
+共计329,984字节分布在192个内存块中，被确定为内存泄漏。
+共计5,134,896字节分布在24,885个间接丢失的内存块中。
+还有可能丢失的86,032字节分布在3个内存块中。
+
+### issue 2884失败
 (未复现) 编译就过不去。 修复版本编译也过不去。
 url: https://github.com/mfem/mfem/issues/2884
 修改test_pa_coeff.cpp中的测试用例Hcurl/Hdiv pa_coeff的299行的if语句为：mesh = Mesh::LoadFromFile("/root/mfem/data/star.mesh");
@@ -201,7 +213,7 @@ cd tests/unit
 ./unit_tests "Hcurl/Hdiv pa_coeff"
 
 ### issue 2878成功
-
+没有gcda文件，覆盖率失败
 url: https://github.com/mfem/mfem/issues/2878
 bug sha:使用的是50cd7da165999d4c65a6875a24c39317acaa2c3e
 修改ex3p.cpp中204行a->AddDomainIntegrator(new VectorFEMassIntegrator(*sigma)); 为：
@@ -214,10 +226,11 @@ cd mfem
 make clean
 make all -j
 cd examples
-mpirun -np 5 ex3p -m /root/mfem/data/beam-tet.mesh -o 1
+mpicxx -O3 -std=c++11 -fprofile-arcs -ftest-coverage -I.. -I../../hypre/src/hypre/include 2878.cpp -o 2878 -L.. -lmfem -L../../hypre/src/hypre/lib -lHYPRE -L../../metis-4.0 -lmetis -lrt -lgcov
+mpirun -np 5 2878 -m /root/mfem/data/beam-tet.mesh -o 1
 
 ### issue 2666成功
-
+覆盖率失败，没有gcno文件
 url: https://github.com/mfem/mfem/issues/2666
 第一种：运行ex15p
 bug sha: 0843a87d7953cf23e556dcfd426d27bd9cfb3e21。
@@ -249,7 +262,7 @@ root@eaa7a2b03f3a:~/mfem/examples# mpicxx -O3 -std=c++11 -I.. -I../../hypre/src/
       |     rindex
 可能是FindPointsGSLIB依赖于外部库或模块,FindPointsGSLIB位于miniapps/gslib中的pfindpts和field-interp，应该要编译miniapps
 
-### 2779成功
+### 2779成功.
 reset current branch to previous commit,hard reset
 cd mfem
 make clean
@@ -259,7 +272,7 @@ mpicxx -O3 -std=c++11 -I.. -I../../hypre/src/hypre/include 2779.cpp -o 2779 -L..
 添加覆盖率：mpicxx -O3 -std=c++11 -fprofile-arcs -ftest-coverage -I.. -I../../hypre/src/hypre/include 2779.cpp -o 2779 -L.. -lmfem -L../../hypre/src/hypre/lib -lHYPRE -L../../metis-4.0 -lmetis -lrt -lgcov
 ./2779
 
-### 2559成功
+### 2559成功.
 reset current branch to previous commit,hard reset
 去掉头文件#include "stokes.hpp"，因为编译不过去，然后把tst.cpp放入examples，把manifold.msh放入data
 cd mfem

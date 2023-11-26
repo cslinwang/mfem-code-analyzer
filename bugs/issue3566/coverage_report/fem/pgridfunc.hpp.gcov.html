@@ -1,0 +1,548 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html lang="en">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>LCOV - coverage.info - fem/pgridfunc.hpp</title>
+  <link rel="stylesheet" type="text/css" href="../gcov.css">
+</head>
+
+<body>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="title">LCOV - code coverage report</td></tr>
+    <tr><td class="ruler"><img src="../glass.png" width=3 height=3 alt=""></td></tr>
+
+    <tr>
+      <td width="100%">
+        <table cellpadding=1 border=0 width="100%">
+          <tr>
+            <td width="10%" class="headerItem">Current view:</td>
+            <td width="35%" class="headerValue"><a href="../index.html">top level</a> - <a href="index.html">fem</a> - pgridfunc.hpp<span style="font-size: 80%;"> (source / <a href="pgridfunc.hpp.func-sort-c.html">functions</a>)</span></td>
+            <td width="5%"></td>
+            <td width="15%"></td>
+            <td width="10%" class="headerCovTableHead">Hit</td>
+            <td width="10%" class="headerCovTableHead">Total</td>
+            <td width="15%" class="headerCovTableHead">Coverage</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Test:</td>
+            <td class="headerValue">coverage.info</td>
+            <td></td>
+            <td class="headerItem">Lines:</td>
+            <td class="headerCovTableEntry">0</td>
+            <td class="headerCovTableEntry">10</td>
+            <td class="headerCovTableEntryLo">0.0 %</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Date:</td>
+            <td class="headerValue">2023-11-26 15:30:05</td>
+            <td></td>
+            <td class="headerItem">Functions:</td>
+            <td class="headerCovTableEntry">0</td>
+            <td class="headerCovTableEntry">5</td>
+            <td class="headerCovTableEntryLo">0.0 %</td>
+          </tr>
+          <tr><td><img src="../glass.png" width=3 height=3 alt=""></td></tr>
+        </table>
+      </td>
+    </tr>
+
+    <tr><td class="ruler"><img src="../glass.png" width=3 height=3 alt=""></td></tr>
+  </table>
+
+  <table cellpadding=0 cellspacing=0 border=0>
+    <tr>
+      <td><br></td>
+    </tr>
+    <tr>
+      <td>
+<pre class="sourceHeading">          Line data    Source code</pre>
+<pre class="source">
+<a name="1"><span class="lineNum">       1 </span>            : // Copyright (c) 2010-2023, Lawrence Livermore National Security, LLC. Produced</a>
+<a name="2"><span class="lineNum">       2 </span>            : // at the Lawrence Livermore National Laboratory. All Rights reserved. See files</a>
+<a name="3"><span class="lineNum">       3 </span>            : // LICENSE and NOTICE for details. LLNL-CODE-806117.</a>
+<a name="4"><span class="lineNum">       4 </span>            : //</a>
+<a name="5"><span class="lineNum">       5 </span>            : // This file is part of the MFEM library. For more information and source code</a>
+<a name="6"><span class="lineNum">       6 </span>            : // availability visit https://mfem.org.</a>
+<a name="7"><span class="lineNum">       7 </span>            : //</a>
+<a name="8"><span class="lineNum">       8 </span>            : // MFEM is free software; you can redistribute it and/or modify it under the</a>
+<a name="9"><span class="lineNum">       9 </span>            : // terms of the BSD-3 license. We welcome feedback and contributions, see file</a>
+<a name="10"><span class="lineNum">      10 </span>            : // CONTRIBUTING.md for details.</a>
+<a name="11"><span class="lineNum">      11 </span>            : </a>
+<a name="12"><span class="lineNum">      12 </span>            : #ifndef MFEM_PGRIDFUNC</a>
+<a name="13"><span class="lineNum">      13 </span>            : #define MFEM_PGRIDFUNC</a>
+<a name="14"><span class="lineNum">      14 </span>            : </a>
+<a name="15"><span class="lineNum">      15 </span>            : #include &quot;../config/config.hpp&quot;</a>
+<a name="16"><span class="lineNum">      16 </span>            : </a>
+<a name="17"><span class="lineNum">      17 </span>            : #ifdef MFEM_USE_MPI</a>
+<a name="18"><span class="lineNum">      18 </span>            : </a>
+<a name="19"><span class="lineNum">      19 </span>            : #include &quot;../general/globals.hpp&quot;</a>
+<a name="20"><span class="lineNum">      20 </span>            : #include &quot;pfespace.hpp&quot;</a>
+<a name="21"><span class="lineNum">      21 </span>            : #include &quot;gridfunc.hpp&quot;</a>
+<a name="22"><span class="lineNum">      22 </span>            : #include &lt;iostream&gt;</a>
+<a name="23"><span class="lineNum">      23 </span>            : #include &lt;limits&gt;</a>
+<a name="24"><span class="lineNum">      24 </span>            : </a>
+<a name="25"><span class="lineNum">      25 </span>            : namespace mfem</a>
+<a name="26"><span class="lineNum">      26 </span>            : {</a>
+<a name="27"><span class="lineNum">      27 </span>            : </a>
+<a name="28"><span class="lineNum">      28 </span>            : /// Compute a global Lp norm from the local Lp norms computed by each processor</a>
+<a name="29"><span class="lineNum">      29 </span>            : double GlobalLpNorm(const double p, double loc_norm, MPI_Comm comm);</a>
+<a name="30"><span class="lineNum">      30 </span>            : </a>
+<a name="31"><span class="lineNum">      31 </span>            : /// Class for parallel grid function</a>
+<a name="32"><span class="lineNum">      32 </span>            : class ParGridFunction : public GridFunction</a>
+<a name="33"><span class="lineNum">      33 </span>            : {</a>
+<a name="34"><span class="lineNum">      34 </span>            : protected:</a>
+<a name="35"><span class="lineNum">      35 </span>            :    ParFiniteElementSpace *pfes; ///&lt; Points to the same object as #fes</a>
+<a name="36"><span class="lineNum">      36 </span>            : </a>
+<a name="37"><span class="lineNum">      37 </span>            :    /** @brief Vector used to store data from face-neighbor processors,</a>
+<a name="38"><span class="lineNum">      38 </span>            :        initialized by ExchangeFaceNbrData(). */</a>
+<a name="39"><span class="lineNum">      39 </span>            :    Vector face_nbr_data;</a>
+<a name="40"><span class="lineNum">      40 </span>            : </a>
+<a name="41"><span class="lineNum">      41 </span>            :    /** @brief Vector used as an MPI buffer to send face-neighbor data</a>
+<a name="42"><span class="lineNum">      42 </span>            :        in ExchangeFaceNbrData() to neighboring processors. */</a>
+<a name="43"><span class="lineNum">      43 </span>            :    //TODO: Use temporary memory to avoid CUDA malloc allocation cost.</a>
+<a name="44"><span class="lineNum">      44 </span>            :    Vector send_data;</a>
+<a name="45"><span class="lineNum">      45 </span>            : </a>
+<a name="46"><span class="lineNum">      46 </span>            :    void ProjectBdrCoefficient(Coefficient *coeff[], VectorCoefficient *vcoeff,</a>
+<a name="47"><span class="lineNum">      47 </span>            :                               Array&lt;int&gt; &amp;attr);</a>
+<a name="48"><span class="lineNum">      48 </span>            : </a>
+<a name="49"><span class="lineNum">      49 </span>            : public:</a>
+<a name="50"><span class="lineNum">      50 </span><span class="lineNoCov">          0 :    ParGridFunction() { pfes = NULL; }</span></a>
+<a name="51"><span class="lineNum">      51 </span>            : </a>
+<a name="52"><span class="lineNum">      52 </span>            :    /// Copy constructor. The internal vector #face_nbr_data is not copied.</a>
+<a name="53"><span class="lineNum">      53 </span>            :    ParGridFunction(const ParGridFunction &amp;orig)</a>
+<a name="54"><span class="lineNum">      54 </span>            :       : GridFunction(orig), pfes(orig.pfes) { }</a>
+<a name="55"><span class="lineNum">      55 </span>            : </a>
+<a name="56"><span class="lineNum">      56 </span><span class="lineNoCov">          0 :    ParGridFunction(ParFiniteElementSpace *pf) : GridFunction(pf), pfes(pf) { }</span></a>
+<a name="57"><span class="lineNum">      57 </span>            : </a>
+<a name="58"><span class="lineNum">      58 </span>            :    /// Construct a ParGridFunction using previously allocated array @a data.</a>
+<a name="59"><span class="lineNum">      59 </span>            :    /** The ParGridFunction does not assume ownership of @a data which is assumed</a>
+<a name="60"><span class="lineNum">      60 </span>            :        to be of size at least `pf-&gt;GetVSize()`. Similar to the GridFunction and</a>
+<a name="61"><span class="lineNum">      61 </span>            :        Vector constructors for externally allocated array, the pointer @a data</a>
+<a name="62"><span class="lineNum">      62 </span>            :        can be NULL. The data array can be replaced later using the method</a>
+<a name="63"><span class="lineNum">      63 </span>            :        SetData().</a>
+<a name="64"><span class="lineNum">      64 </span>            :     */</a>
+<a name="65"><span class="lineNum">      65 </span>            :    ParGridFunction(ParFiniteElementSpace *pf, double *data) :</a>
+<a name="66"><span class="lineNum">      66 </span>            :       GridFunction(pf, data), pfes(pf) { }</a>
+<a name="67"><span class="lineNum">      67 </span>            : </a>
+<a name="68"><span class="lineNum">      68 </span>            :    /** @brief Construct a ParGridFunction using previously allocated Vector</a>
+<a name="69"><span class="lineNum">      69 </span>            :        @a base starting at the given offset, @a base_offset. */</a>
+<a name="70"><span class="lineNum">      70 </span>            :    ParGridFunction(ParFiniteElementSpace *pf, Vector &amp;base, int base_offset = 0)</a>
+<a name="71"><span class="lineNum">      71 </span>            :       : GridFunction(pf, base, base_offset), pfes(pf) { }</a>
+<a name="72"><span class="lineNum">      72 </span>            : </a>
+<a name="73"><span class="lineNum">      73 </span>            :    /// Construct a ParGridFunction using a GridFunction as external data.</a>
+<a name="74"><span class="lineNum">      74 </span>            :    /** The parallel space @a *pf and the space used by @a *gf should match. The</a>
+<a name="75"><span class="lineNum">      75 </span>            :        data from @a *gf is used as the local data of the ParGridFunction on each</a>
+<a name="76"><span class="lineNum">      76 </span>            :        processor. The ParGridFunction does not assume ownership of the data. */</a>
+<a name="77"><span class="lineNum">      77 </span>            :    ParGridFunction(ParFiniteElementSpace *pf, GridFunction *gf);</a>
+<a name="78"><span class="lineNum">      78 </span>            : </a>
+<a name="79"><span class="lineNum">      79 </span>            :    /** @brief Creates grid function on (all) dofs from a given vector on the</a>
+<a name="80"><span class="lineNum">      80 </span>            :        true dofs, i.e. P tv. */</a>
+<a name="81"><span class="lineNum">      81 </span>            :    ParGridFunction(ParFiniteElementSpace *pf, HypreParVector *tv);</a>
+<a name="82"><span class="lineNum">      82 </span>            : </a>
+<a name="83"><span class="lineNum">      83 </span>            :    /** @brief Construct a local ParGridFunction from the given *global*</a>
+<a name="84"><span class="lineNum">      84 </span>            :        GridFunction. If @a partitioning is NULL (default), the data from @a gf</a>
+<a name="85"><span class="lineNum">      85 </span>            :        is NOT copied. */</a>
+<a name="86"><span class="lineNum">      86 </span>            :    ParGridFunction(ParMesh *pmesh, const GridFunction *gf,</a>
+<a name="87"><span class="lineNum">      87 </span>            :                    const int *partitioning = NULL);</a>
+<a name="88"><span class="lineNum">      88 </span>            : </a>
+<a name="89"><span class="lineNum">      89 </span>            :    /** @brief Construct a ParGridFunction on a given ParMesh, @a pmesh, reading</a>
+<a name="90"><span class="lineNum">      90 </span>            :        from an std::istream.</a>
+<a name="91"><span class="lineNum">      91 </span>            : </a>
+<a name="92"><span class="lineNum">      92 </span>            :        In the process, a ParFiniteElementSpace and a FiniteElementCollection are</a>
+<a name="93"><span class="lineNum">      93 </span>            :        constructed. The new ParGridFunction assumes ownership of both. */</a>
+<a name="94"><span class="lineNum">      94 </span>            :    ParGridFunction(ParMesh *pmesh, std::istream &amp;input);</a>
+<a name="95"><span class="lineNum">      95 </span>            : </a>
+<a name="96"><span class="lineNum">      96 </span>            :    /// Copy assignment. Only the data of the base class Vector is copied.</a>
+<a name="97"><span class="lineNum">      97 </span>            :    /** It is assumed that this object and @a rhs use ParFiniteElementSpace%s</a>
+<a name="98"><span class="lineNum">      98 </span>            :        that have the same size.</a>
+<a name="99"><span class="lineNum">      99 </span>            : </a>
+<a name="100"><span class="lineNum">     100 </span>            :        @note Defining this method overwrites the implicitly defined copy</a>
+<a name="101"><span class="lineNum">     101 </span>            :        assignment operator. */</a>
+<a name="102"><span class="lineNum">     102 </span>            :    ParGridFunction &amp;operator=(const ParGridFunction &amp;rhs)</a>
+<a name="103"><span class="lineNum">     103 </span>            :    { return operator=((const Vector &amp;)rhs); }</a>
+<a name="104"><span class="lineNum">     104 </span>            : </a>
+<a name="105"><span class="lineNum">     105 </span>            :    /// Assign constant values to the ParGridFunction data.</a>
+<a name="106"><span class="lineNum">     106 </span><span class="lineNoCov">          0 :    ParGridFunction &amp;operator=(double value)</span></a>
+<a name="107"><span class="lineNum">     107 </span><span class="lineNoCov">          0 :    { GridFunction::operator=(value); return *this; }</span></a>
+<a name="108"><span class="lineNum">     108 </span>            : </a>
+<a name="109"><span class="lineNum">     109 </span>            :    /// Copy the data from a Vector to the ParGridFunction data.</a>
+<a name="110"><span class="lineNum">     110 </span>            :    ParGridFunction &amp;operator=(const Vector &amp;v)</a>
+<a name="111"><span class="lineNum">     111 </span>            :    { GridFunction::operator=(v); return *this; }</a>
+<a name="112"><span class="lineNum">     112 </span>            : </a>
+<a name="113"><span class="lineNum">     113 </span>            :    ParFiniteElementSpace *ParFESpace() const { return pfes; }</a>
+<a name="114"><span class="lineNum">     114 </span>            : </a>
+<a name="115"><span class="lineNum">     115 </span>            :    virtual void Update();</a>
+<a name="116"><span class="lineNum">     116 </span>            : </a>
+<a name="117"><span class="lineNum">     117 </span>            :    /// Associate a new FiniteElementSpace with the ParGridFunction.</a>
+<a name="118"><span class="lineNum">     118 </span>            :    /** The ParGridFunction is resized using the SetSize() method. The new space</a>
+<a name="119"><span class="lineNum">     119 </span>            :        @a f is expected to be a ParFiniteElementSpace. */</a>
+<a name="120"><span class="lineNum">     120 </span>            :    virtual void SetSpace(FiniteElementSpace *f);</a>
+<a name="121"><span class="lineNum">     121 </span>            : </a>
+<a name="122"><span class="lineNum">     122 </span>            :    /// Associate a new parallel space with the ParGridFunction.</a>
+<a name="123"><span class="lineNum">     123 </span>            :    void SetSpace(ParFiniteElementSpace *f);</a>
+<a name="124"><span class="lineNum">     124 </span>            : </a>
+<a name="125"><span class="lineNum">     125 </span>            :    using GridFunction::MakeRef;</a>
+<a name="126"><span class="lineNum">     126 </span>            : </a>
+<a name="127"><span class="lineNum">     127 </span>            :    /** @brief Make the ParGridFunction reference external data on a new</a>
+<a name="128"><span class="lineNum">     128 </span>            :        FiniteElementSpace. */</a>
+<a name="129"><span class="lineNum">     129 </span>            :    /** This method changes the FiniteElementSpace associated with the</a>
+<a name="130"><span class="lineNum">     130 </span>            :        ParGridFunction and sets the pointer @a v as external data in the</a>
+<a name="131"><span class="lineNum">     131 </span>            :        ParGridFunction. The new space @a f is expected to be a</a>
+<a name="132"><span class="lineNum">     132 </span>            :        ParFiniteElementSpace. */</a>
+<a name="133"><span class="lineNum">     133 </span>            :    virtual void MakeRef(FiniteElementSpace *f, double *v);</a>
+<a name="134"><span class="lineNum">     134 </span>            : </a>
+<a name="135"><span class="lineNum">     135 </span>            :    /** @brief Make the ParGridFunction reference external data on a new</a>
+<a name="136"><span class="lineNum">     136 </span>            :        ParFiniteElementSpace. */</a>
+<a name="137"><span class="lineNum">     137 </span>            :    /** This method changes the ParFiniteElementSpace associated with the</a>
+<a name="138"><span class="lineNum">     138 </span>            :        ParGridFunction and sets the pointer @a v as external data in the</a>
+<a name="139"><span class="lineNum">     139 </span>            :        ParGridFunction. */</a>
+<a name="140"><span class="lineNum">     140 </span>            :    void MakeRef(ParFiniteElementSpace *f, double *v);</a>
+<a name="141"><span class="lineNum">     141 </span>            : </a>
+<a name="142"><span class="lineNum">     142 </span>            :    /** @brief Make the ParGridFunction reference external data on a new</a>
+<a name="143"><span class="lineNum">     143 </span>            :        FiniteElementSpace. */</a>
+<a name="144"><span class="lineNum">     144 </span>            :    /** This method changes the FiniteElementSpace associated with the</a>
+<a name="145"><span class="lineNum">     145 </span>            :        ParGridFunction and sets the data of the Vector @a v (plus the @a</a>
+<a name="146"><span class="lineNum">     146 </span>            :        v_offset) as external data in the ParGridFunction. The new space @a f is</a>
+<a name="147"><span class="lineNum">     147 </span>            :        expected to be a ParFiniteElementSpace.</a>
+<a name="148"><span class="lineNum">     148 </span>            :        @note This version of the method will also perform bounds checks when</a>
+<a name="149"><span class="lineNum">     149 </span>            :        the build option MFEM_DEBUG is enabled. */</a>
+<a name="150"><span class="lineNum">     150 </span>            :    virtual void MakeRef(FiniteElementSpace *f, Vector &amp;v, int v_offset);</a>
+<a name="151"><span class="lineNum">     151 </span>            : </a>
+<a name="152"><span class="lineNum">     152 </span>            :    /** @brief Make the ParGridFunction reference external data on a new</a>
+<a name="153"><span class="lineNum">     153 </span>            :        ParFiniteElementSpace. */</a>
+<a name="154"><span class="lineNum">     154 </span>            :    /** This method changes the ParFiniteElementSpace associated with the</a>
+<a name="155"><span class="lineNum">     155 </span>            :        ParGridFunction and sets the data of the Vector @a v (plus the</a>
+<a name="156"><span class="lineNum">     156 </span>            :        @a v_offset) as external data in the ParGridFunction.</a>
+<a name="157"><span class="lineNum">     157 </span>            :        @note This version of the method will also perform bounds checks when</a>
+<a name="158"><span class="lineNum">     158 </span>            :        the build option MFEM_DEBUG is enabled. */</a>
+<a name="159"><span class="lineNum">     159 </span>            :    void MakeRef(ParFiniteElementSpace *f, Vector &amp;v, int v_offset);</a>
+<a name="160"><span class="lineNum">     160 </span>            : </a>
+<a name="161"><span class="lineNum">     161 </span>            :    /** Set the grid function on (all) dofs from a given vector on the</a>
+<a name="162"><span class="lineNum">     162 </span>            :        true dofs, i.e. P tv. */</a>
+<a name="163"><span class="lineNum">     163 </span>            :    void Distribute(const Vector *tv);</a>
+<a name="164"><span class="lineNum">     164 </span>            :    void Distribute(const Vector &amp;tv) { Distribute(&amp;tv); }</a>
+<a name="165"><span class="lineNum">     165 </span>            :    void AddDistribute(double a, const Vector *tv);</a>
+<a name="166"><span class="lineNum">     166 </span>            :    void AddDistribute(double a, const Vector &amp;tv) { AddDistribute(a, &amp;tv); }</a>
+<a name="167"><span class="lineNum">     167 </span>            : </a>
+<a name="168"><span class="lineNum">     168 </span>            :    /// Set the GridFunction from the given true-dof vector.</a>
+<a name="169"><span class="lineNum">     169 </span>            :    virtual void SetFromTrueDofs(const Vector &amp;tv) { Distribute(tv); }</a>
+<a name="170"><span class="lineNum">     170 </span>            : </a>
+<a name="171"><span class="lineNum">     171 </span>            :    /// Short semantic for Distribute()</a>
+<a name="172"><span class="lineNum">     172 </span>            :    ParGridFunction &amp;operator=(const HypreParVector &amp;tv)</a>
+<a name="173"><span class="lineNum">     173 </span>            :    { Distribute(&amp;tv); return (*this); }</a>
+<a name="174"><span class="lineNum">     174 </span>            : </a>
+<a name="175"><span class="lineNum">     175 </span>            :    using GridFunction::GetTrueDofs;</a>
+<a name="176"><span class="lineNum">     176 </span>            : </a>
+<a name="177"><span class="lineNum">     177 </span>            :    /// Returns the true dofs in a new HypreParVector</a>
+<a name="178"><span class="lineNum">     178 </span>            :    HypreParVector *GetTrueDofs() const;</a>
+<a name="179"><span class="lineNum">     179 </span>            : </a>
+<a name="180"><span class="lineNum">     180 </span>            :    /// Returns the vector averaged on the true dofs.</a>
+<a name="181"><span class="lineNum">     181 </span>            :    void ParallelAverage(Vector &amp;tv) const;</a>
+<a name="182"><span class="lineNum">     182 </span>            : </a>
+<a name="183"><span class="lineNum">     183 </span>            :    /// Returns the vector averaged on the true dofs.</a>
+<a name="184"><span class="lineNum">     184 </span>            :    void ParallelAverage(HypreParVector &amp;tv) const;</a>
+<a name="185"><span class="lineNum">     185 </span>            : </a>
+<a name="186"><span class="lineNum">     186 </span>            :    /// Returns a new vector averaged on the true dofs.</a>
+<a name="187"><span class="lineNum">     187 </span>            :    HypreParVector *ParallelAverage() const;</a>
+<a name="188"><span class="lineNum">     188 </span>            : </a>
+<a name="189"><span class="lineNum">     189 </span>            :    /// Returns the vector restricted to the true dofs.</a>
+<a name="190"><span class="lineNum">     190 </span>            :    void ParallelProject(Vector &amp;tv) const;</a>
+<a name="191"><span class="lineNum">     191 </span>            : </a>
+<a name="192"><span class="lineNum">     192 </span>            :    /// Returns the vector restricted to the true dofs.</a>
+<a name="193"><span class="lineNum">     193 </span>            :    void ParallelProject(HypreParVector &amp;tv) const;</a>
+<a name="194"><span class="lineNum">     194 </span>            : </a>
+<a name="195"><span class="lineNum">     195 </span>            :    /// Returns a new vector restricted to the true dofs.</a>
+<a name="196"><span class="lineNum">     196 </span>            :    HypreParVector *ParallelProject() const;</a>
+<a name="197"><span class="lineNum">     197 </span>            : </a>
+<a name="198"><span class="lineNum">     198 </span>            :    /// Returns the vector assembled on the true dofs.</a>
+<a name="199"><span class="lineNum">     199 </span>            :    void ParallelAssemble(Vector &amp;tv) const;</a>
+<a name="200"><span class="lineNum">     200 </span>            : </a>
+<a name="201"><span class="lineNum">     201 </span>            :    /// Returns the vector assembled on the true dofs.</a>
+<a name="202"><span class="lineNum">     202 </span>            :    void ParallelAssemble(HypreParVector &amp;tv) const;</a>
+<a name="203"><span class="lineNum">     203 </span>            : </a>
+<a name="204"><span class="lineNum">     204 </span>            :    /// Returns a new vector assembled on the true dofs.</a>
+<a name="205"><span class="lineNum">     205 </span>            :    HypreParVector *ParallelAssemble() const;</a>
+<a name="206"><span class="lineNum">     206 </span>            : </a>
+<a name="207"><span class="lineNum">     207 </span>            :    void ExchangeFaceNbrData();</a>
+<a name="208"><span class="lineNum">     208 </span>            :    Vector &amp;FaceNbrData() { return face_nbr_data; }</a>
+<a name="209"><span class="lineNum">     209 </span>            :    const Vector &amp;FaceNbrData() const { return face_nbr_data; }</a>
+<a name="210"><span class="lineNum">     210 </span>            : </a>
+<a name="211"><span class="lineNum">     211 </span>            :    // Redefine to handle the case when i is a face-neighbor element</a>
+<a name="212"><span class="lineNum">     212 </span>            :    virtual double GetValue(int i, const IntegrationPoint &amp;ip,</a>
+<a name="213"><span class="lineNum">     213 </span>            :                            int vdim = 1) const;</a>
+<a name="214"><span class="lineNum">     214 </span>            :    double GetValue(ElementTransformation &amp;T)</a>
+<a name="215"><span class="lineNum">     215 </span>            :    { return GetValue(T.ElementNo, T.GetIntPoint()); }</a>
+<a name="216"><span class="lineNum">     216 </span>            : </a>
+<a name="217"><span class="lineNum">     217 </span>            :    // Redefine to handle the case when T describes a face-neighbor element</a>
+<a name="218"><span class="lineNum">     218 </span>            :    virtual double GetValue(ElementTransformation &amp;T, const IntegrationPoint &amp;ip,</a>
+<a name="219"><span class="lineNum">     219 </span>            :                            int comp = 0, Vector *tr = NULL) const;</a>
+<a name="220"><span class="lineNum">     220 </span>            : </a>
+<a name="221"><span class="lineNum">     221 </span>            :    virtual void GetVectorValue(int i, const IntegrationPoint &amp;ip,</a>
+<a name="222"><span class="lineNum">     222 </span>            :                                Vector &amp;val) const;</a>
+<a name="223"><span class="lineNum">     223 </span>            : </a>
+<a name="224"><span class="lineNum">     224 </span>            :    // Redefine to handle the case when T describes a face-neighbor element</a>
+<a name="225"><span class="lineNum">     225 </span>            :    virtual void GetVectorValue(ElementTransformation &amp;T,</a>
+<a name="226"><span class="lineNum">     226 </span>            :                                const IntegrationPoint &amp;ip,</a>
+<a name="227"><span class="lineNum">     227 </span>            :                                Vector &amp;val, Vector *tr = NULL) const;</a>
+<a name="228"><span class="lineNum">     228 </span>            : </a>
+<a name="229"><span class="lineNum">     229 </span>            :    /** @brief For each vdof, counts how many elements contain the vdof,</a>
+<a name="230"><span class="lineNum">     230 </span>            :        as containment is determined by FiniteElementSpace::GetElementVDofs(). */</a>
+<a name="231"><span class="lineNum">     231 </span>            :    virtual void CountElementsPerVDof(Array&lt;int&gt; &amp;elem_per_vdof) const;</a>
+<a name="232"><span class="lineNum">     232 </span>            : </a>
+<a name="233"><span class="lineNum">     233 </span>            :    /// Parallel version of GridFunction::GetDerivative(); see its documentation.</a>
+<a name="234"><span class="lineNum">     234 </span>            :    void GetDerivative(int comp, int der_comp, ParGridFunction &amp;der);</a>
+<a name="235"><span class="lineNum">     235 </span>            : </a>
+<a name="236"><span class="lineNum">     236 </span>            :    /** Sets the output vector @a dof_vals to the values of the degrees of</a>
+<a name="237"><span class="lineNum">     237 </span>            :        freedom of element @a el. If @a el is greater than or equal to the number</a>
+<a name="238"><span class="lineNum">     238 </span>            :        of local elements, it will be interpreted as a shifted index of a face</a>
+<a name="239"><span class="lineNum">     239 </span>            :        neighbor element. */</a>
+<a name="240"><span class="lineNum">     240 </span>            :    virtual void GetElementDofValues(int el, Vector &amp;dof_vals) const;</a>
+<a name="241"><span class="lineNum">     241 </span>            : </a>
+<a name="242"><span class="lineNum">     242 </span>            :    using GridFunction::ProjectCoefficient;</a>
+<a name="243"><span class="lineNum">     243 </span>            :    virtual void ProjectCoefficient(Coefficient &amp;coeff);</a>
+<a name="244"><span class="lineNum">     244 </span>            : </a>
+<a name="245"><span class="lineNum">     245 </span>            :    using GridFunction::ProjectDiscCoefficient;</a>
+<a name="246"><span class="lineNum">     246 </span>            :    /** @brief Project a discontinuous vector coefficient as a grid function on</a>
+<a name="247"><span class="lineNum">     247 </span>            :        a continuous finite element space. The values in shared dofs are</a>
+<a name="248"><span class="lineNum">     248 </span>            :        determined from the element with maximal attribute. */</a>
+<a name="249"><span class="lineNum">     249 </span>            :    virtual void ProjectDiscCoefficient(VectorCoefficient &amp;coeff);</a>
+<a name="250"><span class="lineNum">     250 </span>            : </a>
+<a name="251"><span class="lineNum">     251 </span>            :    virtual void ProjectDiscCoefficient(Coefficient &amp;coeff, AvgType type);</a>
+<a name="252"><span class="lineNum">     252 </span>            : </a>
+<a name="253"><span class="lineNum">     253 </span>            :    virtual void ProjectDiscCoefficient(VectorCoefficient &amp;vcoeff, AvgType type);</a>
+<a name="254"><span class="lineNum">     254 </span>            : </a>
+<a name="255"><span class="lineNum">     255 </span>            :    using GridFunction::ProjectBdrCoefficient;</a>
+<a name="256"><span class="lineNum">     256 </span>            : </a>
+<a name="257"><span class="lineNum">     257 </span>            :    // Only the values in the master are guaranteed to be correct!</a>
+<a name="258"><span class="lineNum">     258 </span>            :    virtual void ProjectBdrCoefficient(VectorCoefficient &amp;vcoeff,</a>
+<a name="259"><span class="lineNum">     259 </span>            :                                       Array&lt;int&gt; &amp;attr)</a>
+<a name="260"><span class="lineNum">     260 </span>            :    { ProjectBdrCoefficient(NULL, &amp;vcoeff, attr); }</a>
+<a name="261"><span class="lineNum">     261 </span>            : </a>
+<a name="262"><span class="lineNum">     262 </span>            :    // Only the values in the master are guaranteed to be correct!</a>
+<a name="263"><span class="lineNum">     263 </span><span class="lineNoCov">          0 :    virtual void ProjectBdrCoefficient(Coefficient *coeff[], Array&lt;int&gt; &amp;attr)</span></a>
+<a name="264"><span class="lineNum">     264 </span><span class="lineNoCov">          0 :    { ProjectBdrCoefficient(coeff, NULL, attr); }</span></a>
+<a name="265"><span class="lineNum">     265 </span>            : </a>
+<a name="266"><span class="lineNum">     266 </span>            :    // Only the values in the master are guaranteed to be correct!</a>
+<a name="267"><span class="lineNum">     267 </span>            :    virtual void ProjectBdrCoefficientTangent(VectorCoefficient &amp;vcoeff,</a>
+<a name="268"><span class="lineNum">     268 </span>            :                                              Array&lt;int&gt; &amp;bdr_attr);</a>
+<a name="269"><span class="lineNum">     269 </span>            : </a>
+<a name="270"><span class="lineNum">     270 </span>            :    virtual double ComputeL1Error(Coefficient *exsol[],</a>
+<a name="271"><span class="lineNum">     271 </span>            :                                  const IntegrationRule *irs[] = NULL) const</a>
+<a name="272"><span class="lineNum">     272 </span>            :    {</a>
+<a name="273"><span class="lineNum">     273 </span>            :       return GlobalLpNorm(1.0, GridFunction::ComputeW11Error(</a>
+<a name="274"><span class="lineNum">     274 </span>            :                              *exsol, NULL, 1, NULL, irs), pfes-&gt;GetComm());</a>
+<a name="275"><span class="lineNum">     275 </span>            :    }</a>
+<a name="276"><span class="lineNum">     276 </span>            : </a>
+<a name="277"><span class="lineNum">     277 </span>            :    virtual double ComputeL1Error(Coefficient &amp;exsol,</a>
+<a name="278"><span class="lineNum">     278 </span>            :                                  const IntegrationRule *irs[] = NULL) const</a>
+<a name="279"><span class="lineNum">     279 </span>            :    { return ComputeLpError(1.0, exsol, NULL, irs); }</a>
+<a name="280"><span class="lineNum">     280 </span>            : </a>
+<a name="281"><span class="lineNum">     281 </span>            :    virtual double ComputeL1Error(VectorCoefficient &amp;exsol,</a>
+<a name="282"><span class="lineNum">     282 </span>            :                                  const IntegrationRule *irs[] = NULL) const</a>
+<a name="283"><span class="lineNum">     283 </span>            :    { return ComputeLpError(1.0, exsol, NULL, NULL, irs); }</a>
+<a name="284"><span class="lineNum">     284 </span>            : </a>
+<a name="285"><span class="lineNum">     285 </span>            :    virtual double ComputeL2Error(Coefficient *exsol[],</a>
+<a name="286"><span class="lineNum">     286 </span>            :                                  const IntegrationRule *irs[] = NULL,</a>
+<a name="287"><span class="lineNum">     287 </span>            :                                  const Array&lt;int&gt; *elems = NULL) const</a>
+<a name="288"><span class="lineNum">     288 </span>            :    {</a>
+<a name="289"><span class="lineNum">     289 </span>            :       return GlobalLpNorm(2.0, GridFunction::ComputeL2Error(exsol, irs, elems),</a>
+<a name="290"><span class="lineNum">     290 </span>            :                           pfes-&gt;GetComm());</a>
+<a name="291"><span class="lineNum">     291 </span>            :    }</a>
+<a name="292"><span class="lineNum">     292 </span>            : </a>
+<a name="293"><span class="lineNum">     293 </span><span class="lineNoCov">          0 :    virtual double ComputeL2Error(Coefficient &amp;exsol,</span></a>
+<a name="294"><span class="lineNum">     294 </span>            :                                  const IntegrationRule *irs[] = NULL,</a>
+<a name="295"><span class="lineNum">     295 </span>            :                                  const Array&lt;int&gt; *elems = NULL) const</a>
+<a name="296"><span class="lineNum">     296 </span>            :    {</a>
+<a name="297"><span class="lineNum">     297 </span><span class="lineNoCov">          0 :       return GlobalLpNorm(2.0, GridFunction::ComputeL2Error(exsol, irs, elems),</span></a>
+<a name="298"><span class="lineNum">     298 </span><span class="lineNoCov">          0 :                           pfes-&gt;GetComm());</span></a>
+<a name="299"><span class="lineNum">     299 </span>            :    }</a>
+<a name="300"><span class="lineNum">     300 </span>            : </a>
+<a name="301"><span class="lineNum">     301 </span>            : </a>
+<a name="302"><span class="lineNum">     302 </span>            :    virtual double ComputeL2Error(VectorCoefficient &amp;exsol,</a>
+<a name="303"><span class="lineNum">     303 </span>            :                                  const IntegrationRule *irs[] = NULL,</a>
+<a name="304"><span class="lineNum">     304 </span>            :                                  const Array&lt;int&gt; *elems = NULL) const</a>
+<a name="305"><span class="lineNum">     305 </span>            :    {</a>
+<a name="306"><span class="lineNum">     306 </span>            :       return GlobalLpNorm(2.0, GridFunction::ComputeL2Error(exsol, irs, elems),</a>
+<a name="307"><span class="lineNum">     307 </span>            :                           pfes-&gt;GetComm());</a>
+<a name="308"><span class="lineNum">     308 </span>            :    }</a>
+<a name="309"><span class="lineNum">     309 </span>            : </a>
+<a name="310"><span class="lineNum">     310 </span>            :    /// Returns ||grad u_ex - grad u_h||_L2 for H1 or L2 elements</a>
+<a name="311"><span class="lineNum">     311 </span>            :    virtual double ComputeGradError(VectorCoefficient *exgrad,</a>
+<a name="312"><span class="lineNum">     312 </span>            :                                    const IntegrationRule *irs[] = NULL) const</a>
+<a name="313"><span class="lineNum">     313 </span>            :    {</a>
+<a name="314"><span class="lineNum">     314 </span>            :       return GlobalLpNorm(2.0, GridFunction::ComputeGradError(exgrad,irs),</a>
+<a name="315"><span class="lineNum">     315 </span>            :                           pfes-&gt;GetComm());</a>
+<a name="316"><span class="lineNum">     316 </span>            :    }</a>
+<a name="317"><span class="lineNum">     317 </span>            : </a>
+<a name="318"><span class="lineNum">     318 </span>            :    /// Returns ||curl u_ex - curl u_h||_L2 for ND elements</a>
+<a name="319"><span class="lineNum">     319 </span>            :    virtual double ComputeCurlError(VectorCoefficient *excurl,</a>
+<a name="320"><span class="lineNum">     320 </span>            :                                    const IntegrationRule *irs[] = NULL) const</a>
+<a name="321"><span class="lineNum">     321 </span>            :    {</a>
+<a name="322"><span class="lineNum">     322 </span>            :       return GlobalLpNorm(2.0, GridFunction::ComputeCurlError(excurl,irs),</a>
+<a name="323"><span class="lineNum">     323 </span>            :                           pfes-&gt;GetComm());</a>
+<a name="324"><span class="lineNum">     324 </span>            :    }</a>
+<a name="325"><span class="lineNum">     325 </span>            : </a>
+<a name="326"><span class="lineNum">     326 </span>            :    /// Returns ||div u_ex - div u_h||_L2 for RT elements</a>
+<a name="327"><span class="lineNum">     327 </span>            :    virtual double ComputeDivError(Coefficient *exdiv,</a>
+<a name="328"><span class="lineNum">     328 </span>            :                                   const IntegrationRule *irs[] = NULL) const</a>
+<a name="329"><span class="lineNum">     329 </span>            :    {</a>
+<a name="330"><span class="lineNum">     330 </span>            :       return GlobalLpNorm(2.0, GridFunction::ComputeDivError(exdiv,irs),</a>
+<a name="331"><span class="lineNum">     331 </span>            :                           pfes-&gt;GetComm());</a>
+<a name="332"><span class="lineNum">     332 </span>            :    }</a>
+<a name="333"><span class="lineNum">     333 </span>            : </a>
+<a name="334"><span class="lineNum">     334 </span>            :    /// Returns the Face Jumps error for L2 elements</a>
+<a name="335"><span class="lineNum">     335 </span>            :    virtual double ComputeDGFaceJumpError(Coefficient *exsol,</a>
+<a name="336"><span class="lineNum">     336 </span>            :                                          Coefficient *ell_coeff,</a>
+<a name="337"><span class="lineNum">     337 </span>            :                                          JumpScaling jump_scaling,</a>
+<a name="338"><span class="lineNum">     338 </span>            :                                          const IntegrationRule *irs[]=NULL)</a>
+<a name="339"><span class="lineNum">     339 </span>            :    const;</a>
+<a name="340"><span class="lineNum">     340 </span>            : </a>
+<a name="341"><span class="lineNum">     341 </span>            :    /// Returns either the H1-seminorm or the DG Face Jumps error or both</a>
+<a name="342"><span class="lineNum">     342 </span>            :    /// depending on norm_type = 1, 2, 3</a>
+<a name="343"><span class="lineNum">     343 </span>            :    virtual double ComputeH1Error(Coefficient *exsol, VectorCoefficient *exgrad,</a>
+<a name="344"><span class="lineNum">     344 </span>            :                                  Coefficient *ell_coef, double Nu,</a>
+<a name="345"><span class="lineNum">     345 </span>            :                                  int norm_type) const</a>
+<a name="346"><span class="lineNum">     346 </span>            :    {</a>
+<a name="347"><span class="lineNum">     347 </span>            :       return GlobalLpNorm(2.0,</a>
+<a name="348"><span class="lineNum">     348 </span>            :                           GridFunction::ComputeH1Error(exsol,exgrad,ell_coef,</a>
+<a name="349"><span class="lineNum">     349 </span>            :                                                        Nu, norm_type),</a>
+<a name="350"><span class="lineNum">     350 </span>            :                           pfes-&gt;GetComm());</a>
+<a name="351"><span class="lineNum">     351 </span>            :    }</a>
+<a name="352"><span class="lineNum">     352 </span>            : </a>
+<a name="353"><span class="lineNum">     353 </span>            :    /// Returns the error measured in H1-norm for H1 elements or in &quot;broken&quot;</a>
+<a name="354"><span class="lineNum">     354 </span>            :    /// H1-norm for L2 elements</a>
+<a name="355"><span class="lineNum">     355 </span>            :    virtual double ComputeH1Error(Coefficient *exsol, VectorCoefficient *exgrad,</a>
+<a name="356"><span class="lineNum">     356 </span>            :                                  const IntegrationRule *irs[] = NULL) const</a>
+<a name="357"><span class="lineNum">     357 </span>            :    {</a>
+<a name="358"><span class="lineNum">     358 </span>            :       return GlobalLpNorm(2.0, GridFunction::ComputeH1Error(exsol,exgrad,irs),</a>
+<a name="359"><span class="lineNum">     359 </span>            :                           pfes-&gt;GetComm());</a>
+<a name="360"><span class="lineNum">     360 </span>            :    }</a>
+<a name="361"><span class="lineNum">     361 </span>            : </a>
+<a name="362"><span class="lineNum">     362 </span>            :    /// Returns the error measured H(div)-norm for RT elements</a>
+<a name="363"><span class="lineNum">     363 </span>            :    virtual double ComputeHDivError(VectorCoefficient *exsol,</a>
+<a name="364"><span class="lineNum">     364 </span>            :                                    Coefficient *exdiv,</a>
+<a name="365"><span class="lineNum">     365 </span>            :                                    const IntegrationRule *irs[] = NULL) const</a>
+<a name="366"><span class="lineNum">     366 </span>            :    {</a>
+<a name="367"><span class="lineNum">     367 </span>            :       return GlobalLpNorm(2.0, GridFunction::ComputeHDivError(exsol,exdiv,irs),</a>
+<a name="368"><span class="lineNum">     368 </span>            :                           pfes-&gt;GetComm());</a>
+<a name="369"><span class="lineNum">     369 </span>            :    }</a>
+<a name="370"><span class="lineNum">     370 </span>            : </a>
+<a name="371"><span class="lineNum">     371 </span>            :    /// Returns the error measured H(curl)-norm for ND elements</a>
+<a name="372"><span class="lineNum">     372 </span>            :    virtual double ComputeHCurlError(VectorCoefficient *exsol,</a>
+<a name="373"><span class="lineNum">     373 </span>            :                                     VectorCoefficient *excurl,</a>
+<a name="374"><span class="lineNum">     374 </span>            :                                     const IntegrationRule *irs[] = NULL) const</a>
+<a name="375"><span class="lineNum">     375 </span>            :    {</a>
+<a name="376"><span class="lineNum">     376 </span>            :       return GlobalLpNorm(2.0,</a>
+<a name="377"><span class="lineNum">     377 </span>            :                           GridFunction::ComputeHCurlError(exsol,excurl,irs),</a>
+<a name="378"><span class="lineNum">     378 </span>            :                           pfes-&gt;GetComm());</a>
+<a name="379"><span class="lineNum">     379 </span>            :    }</a>
+<a name="380"><span class="lineNum">     380 </span>            : </a>
+<a name="381"><span class="lineNum">     381 </span>            :    virtual double ComputeMaxError(Coefficient *exsol[],</a>
+<a name="382"><span class="lineNum">     382 </span>            :                                   const IntegrationRule *irs[] = NULL) const</a>
+<a name="383"><span class="lineNum">     383 </span>            :    {</a>
+<a name="384"><span class="lineNum">     384 </span>            :       return GlobalLpNorm(infinity(),</a>
+<a name="385"><span class="lineNum">     385 </span>            :                           GridFunction::ComputeMaxError(exsol, irs),</a>
+<a name="386"><span class="lineNum">     386 </span>            :                           pfes-&gt;GetComm());</a>
+<a name="387"><span class="lineNum">     387 </span>            :    }</a>
+<a name="388"><span class="lineNum">     388 </span>            : </a>
+<a name="389"><span class="lineNum">     389 </span>            :    virtual double ComputeMaxError(Coefficient &amp;exsol,</a>
+<a name="390"><span class="lineNum">     390 </span>            :                                   const IntegrationRule *irs[] = NULL) const</a>
+<a name="391"><span class="lineNum">     391 </span>            :    {</a>
+<a name="392"><span class="lineNum">     392 </span>            :       return ComputeLpError(infinity(), exsol, NULL, irs);</a>
+<a name="393"><span class="lineNum">     393 </span>            :    }</a>
+<a name="394"><span class="lineNum">     394 </span>            : </a>
+<a name="395"><span class="lineNum">     395 </span>            :    virtual double ComputeMaxError(VectorCoefficient &amp;exsol,</a>
+<a name="396"><span class="lineNum">     396 </span>            :                                   const IntegrationRule *irs[] = NULL) const</a>
+<a name="397"><span class="lineNum">     397 </span>            :    {</a>
+<a name="398"><span class="lineNum">     398 </span>            :       return ComputeLpError(infinity(), exsol, NULL, NULL, irs);</a>
+<a name="399"><span class="lineNum">     399 </span>            :    }</a>
+<a name="400"><span class="lineNum">     400 </span>            : </a>
+<a name="401"><span class="lineNum">     401 </span>            :    virtual double ComputeLpError(const double p, Coefficient &amp;exsol,</a>
+<a name="402"><span class="lineNum">     402 </span>            :                                  Coefficient *weight = NULL,</a>
+<a name="403"><span class="lineNum">     403 </span>            :                                  const IntegrationRule *irs[] = NULL,</a>
+<a name="404"><span class="lineNum">     404 </span>            :                                  const Array&lt;int&gt; *elems = NULL) const</a>
+<a name="405"><span class="lineNum">     405 </span>            :    {</a>
+<a name="406"><span class="lineNum">     406 </span>            :       return GlobalLpNorm(p, GridFunction::ComputeLpError(p, exsol, weight, irs,</a>
+<a name="407"><span class="lineNum">     407 </span>            :                                                           elems), pfes-&gt;GetComm());</a>
+<a name="408"><span class="lineNum">     408 </span>            :    }</a>
+<a name="409"><span class="lineNum">     409 </span>            : </a>
+<a name="410"><span class="lineNum">     410 </span>            :    /** When given a vector weight, compute the pointwise (scalar) error as the</a>
+<a name="411"><span class="lineNum">     411 </span>            :        dot product of the vector error with the vector weight. Otherwise, the</a>
+<a name="412"><span class="lineNum">     412 </span>            :        scalar error is the l_2 norm of the vector error. */</a>
+<a name="413"><span class="lineNum">     413 </span>            :    virtual double ComputeLpError(const double p, VectorCoefficient &amp;exsol,</a>
+<a name="414"><span class="lineNum">     414 </span>            :                                  Coefficient *weight = NULL,</a>
+<a name="415"><span class="lineNum">     415 </span>            :                                  VectorCoefficient *v_weight = NULL,</a>
+<a name="416"><span class="lineNum">     416 </span>            :                                  const IntegrationRule *irs[] = NULL) const</a>
+<a name="417"><span class="lineNum">     417 </span>            :    {</a>
+<a name="418"><span class="lineNum">     418 </span>            :       return GlobalLpNorm(p, GridFunction::ComputeLpError(</a>
+<a name="419"><span class="lineNum">     419 </span>            :                              p, exsol, weight, v_weight, irs), pfes-&gt;GetComm());</a>
+<a name="420"><span class="lineNum">     420 </span>            :    }</a>
+<a name="421"><span class="lineNum">     421 </span>            : </a>
+<a name="422"><span class="lineNum">     422 </span>            :    virtual void ComputeFlux(BilinearFormIntegrator &amp;blfi,</a>
+<a name="423"><span class="lineNum">     423 </span>            :                             GridFunction &amp;flux,</a>
+<a name="424"><span class="lineNum">     424 </span>            :                             bool wcoef = true, int subdomain = -1);</a>
+<a name="425"><span class="lineNum">     425 </span>            : </a>
+<a name="426"><span class="lineNum">     426 </span>            :    /** Save the local portion of the ParGridFunction. This differs from the</a>
+<a name="427"><span class="lineNum">     427 </span>            :        serial GridFunction::Save in that it takes into account the signs of</a>
+<a name="428"><span class="lineNum">     428 </span>            :        the local dofs. */</a>
+<a name="429"><span class="lineNum">     429 </span>            :    virtual void Save(std::ostream &amp;out) const;</a>
+<a name="430"><span class="lineNum">     430 </span>            : </a>
+<a name="431"><span class="lineNum">     431 </span>            :    /// Save the ParGridFunction to a single file (written using MPI rank 0). The</a>
+<a name="432"><span class="lineNum">     432 </span>            :    /// given @a precision will be used for ASCII output.</a>
+<a name="433"><span class="lineNum">     433 </span>            :    void SaveAsOne(const char *fname, int precision=16) const;</a>
+<a name="434"><span class="lineNum">     434 </span>            : </a>
+<a name="435"><span class="lineNum">     435 </span>            :    /// Save the ParGridFunction to files (one for each MPI rank). The files will</a>
+<a name="436"><span class="lineNum">     436 </span>            :    /// be given suffixes according to the MPI rank. The given @a precision will</a>
+<a name="437"><span class="lineNum">     437 </span>            :    /// be used for ASCII output.</a>
+<a name="438"><span class="lineNum">     438 </span>            :    virtual void Save(const char *fname, int precision=16) const;</a>
+<a name="439"><span class="lineNum">     439 </span>            : </a>
+<a name="440"><span class="lineNum">     440 </span>            : #ifdef MFEM_USE_ADIOS2</a>
+<a name="441"><span class="lineNum">     441 </span>            :    /** Save the local portion of the ParGridFunction. This differs from the</a>
+<a name="442"><span class="lineNum">     442 </span>            :        serial GridFunction::Save in that it takes into account the signs of</a>
+<a name="443"><span class="lineNum">     443 </span>            :        the local dofs. */</a>
+<a name="444"><span class="lineNum">     444 </span>            :    virtual void Save(</a>
+<a name="445"><span class="lineNum">     445 </span>            :       adios2stream &amp;out, const std::string &amp;variable_name,</a>
+<a name="446"><span class="lineNum">     446 </span>            :       const adios2stream::data_type type = adios2stream::data_type::point_data) const;</a>
+<a name="447"><span class="lineNum">     447 </span>            : #endif</a>
+<a name="448"><span class="lineNum">     448 </span>            : </a>
+<a name="449"><span class="lineNum">     449 </span>            :    /// Merge the local grid functions</a>
+<a name="450"><span class="lineNum">     450 </span>            :    void SaveAsOne(std::ostream &amp;out = mfem::out) const;</a>
+<a name="451"><span class="lineNum">     451 </span>            : </a>
+<a name="452"><span class="lineNum">     452 </span><span class="lineNoCov">          0 :    virtual ~ParGridFunction() { }</span></a>
+<a name="453"><span class="lineNum">     453 </span>            : };</a>
+<a name="454"><span class="lineNum">     454 </span>            : </a>
+<a name="455"><span class="lineNum">     455 </span>            : </a>
+<a name="456"><span class="lineNum">     456 </span>            : /** Performs a global L2 projection (through a HypreBoomerAMG solve) of flux</a>
+<a name="457"><span class="lineNum">     457 </span>            :     from supplied discontinuous space into supplied smooth (continuous, or at</a>
+<a name="458"><span class="lineNum">     458 </span>            :     least conforming) space, and computes the Lp norms of the differences</a>
+<a name="459"><span class="lineNum">     459 </span>            :     between them on each element. This is one approach to handling conforming</a>
+<a name="460"><span class="lineNum">     460 </span>            :     and non-conforming elements in parallel. Returns the total error estimate. */</a>
+<a name="461"><span class="lineNum">     461 </span>            : double L2ZZErrorEstimator(BilinearFormIntegrator &amp;flux_integrator,</a>
+<a name="462"><span class="lineNum">     462 </span>            :                           const ParGridFunction &amp;x,</a>
+<a name="463"><span class="lineNum">     463 </span>            :                           ParFiniteElementSpace &amp;smooth_flux_fes,</a>
+<a name="464"><span class="lineNum">     464 </span>            :                           ParFiniteElementSpace &amp;flux_fes,</a>
+<a name="465"><span class="lineNum">     465 </span>            :                           Vector &amp;errors, int norm_p = 2, double solver_tol = 1e-12,</a>
+<a name="466"><span class="lineNum">     466 </span>            :                           int solver_max_it = 200);</a>
+<a name="467"><span class="lineNum">     467 </span>            : </a>
+<a name="468"><span class="lineNum">     468 </span>            : }</a>
+<a name="469"><span class="lineNum">     469 </span>            : </a>
+<a name="470"><span class="lineNum">     470 </span>            : #endif // MFEM_USE_MPI</a>
+<a name="471"><span class="lineNum">     471 </span>            : </a>
+<a name="472"><span class="lineNum">     472 </span>            : #endif</a>
+</pre>
+      </td>
+    </tr>
+  </table>
+  <br>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="ruler"><img src="../glass.png" width=3 height=3 alt=""></td></tr>
+    <tr><td class="versionInfo">Generated by: <a href="http://ltp.sourceforge.net/coverage/lcov.php" target="_parent">LCOV version 1.14</a></td></tr>
+  </table>
+  <br>
+
+</body>
+</html>
