@@ -265,7 +265,9 @@ make clean
 make all -j
 cd examples
 mpicxx -O3 -std=c++11 -I.. -I../../hypre/src/hypre/include tst.cpp -o tst -L.. -lmfem -L../../hypre/src/hypre/lib -lHYPRE -L../../metis-4.0 -lmetis -lrt
-mpirun -np 4 tst -m /root/mfem/data/manifold.msh
+（添加覆盖率的话使用：mpicxx -O3 -std=c++11 -fprofile-arcs -ftest-coverage -I.. -I../../hypre/src/hypre/include tst.cpp -o tst -L.. -lmfem -L../../hypre/src/hypre/lib -lHYPRE -L../../metis-4.0 -lmetis -lrt -lgcov）
+
+mpirun -np 4 tst -m /root/mfem-code-analyzer/bugs/issue2559/manifold.msh
 
 
 ### 2413
