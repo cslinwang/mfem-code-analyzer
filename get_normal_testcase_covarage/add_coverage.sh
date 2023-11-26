@@ -30,4 +30,5 @@ awk '
 
 # 运行配置和编译命令
 make config
+make parallel -j
 make all -j # 使用适当数量的作业
