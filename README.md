@@ -175,6 +175,7 @@ make all -j
 
 ## BUG复现命令
 
+# v201
 ### issue 3691成功
 
 fix sha:a15866e212b167ab83d5384e7326cdd3fa0723b2
@@ -255,6 +256,7 @@ make clean
 make all -j
 cd examples
 mpicxx -O3 -std=c++11 -I.. -I../../hypre/src/hypre/include 2779.cpp -o 2779 -L.. -lmfem -L../../hypre/src/hypre/lib -lHYPRE -L../../metis-4.0 -lmetis -lrt
+添加覆盖率：mpicxx -O3 -std=c++11 -fprofile-arcs -ftest-coverage -I.. -I../../hypre/src/hypre/include 2779.cpp -o 2779 -L.. -lmfem -L../../hypre/src/hypre/lib -lHYPRE -L../../metis-4.0 -lmetis -lrt -lgcov
 ./2779
 
 ### 2559成功
@@ -270,6 +272,7 @@ mpicxx -O3 -std=c++11 -I.. -I../../hypre/src/hypre/include tst.cpp -o tst -L.. -
 mpirun -np 4 tst -m /root/mfem-code-analyzer/bugs/issue2559/manifold.msh
 
 
+## V1
 ### 2413
 （未复现）编译失败
 url: https://github.com/mfem/mfem/issues/2413
