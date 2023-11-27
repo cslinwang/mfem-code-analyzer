@@ -665,6 +665,8 @@ make clean
 make all -j
 cd examples
 mpicxx -O3 -std=c++11 -I.. -I../../hypre/src/hypre/include 463.cpp -o 463 -L.. -lmfem -L../../hypre/src/hypre/lib -lHYPRE -L../../metis-4.0 -lmetis -lrt
+添加覆盖率：mpicxx -O3 -std=c++11 -fprofile-arcs -ftest-coverage -I.. -I../../hypre/src/hypre/include 463.cpp -o 463 -L.. -lmfem -L../../hypre/src/hypre/lib -lHYPRE -L../../metis-4.0 -lmetis -lrt -lgcov
+
 mpirun -n 2 ./463
 结果：
 After creation : Boundary attribute size: 4
