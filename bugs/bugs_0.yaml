@@ -193,7 +193,7 @@ mfem issue1326:
 
 mfem issue1284:
   name: issue1284
-  bug_sha: f0553ab5b16cbdb9ad17a3d18a06480396d05141
+  bug_sha: e6385f2992b9c2d9001265fe3283403bec30b417
   fix_sha: ae38fca215904de81204d946baf412177a51de93
   testcase: examples/ex5.cpp,examples/ex9.cpp
   testname: ex5,ex9

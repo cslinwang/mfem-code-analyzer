@@ -177,7 +177,7 @@ make all -j
 
 # v201
 
-### issue 3691成功
+### issue 3691成功，但没有覆盖率
 fix sha:a15866e212b167ab83d5384e7326cdd3fa0723b2
 reset current branch to previous commit,hard reset
 cd ~
@@ -189,15 +189,26 @@ mpirun -np 24 ex6p -m /root/mfem-code-analyzer/bugs/issue3691/p1_prism.msh -o 2
 
 ### issue 3566成功.
 内存泄漏问题，不报错：
-切换分支
-编译：/root/mfem/mfem-code-analyzer/get_normal_testcase_covarage/compile_mfem.sh 93393c5c58ecaa3eb6fb9bbd6a822e7c3fd96be5：
-查看是否内存泄漏cd ~/mfem/mfem/build/tests/unit
+privious commit
+/root/mfem-code-analyzer/get_normal_testcase_covarage/add_coverage.sh
+cd ~/mfem/mfem/build/tests/unit
 valgrind --leak-check=full ./unit_tests SubMesh
-Valgrind的输出显示存在内存泄漏。以下是报告的主要信息：
+结果：
+==267697== LEAK SUMMARY:
+==267697==    definitely lost: 327,208 bytes in 192 blocks
+==267697==    indirectly lost: 5,209,184 bytes in 24,887 blocks
+==267697==      possibly lost: 14,520 bytes in 1 blocks
+==267697==    still reachable: 0 bytes in 0 blocks
+==267697==         suppressed: 0 bytes in 0 blocks
+==267697==
+==267697== For lists of detected and suppressed errors, rerun with: -s
+==267697== ERROR SUMMARY: 20 errors from 20 contexts (suppressed: 0 from 0)
 
-共计329,984字节分布在192个内存块中，被确定为内存泄漏。
-共计5,134,896字节分布在24,885个间接丢失的内存块中。
-还有可能丢失的86,032字节分布在3个内存块中。
+### issue 3332成功.
+privious commit
+/root/mfem-code-analyzer/get_normal_testcase_covarage/add_coverage.sh
+cd ~/mfem/tests/unit
+./unit_tests SubMesh
 
 ### issue 2884失败
 (未复现) 编译就过不去。 修复版本编译也过不去。
@@ -212,7 +223,7 @@ cd tests/unit
 ./unit_tests --list-test-names-only
 ./unit_tests "Hcurl/Hdiv pa_coeff"
 
-### issue 2878成功
+### issue 2878成功，但没有覆盖率
 没有gcda文件，覆盖率失败
 url: https://github.com/mfem/mfem/issues/2878
 bug sha:使用的是50cd7da165999d4c65a6875a24c39317acaa2c3e
@@ -229,7 +240,7 @@ cd examples
 mpicxx -O3 -std=c++11 -fprofile-arcs -ftest-coverage -I.. -I../../hypre/src/hypre/include 2878.cpp -o 2878 -L.. -lmfem -L../../hypre/src/hypre/lib -lHYPRE -L../../metis-4.0 -lmetis -lrt -lgcov
 mpirun -np 5 2878 -m /root/mfem/data/beam-tet.mesh -o 1
 
-### issue 2666成功
+### issue 2666成功，但没有覆盖率
 覆盖率失败，没有gcno文件
 url: https://github.com/mfem/mfem/issues/2666
 第一种：运行ex15p
@@ -284,8 +295,36 @@ mpicxx -O3 -std=c++11 -I.. -I../../hypre/src/hypre/include tst.cpp -o tst -L.. -
 
 mpirun -np 4 tst -m /root/mfem-code-analyzer/bugs/issue2559/manifold.msh
 
+### 2343成功
+先使用三条命令清理，然后注释
+将2343中的用例放入bug版本中
+/root/mfem-code-analyzer/get_normal_testcase_covarage/add_coverage.sh
+cd tests/unit
+./unit_tests "First order ODE methods"
+结果：
+test cases:  1 |  0 passed | 1 failed
+assertions: 33 | 26 passed | 7 failed
+
+## 3332成功
+将3332中的用例放入bug版本中
+/root/mfem-code-analyzer/get_normal_testcase_covarage/compile_mfem.sh 973b42c57a60ea4844dd09ff38e47ed89ead93ad
+/root/mfem-code-analyzer/get_normal_testcase_covarage/run_tesscase.sh
+第二个脚本中需修改用例为SubMesh
+结果：
+test cases:   1 |   0 passed | 1 failed
+assertions: 132 | 131 passed | 1 failed
+
+
 
 ## V1
+
+## 1284成功
+将1284中的ex5放入bug版本中
+/root/mfem-code-analyzer/get_normal_testcase_covarage/compile_mfem.sh e6385f2992b9c2d9001265fe3283403bec30b417
+/root/mfem-code-analyzer/get_normal_testcase_covarage/run_exp_tesscase.sh
+第二个脚本中需修改用例为ex5
+结果：
+
 ### 2413
 （未复现）编译失败
 url: https://github.com/mfem/mfem/issues/2413
@@ -530,7 +569,6 @@ Aborted (core dumped)
 privious commit
 将64.cpp放入examples
 make clean
-make all -j
 cd examples
 g++  -O3 -std=c++11 -I..  64.cpp -o 64 -L.. -lmfem -lrt
 ./64

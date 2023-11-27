@@ -1,6 +1,6 @@
 #!/bin/bash
 
-test_case="${1:-"PA VectorDivergence"}"
+test_case="${1:-"SubMesh"}"
 
 echo "开始运行测试用例 $test_case ..."
 

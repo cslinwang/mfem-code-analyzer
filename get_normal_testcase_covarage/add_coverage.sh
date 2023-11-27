@@ -5,9 +5,9 @@
 # cd /root/mfem || exit 1 # 用实际路径替换 /path/to/mfem
 
 # 清理构建和 Git 未跟踪文件
-make clean
-git clean -fdx
-git reset --hard
+# make clean
+# git clean -fdx
+# git reset --hard
 
 # 使用 awk 进行替换
 awk '

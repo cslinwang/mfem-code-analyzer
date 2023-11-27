@@ -1,0 +1,322 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html lang="en">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>LCOV - coverage.info - linalg/complex_densemat.hpp</title>
+  <link rel="stylesheet" type="text/css" href="../gcov.css">
+</head>
+
+<body>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="title">LCOV - code coverage report</td></tr>
+    <tr><td class="ruler"><img src="../glass.png" width=3 height=3 alt=""></td></tr>
+
+    <tr>
+      <td width="100%">
+        <table cellpadding=1 border=0 width="100%">
+          <tr>
+            <td width="10%" class="headerItem">Current view:</td>
+            <td width="35%" class="headerValue"><a href="../index.html">top level</a> - <a href="index.html">linalg</a> - complex_densemat.hpp<span style="font-size: 80%;"> (source / <a href="complex_densemat.hpp.func-sort-c.html">functions</a>)</span></td>
+            <td width="5%"></td>
+            <td width="15%"></td>
+            <td width="10%" class="headerCovTableHead">Hit</td>
+            <td width="10%" class="headerCovTableHead">Total</td>
+            <td width="15%" class="headerCovTableHead">Coverage</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Test:</td>
+            <td class="headerValue">coverage.info</td>
+            <td></td>
+            <td class="headerItem">Lines:</td>
+            <td class="headerCovTableEntry">0</td>
+            <td class="headerCovTableEntry">27</td>
+            <td class="headerCovTableEntryLo">0.0 %</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Date:</td>
+            <td class="headerValue">2023-11-27 11:41:49</td>
+            <td></td>
+            <td class="headerItem">Functions:</td>
+            <td class="headerCovTableEntry">0</td>
+            <td class="headerCovTableEntry">6</td>
+            <td class="headerCovTableEntryLo">0.0 %</td>
+          </tr>
+          <tr><td><img src="../glass.png" width=3 height=3 alt=""></td></tr>
+        </table>
+      </td>
+    </tr>
+
+    <tr><td class="ruler"><img src="../glass.png" width=3 height=3 alt=""></td></tr>
+  </table>
+
+  <table cellpadding=0 cellspacing=0 border=0>
+    <tr>
+      <td><br></td>
+    </tr>
+    <tr>
+      <td>
+<pre class="sourceHeading">          Line data    Source code</pre>
+<pre class="source">
+<a name="1"><span class="lineNum">       1 </span>            : // Copyright (c) 2010-2023, Lawrence Livermore National Security, LLC. Produced</a>
+<a name="2"><span class="lineNum">       2 </span>            : // at the Lawrence Livermore National Laboratory. All Rights reserved. See files</a>
+<a name="3"><span class="lineNum">       3 </span>            : // LICENSE and NOTICE for details. LLNL-CODE-806117.</a>
+<a name="4"><span class="lineNum">       4 </span>            : //</a>
+<a name="5"><span class="lineNum">       5 </span>            : // This file is part of the MFEM library. For more information and source code</a>
+<a name="6"><span class="lineNum">       6 </span>            : // availability visit https://mfem.org.</a>
+<a name="7"><span class="lineNum">       7 </span>            : //</a>
+<a name="8"><span class="lineNum">       8 </span>            : // MFEM is free software; you can redistribute it and/or modify it under the</a>
+<a name="9"><span class="lineNum">       9 </span>            : // terms of the BSD-3 license. We welcome feedback and contributions, see file</a>
+<a name="10"><span class="lineNum">      10 </span>            : // CONTRIBUTING.md for details.</a>
+<a name="11"><span class="lineNum">      11 </span>            : </a>
+<a name="12"><span class="lineNum">      12 </span>            : #ifndef MFEM_COMPLEX_DENSEMAT</a>
+<a name="13"><span class="lineNum">      13 </span>            : #define MFEM_COMPLEX_DENSEMAT</a>
+<a name="14"><span class="lineNum">      14 </span>            : </a>
+<a name="15"><span class="lineNum">      15 </span>            : #include &quot;complex_operator.hpp&quot;</a>
+<a name="16"><span class="lineNum">      16 </span>            : #include &lt;complex&gt;</a>
+<a name="17"><span class="lineNum">      17 </span>            : </a>
+<a name="18"><span class="lineNum">      18 </span>            : namespace mfem</a>
+<a name="19"><span class="lineNum">      19 </span>            : {</a>
+<a name="20"><span class="lineNum">      20 </span>            : </a>
+<a name="21"><span class="lineNum">      21 </span>            : /** @brief Specialization of the ComplexOperator built from a pair of</a>
+<a name="22"><span class="lineNum">      22 </span>            :     Dense Matrices.  The purpose of this specialization is to support</a>
+<a name="23"><span class="lineNum">      23 </span>            :     the inverse of a ComplexDenseMatrix and various MatMat operations</a>
+<a name="24"><span class="lineNum">      24 </span>            :     See ComplexOperator documentation for more information.</a>
+<a name="25"><span class="lineNum">      25 </span>            :  */</a>
+<a name="26"><span class="lineNum">      26 </span><span class="lineNoCov">          0 : class ComplexDenseMatrix : public ComplexOperator</span></a>
+<a name="27"><span class="lineNum">      27 </span>            : {</a>
+<a name="28"><span class="lineNum">      28 </span>            : </a>
+<a name="29"><span class="lineNum">      29 </span>            : public:</a>
+<a name="30"><span class="lineNum">      30 </span><span class="lineNoCov">          0 :    ComplexDenseMatrix(DenseMatrix * A_Real, DenseMatrix * A_Imag,</span></a>
+<a name="31"><span class="lineNum">      31 </span>            :                       bool ownReal, bool ownImag, Convention convention = HERMITIAN)</a>
+<a name="32"><span class="lineNum">      32 </span><span class="lineNoCov">          0 :       : ComplexOperator(A_Real, A_Imag, ownReal, ownImag, convention)</span></a>
+<a name="33"><span class="lineNum">      33 </span>            :    { }</a>
+<a name="34"><span class="lineNum">      34 </span>            : </a>
+<a name="35"><span class="lineNum">      35 </span>            :    virtual DenseMatrix &amp; real();</a>
+<a name="36"><span class="lineNum">      36 </span>            :    virtual DenseMatrix &amp; imag();</a>
+<a name="37"><span class="lineNum">      37 </span>            : </a>
+<a name="38"><span class="lineNum">      38 </span>            :    virtual const DenseMatrix &amp; real() const;</a>
+<a name="39"><span class="lineNum">      39 </span>            :    virtual const DenseMatrix &amp; imag() const;</a>
+<a name="40"><span class="lineNum">      40 </span>            : </a>
+<a name="41"><span class="lineNum">      41 </span>            :    /** Combine the blocks making up this complex operator into a single</a>
+<a name="42"><span class="lineNum">      42 </span>            :        DenseMatrix. Note that this combined operator requires roughly</a>
+<a name="43"><span class="lineNum">      43 </span>            :        twice the memory of the block structured operator. */</a>
+<a name="44"><span class="lineNum">      44 </span>            :    DenseMatrix * GetSystemMatrix() const;</a>
+<a name="45"><span class="lineNum">      45 </span>            : </a>
+<a name="46"><span class="lineNum">      46 </span>            :    virtual Type GetType() const { return Complex_DenseMat; }</a>
+<a name="47"><span class="lineNum">      47 </span>            : </a>
+<a name="48"><span class="lineNum">      48 </span>            :    ComplexDenseMatrix * ComputeInverse();</a>
+<a name="49"><span class="lineNum">      49 </span>            : </a>
+<a name="50"><span class="lineNum">      50 </span>            : };</a>
+<a name="51"><span class="lineNum">      51 </span>            : </a>
+<a name="52"><span class="lineNum">      52 </span>            : /// Matrix matrix multiplication.  A = B * C.</a>
+<a name="53"><span class="lineNum">      53 </span>            : ComplexDenseMatrix * Mult(const ComplexDenseMatrix &amp;B,</a>
+<a name="54"><span class="lineNum">      54 </span>            :                           const ComplexDenseMatrix &amp;C);</a>
+<a name="55"><span class="lineNum">      55 </span>            : </a>
+<a name="56"><span class="lineNum">      56 </span>            : /// Multiply the complex conjugate transpose of a matrix A with a matrix B. A^H*B</a>
+<a name="57"><span class="lineNum">      57 </span>            : ComplexDenseMatrix * MultAtB(const ComplexDenseMatrix &amp;A,</a>
+<a name="58"><span class="lineNum">      58 </span>            :                              const ComplexDenseMatrix &amp;B);</a>
+<a name="59"><span class="lineNum">      59 </span>            : </a>
+<a name="60"><span class="lineNum">      60 </span>            : </a>
+<a name="61"><span class="lineNum">      61 </span>            : /** Abstract class that can compute factorization of external data and perform various</a>
+<a name="62"><span class="lineNum">      62 </span>            :     operations with the factored data. */</a>
+<a name="63"><span class="lineNum">      63 </span>            : class ComplexFactors</a>
+<a name="64"><span class="lineNum">      64 </span>            : {</a>
+<a name="65"><span class="lineNum">      65 </span>            : protected:</a>
+<a name="66"><span class="lineNum">      66 </span>            : </a>
+<a name="67"><span class="lineNum">      67 </span>            :    // returns a new complex array</a>
+<a name="68"><span class="lineNum">      68 </span>            :    std::complex&lt;double&gt; * RealToComplex(int m, const double * x_r,</a>
+<a name="69"><span class="lineNum">      69 </span>            :                                         const double * x_i) const;</a>
+<a name="70"><span class="lineNum">      70 </span>            :    // copies the given complex array to real and imag arrays</a>
+<a name="71"><span class="lineNum">      71 </span>            :    void ComplexToReal(int m, const std::complex&lt;double&gt; * x, double * x_r,</a>
+<a name="72"><span class="lineNum">      72 </span>            :                       double * x_i) const;</a>
+<a name="73"><span class="lineNum">      73 </span>            : </a>
+<a name="74"><span class="lineNum">      74 </span>            : public:</a>
+<a name="75"><span class="lineNum">      75 </span>            : </a>
+<a name="76"><span class="lineNum">      76 </span>            :    double *data_r = nullptr;</a>
+<a name="77"><span class="lineNum">      77 </span>            :    double *data_i = nullptr;</a>
+<a name="78"><span class="lineNum">      78 </span>            :    std::complex&lt;double&gt; * data = nullptr;</a>
+<a name="79"><span class="lineNum">      79 </span>            : </a>
+<a name="80"><span class="lineNum">      80 </span>            :    ComplexFactors() { }</a>
+<a name="81"><span class="lineNum">      81 </span>            : </a>
+<a name="82"><span class="lineNum">      82 </span><span class="lineNoCov">          0 :    ComplexFactors(double *data_r_, double *data_i_)</span></a>
+<a name="83"><span class="lineNum">      83 </span><span class="lineNoCov">          0 :       : data_r(data_r_), data_i(data_i_) { }</span></a>
+<a name="84"><span class="lineNum">      84 </span>            : </a>
+<a name="85"><span class="lineNum">      85 </span>            :    void SetComplexData(int m);</a>
+<a name="86"><span class="lineNum">      86 </span>            : </a>
+<a name="87"><span class="lineNum">      87 </span>            :    void ResetComplexData(int m)</a>
+<a name="88"><span class="lineNum">      88 </span>            :    {</a>
+<a name="89"><span class="lineNum">      89 </span>            :       delete [] data; data = nullptr;</a>
+<a name="90"><span class="lineNum">      90 </span>            :       SetComplexData(m);</a>
+<a name="91"><span class="lineNum">      91 </span>            :    }</a>
+<a name="92"><span class="lineNum">      92 </span>            : </a>
+<a name="93"><span class="lineNum">      93 </span><span class="lineNoCov">          0 :    virtual bool Factor(int m, double TOL = 0.0)</span></a>
+<a name="94"><span class="lineNum">      94 </span>            :    {</a>
+<a name="95"><span class="lineNum">      95 </span><span class="lineNoCov">          0 :       mfem_error(&quot;ComplexFactors::ComplexFactors(...)&quot;);</span></a>
+<a name="96"><span class="lineNum">      96 </span><span class="lineNoCov">          0 :       return false;</span></a>
+<a name="97"><span class="lineNum">      97 </span>            :    }</a>
+<a name="98"><span class="lineNum">      98 </span>            : </a>
+<a name="99"><span class="lineNum">      99 </span><span class="lineNoCov">          0 :    virtual std::complex&lt;double&gt; Det(int m) const</span></a>
+<a name="100"><span class="lineNum">     100 </span>            :    {</a>
+<a name="101"><span class="lineNum">     101 </span><span class="lineNoCov">          0 :       mfem_error(&quot;Factors::Det(...)&quot;);</span></a>
+<a name="102"><span class="lineNum">     102 </span><span class="lineNoCov">          0 :       return 0.;</span></a>
+<a name="103"><span class="lineNum">     103 </span>            :    }</a>
+<a name="104"><span class="lineNum">     104 </span>            : </a>
+<a name="105"><span class="lineNum">     105 </span><span class="lineNoCov">          0 :    virtual void Solve(int m, int n, double *X_r, double * X_i) const</span></a>
+<a name="106"><span class="lineNum">     106 </span>            :    {</a>
+<a name="107"><span class="lineNum">     107 </span><span class="lineNoCov">          0 :       mfem_error(&quot;Factors::Solve(...)&quot;);</span></a>
+<a name="108"><span class="lineNum">     108 </span><span class="lineNoCov">          0 :    }</span></a>
+<a name="109"><span class="lineNum">     109 </span>            : </a>
+<a name="110"><span class="lineNum">     110 </span><span class="lineNoCov">          0 :    virtual void GetInverseMatrix(int m, double *X_r, double * X_i) const</span></a>
+<a name="111"><span class="lineNum">     111 </span>            :    {</a>
+<a name="112"><span class="lineNum">     112 </span><span class="lineNoCov">          0 :       mfem_error(&quot;Factors::GetInverseMatrix(...)&quot;);</span></a>
+<a name="113"><span class="lineNum">     113 </span><span class="lineNoCov">          0 :    }</span></a>
+<a name="114"><span class="lineNum">     114 </span>            : </a>
+<a name="115"><span class="lineNum">     115 </span><span class="lineNoCov">          0 :    virtual ~ComplexFactors()</span></a>
+<a name="116"><span class="lineNum">     116 </span><span class="lineNoCov">          0 :    {</span></a>
+<a name="117"><span class="lineNum">     117 </span><span class="lineNoCov">          0 :       delete [] data; data = nullptr;</span></a>
+<a name="118"><span class="lineNum">     118 </span><span class="lineNoCov">          0 :    }</span></a>
+<a name="119"><span class="lineNum">     119 </span>            : };</a>
+<a name="120"><span class="lineNum">     120 </span>            : </a>
+<a name="121"><span class="lineNum">     121 </span>            : /** Class that computes factorization of external data and perform various</a>
+<a name="122"><span class="lineNum">     122 </span>            :     operations with the factored data. */</a>
+<a name="123"><span class="lineNum">     123 </span><span class="lineNoCov">          0 : class ComplexLUFactors : public ComplexFactors</span></a>
+<a name="124"><span class="lineNum">     124 </span>            : {</a>
+<a name="125"><span class="lineNum">     125 </span>            : public:</a>
+<a name="126"><span class="lineNum">     126 </span>            :    int *ipiv;</a>
+<a name="127"><span class="lineNum">     127 </span>            : #ifdef MFEM_USE_LAPACK</a>
+<a name="128"><span class="lineNum">     128 </span>            :    static const int ipiv_base = 1;</a>
+<a name="129"><span class="lineNum">     129 </span>            : #else</a>
+<a name="130"><span class="lineNum">     130 </span>            :    static const int ipiv_base = 0;</a>
+<a name="131"><span class="lineNum">     131 </span>            : #endif</a>
+<a name="132"><span class="lineNum">     132 </span>            : </a>
+<a name="133"><span class="lineNum">     133 </span>            :    /** With this constructor, the (public) data and ipiv members should be set</a>
+<a name="134"><span class="lineNum">     134 </span>            :        explicitly before calling class methods. */</a>
+<a name="135"><span class="lineNum">     135 </span>            :    ComplexLUFactors(): ComplexFactors() { }</a>
+<a name="136"><span class="lineNum">     136 </span>            : </a>
+<a name="137"><span class="lineNum">     137 </span><span class="lineNoCov">          0 :    ComplexLUFactors(double *data_r_,double * data_i, int *ipiv_)</span></a>
+<a name="138"><span class="lineNum">     138 </span><span class="lineNoCov">          0 :       : ComplexFactors(data_r_, data_i), ipiv(ipiv_) { }</span></a>
+<a name="139"><span class="lineNum">     139 </span>            :    /**</a>
+<a name="140"><span class="lineNum">     140 </span>            :     * @brief Compute the LU factorization of the current matrix</a>
+<a name="141"><span class="lineNum">     141 </span>            :     *</a>
+<a name="142"><span class="lineNum">     142 </span>            :     * Factorize the current matrix of size (m x m) overwriting it with the</a>
+<a name="143"><span class="lineNum">     143 </span>            :     * LU factors. The factorization is such that L.U = P.A, where A is the</a>
+<a name="144"><span class="lineNum">     144 </span>            :     * original matrix and P is a permutation matrix represented by ipiv.</a>
+<a name="145"><span class="lineNum">     145 </span>            :     *</a>
+<a name="146"><span class="lineNum">     146 </span>            :     * @param [in] m size of the square matrix</a>
+<a name="147"><span class="lineNum">     147 </span>            :     * @param [in] TOL optional fuzzy comparison tolerance. Defaults to 0.0.</a>
+<a name="148"><span class="lineNum">     148 </span>            :     *</a>
+<a name="149"><span class="lineNum">     149 </span>            :     * @return status set to true if successful, otherwise, false.</a>
+<a name="150"><span class="lineNum">     150 </span>            :     */</a>
+<a name="151"><span class="lineNum">     151 </span>            :    virtual bool Factor(int m, double TOL = 0.0);</a>
+<a name="152"><span class="lineNum">     152 </span>            : </a>
+<a name="153"><span class="lineNum">     153 </span>            :    /** Assuming L.U = P.A factored data of size (m x m), compute |A|</a>
+<a name="154"><span class="lineNum">     154 </span>            :        from the diagonal values of U and the permutation information. */</a>
+<a name="155"><span class="lineNum">     155 </span>            :    virtual std::complex&lt;double&gt; Det(int m) const;</a>
+<a name="156"><span class="lineNum">     156 </span>            : </a>
+<a name="157"><span class="lineNum">     157 </span>            :    /** Assuming L.U = P.A factored data of size (m x m), compute X &lt;- A X,</a>
+<a name="158"><span class="lineNum">     158 </span>            :        for a matrix X of size (m x n). */</a>
+<a name="159"><span class="lineNum">     159 </span>            :    void Mult(int m, int n, double *X_r, double * X_i) const;</a>
+<a name="160"><span class="lineNum">     160 </span>            : </a>
+<a name="161"><span class="lineNum">     161 </span>            :    void Mult(int m, int n, std::complex&lt;double&gt; *X) const;</a>
+<a name="162"><span class="lineNum">     162 </span>            : </a>
+<a name="163"><span class="lineNum">     163 </span>            :    /** Assuming L.U = P.A factored data of size (m x m), compute</a>
+<a name="164"><span class="lineNum">     164 </span>            :        X &lt;- L^{-1} P X, for a matrix X of size (m x n). */</a>
+<a name="165"><span class="lineNum">     165 </span>            :    void LSolve(int m, int n, double *X_r, double *X_i) const;</a>
+<a name="166"><span class="lineNum">     166 </span>            : </a>
+<a name="167"><span class="lineNum">     167 </span>            :    /** Assuming L.U = P.A factored data of size (m x m), compute</a>
+<a name="168"><span class="lineNum">     168 </span>            :        X &lt;- U^{-1} X, for a matrix X of size (m x n). */</a>
+<a name="169"><span class="lineNum">     169 </span>            :    void USolve(int m, int n, double *X_r, double *X_i) const;</a>
+<a name="170"><span class="lineNum">     170 </span>            : </a>
+<a name="171"><span class="lineNum">     171 </span>            :    /** Assuming L.U = P.A factored data of size (m x m), compute X &lt;- A^{-1} X,</a>
+<a name="172"><span class="lineNum">     172 </span>            :        for a matrix X of size (m x n). */</a>
+<a name="173"><span class="lineNum">     173 </span>            :    virtual void Solve(int m, int n, double *X_r, double *X_i) const;</a>
+<a name="174"><span class="lineNum">     174 </span>            : </a>
+<a name="175"><span class="lineNum">     175 </span>            :    /** Assuming L.U = P.A factored data of size (m x m), compute X &lt;- X A^{-1},</a>
+<a name="176"><span class="lineNum">     176 </span>            :        for a matrix X of size (n x m). */</a>
+<a name="177"><span class="lineNum">     177 </span>            :    void RightSolve(int m, int n, double *X_r, double *X_i) const;</a>
+<a name="178"><span class="lineNum">     178 </span>            : </a>
+<a name="179"><span class="lineNum">     179 </span>            :    /// Assuming L.U = P.A factored data of size (m x m), compute X &lt;- A^{-1}.</a>
+<a name="180"><span class="lineNum">     180 </span>            :    virtual void GetInverseMatrix(int m, double *X_r, double * X_i) const;</a>
+<a name="181"><span class="lineNum">     181 </span>            : };</a>
+<a name="182"><span class="lineNum">     182 </span>            : </a>
+<a name="183"><span class="lineNum">     183 </span>            : </a>
+<a name="184"><span class="lineNum">     184 </span>            : /** Class that can compute Cholesky factorizations of external data of an</a>
+<a name="185"><span class="lineNum">     185 </span>            :     Hermitian positive matrix and perform various operations with the factored data. */</a>
+<a name="186"><span class="lineNum">     186 </span><span class="lineNoCov">          0 : class ComplexCholeskyFactors : public ComplexFactors</span></a>
+<a name="187"><span class="lineNum">     187 </span>            : {</a>
+<a name="188"><span class="lineNum">     188 </span>            : public:</a>
+<a name="189"><span class="lineNum">     189 </span>            : </a>
+<a name="190"><span class="lineNum">     190 </span>            :    /** With this constructor, the (public) data should be set</a>
+<a name="191"><span class="lineNum">     191 </span>            :        explicitly before calling class methods. */</a>
+<a name="192"><span class="lineNum">     192 </span>            :    ComplexCholeskyFactors() : ComplexFactors() { }</a>
+<a name="193"><span class="lineNum">     193 </span>            : </a>
+<a name="194"><span class="lineNum">     194 </span><span class="lineNoCov">          0 :    ComplexCholeskyFactors(double *data_r_, double * data_i_)</span></a>
+<a name="195"><span class="lineNum">     195 </span><span class="lineNoCov">          0 :       : ComplexFactors(data_r_, data_i_) { }</span></a>
+<a name="196"><span class="lineNum">     196 </span>            : </a>
+<a name="197"><span class="lineNum">     197 </span>            :    /**</a>
+<a name="198"><span class="lineNum">     198 </span>            :     * @brief Compute the Cholesky factorization of the current matrix</a>
+<a name="199"><span class="lineNum">     199 </span>            :     *</a>
+<a name="200"><span class="lineNum">     200 </span>            :     * Factorize the current matrix of size (m x m) overwriting it with the</a>
+<a name="201"><span class="lineNum">     201 </span>            :     * Cholesky factors. The factorization is such that LL^H = A, where A is the</a>
+<a name="202"><span class="lineNum">     202 </span>            :     * original matrix</a>
+<a name="203"><span class="lineNum">     203 </span>            :     *</a>
+<a name="204"><span class="lineNum">     204 </span>            :     * @param [in] m size of the square matrix</a>
+<a name="205"><span class="lineNum">     205 </span>            :     * @param [in] TOL optional fuzzy comparison tolerance. Defaults to 0.0.</a>
+<a name="206"><span class="lineNum">     206 </span>            :     *</a>
+<a name="207"><span class="lineNum">     207 </span>            :     * @return status set to true if successful, otherwise, false.</a>
+<a name="208"><span class="lineNum">     208 </span>            :     */</a>
+<a name="209"><span class="lineNum">     209 </span>            :    virtual bool Factor(int m, double TOL = 0.0);</a>
+<a name="210"><span class="lineNum">     210 </span>            : </a>
+<a name="211"><span class="lineNum">     211 </span>            :    /** Assuming LL^H = A factored data of size (m x m), compute |A|</a>
+<a name="212"><span class="lineNum">     212 </span>            :        from the diagonal values of L */</a>
+<a name="213"><span class="lineNum">     213 </span>            :    virtual std::complex&lt;double&gt; Det(int m) const;</a>
+<a name="214"><span class="lineNum">     214 </span>            : </a>
+<a name="215"><span class="lineNum">     215 </span>            :    /** Assuming L.L^H = A factored data of size (m x m), compute X &lt;- L X,</a>
+<a name="216"><span class="lineNum">     216 </span>            :        for a matrix X of size (m x n). */</a>
+<a name="217"><span class="lineNum">     217 </span>            :    void LMult(int m, int n, double *X_r, double * X_i) const;</a>
+<a name="218"><span class="lineNum">     218 </span>            : </a>
+<a name="219"><span class="lineNum">     219 </span>            :    /** Assuming L.L^H = A factored data of size (m x m), compute X &lt;- L^t X,</a>
+<a name="220"><span class="lineNum">     220 </span>            :        for a matrix X of size (m x n). */</a>
+<a name="221"><span class="lineNum">     221 </span>            :    void UMult(int m, int n, double *X_r, double *X_i) const;</a>
+<a name="222"><span class="lineNum">     222 </span>            : </a>
+<a name="223"><span class="lineNum">     223 </span>            :    /** Assuming L L^H = A factored data of size (m x m), compute</a>
+<a name="224"><span class="lineNum">     224 </span>            :        X &lt;- L^{-1} X, for a matrix X of size (m x n). */</a>
+<a name="225"><span class="lineNum">     225 </span>            :    void LSolve(int m, int n, double *X_r, double * X_i) const;</a>
+<a name="226"><span class="lineNum">     226 </span>            : </a>
+<a name="227"><span class="lineNum">     227 </span>            :    /** Assuming L L^H = A factored data of size (m x m), compute</a>
+<a name="228"><span class="lineNum">     228 </span>            :        X &lt;- L^{-t} X, for a matrix X of size (m x n). */</a>
+<a name="229"><span class="lineNum">     229 </span>            :    void USolve(int m, int n, double *X_r, double *X_i) const;</a>
+<a name="230"><span class="lineNum">     230 </span>            : </a>
+<a name="231"><span class="lineNum">     231 </span>            :    /** Assuming L.L^H = A factored data of size (m x m), compute X &lt;- A^{-1} X,</a>
+<a name="232"><span class="lineNum">     232 </span>            :        for a matrix X of size (m x n). */</a>
+<a name="233"><span class="lineNum">     233 </span>            :    virtual void Solve(int m, int n, double *X_r, double * X_i) const;</a>
+<a name="234"><span class="lineNum">     234 </span>            : </a>
+<a name="235"><span class="lineNum">     235 </span>            :    /** Assuming L.L^H = A factored data of size (m x m), compute X &lt;- X A^{-1},</a>
+<a name="236"><span class="lineNum">     236 </span>            :        for a matrix X of size (n x m). */</a>
+<a name="237"><span class="lineNum">     237 </span>            :    void RightSolve(int m, int n, double *X_r, double *X_i) const;</a>
+<a name="238"><span class="lineNum">     238 </span>            : </a>
+<a name="239"><span class="lineNum">     239 </span>            :    /// Assuming L.L^H = A factored data of size (m x m), compute X &lt;- A^{-1}.</a>
+<a name="240"><span class="lineNum">     240 </span>            :    virtual void GetInverseMatrix(int m, double *X_r, double * X_i) const;</a>
+<a name="241"><span class="lineNum">     241 </span>            : </a>
+<a name="242"><span class="lineNum">     242 </span>            : };</a>
+<a name="243"><span class="lineNum">     243 </span>            : </a>
+<a name="244"><span class="lineNum">     244 </span>            : } // namespace mfem</a>
+<a name="245"><span class="lineNum">     245 </span>            : </a>
+<a name="246"><span class="lineNum">     246 </span>            : #endif // MFEM_COMPLEX_DENSEMAT</a>
+</pre>
+      </td>
+    </tr>
+  </table>
+  <br>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="ruler"><img src="../glass.png" width=3 height=3 alt=""></td></tr>
+    <tr><td class="versionInfo">Generated by: <a href="http://ltp.sourceforge.net/coverage/lcov.php" target="_parent">LCOV version 1.14</a></td></tr>
+  </table>
+  <br>
+
+</body>
+</html>
