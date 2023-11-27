@@ -30,5 +30,11 @@ awk '
 
 # 运行配置和编译命令
 make config
-make parallel -j
+# make parallel -j
+make serial -j # 使用适当数量的作业
 make all -j # 使用适当数量的作业
+exit 0
+make clean
+git clean -fdx
+git reset --hard
+/root/mfem/mfem-code-analyzer/get_normal_testcase_covarage/add_coverage.sh

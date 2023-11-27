@@ -324,12 +324,17 @@ assertions: 132 | 131 passed | 1 failed
 
 ## V1
 
-## 1284成功
-将1284中的ex5放入bug版本中
-/root/mfem-code-analyzer/get_normal_testcase_covarage/compile_mfem.sh e6385f2992b9c2d9001265fe3283403bec30b417
-/root/mfem-code-analyzer/get_normal_testcase_covarage/run_exp_tesscase.sh
-第二个脚本中需修改用例为ex5
-结果：
+## 1284成功.
+切换e6385f2992b9c2d9001265fe3283403bec30b417
+make clean
+git clean -fdx
+git reset --hard
+/root/mfem/mfem-code-analyzer/get_normal_testcase_covarage/add_coverage.sh
+cd examples
+./ex5
+fastcov --gcov gcov --exclude /usr/include --include /root/mfem coverage.json
+fastcov --lcov -o coverage.info
+genhtml coverage.info --output-directory coverage_report
 
 ### 2413
 （未复现）编译失败
