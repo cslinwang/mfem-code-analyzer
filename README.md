@@ -155,8 +155,9 @@ make all -j
 
 # 先编译全部
 
-  cd mefm
-  make all -j
+cd mfem
+
+make all -j
 
         # 并行
         export OMPI_ALLOW_RUN_AS_ROOT=1
@@ -186,6 +187,8 @@ make clean
 make all -j
 cd examples
 mpirun -np 24 ex6p -m /root/mfem-code-analyzer/bugs/issue3691/p1_prism.msh -o 2
+
+```
 
 ### issue 3566成功.
 内存泄漏问题，不报错：
@@ -681,3 +684,14 @@ mpirun -n 2 ./413
 valgrind --leak-check=full mpirun -n 2 ./413
 结果：
 mpirun noticed that process rank 0 with PID 0 on node 8403300dc1d0 exited on signal 11 (Segmentation fault).
+### 旧版mfem 复现
+
+hyper 2.20
+
+```
+
+wget https://github.com/hypre-space/hypre/archive/refs/tags/v2.20.0.tar.gz
+tar -xzvf v2.20.0.tar.gz
+
+
+```
