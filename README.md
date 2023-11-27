@@ -686,7 +686,6 @@ make clean
 make all -j
 cd examples
 mpicxx -O3 -std=c++11 -I.. -I../../hypre/src/hypre/include 413.cpp -o 413 -L.. -lmfem -L../../hypre/src/hypre/lib -lHYPRE -L../../metis-4.0 -lmetis -lrt
-mpirun -n 2 ./413
 包含覆盖率的命令：mpicxx -O3 -std=c++11 --coverage -I.. -I../../hypre/src/hypre/include 413.cpp -o 413 -L.. -lmfem -L../../hypre/src/hypre/lib -lHYPRE -L../../metis-4.0 -lmetis -lrt
 valgrind --leak-check=full mpirun -n 2 ./413
 结果：
