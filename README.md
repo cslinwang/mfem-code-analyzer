@@ -575,6 +575,7 @@ make clean
 
 cd examples
 g++  -O3 -std=c++11 -I..  64.cpp -o 64 -L.. -lmfem -lrt
+覆盖率的话修改为：g++ -O3 -std=c++11 -fprofile-arcs -ftest-coverage -I.. 64.cpp -o 64 -L.. -lmfem -lrt -lgcov
 ./64
 
 ## v2101:
@@ -615,6 +616,7 @@ make clean
 make all -j
 cd examples
 mpicxx -O3 -std=c++11 -I.. -I../../hypre/src/hypre/include 2035.cpp -o 2035 -L.. -lmfem -L../../hypre/src/hypre/lib -lHYPRE -L../../metis-4.0 -lmetis -lrt
+添加覆盖率：mpicxx -O3 -std=c++11 -fprofile-arcs -ftest-coverage -I.. -I../../hypre/src/hypre/include 2035.cpp -o 2035 -L.. -lmfem -L../../hypre/src/hypre/lib -lHYPRE -L../../metis-4.0 -lmetis -lrt -lgcov
 valgrind --leak-check=full mpirun -np 5 2035
 结果：
 ==423008== LEAK SUMMARY:
@@ -630,7 +632,7 @@ cd mfem
 make clean
 make all -j
 cd examples
-mpirun -n 2 ./ex3p -m ../data/inline-tet.mesh -o 2
+mpirun -n 2 ./ex3p -m /root/mfem/data/inline-tet.mesh -o 2
 结果：
 MFEM abort: triangle face orientation 1 is not supported! Use Mesh::ReorientTetMesh to fix it.
  ... in function: virtual const int* mfem::ND_FECollection::DofOrderForOrientation(mfem::Geometry::Type, int) const
@@ -676,6 +678,6 @@ cd examples
 mpicxx -O3 -std=c++11 -I.. -I../../hypre/src/hypre/include 413.cpp -o 413 -L.. -lmfem -L../../hypre/src/hypre/lib -lHYPRE -L../../metis-4.0 -lmetis -lrt
 mpirun -n 2 ./413
 包含覆盖率的命令：mpicxx -O3 -std=c++11 --coverage -I.. -I../../hypre/src/hypre/include 413.cpp -o 413 -L.. -lmfem -L../../hypre/src/hypre/lib -lHYPRE -L../../metis-4.0 -lmetis -lrt
-
+valgrind --leak-check=full mpirun -n 2 ./413
 结果：
 mpirun noticed that process rank 0 with PID 0 on node 8403300dc1d0 exited on signal 11 (Segmentation fault).
