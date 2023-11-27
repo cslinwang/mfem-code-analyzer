@@ -30,11 +30,24 @@ awk '
 
 # 运行配置和编译命令
 make config
-# make parallel -j
-make serial -j # 使用适当数量的作业
+make parallel -j
+# make serial -j # 使用适当数量的作业
 make all -j # 使用适当数量的作业
 exit 0
 make clean
 git clean -fdx
 git reset --hard
 /root/mfem/mfem-code-analyzer/get_normal_testcase_covarage/add_coverage.sh
+
+rm -rf hypre
+ln -s hypre-2.26.0 hypre
+
+rm -rf hypre
+ln -s hypre-2.20.0 hypre
+
+# rm -rf hypre
+# ln -s hypre-2.10.0b hypre
+
+hypre-2.10.0b
+hypre-2.20.0
+hypre-2.26.0
