@@ -1,6 +1,6 @@
 #!/bin/bash
 
-test_case="${1:-"SubMesh"}"
+test_case="${1:-"Hcurl/Hdiv pa_coeff"}"
 
 echo "开始运行测试用例 $test_case ..."
 

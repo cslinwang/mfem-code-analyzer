@@ -213,6 +213,14 @@ privious commit
 cd ~/mfem/tests/unit
 ./unit_tests SubMesh
 
+### issue3328成功
+privious commit
+/root/mfem-code-analyzer/get_normal_testcase_covarage/add_coverage.sh
+把3328.cpp放入examples
+cd examples
+make 3328
+./3328
+
 ### issue 2884失败
 (未复现) 编译就过不去。 修复版本编译也过不去。
 url: https://github.com/mfem/mfem/issues/2884
@@ -323,6 +331,14 @@ assertions: 132 | 131 passed | 1 failed
 
 
 ## V1
+
+## 2563成功.
+将ex1中的mesh文件替换
+const char *mesh_file = "/root/mfem/mfem-code-analyzer/bugs/issue2563/origin_mesh_tri.vtu";
+/root/mfem/mfem-code-analyzer/get_normal_testcase_covarage/add_coverage.sh
+cd examples
+./ex5
+
 
 ## 3712没有覆盖率
 bug sha: b5491f763085b3cc917fed34a58ee816c1bc0cc9

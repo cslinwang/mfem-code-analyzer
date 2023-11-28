@@ -1,42 +1,51 @@
-2023-11-27 14:46:52,520:INFO:这是一条INFO级别的日志
-2023-11-27 14:46:52,520:DEBUG:这是一条DEBUG级别的日志
-2023-11-27 14:46:52,525:ERROR:
-2023-11-27 14:46:52,525:ERROR:Processing issues:   0%|          | 0/1 [00:00<?, ?it/s]
-2023-11-27 14:46:52,525:DEBUG:Processing mfem issue2878
-2023-11-27 14:46:52,526:ERROR:
-2023-11-27 14:46:52,526:ERROR:Processing test cases for mfem issue2878:   0%|          | 0/2 [00:00<?, ?it/s]
-2023-11-27 14:46:52,526:ERROR:[A
-2023-11-27 14:46:52,535:DEBUG:No existing branch named branch_d9275d7, continue...
-2023-11-27 14:46:52,599:DEBUG:Switched to new branch branch_d9275d7 at d9275d734e060fc653236ab4901b370cbb6dd7ad
-2023-11-27 14:46:52,600:DEBUG:Target directory: /root/mfem-code-analyzer/bugs/issue2878
-2023-11-27 14:46:52,600:DEBUG:Copied tests/unit/fem/test_pa_coeff.cpp to /root/mfem-code-analyzer/bugs/issue2878/test_pa_coeff.cpp
-2023-11-27 14:46:52,742:DEBUG:Deleted old branch branch_d9275d7
-2023-11-27 14:46:52,836:DEBUG:Switched to new branch branch_d9275d7 at d9275d734e060fc653236ab4901b370cbb6dd7ad
-2023-11-27 14:46:52,836:DEBUG:Target directory: /root/mfem-code-analyzer/bugs/issue2878
-2023-11-27 14:46:52,836:DEBUG:Copied tests/unit/fem/test_pa_grad.cpp to /root/mfem-code-analyzer/bugs/issue2878/test_pa_grad.cpp
-2023-11-27 14:46:52,836:ERROR:
-2023-11-27 14:46:52,836:ERROR:Processing test cases for mfem issue2878: 100%|##########| 2/2 [00:00<00:00,  6.44it/s]
-2023-11-27 14:46:52,836:ERROR:[A
-2023-11-27 14:46:52,836:ERROR:[A
-2023-11-27 14:46:52,836:INFO:Processing issue: {'name': 'issue2878', 'bug_sha': '78d65bd549cfd0aa2bcc2f9d91e0df1aa3f32538', 'fix_sha': 'd9275d734e060fc653236ab4901b370cbb6dd7ad', 'testcase': 'tests/unit/fem/test_pa_coeff.cpp,tests/unit/fem/test_pa_grad.cpp', 'testname': 'H1 pa_coeff,Hcurl/Hdiv pa_coeff,Hcurl/Hdiv mixed pa_coeff,ParallelPAGradient,PA Gradient,Nonlinear Convection', 'url': 'https://github.com/mfem/mfem/commit/987d2e043bad3a99841b88354dce0c0932cb8642'}
-2023-11-27 14:46:52,836:INFO:Running bug version: 78d65bd549cfd0aa2bcc2f9d91e0df1aa3f32538
-2023-11-27 14:46:52,979:DEBUG:No existing branch named branch_78d65bd, continue...
-2023-11-27 14:46:53,057:DEBUG:Switched to new branch branch_78d65bd at 78d65bd549cfd0aa2bcc2f9d91e0df1aa3f32538
-2023-11-27 14:46:53,057:ERROR:
-2023-11-27 14:46:53,057:ERROR:Processing issues:   0%|          | 0/1 [00:00<?, ?it/s]
-2023-11-27 14:46:53,057:ERROR:Traceback (most recent call last):
-2023-11-27 14:46:53,057:ERROR:  File "/root/mfem-code-analyzer/get_normal_testcase_covarage/run_mfme_testcase.py", line 299, in <module>
-2023-11-27 14:46:53,057:ERROR:processor.process_yaml_file()
-2023-11-27 14:46:53,057:ERROR:  File "/root/mfem-code-analyzer/get_normal_testcase_covarage/run_mfme_testcase.py", line 147, in process_yaml_file
-2023-11-27 14:46:53,057:ERROR:self.process_mfem_issue(issue_data)
-2023-11-27 14:46:53,057:ERROR:  File "/root/mfem-code-analyzer/get_normal_testcase_covarage/run_mfme_testcase.py", line 102, in process_mfem_issue
-2023-11-27 14:46:53,058:ERROR:self.copy_testcase(name, tc)
-2023-11-27 14:46:53,058:ERROR:  File "/root/mfem-code-analyzer/get_normal_testcase_covarage/run_mfme_testcase.py", line 251, in copy_testcase
-2023-11-27 14:46:53,058:ERROR:shutil.copy(source_path, target_path)
-2023-11-27 14:46:53,058:ERROR:  File "/usr/lib/python3.10/shutil.py", line 417, in copy
-2023-11-27 14:46:53,058:ERROR:copyfile(src, dst, follow_symlinks=follow_symlinks)
-2023-11-27 14:46:53,058:ERROR:  File "/usr/lib/python3.10/shutil.py", line 256, in copyfile
-2023-11-27 14:46:53,058:ERROR:with open(dst, 'wb') as fdst:
-2023-11-27 14:46:53,058:ERROR:FileNotFoundError
-2023-11-27 14:46:53,058:ERROR::
-2023-11-27 14:46:53,058:ERROR:[Errno 2] No such file or directory: '/root/mfem/tests/unit/fem/test_pa_coeff.cpp'
+2023-11-28 09:36:07,186:INFO:这是一条INFO级别的日志
+2023-11-28 09:36:07,186:DEBUG:这是一条DEBUG级别的日志
+2023-11-28 09:36:07,197:ERROR:
+2023-11-28 09:36:07,197:ERROR:Processing issues:   0%|          | 0/1 [00:00<?, ?it/s]
+2023-11-28 09:36:07,197:DEBUG:Processing mfem issue2878
+2023-11-28 09:36:07,197:ERROR:
+2023-11-28 09:36:07,197:ERROR:Processing test cases for mfem issue2878:   0%|          | 0/2 [00:00<?, ?it/s]
+2023-11-28 09:36:07,198:ERROR:[A
+2023-11-28 09:36:07,424:DEBUG:Deleted old branch branch_d9275d7
+2023-11-28 09:36:07,694:DEBUG:Switched to new branch branch_d9275d7 at d9275d734e060fc653236ab4901b370cbb6dd7ad
+2023-11-28 09:36:07,695:DEBUG:Target directory: /root/mfem/mfem-code-analyzer/bugs/issue2878
+2023-11-28 09:36:07,695:DEBUG:Copied tests/unit/fem/test_pa_coeff.cpp to /root/mfem/mfem-code-analyzer/bugs/issue2878/test_pa_coeff.cpp
+2023-11-28 09:36:07,696:ERROR:
+2023-11-28 09:36:07,696:ERROR:Processing test cases for mfem issue2878:  50%|#####     | 1/2 [00:00<00:00,  2.01it/s]
+2023-11-28 09:36:07,696:ERROR:[A
+2023-11-28 09:36:08,092:DEBUG:Deleted old branch branch_d9275d7
+2023-11-28 09:36:08,314:DEBUG:Switched to new branch branch_d9275d7 at d9275d734e060fc653236ab4901b370cbb6dd7ad
+2023-11-28 09:36:08,314:DEBUG:Target directory: /root/mfem/mfem-code-analyzer/bugs/issue2878
+2023-11-28 09:36:08,314:DEBUG:Copied tests/unit/fem/test_pa_grad.cpp to /root/mfem/mfem-code-analyzer/bugs/issue2878/test_pa_grad.cpp
+2023-11-28 09:36:08,315:ERROR:
+2023-11-28 09:36:08,315:ERROR:Processing test cases for mfem issue2878: 100%|##########| 2/2 [00:01<00:00,  1.76it/s]
+2023-11-28 09:36:08,315:ERROR:[A
+2023-11-28 09:36:08,316:ERROR:[A
+2023-11-28 09:36:08,316:INFO:Processing issue: {'name': 'issue2878', 'bug_sha': '9d8043b9e78dcdcd86639bbb28d3bd7b514fb5e2', 'fix_sha': 'd9275d734e060fc653236ab4901b370cbb6dd7ad', 'testcase': 'tests/unit/fem/test_pa_coeff.cpp,tests/unit/fem/test_pa_grad.cpp', 'testname': 'H1 pa_coeff,Hcurl/Hdiv pa_coeff,Hcurl/Hdiv mixed pa_coeff,ParallelPAGradient,PA Gradient,Nonlinear Convection', 'url': 'https://github.com/mfem/mfem/commit/987d2e043bad3a99841b88354dce0c0932cb8642'}
+2023-11-28 09:36:08,316:INFO:Running bug version: 9d8043b9e78dcdcd86639bbb28d3bd7b514fb5e2
+2023-11-28 09:36:08,699:DEBUG:No existing branch named branch_9d8043b, continue...
+2023-11-28 09:36:08,972:DEBUG:Switched to new branch branch_9d8043b at 9d8043b9e78dcdcd86639bbb28d3bd7b514fb5e2
+2023-11-28 09:36:08,972:DEBUG:Copied fix file /root/mfem/mfem-code-analyzer/bugs/issue2878/test_pa_coeff.cpp to /root/mfem/mfem/tests/unit/fem/test_pa_coeff.cpp
+2023-11-28 09:36:08,973:DEBUG:Copied fix file /root/mfem/mfem-code-analyzer/bugs/issue2878/test_pa_grad.cpp to /root/mfem/mfem/tests/unit/fem/test_pa_grad.cpp
+2023-11-28 09:36:09,012:ERROR:CMake Error: The source directory "/root/mfem" does not appear to contain CMakeLists.txt.
+Specify --help for usage, or press the help button on the CMake GUI.
+make: *** No rule to make target 'exec'.  Stop.
+make: *** No rule to make target 'install'.  Stop.
+/root/mfem/mfem-code-analyzer/get_normal_testcase_covarage/compile_mfem.sh: line 15: cd: tests: No such file or directory
+make: *** No targets specified and no makefile found.  Stop.
+
+2023-11-28 09:36:09,012:DEBUG:
+2023-11-28 09:36:09,012:ERROR:
+2023-11-28 09:36:09,012:ERROR:Processing issues:   0%|          | 0/1 [00:01<?, ?it/s]
+2023-11-28 09:36:09,012:ERROR:Traceback (most recent call last):
+2023-11-28 09:36:09,012:ERROR:  File "/root/mfem/mfem-code-analyzer/get_normal_testcase_covarage/run_mfme_testcase.py", line 299, in <module>
+2023-11-28 09:36:09,013:ERROR:processor.process_yaml_file()
+2023-11-28 09:36:09,013:ERROR:  File "/root/mfem/mfem-code-analyzer/get_normal_testcase_covarage/run_mfme_testcase.py", line 147, in process_yaml_file
+2023-11-28 09:36:09,013:ERROR:self.process_mfem_issue(issue_data)
+2023-11-28 09:36:09,013:ERROR:  File "/root/mfem/mfem-code-analyzer/get_normal_testcase_covarage/run_mfme_testcase.py", line 107, in process_mfem_issue
+2023-11-28 09:36:09,013:ERROR:self.run_unit_test(testname)
+2023-11-28 09:36:09,014:ERROR:  File "/root/mfem/mfem-code-analyzer/get_normal_testcase_covarage/run_mfme_testcase.py", line 281, in run_unit_test
+2023-11-28 09:36:09,014:ERROR:os.chdir(cmd_path)
+2023-11-28 09:36:09,014:ERROR:FileNotFoundError
+2023-11-28 09:36:09,014:ERROR::
+2023-11-28 09:36:09,014:ERROR:[Errno 2] No such file or directory: '/root/mfem/mfem/build/tests/unit'
