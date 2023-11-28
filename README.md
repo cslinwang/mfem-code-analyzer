@@ -444,6 +444,13 @@ Average reduction factor = 0.191576
 tcase 1 -- L2 norm: 0.151905
 Fail
 
+### 1887成功.
+先切换分支，然后修改ex1中的网格文件，将const char *mesh_file = "../data/star.mesh";修改为beam-wedge.vtk，然后编译和运行用例：
+/root/mfem/mfem-code-analyzer/get_normal_testcase_covarage/add_coverage.sh
+cd examples
+./ex1
+bug版结果：Elements with wrong orientation: 8 / 8 (NOT FIXED)
+
 ### 1413失败
 privious commit
 将1413_2放入examples
