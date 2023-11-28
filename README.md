@@ -585,6 +585,7 @@ cd examples
 g++  -O3 -std=c++11 -I..  64.cpp -o 64 -L.. -lmfem -lrt
 覆盖率的话修改为：g++ -O3 -std=c++11 -fprofile-arcs -ftest-coverage -I.. 64.cpp -o 64 -L.. -lmfem -lrt -lgcov
 ./64
+valgrind --leak-check=full mpirun -np 1 64
 
 ## v2101:
 
