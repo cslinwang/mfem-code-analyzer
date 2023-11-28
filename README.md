@@ -349,7 +349,7 @@ url: https://github.com/mfem/mfem/issues/2413
 作者提供的网格和用例都放入issues2413中了
 mpicxx -O3 -std=c++11 -I.. -I../../hypre/src/hypre/include 2413.cpp -o 2413 -L.. -lmfem -L../../hypre/src/hypre/lib -lHYPRE -L../../metis-4.0 -lmetis -lrt
 
-### 2144成功
+### 2144成功.
 切换privious commit和bug sha都可
 /root/mfem/mfem-code-analyzer/get_normal_testcase_covarage/add_coverage.sh
 cd examples
@@ -409,7 +409,7 @@ root@d8f6458e7cf3:~/mfem/mfem/examples# ./1930
 BlockMatrix::Elem
 Aborted (core dumped)
 
-### 1928成功
+### 1928成功.
 privious commit
 将square_2mat_per.msh放入data，将test_full_periodic放入examples
 make clean
