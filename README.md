@@ -324,6 +324,13 @@ assertions: 132 | 131 passed | 1 failed
 
 ## V1
 
+## 3712没有覆盖率
+bug sha: b5491f763085b3cc917fed34a58ee816c1bc0cc9
+把3712用例替换到bug版本
+/root/mfem/mfem-code-analyzer/get_normal_testcase_covarage/add_coverage.sh
+cd tests/unit
+./unit_tests "PA VectorDivergence"
+
 ## 1284成功.
 切换e6385f2992b9c2d9001265fe3283403bec30b417
 make clean
@@ -344,8 +351,7 @@ mpicxx -O3 -std=c++11 -I.. -I../../hypre/src/hypre/include 2413.cpp -o 2413 -L..
 
 ### 2144成功
 切换privious commit和bug sha都可
-make clean
-make all -j
+/root/mfem/mfem-code-analyzer/get_normal_testcase_covarage/add_coverage.sh
 cd examples
 make 2144
 ./2144
