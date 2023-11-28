@@ -479,7 +479,7 @@ Device configuration: cpu
 1 1 1 1 1 1 1 1
 2 2 2 2 2 2 2 2
 
-### 685成功
+### 685成功.
 privious commit
 将685.cpp放入examples
 make clean
