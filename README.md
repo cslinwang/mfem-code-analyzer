@@ -306,6 +306,14 @@ mpicxx -O3 -std=c++11 -I.. -I../../hypre/src/hypre/include tst.cpp -o tst -L.. -
 
 mpirun -np 4 tst -m /root/mfem-code-analyzer/bugs/issue2559/manifold.msh
 
+
+### 1238
+rm -rf hypre
+ln -s hypre-2.20.0 hypre
+/root/mfem-code-analyzer/get_normal_testcase_covarage/add_coverage.sh
+mpicxx -O3 -std=c++11 -fprofile-arcs -ftest-coverage -I.. -I../../hypre/src/hypre/include 1238.cpp -o 1238 -L.. -lmfem -L../../hypre/src/hypre/lib -lHYPRE -L../../metis-4.0 -lmetis -lrt -lgcov
+valgrind --leak-check=full mpirun -np 2 1238
+
 ### 2343成功.
 切换到34ad9fca157368768af1869e9821876cf259f940
 先使用三条命令清理，然后注释
