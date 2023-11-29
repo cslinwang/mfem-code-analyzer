@@ -306,8 +306,12 @@ mpicxx -O3 -std=c++11 -I.. -I../../hypre/src/hypre/include tst.cpp -o tst -L.. -
 
 mpirun -np 4 tst -m /root/mfem-code-analyzer/bugs/issue2559/manifold.msh
 
+### 1230成功.
+/root/mfem-code-analyzer/get_normal_testcase_covarage/add_coverage.sh
+mpicxx -O3 -std=c++11 -fprofile-arcs -ftest-coverage -I.. -I../../hypre/src/hypre/include 1230.cpp -o 1230 -L.. -lmfem -L../../hypre/src/hypre/lib -lHYPRE -L../../metis-4.0 -lmetis -lrt -lgcov
+mpirun -np 4 1230
 
-### 1238
+### 1238成功.
 rm -rf hypre
 ln -s hypre-2.20.0 hypre
 /root/mfem-code-analyzer/get_normal_testcase_covarage/add_coverage.sh

@@ -1,36 +1,117 @@
-2023-11-28 09:36:07,186:INFO:这是一条INFO级别的日志
-2023-11-28 09:36:07,197:ERROR:
-2023-11-28 09:36:07,197:ERROR:Processing issues:   0%|          | 0/1 [00:00<?, ?it/s]
-2023-11-28 09:36:07,197:ERROR:
-2023-11-28 09:36:07,197:ERROR:Processing test cases for mfem issue2878:   0%|          | 0/2 [00:00<?, ?it/s]
-2023-11-28 09:36:07,198:ERROR:[A
-2023-11-28 09:36:07,696:ERROR:
-2023-11-28 09:36:07,696:ERROR:Processing test cases for mfem issue2878:  50%|#####     | 1/2 [00:00<00:00,  2.01it/s]
-2023-11-28 09:36:07,696:ERROR:[A
-2023-11-28 09:36:08,315:ERROR:
-2023-11-28 09:36:08,315:ERROR:Processing test cases for mfem issue2878: 100%|##########| 2/2 [00:01<00:00,  1.76it/s]
-2023-11-28 09:36:08,315:ERROR:[A
-2023-11-28 09:36:08,316:ERROR:[A
-2023-11-28 09:36:08,316:INFO:Processing issue: {'name': 'issue2878', 'bug_sha': '9d8043b9e78dcdcd86639bbb28d3bd7b514fb5e2', 'fix_sha': 'd9275d734e060fc653236ab4901b370cbb6dd7ad', 'testcase': 'tests/unit/fem/test_pa_coeff.cpp,tests/unit/fem/test_pa_grad.cpp', 'testname': 'H1 pa_coeff,Hcurl/Hdiv pa_coeff,Hcurl/Hdiv mixed pa_coeff,ParallelPAGradient,PA Gradient,Nonlinear Convection', 'url': 'https://github.com/mfem/mfem/commit/987d2e043bad3a99841b88354dce0c0932cb8642'}
-2023-11-28 09:36:08,316:INFO:Running bug version: 9d8043b9e78dcdcd86639bbb28d3bd7b514fb5e2
-2023-11-28 09:36:09,012:ERROR:CMake Error: The source directory "/root/mfem" does not appear to contain CMakeLists.txt.
-Specify --help for usage, or press the help button on the CMake GUI.
-make: *** No rule to make target 'exec'.  Stop.
-make: *** No rule to make target 'install'.  Stop.
-/root/mfem/mfem-code-analyzer/get_normal_testcase_covarage/compile_mfem.sh: line 15: cd: tests: No such file or directory
-make: *** No targets specified and no makefile found.  Stop.
+2023-11-29 04:29:03,867:INFO:这是一条INFO级别的日志
+2023-11-29 04:29:03,871:ERROR:
+2023-11-29 04:29:03,871:ERROR:Processing issues:   0%|          | 0/1 [00:00<?, ?it/s]
+2023-11-29 04:29:03,871:ERROR:
+2023-11-29 04:29:03,871:ERROR:Processing test cases for mfem issue2878:   0%|          | 0/2 [00:00<?, ?it/s]
+2023-11-29 04:29:03,871:ERROR:[A
+2023-11-29 04:29:04,067:ERROR:
+2023-11-29 04:29:04,067:ERROR:Processing test cases for mfem issue2878:  50%|#####     | 1/2 [00:00<00:00,  5.10it/s]
+2023-11-29 04:29:04,067:ERROR:[A
+2023-11-29 04:29:04,333:ERROR:
+2023-11-29 04:29:04,333:ERROR:Processing test cases for mfem issue2878: 100%|##########| 2/2 [00:00<00:00,  4.22it/s]
+2023-11-29 04:29:04,333:ERROR:[A
+2023-11-29 04:29:04,333:ERROR:[A
+2023-11-29 04:29:04,333:INFO:Processing issue: {'name': 'issue2878', 'bug_sha': '4134e9496a77ebccde0819438e050de20480ffb8', 'fix_sha': 'd9275d734e060fc653236ab4901b370cbb6dd7ad', 'testcase': 'tests/unit/fem/test_pa_coeff.cpp,tests/unit/fem/test_pa_grad.cpp', 'testname': 'H1 pa_coeff,Hcurl/Hdiv pa_coeff,Hcurl/Hdiv mixed pa_coeff,ParallelPAGradient,PA Gradient,Nonlinear Convection', 'url': 'https://github.com/mfem/mfem/commit/987d2e043bad3a99841b88354dce0c0932cb8642'}
+2023-11-29 04:29:04,333:INFO:Running bug version: 4134e9496a77ebccde0819438e050de20480ffb8
+2023-11-29 04:29:22,597:ERROR:CMake Deprecation Warning at CMakeLists.txt:12 (cmake_minimum_required):
+  Compatibility with CMake < 2.8.12 will be removed from a future version of
+  CMake.
 
-2023-11-28 09:36:09,012:ERROR:
-2023-11-28 09:36:09,012:ERROR:Processing issues:   0%|          | 0/1 [00:01<?, ?it/s]
-2023-11-28 09:36:09,012:ERROR:Traceback (most recent call last):
-2023-11-28 09:36:09,012:ERROR:  File "/root/mfem/mfem-code-analyzer/get_normal_testcase_covarage/run_mfme_testcase.py", line 299, in <module>
-2023-11-28 09:36:09,013:ERROR:processor.process_yaml_file()
-2023-11-28 09:36:09,013:ERROR:  File "/root/mfem/mfem-code-analyzer/get_normal_testcase_covarage/run_mfme_testcase.py", line 147, in process_yaml_file
-2023-11-28 09:36:09,013:ERROR:self.process_mfem_issue(issue_data)
-2023-11-28 09:36:09,013:ERROR:  File "/root/mfem/mfem-code-analyzer/get_normal_testcase_covarage/run_mfme_testcase.py", line 107, in process_mfem_issue
-2023-11-28 09:36:09,013:ERROR:self.run_unit_test(testname)
-2023-11-28 09:36:09,014:ERROR:  File "/root/mfem/mfem-code-analyzer/get_normal_testcase_covarage/run_mfme_testcase.py", line 281, in run_unit_test
-2023-11-28 09:36:09,014:ERROR:os.chdir(cmd_path)
-2023-11-28 09:36:09,014:ERROR:FileNotFoundError
-2023-11-28 09:36:09,014:ERROR::
-2023-11-28 09:36:09,014:ERROR:[Errno 2] No such file or directory: '/root/mfem/mfem/build/tests/unit'
+  Update the VERSION argument <min> value or use a ...<max> suffix to tell
+  CMake that the project does not need compatibility with older versions.
+
+
+/root/mfem/fem/intrules.cpp: In member function ‘mfem::IntegrationRule* mfem::IntegrationRules::SegmentIntegrationRule(int)’:
+/root/mfem/fem/intrules.cpp:1107:11: warning: function may return address of local variable [-Wreturn-local-addr]
+ 1107 |    return ir;
+      |           ^~
+/root/mfem/fem/intrules.cpp:1046:20: note: declared here
+ 1046 |    IntegrationRule tmp, *ir;
+      |                    ^~~
+/root/mfem/tests/unit/fem/test_pa_coeff.cpp:13:10: fatal error: unit_tests.hpp: No such file or directory
+   13 | #include "unit_tests.hpp"
+      |          ^~~~~~~~~~~~~~~~
+compilation terminated.
+make[3]: *** [tests/unit/CMakeFiles/unit_tests.dir/build.make:244: tests/unit/CMakeFiles/unit_tests.dir/fem/test_pa_coeff.cpp.o] Error 1
+make[3]: *** Waiting for unfinished jobs....
+make[2]: *** [CMakeFiles/Makefile2:735: tests/unit/CMakeFiles/unit_tests.dir/all] Error 2
+make[1]: *** [CMakeFiles/Makefile2:664: CMakeFiles/exec.dir/rule] Error 2
+make: *** [Makefile:244: exec] Error 2
+/root/mfem/tests/unit/fem/test_pa_coeff.cpp:13:10: fatal error: unit_tests.hpp: No such file or directory
+   13 | #include "unit_tests.hpp"
+      |          ^~~~~~~~~~~~~~~~
+compilation terminated.
+make[2]: *** [tests/unit/CMakeFiles/unit_tests.dir/build.make:244: tests/unit/CMakeFiles/unit_tests.dir/fem/test_pa_coeff.cpp.o] Error 1
+make[2]: *** Waiting for unfinished jobs....
+make[1]: *** [CMakeFiles/Makefile2:735: tests/unit/CMakeFiles/unit_tests.dir/all] Error 2
+make: *** [Makefile:146: all] Error 2
+
+2023-11-29 04:29:22,598:INFO:Running test case: H1 pa_coeff
+2023-11-29 04:29:22,598:INFO:CWD: /root/mfem/build/tests/unit
+2023-11-29 04:29:22,598:INFO:开始运行测试用例 H1 pa_coeff ...
+H1 pa_coeff 不存在于测试用例列表中
+
+2023-11-29 04:29:22,598:ERROR:/root/mfem-code-analyzer/get_normal_testcase_covarage/run_tesscase.sh: line 11: ./unit_tests: No such file or directory
+/root/mfem-code-analyzer/get_normal_testcase_covarage/run_tesscase.sh: line 21: ./unit_tests: No such file or directory
+
+2023-11-29 04:29:22,600:INFO:Running test case: Hcurl/Hdiv pa_coeff
+2023-11-29 04:29:22,600:INFO:CWD: /root/mfem/build/tests/unit
+2023-11-29 04:29:22,600:INFO:开始运行测试用例 Hcurl/Hdiv pa_coeff ...
+Hcurl/Hdiv pa_coeff 不存在于测试用例列表中
+
+2023-11-29 04:29:22,600:ERROR:/root/mfem-code-analyzer/get_normal_testcase_covarage/run_tesscase.sh: line 11: ./unit_tests: No such file or directory
+/root/mfem-code-analyzer/get_normal_testcase_covarage/run_tesscase.sh: line 21: ./unit_tests: No such file or directory
+
+2023-11-29 04:29:22,601:INFO:Running test case: Hcurl/Hdiv mixed pa_coeff
+2023-11-29 04:29:22,601:INFO:CWD: /root/mfem/build/tests/unit
+2023-11-29 04:29:22,601:INFO:开始运行测试用例 Hcurl/Hdiv mixed pa_coeff ...
+Hcurl/Hdiv mixed pa_coeff 不存在于测试用例列表中
+
+2023-11-29 04:29:22,601:ERROR:/root/mfem-code-analyzer/get_normal_testcase_covarage/run_tesscase.sh: line 11: ./unit_tests: No such file or directory
+/root/mfem-code-analyzer/get_normal_testcase_covarage/run_tesscase.sh: line 21: ./unit_tests: No such file or directory
+
+2023-11-29 04:29:22,602:INFO:Running test case: ParallelPAGradient
+2023-11-29 04:29:22,602:INFO:CWD: /root/mfem/build/tests/unit
+2023-11-29 04:29:22,602:INFO:开始运行测试用例 ParallelPAGradient ...
+ParallelPAGradient 不存在于测试用例列表中
+
+2023-11-29 04:29:22,602:ERROR:/root/mfem-code-analyzer/get_normal_testcase_covarage/run_tesscase.sh: line 11: ./unit_tests: No such file or directory
+/root/mfem-code-analyzer/get_normal_testcase_covarage/run_tesscase.sh: line 21: ./unit_tests: No such file or directory
+
+2023-11-29 04:29:22,603:INFO:Running test case: PA Gradient
+2023-11-29 04:29:22,603:INFO:CWD: /root/mfem/build/tests/unit
+2023-11-29 04:29:22,603:INFO:开始运行测试用例 PA Gradient ...
+PA Gradient 不存在于测试用例列表中
+
+2023-11-29 04:29:22,603:ERROR:/root/mfem-code-analyzer/get_normal_testcase_covarage/run_tesscase.sh: line 11: ./unit_tests: No such file or directory
+/root/mfem-code-analyzer/get_normal_testcase_covarage/run_tesscase.sh: line 21: ./unit_tests: No such file or directory
+
+2023-11-29 04:29:22,604:INFO:Running test case: Nonlinear Convection
+2023-11-29 04:29:22,604:INFO:CWD: /root/mfem/build/tests/unit
+2023-11-29 04:29:22,604:INFO:开始运行测试用例 Nonlinear Convection ...
+Nonlinear Convection 不存在于测试用例列表中
+
+2023-11-29 04:29:22,604:ERROR:/root/mfem-code-analyzer/get_normal_testcase_covarage/run_tesscase.sh: line 11: ./unit_tests: No such file or directory
+/root/mfem-code-analyzer/get_normal_testcase_covarage/run_tesscase.sh: line 21: ./unit_tests: No such file or directory
+
+2023-11-29 04:29:22,604:INFO:Running fix version: d9275d734e060fc653236ab4901b370cbb6dd7ad
+2023-11-29 04:29:38,907:ERROR:
+2023-11-29 04:29:38,908:ERROR:Processing issues:   0%|          | 0/1 [00:35<?, ?it/s]
+2023-11-29 04:29:38,908:ERROR:Traceback (most recent call last):
+2023-11-29 04:29:38,908:ERROR:  File "/root/mfem-code-analyzer/get_normal_testcase_covarage/run_mfme_testcase.py", line 299, in <module>
+2023-11-29 04:29:38,908:ERROR:processor.process_yaml_file()
+2023-11-29 04:29:38,908:ERROR:  File "/root/mfem-code-analyzer/get_normal_testcase_covarage/run_mfme_testcase.py", line 147, in process_yaml_file
+2023-11-29 04:29:38,908:ERROR:self.process_mfem_issue(issue_data)
+2023-11-29 04:29:38,908:ERROR:  File "/root/mfem-code-analyzer/get_normal_testcase_covarage/run_mfme_testcase.py", line 113, in process_mfem_issue
+2023-11-29 04:29:38,908:ERROR:self.compile_mfem()
+2023-11-29 04:29:38,908:ERROR:  File "/root/mfem-code-analyzer/get_normal_testcase_covarage/run_mfme_testcase.py", line 234, in compile_mfem
+2023-11-29 04:29:38,908:ERROR:result = subprocess.run(["bash", bash_path], capture_output=True, text=True)
+2023-11-29 04:29:38,908:ERROR:  File "/usr/lib/python3.10/subprocess.py", line 505, in run
+2023-11-29 04:29:38,908:ERROR:stdout, stderr = process.communicate(input, timeout=timeout)
+2023-11-29 04:29:38,908:ERROR:  File "/usr/lib/python3.10/subprocess.py", line 1154, in communicate
+2023-11-29 04:29:38,908:ERROR:stdout, stderr = self._communicate(input, endtime, timeout)
+2023-11-29 04:29:38,908:ERROR:  File "/usr/lib/python3.10/subprocess.py", line 2021, in _communicate
+2023-11-29 04:29:38,908:ERROR:ready = selector.select(timeout)
+2023-11-29 04:29:38,908:ERROR:  File "/usr/lib/python3.10/selectors.py", line 416, in select
+2023-11-29 04:29:38,908:ERROR:fd_event_list = self._selector.poll(timeout)
+2023-11-29 04:29:38,908:ERROR:KeyboardInterrupt

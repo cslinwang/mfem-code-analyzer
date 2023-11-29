@@ -13,9 +13,9 @@ from tqdm import tqdm
 
 # 设定日志文件的路径
 log_file_path = os.path.join(
-    '/root/mfem/mfem-code-analyzer/get_normal_testcase_covarage', 'log.log')
+    '/root/mfem-code-analyzer/get_normal_testcase_covarage', 'log.log')
 info_log_file_path = os.path.join(
-    '/root/mfem/mfem-code-analyzer/get_normal_testcase_covarage', 'info.log')
+    '/root/mfem-code-analyzer/get_normal_testcase_covarage', 'info.log')
 
 # 如果文件存在，则移除
 if os.path.exists(log_file_path):
