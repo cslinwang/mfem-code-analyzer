@@ -1,7 +1,12 @@
 #!/bin/bash
 # 覆盖率增加脚本
 
+# 设置环境变量
+export OMPI_ALLOW_RUN_AS_ROOT=1
+export OMPI_ALLOW_RUN_AS_ROOT_CONFIRM=1
+
 # 进入mfem项目目录
+cd /root/mfem || exit 1
 # cd /root/mfem || exit 1 # 用实际路径替换 /path/to/mfem
 
 # 清理构建和 Git 未跟踪文件

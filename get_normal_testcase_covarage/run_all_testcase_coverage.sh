@@ -1,133 +1,105 @@
 #!/bin/bash
 
 # 输入 默认两个值都是sha
-git_sha="${1:-ec52dee4274fcf994d358c8b0f883eec8f67e041}"
-git_version="${2:-FDS6.7.9}"
+git_sha="${1:-9d8043b9e78dcdcd86639bbb28d3bd7b514fb5e2}"
+git_version="${2:-MFEM4.3}"
+bash_start_time=$(date +%s.%N)
 
+# 清空文件夹
+testcase_coverage_save_file="/root/mfem_coverage/$git_version"
+rm -rf $testcase_coverage_save_file
 # 获取脚本的绝对路径
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 cd "$SCRIPT_DIR"
-# 清楚日志
+# 清除日志
 rm -rf ./run_log.log
 exec &> >(tee -a "./run_log.log")
 
 # 1. 编译当前版本的FDS
-echo "开始编译FDS..."
-# ./compile_fds.sh $git_sha
+echo "开始编译MFEM..."
+# # 切换版本
+# ./switch_sha.sh $git_sha
+# # 编译
+# ./add_coverage.sh
 
 # 2. 循环运行样例
-# 2.1 获取样例列表
-testcase_list=$(find /home/my/fds/Verification /home/my/fds/Validation -name "*.fds")
-# 统计样例数量
-# 计算总的测试用例数
-total_cases=$(echo "$testcase_list" | wc -l)
-# 初始化计数器
+echo "开始运行样例..."
+echo "开始运行example样例..."
+# 2.1 运行example样例
+cd ~/mfem/examples
+# 计数器，用于统计可执行文件数量
 count=0
 
-# 设置起始和终止参数
-start=0
-end=999999
-
-# 读取二次筛选结果
-# 设定目录路径
-directory='/home/my/fds_all_examples/get_normal_testcase_covarage/二次筛选结果'
-# 切换到指定的目录
-cd "$directory"
-
-echo "git_sha: $git_sha"
-testcase_list_v2=""
-# 遍历目录中的所有.txt文件
-for file in *.txt; do
-    # 检查文件名是否包含git_hash
-    if [[ $file == *"$git_sha"* ]]; then
-        testcase_list_v2="$testcase_list_v2 $(cat "$file")"
-        # 仅为展示目的，打印数组内容
+# 循环遍历目录中的所有文件
+for file in *; do
+    # 检查文件是否为可执行文件
+    if [[ -x "$file" && ! -d "$file" ]]; then
+        # 如果是可执行文件，增加计数器
+        count=$((count+1))
+        # 清空覆盖率信息
+        find ~/mfem \( -name '*.gcda' -o -name '*.gcov' \) -delete
+        # 创建保存覆盖率的文件夹
+        testcase_coverage_save_path="/root/mfem_coverage/$git_version/$file"
+        mkdir -p $testcase_coverage_save_path
+        # 执行文件
+        echo "正在执行：$file"
+        # 获取开始时间
+        start_time=$(date +%s.%N)
+        echo c | ./"$file"
+        # 获取结束时间
+        end_time=$(date +%s.%N)
+        # 计算并输出运行时间
+        duration=$(echo "$end_time - $start_time" | bc)
+        echo "测试 $file 运行时间：$duration 秒"
+        # 生成覆盖率报告
+        fastcov --gcov gcov --exclude /usr/include --include /root/mfem -o $testcase_coverage_save_path/coverage.json
+        fastcov --lcov -o $testcase_coverage_save_path/coverage.info
+        genhtml $testcase_coverage_save_path/coverage.info --output-directory $testcase_coverage_save_path/coverage_report
     fi
 done
-cd "$SCRIPT_DIR"
+echo "example样例运行完毕。"
+# 2.2 运行unit_tests样例
+echo "开始运行unit_tests样例..."
+cd /root/mfem/tests/unit
+# 保存原始的 IFS
+OLDIFS=$IFS
 
-echo "总共有 $total_cases 个测试用例。"
-echo -ne '测试用例运行进度: [--------------------] (0%, 0/'$total_cases')\r'
+# 设置 IFS 为换行符
+IFS=$'\n'
 
-for testcase in $testcase_list; do
-    # 检测当前服务器存储，如果剩余空间小于1G，退出
-    free_space=$(df -m /home/my | tail -1 | awk '{print $4}')
-    if [ $free_space -lt 1024 ]; then
-        echo -e "\n服务器存储空间不足1G，重新编译。"
-        # 重新编译
-        cd /home/my/fds/
-        git reset --hard HEAD
-        git clean -fdx
-        cd "$SCRIPT_DIR"
-        ./compile_fds.sh $git_sha
-        # 重新查看剩余空间
-        free_space=$(df -m /home/my | tail -1 | awk '{print $4}')
-        if [ $free_space -lt 1024 ]; then
-            echo -e "\n服务器存储空间不足1G，退出。"
-            exit 1
-        fi
-    fi
-    # 更新计数器
-    ((count++))
-    # 检查是否在指定范围内
-    if [ $count -ge $start ] && [ $count -le $end ]; then
-        echo "执行 $count"
-    else
-        echo "跳过 $count"
-        continue
-    fi
+# 获取并存储所有测试名称，跳过第一行
+test_names=$(./unit_tests --list-test-names-only | tail -n +2)
 
-    # 删除历史中间文件
-    cd /home/my/fds/
-    git clean -f -d /home/my/fds/Verification
-    git clean -f -d /home/my/fds/Validation
-    cd "$SCRIPT_DIR"
-
-    # 获取testcase名称
-    testcase_name=$(basename $testcase)
-    testcase_name=${testcase_name%.*}
-
-     # 如果在二次筛选列表中，则运行。否则跳过
-    if [[ $testcase_list_v2 != *"$testcase_name"* ]]; then
-        echo "小版本跳过 $testcase_name"
-        continue
-    else
-        echo "小版本执行 $testcase_name"
-    fi
-
+# 遍历并执行每个测试
+for test_name in $test_names; do
+    # 清空覆盖率信息
+    find ~/mfem \( -name '*.gcda' -o -name '*.gcov' \) -delete
     # 创建保存覆盖率的文件夹
-    testcase_coverage_save_path="/home/my/fds_coverage/$git_version/$testcase_name"
+    testcase_coverage_save_path="/root/mfem_coverage/$git_version/$test_name"
     mkdir -p $testcase_coverage_save_path
-
-    echo "开始运行样例 $testcase_name"
-    exit -1
-
-    # 检查覆盖率文件是否已存在
-    coverage_file="$testcase_coverage_save_path/report.json"  # 请替换为你的实际覆盖率文件名
-    if [ -f "$coverage_file" ]; then
-        echo "覆盖率文件已存在，跳过 $testcase_name"
-    else
-        echo "开始运行样例 $testcase_name"
-        # 运行测试用例并设置超时时间
-        timeout 1200s ./run_testcase_coverage.sh "$testcase" "$testcase_coverage_save_path"
-        if [ $? -eq 124 ]; then
-            echo -e "\n命令超时"
-            touch "$testcase_coverage_save_path/report.json"
-        else
-            echo -e "\n样例 $testcase_name 运行完成。"
-            fi
-
-    fi
-    # 计算进度
-    percent=$((100 * count / total_cases))
-    bar=$(printf "%0.s#" $(seq 1 $((percent / 5))))
-    empty_bar=$(printf "%0.s-" $(seq 1 $((20 - percent / 5))))
-
-    # 打印进度
-    echo -ne "测试用例运行进度: [$bar$empty_bar] ($percent%, $count/$total_cases)\r"
-
+    # 执行文件
+    echo "正在执行测试：$test_name"
+    # ./unit_tests "VTU XML Reader"
+    # 获取开始时间
+    start_time=$(date +%s.%N)
+    ./unit_tests "$test_name"
+    # 获取结束时间
+    end_time=$(date +%s.%N)
+     # 计算并输出运行时间
+    duration=$(echo "$end_time - $start_time" | bc)
+    echo "测试 $test_name 运行时间：$duration 秒"
+    # 生成覆盖率报告
+    fastcov --gcov gcov --exclude /usr/include --include /root/mfem -o $testcase_coverage_save_path/coverage.json
+    fastcov --lcov -o $testcase_coverage_save_path/coverage.info
+    genhtml $testcase_coverage_save_path/coverage.info --output-directory $testcase_coverage_save_path/coverage_report
 done
+echo "unit_tests样例运行完毕。"
+# 恢复原始的 IFS
+IFS=$OLDIFS
 
 echo -e "\n所有测试用例运行完毕。"
-
+bash_end_time=$(date +%s.%N)
+# 计算并输出运行时间
+duration=$(echo "$bash_end_time - $bash_start_time" | bc)
+echo "测试 总 运行时间：$duration 秒"
 # End of script.

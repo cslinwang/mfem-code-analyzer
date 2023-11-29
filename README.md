@@ -756,3 +756,13 @@ tar -xzvf v2.20.0.tar.gz
 
 
 ```
+
+## 报错 unittestcase 无法编译的情况
+
+根据报错情况，定位到报错位置，应该是
+catch.hpp中的：
+     constexpr std::size_t sigStackSize = 32768 >= MINSIGSTKSZ ? 32768 : MINSIGSTKSZ;
+将其改为：
+    constexpr std::size_t sigStackSize = 32768;
+即可
+make test
