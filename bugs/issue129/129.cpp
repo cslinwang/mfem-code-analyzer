@@ -4,7 +4,7 @@ using namespace mfem;
 
 int main(int argc, char *argv[])
 {
-   const char *mesh_file = "/root/mfem/mfem/data/star.mesh"; // invalid read from Valgrind
+   const char *mesh_file = "/root/mfem/data/star.mesh"; // invalid read from Valgrind
    // const char *mesh_file = "../data/fichera.mesh"; // no Valgrind errors
 
    int order = 3;

@@ -651,6 +651,12 @@ make all -j
 cd examples
 mpicxx -O3 -std=c++11 -I.. -I../../hypre/src/hypre/include 2413.cpp -o 2413 -L.. -lmfem -L../../hypre/src/hypre/lib -lHYPRE -L../../metis-4.0 -lmetis -lrt
 
+### 129成功.
+/root/mfem-code-analyzer/get_normal_testcase_covarage/add_coverage.sh
+mpicxx -O3 -std=c++11 -fprofile-arcs -ftest-coverage -I.. -I../../hypre/src/hypre/include 129.cpp -o 129 -L.. -lmfem -L../../hypre/src/hypre/lib -lHYPRE -L../../metis-4.0 -lmetis -lrt -lgcov
+cd examples
+valgrind ./129
+
 ### 2062失败
 mesh-explorer.cpp中修改mesh路径
 cd mfem

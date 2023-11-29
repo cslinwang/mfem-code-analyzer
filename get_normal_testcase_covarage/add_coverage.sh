@@ -54,3 +54,6 @@ ln -s hypre-2.20.0 hypre
 hypre-2.10.0b
 hypre-2.20.0
 hypre-2.26.0
+fastcov --gcov gcov --exclude /usr/include --include /root/mfem coverage.json
+fastcov --lcov -o coverage.info
+genhtml coverage.info --output-directory coverage_report
