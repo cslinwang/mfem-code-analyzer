@@ -5,9 +5,11 @@
 # cd /root/mfem || exit 1 # 用实际路径替换 /path/to/mfem
 
 # 清理构建和 Git 未跟踪文件
-# make clean
-# git clean -fdx
-# git reset --hard
+make clean
+git clean -fdx
+git reset --hard
+# 清楚覆盖率信息
+find /root/mfem \( -name '*.gcda' -o -name '*.gcov' \) -delete
 
 # 使用 awk 进行替换
 awk '
@@ -30,6 +32,7 @@ awk '
 
 # 运行配置和编译命令
 make config
+# 串行 make serial -j
 make parallel -j
 # make serial -j # 使用适当数量的作业
 make all -j # 使用适当数量的作业
