@@ -224,7 +224,13 @@ valgrind --leak-check=full ./unit_tests SubMesh
 ==267697== ERROR SUMMARY: 20 errors from 20 contexts (suppressed: 0 from 0)
 
 ### issue 3332成功.
-privious commit
+privious commit,替换test_submesh.cpp，修改/root/mfem/mesh/submesh/submesh_utils.cpp，最上面加入：
+#ifdef __GNUC__
+extern "C" void __gcov_flush(void);
+#endif
+if (T(j, k) != 0.0)这一行前写入：
+__gcov_flush(); // 强制写入覆盖率数据
+
 /root/mfem-code-analyzer/get_normal_testcase_covarage/add_coverage.sh
 cd ~/mfem/tests/unit
 ./unit_tests SubMesh
@@ -250,22 +256,10 @@ cd tests/unit
 ./unit_tests --list-test-names-only
 ./unit_tests "Hcurl/Hdiv pa_coeff"
 
-### issue 2878成功，但没有覆盖率
-没有gcda文件，覆盖率失败
-url: https://github.com/mfem/mfem/issues/2878
-bug sha:使用的是50cd7da165999d4c65a6875a24c39317acaa2c3e
-修改ex3p.cpp中204行a->AddDomainIntegrator(new VectorFEMassIntegrator(*sigma)); 为：
-a->AddDomainIntegrator(new VectorFEMassIntegrator(*sigma));
-a->AddBoundaryIntegrator(new VectorFEMassIntegrator(*sigma));
-
-fix sha: a4504c3c083e8d13c89c0cf72f8eb36ef3aed642
-cd ~
-cd mfem
-make clean
-make all -j
-cd examples
-mpicxx -O3 -std=c++11 -fprofile-arcs -ftest-coverage -I.. -I../../hypre/src/hypre/include 2878.cpp -o 2878 -L.. -lmfem -L../../hypre/src/hypre/lib -lHYPRE -L../../metis-4.0 -lmetis -lrt -lgcov
-mpirun -np 5 2878 -m /root/mfem/data/beam-tet.mesh -o 1
+### issue 2878成功
+privious commit,替换issue中的ex3p.cpp
+/root/mfem-code-analyzer/get_normal_testcase_covarage/add_coverage.sh
+mpirun -np 5 ex3p -m /root/mfem/data/beam-tet.mesh -o 1
 
 ### issue 2666成功，但没有覆盖率
 覆盖率失败，没有gcno文件
