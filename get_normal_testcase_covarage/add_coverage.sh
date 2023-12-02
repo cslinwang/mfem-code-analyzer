@@ -10,9 +10,9 @@ cd /root/mfem || exit 1
 # cd /root/mfem || exit 1 # 用实际路径替换 /path/to/mfem
 
 # 清理构建和 Git 未跟踪文件
-make clean
-git clean -fdx
-git reset --hard
+# make clean
+# git clean -fdx
+# git reset --hard
 # 清楚覆盖率信息
 find /root/mfem \( -name '*.gcda' -o -name '*.gcov' \) -delete
 
@@ -64,3 +64,4 @@ fastcov --lcov -o coverage.info
 genhtml coverage.info --output-directory coverage_report
 
 tar -czvf mfem_bug.tar.gz /root/mfem-code-analyzer
+tar -czvf mfem_pass.tar.gz /root/mfem_coverage

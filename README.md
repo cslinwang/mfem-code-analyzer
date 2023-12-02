@@ -176,6 +176,21 @@ make all -j
 
 ## BUG复现命令
 
+# 21p02
+
+### 3840
+fix：8a9ca138551bb0b3668da6a40cd636985f21039e
+/root/mfem-code-analyzer/get_normal_testcase_covarage/add_coverage.sh
+cd tests/unit
+./unit_tests "direct-serial"
+结果：No tests ran
+
+### 3436成功
+553dc3109f5ddb03505fc7abc54edd08f36d9b3e的privious commit,修改exp0中的mesh
+/root/mfem-code-analyzer/get_normal_testcase_covarage/add_coverage.sh
+cd examples
+valgrind --leak-check=full ./ex0p
+
 # v201
 
 ### issue 3691成功，但没有覆盖率
