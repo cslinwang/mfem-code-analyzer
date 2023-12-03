@@ -38,14 +38,14 @@ awk '
 # 运行配置和编译命令
 make config
 # 串行 make serial -j
-make parallel -j
-# make serial -j # 使用适当数量的作业
+# make parallel -j
+make serial -j # 使用适当数量的作业
 make all -j # 使用适当数量的作业
 exit 0
 make clean
 git clean -fdx
 git reset --hard
-/root/mfem/mfem-code-analyzer/get_normal_testcase_covarage/add_coverage.sh
+/root/mfem-code-analyzer/get_normal_testcase_covarage/add_coverage.sh
 
 rm -rf hypre
 ln -s hypre-2.26.0 hypre
@@ -65,3 +65,9 @@ genhtml coverage.info --output-directory coverage_report
 
 tar -czvf mfem_bug.tar.gz /root/mfem-code-analyzer
 tar -czvf mfem_pass.tar.gz /root/mfem_coverage
+
+#ifdef __GNUC__
+extern "C" void __gcov_flush(void);
+#endif
+
+__gcov_flush(); // 强制写入覆盖率数据

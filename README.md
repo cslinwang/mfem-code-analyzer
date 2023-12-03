@@ -191,6 +191,12 @@ cd tests/unit
 cd examples
 valgrind --leak-check=full ./ex0p
 
+### 2838成功
+8554fcfa9cdb06c9f036ee0445611c71183738b6的privious commit,替换issue中的两个用例，修改catch.hpp
+/root/mfem-code-analyzer/get_normal_testcase_covarage/add_coverage.sh
+cd tests/unit
+./unit_tests "PA Convection"
+
 
 # v201
 

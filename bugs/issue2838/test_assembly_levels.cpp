@@ -13,6 +13,9 @@
 #include "mfem.hpp"
 #include <fstream>
 #include <iostream>
+#ifdef __GNUC__
+extern "C" void __gcov_flush(void);
+#endif
 
 using namespace mfem;
 
@@ -171,9 +174,11 @@ TEST_CASE("H1 Assembly Levels", "[AssemblyLevel], [PartialAssembly]")
                             AssemblyLevel::FULL);
 
    SECTION("Conforming")
+   __gcov_flush(); // 强制写入覆盖率数据
    {
       SECTION("2D")
       {
+         __gcov_flush(); // 强制写入覆盖率数据
          auto order = GENERATE(2, 3);
          test_assembly_level("../../data/periodic-square.mesh",
                              order, dg, pb, assembly);

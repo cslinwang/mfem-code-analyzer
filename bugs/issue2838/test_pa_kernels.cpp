@@ -13,6 +13,9 @@
 #include "mfem.hpp"
 #include <fstream>
 #include <iostream>
+#ifdef __GNUC__
+extern "C" void __gcov_flush(void);
+#endif
 
 using namespace mfem;
 
@@ -443,13 +446,18 @@ TEST_CASE("PA Convection", "[PartialAssembly]")
    // - 1: DG continuous coeff,
    // - 2: DG discontinuous coeff,
    // - 3: DG Bernstein discontinuous coeff.
+   __gcov_flush(); // 强制写入覆盖率数据
    auto prob = GENERATE(0, 1, 2, 3);
+   __gcov_flush(); // 强制写入覆盖率数据
    auto order = GENERATE(2);
+   __gcov_flush(); // 强制写入覆盖率数据
    // refinement > 0 => Non-conforming mesh
    auto refinement = GENERATE(0,1);
-
+   __gcov_flush(); // 强制写入覆盖率数据
    SECTION("2D")
+   __gcov_flush(); // 强制写入覆盖率数据
    {
+      __gcov_flush(); // 强制写入覆盖率数据
       test_pa_convection("../../data/periodic-square.mesh", order, prob,
                          refinement);
    }
@@ -471,13 +479,18 @@ TEST_CASE("PA Convection advanced", "[PartialAssembly][MFEMData]")
       // - 1: DG continuous coeff,
       // - 2: DG discontinuous coeff,
       // - 3: DG Bernstein discontinuous coeff.
+      __gcov_flush(); // 强制写入覆盖率数据
       auto prob = GENERATE(0, 1, 2, 3);
+      __gcov_flush(); // 强制写入覆盖率数据
       auto order = GENERATE(2);
+      __gcov_flush(); // 强制写入覆盖率数据
       // refinement > 0 => Non-conforming mesh
       auto refinement = GENERATE(0,1);
-
+      __gcov_flush(); // 强制写入覆盖率数据
       SECTION("2D")
+      __gcov_flush(); // 强制写入覆盖率数据
       {
+         __gcov_flush(); // 强制写入覆盖率数据
          test_pa_convection("../../data/periodic-hexagon.mesh", order, prob,
                             refinement);
          test_pa_convection("../../data/star-q3.mesh", order, prob,
