@@ -197,6 +197,23 @@ valgrind --leak-check=full ./ex0p
 cd tests/unit
 ./unit_tests "PA Convection"
 
+### 2809成功，没有覆盖率
+/root/mfem-code-analyzer/get_normal_testcase_covarage/add_coverage.sh
+make pmesh-bug
+valgrind --leak-check=full mpirun -np 4 ./pmesh-bug
+
+### 2703
+/root/mfem-code-analyzer/get_normal_testcase_covarage/add_coverage.sh
+cd examples
+make 2703
+./2703
+结果：
+root@763087cd9a0c:~/mfem/examples# ./2703
+ScaledOperator Mult result: 0 2 4 6 8
+
+
+Operator::MultTranspose() is not overloaded!
+Aborted (core dumped)
 
 # v201
 
