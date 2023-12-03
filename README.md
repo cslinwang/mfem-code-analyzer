@@ -203,6 +203,7 @@ make pmesh-bug
 valgrind --leak-check=full mpirun -np 4 ./pmesh-bug
 
 ### 2703
+privious commit,
 /root/mfem-code-analyzer/get_normal_testcase_covarage/add_coverage.sh
 cd examples
 make 2703
@@ -211,9 +212,12 @@ make 2703
 root@763087cd9a0c:~/mfem/examples# ./2703
 ScaledOperator Mult result: 0 2 4 6 8
 
-
-Operator::MultTranspose() is not overloaded!
-Aborted (core dumped)
+### 2699
+773ea0cc5d7f6004547f930b9a4793af583cf447的privious commit,替换issue中的两个用例
+/root/mfem-code-analyzer/get_normal_testcase_covarage/add_coverage.sh
+cd examples
+./ex1
+或者mpirun -np 2 。、ex1p
 
 # v201
 
