@@ -219,6 +219,13 @@ cd examples
 ./ex1
 或者mpirun -np 2 。、ex1p
 
+### 2363
+cf90fad7fbfd56da3916b0adbb80d5174b7b5a06的privious commit,替换issue中的用例
+/root/mfem-code-analyzer/get_normal_testcase_covarage/add_coverage.sh
+cd examples
+mpicxx  -O3 -std=c++11 -fprofile-arcs -ftest-coverage -I.. -I../../hypre/src/hypre/include 2363.cpp -o 2363 -L.. -lmfem -L../../hypre/src/hypre/lib -lHYPRE -L../../metis-4.0 -lmetis -lrt -lgcov
+mpirun -np 2 2363
+
 # v201
 
 ### issue 3691成功，但没有覆盖率
@@ -308,7 +315,7 @@ make clean
 make all -j
 cd examples
 mpicxx -O3 -std=c++11 -I.. -I../../hypre/src/hypre/include 2982.cpp -o 2982 -L.. -lmfem -L../../hypre/src/hypre/lib -lHYPRE -L../../metis-4.0 -lmetis -lrt
-mpicxx -O3 -std=c++11 -I.. -I../../hypre/src/hypre/include ex1.cpp -o ex1 -L.. -lmfem -L../../hypre/src/hypre/lib -lHYPRE -L../../metis-4.0 -lmetis -lrt
+mpicxx -O3 -std=c++11 -I.. -I../../hypre/src/hypre/include ex1p.cpp -o ex1p -L.. -lmfem -L../../hypre/src/hypre/lib -lHYPRE -L../../metis-4.0 -lmetis -lrt
 报错：
 root@eaa7a2b03f3a:~/mfem/examples# mpicxx -O3 -std=c++11 -I.. -I../../hypre/src/hypre/include 2982.cpp -o 2982 -L.. -lmfem -L../../hypre/src/hypre/lib -lHYPRE -L../../metis-4.0 -lmetis -lrt
 2982.cpp: In function ‘void transfer_field_distributed(mfem::ParGridFunction*, mfem::ParGridFunction*, double)’:
