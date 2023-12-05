@@ -226,6 +226,18 @@ cd examples
 mpicxx  -O3 -std=c++11 -fprofile-arcs -ftest-coverage -I.. -I../../hypre/src/hypre/include 2363.cpp -o 2363 -L.. -lmfem -L../../hypre/src/hypre/lib -lHYPRE -L../../metis-4.0 -lmetis -lrt -lgcov
 mpirun -np 2 2363
 
+### 2157
+789fe959fddce5ec7f43862666bbf82a4d1174cd的privious commit,替换issue中的用例
+/root/mfem-code-analyzer/get_normal_testcase_covarage/add_coverage.sh
+cd examples
+make 2157
+./2157
+root@763087cd9a0c:~/mfem/examples# ./2157
+Original dt1 sizes: 2, 3, 4
+Original dt2 sizes: 4, 3, 2
+Swapped dt1 sizes: 2, 3, 2
+Swapped dt2 sizes: 4, 3, 4
+
 # v201
 
 ### issue 3691成功，但没有覆盖率
