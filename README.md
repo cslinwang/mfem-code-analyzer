@@ -238,6 +238,37 @@ Original dt2 sizes: 4, 3, 2
 Swapped dt1 sizes: 2, 3, 2
 Swapped dt2 sizes: 4, 3, 4
 
+### 2152
+5335439a711bf589857651a4ef6bdf927567d83d的privious commit,将test_build放入tests/unit/fem
+/root/mfem-code-analyzer/get_normal_testcase_covarage/add_coverage.sh
+cd tests/unit
+./unit_tests "Build Dof To Arrays"
+
+root@763087cd9a0c:~/mfem/tests/unit# ./unit_tests "Build Dof To Arrays"
+Filters: Build Dof To Arrays ~[Parallel]
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+unit_tests is a Catch v2.13.2 host application.
+Run with -? for options
+
+-------------------------------------------------------------------------------
+Build Dof To Arrays
+  Mesh Type: 1, Basis Type: 1
+-------------------------------------------------------------------------------
+/root/mfem/tests/unit/fem/test_build.cpp:94
+...............................................................................
+
+/root/mfem/tests/unit/fem/test_build.cpp:94: FAILED:
+  {Unknown expression after the reported line}
+due to a fatal error condition:
+  SIGSEGV - Segmentation violation signal
+
+===============================================================================
+test cases:   1 |   0 passed | 1 failed
+assertions: 577 | 576 passed | 1 failed
+
+Segmentation fault (core dumped)
+
 # v201
 
 ### issue 3691成功，但没有覆盖率
