@@ -41,6 +41,9 @@ make config
 make parallel -j
 # make serial -j # 使用适当数量的作业
 make all -j # 使用适当数量的作业
+
+#############################################
+# 常用命令
 exit 0
 make clean
 git clean -fdx
