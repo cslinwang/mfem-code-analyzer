@@ -276,6 +276,20 @@ cd examples
 make 2119
 ./2119
 
+### 2001
+崩溃性bug，强行收集了覆盖率，但是没有覆盖到有效文件。
+复现sha：cd788e83ff2b525edbd10855ac5168d21ecf2a69
+/root/mfem-code-analyzer/get_normal_testcase_covarage/add_coverage.sh
+cd examples
+make 2001
+./2001
+结果：
+root@763087cd9a0c:~/mfem/examples# ./2001
+MFEM abort: VTK mesh is not in ASCII format!
+ ... in function: void mfem::Mesh::ReadVTKMesh(std::istream&, int&, int&, bool&)
+ ... in file: mesh/mesh_readers.cpp:769
+Aborted (core dumped)
+
 # v201
 
 ### issue 3691成功，但没有覆盖率

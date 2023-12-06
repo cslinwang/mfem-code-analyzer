@@ -1,35 +1,35 @@
-2023-12-06 01:46:03,124:INFO:这是一条INFO级别的日志
-2023-12-06 01:46:03,128:ERROR:
-2023-12-06 01:46:03,128:ERROR:Processing issues:   0%|          | 0/1 [00:00<?, ?it/s]
-2023-12-06 01:46:03,128:ERROR:
-2023-12-06 01:46:03,128:ERROR:Processing test cases for mfem issue2878:   0%|          | 0/2 [00:00<?, ?it/s]
-2023-12-06 01:46:03,128:ERROR:[A
-2023-12-06 01:46:03,323:ERROR:
-2023-12-06 01:46:03,323:ERROR:Processing test cases for mfem issue2878:  50%|#####     | 1/2 [00:00<00:00,  5.13it/s]
-2023-12-06 01:46:03,323:ERROR:[A
-2023-12-06 01:46:03,561:ERROR:
-2023-12-06 01:46:03,561:ERROR:Processing test cases for mfem issue2878: 100%|##########| 2/2 [00:00<00:00,  4.54it/s]
-2023-12-06 01:46:03,562:ERROR:[A
-2023-12-06 01:46:03,562:ERROR:[A
-2023-12-06 01:46:03,562:INFO:Processing issue: {'name': 'issue2878', 'bug_sha': '5335439a711bf589857651a4ef6bdf927567d83d', 'fix_sha': 'd9275d734e060fc653236ab4901b370cbb6dd7ad', 'testcase': 'tests/unit/fem/test_pa_coeff.cpp,tests/unit/fem/test_pa_grad.cpp', 'testname': 'H1 pa_coeff,Hcurl/Hdiv pa_coeff,Hcurl/Hdiv mixed pa_coeff,ParallelPAGradient,PA Gradient,Nonlinear Convection', 'url': 'https://github.com/mfem/mfem/commit/987d2e043bad3a99841b88354dce0c0932cb8642'}
-2023-12-06 01:46:03,562:INFO:Running bug version: 5335439a711bf589857651a4ef6bdf927567d83d
-2023-12-06 01:46:06,560:ERROR:
-2023-12-06 01:46:06,560:ERROR:Processing issues:   0%|          | 0/1 [00:03<?, ?it/s]
-2023-12-06 01:46:06,561:ERROR:Traceback (most recent call last):
-2023-12-06 01:46:06,561:ERROR:  File "/root/mfem-code-analyzer/get_normal_testcase_covarage/run_mfme_testcase.py", line 299, in <module>
-2023-12-06 01:46:06,561:ERROR:processor.process_yaml_file()
-2023-12-06 01:46:06,561:ERROR:  File "/root/mfem-code-analyzer/get_normal_testcase_covarage/run_mfme_testcase.py", line 147, in process_yaml_file
-2023-12-06 01:46:06,561:ERROR:self.process_mfem_issue(issue_data)
-2023-12-06 01:46:06,561:ERROR:  File "/root/mfem-code-analyzer/get_normal_testcase_covarage/run_mfme_testcase.py", line 103, in process_mfem_issue
-2023-12-06 01:46:06,561:ERROR:self.compile_mfem()
-2023-12-06 01:46:06,561:ERROR:  File "/root/mfem-code-analyzer/get_normal_testcase_covarage/run_mfme_testcase.py", line 234, in compile_mfem
-2023-12-06 01:46:06,561:ERROR:result = subprocess.run(["bash", bash_path], capture_output=True, text=True)
-2023-12-06 01:46:06,561:ERROR:  File "/usr/lib/python3.10/subprocess.py", line 505, in run
-2023-12-06 01:46:06,561:ERROR:stdout, stderr = process.communicate(input, timeout=timeout)
-2023-12-06 01:46:06,561:ERROR:  File "/usr/lib/python3.10/subprocess.py", line 1154, in communicate
-2023-12-06 01:46:06,561:ERROR:stdout, stderr = self._communicate(input, endtime, timeout)
-2023-12-06 01:46:06,561:ERROR:  File "/usr/lib/python3.10/subprocess.py", line 2021, in _communicate
-2023-12-06 01:46:06,561:ERROR:ready = selector.select(timeout)
-2023-12-06 01:46:06,561:ERROR:  File "/usr/lib/python3.10/selectors.py", line 416, in select
-2023-12-06 01:46:06,561:ERROR:fd_event_list = self._selector.poll(timeout)
-2023-12-06 01:46:06,561:ERROR:KeyboardInterrupt
+2023-12-06 07:34:27,506:INFO:这是一条INFO级别的日志
+2023-12-06 07:34:27,509:ERROR:
+2023-12-06 07:34:27,509:ERROR:Processing issues:   0%|          | 0/1 [00:00<?, ?it/s]
+2023-12-06 07:34:27,509:ERROR:
+2023-12-06 07:34:27,509:ERROR:Processing test cases for mfem issue2878:   0%|          | 0/2 [00:00<?, ?it/s]
+2023-12-06 07:34:27,509:ERROR:[A
+2023-12-06 07:34:27,705:ERROR:
+2023-12-06 07:34:27,705:ERROR:Processing test cases for mfem issue2878:  50%|#####     | 1/2 [00:00<00:00,  5.12it/s]
+2023-12-06 07:34:27,705:ERROR:[A
+2023-12-06 07:34:27,969:ERROR:
+2023-12-06 07:34:27,969:ERROR:Processing test cases for mfem issue2878: 100%|##########| 2/2 [00:00<00:00,  4.24it/s]
+2023-12-06 07:34:27,969:ERROR:[A
+2023-12-06 07:34:27,969:ERROR:[A
+2023-12-06 07:34:27,969:INFO:Processing issue: {'name': 'issue2878', 'bug_sha': 'cd788e83ff2b525edbd10855ac5168d21ecf2a69', 'fix_sha': 'd9275d734e060fc653236ab4901b370cbb6dd7ad', 'testcase': 'tests/unit/fem/test_pa_coeff.cpp,tests/unit/fem/test_pa_grad.cpp', 'testname': 'H1 pa_coeff,Hcurl/Hdiv pa_coeff,Hcurl/Hdiv mixed pa_coeff,ParallelPAGradient,PA Gradient,Nonlinear Convection', 'url': 'https://github.com/mfem/mfem/commit/987d2e043bad3a99841b88354dce0c0932cb8642'}
+2023-12-06 07:34:27,969:INFO:Running bug version: cd788e83ff2b525edbd10855ac5168d21ecf2a69
+2023-12-06 07:34:30,086:ERROR:
+2023-12-06 07:34:30,087:ERROR:Processing issues:   0%|          | 0/1 [00:02<?, ?it/s]
+2023-12-06 07:34:30,087:ERROR:Traceback (most recent call last):
+2023-12-06 07:34:30,087:ERROR:  File "/root/mfem-code-analyzer/get_normal_testcase_covarage/run_mfme_testcase.py", line 299, in <module>
+2023-12-06 07:34:30,087:ERROR:processor.process_yaml_file()
+2023-12-06 07:34:30,087:ERROR:  File "/root/mfem-code-analyzer/get_normal_testcase_covarage/run_mfme_testcase.py", line 147, in process_yaml_file
+2023-12-06 07:34:30,087:ERROR:self.process_mfem_issue(issue_data)
+2023-12-06 07:34:30,087:ERROR:  File "/root/mfem-code-analyzer/get_normal_testcase_covarage/run_mfme_testcase.py", line 103, in process_mfem_issue
+2023-12-06 07:34:30,087:ERROR:self.compile_mfem()
+2023-12-06 07:34:30,087:ERROR:  File "/root/mfem-code-analyzer/get_normal_testcase_covarage/run_mfme_testcase.py", line 234, in compile_mfem
+2023-12-06 07:34:30,087:ERROR:result = subprocess.run(["bash", bash_path], capture_output=True, text=True)
+2023-12-06 07:34:30,087:ERROR:  File "/usr/lib/python3.10/subprocess.py", line 505, in run
+2023-12-06 07:34:30,087:ERROR:stdout, stderr = process.communicate(input, timeout=timeout)
+2023-12-06 07:34:30,087:ERROR:  File "/usr/lib/python3.10/subprocess.py", line 1154, in communicate
+2023-12-06 07:34:30,088:ERROR:stdout, stderr = self._communicate(input, endtime, timeout)
+2023-12-06 07:34:30,088:ERROR:  File "/usr/lib/python3.10/subprocess.py", line 2021, in _communicate
+2023-12-06 07:34:30,088:ERROR:ready = selector.select(timeout)
+2023-12-06 07:34:30,088:ERROR:  File "/usr/lib/python3.10/selectors.py", line 416, in select
+2023-12-06 07:34:30,088:ERROR:fd_event_list = self._selector.poll(timeout)
+2023-12-06 07:34:30,088:ERROR:KeyboardInterrupt
