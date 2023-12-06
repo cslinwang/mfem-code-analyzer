@@ -5,7 +5,8 @@ using namespace std; // 添加这行
 int main()
 {
     // 创建简单的2D网格
-    Mesh *mesh = new Mesh("simple_2d_mesh.mesh");
+    const char *mesh_file = "/root/mfem-code-analyzer/bugs/issue2152/2D.msh";
+    Mesh *mesh = new Mesh(mesh_file);
 
     // 创建一阶ND_FECollection有限元空间
     ND_FECollection fec(1, mesh->Dimension());

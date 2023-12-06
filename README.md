@@ -269,6 +269,13 @@ assertions: 577 | 576 passed | 1 failed
 
 Segmentation fault (core dumped)
 
+### 2119
+5e76cea136ce53406c3a0e7d3b6cadf378c76e2f的privious commit,替换ex1p中的mesh为2119.msh
+/root/mfem-code-analyzer/get_normal_testcase_covarage/add_coverage.sh
+cd examples
+make 2119
+./2119
+
 # v201
 
 ### issue 3691成功，但没有覆盖率
