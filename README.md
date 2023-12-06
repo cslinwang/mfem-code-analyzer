@@ -290,6 +290,12 @@ MFEM abort: VTK mesh is not in ASCII format!
  ... in file: mesh/mesh_readers.cpp:769
 Aborted (core dumped)
 
+### 1896
+复现sha：759987ef3186d9c2ebeb82e6e340ebebfde6b0c2
+/root/mfem-code-analyzer/get_normal_testcase_covarage/add_coverage.sh
+cd examples
+./ex9
+
 # v201
 
 ### issue 3691成功，但没有覆盖率
