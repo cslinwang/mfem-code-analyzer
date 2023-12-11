@@ -311,6 +311,7 @@ mpirun -np 24 ex6p -m /root/mfem-code-analyzer/bugs/issue3691/p1_prism.msh -o 2
 ```
 
 ### issue 3566成功.
+复现sha：93393c5c58ecaa3eb6fb9bbd6a822e7c3fd96be5
 内存泄漏问题，不报错：
 privious commit
 /root/mfem-code-analyzer/get_normal_testcase_covarage/add_coverage.sh
@@ -328,6 +329,7 @@ valgrind --leak-check=full ./unit_tests SubMesh
 ==267697== ERROR SUMMARY: 20 errors from 20 contexts (suppressed: 0 from 0)
 
 ### issue 3332成功.
+复现sha：e6ba86462c0db85732c1ac33ce7615d79b555bfd
 privious commit,替换test_submesh.cpp，修改/root/mfem/mesh/submesh/submesh_utils.cpp，最上面加入：
 #ifdef __GNUC__
 extern "C" void __gcov_flush(void);
@@ -336,8 +338,34 @@ if (T(j, k) != 0.0)这一行前写入：
 __gcov_flush(); // 强制写入覆盖率数据
 
 /root/mfem-code-analyzer/get_normal_testcase_covarage/add_coverage.sh
-cd ~/mfem/tests/unit
+cd tests/unit
 ./unit_tests SubMesh
+结果：
+root@f64125032199:~/mfem/tests/unit# ./unit_tests SubMesh
+INFO: Test filter: SubMesh ~[Parallel] ~[MFEMData]
+Filters: SubMesh ~[Parallel] ~[MFEMData]
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+unit_tests is a Catch v2.13.9 host application.
+Run with -? for options
+
+-------------------------------------------------------------------------------
+SubMesh
+  2D
+-------------------------------------------------------------------------------
+/root/mfem/tests/unit/mesh/test_submesh.cpp:405
+...............................................................................
+
+/root/mfem/tests/unit/mesh/test_submesh.cpp:407: FAILED:
+  {Unknown expression after the reported line}
+due to a fatal error condition:
+  SIGSEGV - Segmentation violation signal
+
+===============================================================================
+test cases:   1 |   0 passed | 1 failed
+assertions: 132 | 131 passed | 1 failed
+
+Segmentation fault (core dumped)
 
 ### issue3328成功
 privious commit
