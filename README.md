@@ -192,10 +192,37 @@ cd examples
 valgrind --leak-check=full ./ex0p
 
 ### 2838成功
-8554fcfa9cdb06c9f036ee0445611c71183738b6的privious commit,替换issue中的两个用例，修改catch.hpp
+复现sha：5fe211e3aecf2560c2d1872af425e2ea37c1fa8a
+替换issue中的两个用例，修改catch.hpp
 /root/mfem-code-analyzer/get_normal_testcase_covarage/add_coverage.sh
 cd tests/unit
 ./unit_tests "PA Convection"
+结果：
+root@f64125032199:~/mfem/tests/unit# ./unit_tests "PA Convection"
+INFO: Test filter: PA Convection ~[Parallel] ~[MFEMData]
+Filters: PA Convection ~[Parallel] ~[MFEMData]
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+unit_tests is a Catch v2.13.2 host application.
+Run with -? for options
+
+-------------------------------------------------------------------------------
+PA Convection
+-------------------------------------------------------------------------------
+/root/mfem/tests/unit/fem/test_pa_kernels.cpp:442
+...............................................................................
+
+/root/mfem/tests/unit/fem/test_pa_kernels.cpp:457: FAILED:
+  {Unknown expression after the reported line}
+due to a fatal error condition:
+  mesh=../../data/periodic-square.mesh, order=2, prob=0, refinement=0
+  SIGSEGV - Segmentation violation signal
+
+===============================================================================
+test cases: 1 | 1 failed
+assertions: 2 | 1 passed | 1 failed
+
+Segmentation fault (core dumped)
 
 ### 2809成功，没有覆盖率
 /root/mfem-code-analyzer/get_normal_testcase_covarage/add_coverage.sh
@@ -203,7 +230,7 @@ make pmesh-bug
 valgrind --leak-check=full mpirun -np 4 ./pmesh-bug
 
 ### 2703
-privious commit,
+复现sha：783f0e0304b6a16f9b0f777698007d0b2fe09f1a
 /root/mfem-code-analyzer/get_normal_testcase_covarage/add_coverage.sh
 cd examples
 make 2703
@@ -213,11 +240,125 @@ root@763087cd9a0c:~/mfem/examples# ./2703
 ScaledOperator Mult result: 0 2 4 6 8
 
 ### 2699
+复现sha：3d7b3b18fb980bb2c6f6bd00161b32fc05e83a1e
 773ea0cc5d7f6004547f930b9a4793af583cf447的privious commit,替换issue中的两个用例
 /root/mfem-code-analyzer/get_normal_testcase_covarage/add_coverage.sh
 cd examples
-./ex1
-或者mpirun -np 2 。、ex1p
+mpirun -np 2 ex1p
+结果：
+root@f64125032199:~/mfem/examples# mpirun -np 2 ex1p
+Options used:
+   --mesh ../data/star.mesh
+   --order 1
+   --no-static-condensation
+   --no-partial-assembly
+   --no-full-assembly
+   --device cpu
+   --visualization
+Device configuration: cpu
+Memory configuration: host-std
+Number of finite element unknowns: 82561
+
+
+ Num MPI tasks = 2
+
+ Num OpenMP threads = 1
+
+
+BoomerAMG SETUP PARAMETERS:
+
+ Max levels = 25
+ Num levels = 7
+
+ Strength Threshold = 0.250000
+ Interpolation Truncation Factor = 0.000000
+ Maximum Row Sum Threshold for Dependency Weakening = 0.900000
+
+ Coarsening Type = HMIS
+
+ No. of levels of aggressive coarsening: 1
+
+ Interpolation on agg. levels= multipass interpolation
+ measures are determined locally
+
+
+ No global partition option chosen.
+
+ Interpolation = extended+i interpolation
+
+Operator Matrix Information:
+
+             nonzero            entries/row          row sums
+lev    rows  entries sparse   min  max     avg      min         max
+======================================================================
+  0   82561   739201  0.000     4   11     9.0  -1.277e-15   1.915e+00
+  1    4962    43648  0.002     3   11     8.8  -5.995e-15   5.834e+00
+  2    1632    33284  0.012     7   28    20.4  -8.710e-15   7.383e+00
+  3     531    14231  0.050    11   40    26.8  -1.227e-14   7.832e+00
+  4     125     3241  0.207    11   45    25.9  -2.151e-14   5.852e+00
+  5      24      402  0.698     9   24    16.8   1.173e+00   6.208e+00
+  6       4       16  1.000     4    4     4.0   4.085e+00   5.839e+00
+
+
+Interpolation Matrix Information:
+                    entries/row        min        max            row sums
+lev  rows x cols  min  max  avgW     weight      weight       min         max
+================================================================================
+  0 82561 x 4962    0    4   1.6   1.180e-02   1.000e+00   0.000e+00   1.000e+00
+  1  4962 x 1632    1    4   4.0   1.554e-02   6.587e-01   3.036e-01   1.000e+00
+  2  1632 x 531     1    4   3.9   9.934e-03   6.314e-01   2.070e-01   1.000e+00
+  3   531 x 125     0    4   3.8   4.331e-03   7.090e-01   0.000e+00   1.000e+00
+  4   125 x 24      0    4   3.7   2.908e-03   6.335e-01   0.000e+00   1.000e+00
+  5    24 x 4       0    4   2.4   3.184e-03   3.894e-01   0.000e+00   1.000e+00
+
+
+     Complexity:    grid = 1.088153
+                operator = 1.128276
+                memory = 1.328364
+
+
+
+
+BoomerAMG SOLVER PARAMETERS:
+
+  Maximum number of cycles:         1
+  Stopping Tolerance:               0.000000e+00
+  Cycle type (1 = V, 2 = W, etc.):  1
+
+  Relaxation Parameters:
+   Visiting Grid:                     down   up  coarse
+            Number of sweeps:            1    1     1
+   Type 0=Jac, 3=hGS, 6=hSGS, 9=GE:      8    8     9
+   Point types, partial sweeps (1=C, -1=F):
+                  Pre-CG relaxation (down):   0
+                   Post-CG relaxation (up):   0
+                             Coarsest grid:   0
+
+   Iteration :   0  (B r, r) = 0.290049
+   Iteration :   1  (B r, r) = 0.0200637
+   Iteration :   2  (B r, r) = 0.000570177
+   Iteration :   3  (B r, r) = 5.74965e-05
+   Iteration :   4  (B r, r) = 2.46573e-06
+   Iteration :   5  (B r, r) = 3.5549e-07
+   Iteration :   6  (B r, r) = 3.79278e-08
+   Iteration :   7  (B r, r) = 4.37046e-09
+   Iteration :   8  (B r, r) = 6.30729e-10
+   Iteration :   9  (B r, r) = 6.43674e-11
+   Iteration :  10  (B r, r) = 6.02537e-12
+   Iteration :  11  (B r, r) = 6.16521e-13
+   Iteration :  12  (B r, r) = 4.45556e-14
+   Iteration :  13  (B r, r) = 4.20101e-15
+   Iteration :  14  (B r, r) = 3.88272e-16
+   Iteration :  15  (B r, r) = 4.0686e-17
+   Iteration :  16  (B r, r) = 4.1729e-18
+   Iteration :  17  (B r, r) = 3.3523e-19
+   Iteration :  18  (B r, r) = 2.83435e-20
+   Iteration :  19  (B r, r) = 2.46983e-21
+   Iteration :  20  (B r, r) = 2.01668e-22
+   Iteration :  21  (B r, r) = 1.4673e-23
+   Iteration :  22  (B r, r) = 1.20986e-24
+   Iteration :  23  (B r, r) = 9.48848e-26
+Average reduction factor = 0.29357
 
 ### 2363
 cf90fad7fbfd56da3916b0adbb80d5174b7b5a06的privious commit,替换issue中的用例
@@ -368,12 +509,20 @@ assertions: 132 | 131 passed | 1 failed
 Segmentation fault (core dumped)
 
 ### issue3328成功
+复现sha：ca6588da7df13b299609098685b8e384abeea4ac
 privious commit
 /root/mfem-code-analyzer/get_normal_testcase_covarage/add_coverage.sh
 把3328.cpp放入examples
 cd examples
 make 3328
 ./3328
+结果：
+root@f64125032199:~/mfem/examples# ./3328
+
+
+MFEM Warning: Unable to open mesh file: test_000000/mesh.000000
+ ... in function: void mfem::VisItDataCollection::LoadMesh()
+ ... in file: fem/datacollection.cpp:574
 
 ### issue 2884失败
 (未复现) 编译就过不去。 修复版本编译也过不去。
@@ -389,9 +538,68 @@ cd tests/unit
 ./unit_tests "Hcurl/Hdiv pa_coeff"
 
 ### issue 2878成功
+复现sha：50cd7da165999d4c65a6875a24c39317acaa2c3e
 privious commit,替换issue中的ex3p.cpp
 /root/mfem-code-analyzer/get_normal_testcase_covarage/add_coverage.sh
 mpirun -np 5 ex3p -m /root/mfem/data/beam-tet.mesh -o 1
+结果：
+root@f64125032199:~/mfem/examples# mpirun -np 5 ex3p -m /root/mfem/data/beam-tet.mesh -o 1
+Options used:
+   --mesh /root/mfem/data/beam-tet.mesh
+   --order 1
+   --frequency 1
+   --no-static-condensation
+   --no-partial-assembly
+   --device cpu
+   --visualization
+Device configuration: cpu
+Memory configuration: host-std
+Number of finite element unknowns: 32016
+
+
+Verification failed: (Fo.Size() >= 1) is false:
+ --> Face orientations are unset in ND_TriDofTransformation
+ ... in function: virtual void mfem::ND_TriDofTransformation::TransformDual(double*) const
+ ... in file: fem/doftrans.cpp:316
+
+--------------------------------------------------------------------------
+MPI_ABORT was invoked on rank 1 in communicator MPI_COMM_WORLD
+with errorcode 1.
+
+NOTE: invoking MPI_ABORT causes Open MPI to kill all MPI processes.
+You may or may not see output from other processes, depending on
+exactly when Open MPI kills them.
+--------------------------------------------------------------------------
+
+
+Verification failed: (Fo.Size() >= 1) is false:
+ --> Face orientations are unset in ND_TriDofTransformation
+ ... in function: virtual void mfem::ND_TriDofTransformation::TransformDual(double*) const
+ ... in file: fem/doftrans.cpp:316
+
+
+
+Verification failed: (Fo.Size() >= 1) is false:
+ --> Face orientations are unset in ND_TriDofTransformation
+ ... in function: virtual void mfem::ND_TriDofTransformation::TransformDual(double*) const
+ ... in file: fem/doftrans.cpp:316
+
+
+
+Verification failed: (Fo.Size() >= 1) is false:
+ --> Face orientations are unset in ND_TriDofTransformation
+ ... in function: virtual void mfem::ND_TriDofTransformation::TransformDual(double*) const
+ ... in file: fem/doftrans.cpp:316
+
+
+
+Verification failed: (Fo.Size() >= 1) is false:
+ --> Face orientations are unset in ND_TriDofTransformation
+ ... in function: virtual void mfem::ND_TriDofTransformation::TransformDual(double*) const
+ ... in file: fem/doftrans.cpp:316
+
+[f64125032199:731338] 4 more processes have sent help message help-mpi-api.txt / mpi-abort
+[f64125032199:731338] Set MCA parameter "orte_base_help_aggregate" to 0 to see all help / error messages
 
 ### issue 2666成功，但没有覆盖率
 覆盖率失败，没有gcno文件
@@ -427,14 +635,86 @@ root@eaa7a2b03f3a:~/mfem/examples# mpicxx -O3 -std=c++11 -I.. -I../../hypre/src/
 可能是FindPointsGSLIB依赖于外部库或模块,FindPointsGSLIB位于miniapps/gslib中的pfindpts和field-interp，应该要编译miniapps
 
 ### 2779成功.
-reset current branch to previous commit,hard reset
+复现sha：bba2c08025c0700ead5965d27d7ed0f8564a0018
 cd mfem
 make clean
 make all -j
 cd examples
-mpicxx -O3 -std=c++11 -I.. -I../../hypre/src/hypre/include 2779.cpp -o 2779 -L.. -lmfem -L../../hypre/src/hypre/lib -lHYPRE -L../../metis-4.0 -lmetis -lrt
-添加覆盖率：mpicxx -O3 -std=c++11 -fprofile-arcs -ftest-coverage -I.. -I../../hypre/src/hypre/include 2779.cpp -o 2779 -L.. -lmfem -L../../hypre/src/hypre/lib -lHYPRE -L../../metis-4.0 -lmetis -lrt -lgcov
+mpicxx -O3 -std=c++11 -fprofile-arcs -ftest-coverage -I.. -I../../hypre/src/hypre/include 2779.cpp -o 2779 -L.. -lmfem -L../../hypre/src/hypre/lib -lHYPRE -L../../metis-4.0 -lmetis -lrt -lgcov
 ./2779
+结果：
+DOF missing: 13
+[row 0]
+ (0,1)
+[row 1]
+ (1,1)
+[row 2]
+ (2,1)
+[row 3]
+ (3,1)
+[row 4]
+ (4,1)
+[row 5]
+ (5,1)
+[row 6]
+ (6,1)
+[row 7]
+ (7,1)
+[row 8]
+ (9,1)
+[row 9]
+ (10,1)
+[row 10]
+ (11,1)
+[row 11]
+ (12,1)
+[row 12]
+ (13,1)
+[row 13]
+ (16,1)
+[row 14]
+ (17,1)
+[row 15]
+ (18,1)
+[row 16]
+ (19,1)
+[row 17]
+ (20,1)
+[row 18]
+ (21,1)
+[row 19]
+ (22,1)
+[row 20]
+ (24,1)
+[row 21]
+ (25,1)
+[row 22]
+ (26,1)
+[row 23]
+ (27,1)
+[row 24]
+ (28,1)
+[row 25]
+ (29,1)
+[row 26]
+ (30,1)
+[row 27]
+ (32,1)
+[row 28]
+ (33,1)
+[row 29]
+ (34,1)
+[row 30]
+ (35,1)
+[row 31]
+ (36,1)
+[row 32]
+ (37,1)
+[row 33]
+ (38,1)
+[row 34]
+ (39,1)
+max_order is 3
 
 ### 2559成功.
 reset current branch to previous commit,hard reset
@@ -487,11 +767,33 @@ assertions: 132 | 131 passed | 1 failed
 ## V1
 
 ## 2563成功.
-将ex1中的mesh文件替换
-const char *mesh_file = "/root/mfem/mfem-code-analyzer/bugs/issue2563/origin_mesh_tri.vtu";
+复现sha：1e82e22374d45afadc383c601f07520ec6cf51b4
+将ex5中的mesh文件替换 /root/mfem-code-analyzer/bugs/issue2563/origin_mesh_tri.vtu
 /root/mfem/mfem-code-analyzer/get_normal_testcase_covarage/add_coverage.sh
 cd examples
 ./ex5
+结果：
+root@f64125032199:~/mfem/examples# ./ex5
+Options used:
+   --mesh /root/mfem-code-analyzer/bugs/issue2563/origin_mesh_tri.vtu
+   --order 1
+   --no-partial-assembly
+   --device cpu
+   --visualization
+Device configuration: cpu
+Memory configuration: host-std
+***********************************************************
+dim(R) = 255764
+dim(W) = 153420
+dim(R+W) = 409184
+***********************************************************
+
+
+MFEM abort: Zero diagonal in SparseMatrix::DiagScale
+ ... in function: mfem::SparseMatrix::DiagScale(const mfem::Vector&, mfem::Vector&, double) const::<lambda(int)>
+ ... in file: linalg/sparsemat.cpp:2443
+
+Aborted (core dumped)
 
 
 ## 3712没有覆盖率
