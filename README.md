@@ -381,6 +381,7 @@ Swapped dt1 sizes: 2, 3, 2
 Swapped dt2 sizes: 4, 3, 4
 
 ### 2152
+复现bug：72f7f26e08d740f861fa8ade08430c0a55dd5654
 5335439a711bf589857651a4ef6bdf927567d83d的privious commit,将test_build放入tests/unit/fem
 /root/mfem-code-analyzer/get_normal_testcase_covarage/add_coverage.sh
 cd tests/unit
