@@ -154,7 +154,7 @@ void sol_exact6(const Vector &x, Vector &u);
 int main(int argc, char *argv[])
 {
    //    Parse command-line options.
-   const char *mesh_file = "/root/mfem/mfem/data/square_2mat_per.msh";
+   const char *mesh_file = "/root/mfem-code-analyzer/bugs/issue1928/square_2mat_per.msh";
    //   const char *mesh_file = "yper.mesh";
    int order = 1;
    int tcase = 1;
