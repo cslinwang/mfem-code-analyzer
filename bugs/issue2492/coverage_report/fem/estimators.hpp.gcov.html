@@ -1,0 +1,659 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html lang="en">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>LCOV - coverage.info - fem/estimators.hpp</title>
+  <link rel="stylesheet" type="text/css" href="../gcov.css">
+</head>
+
+<body>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="title">LCOV - code coverage report</td></tr>
+    <tr><td class="ruler"><img src="../glass.png" width=3 height=3 alt=""></td></tr>
+
+    <tr>
+      <td width="100%">
+        <table cellpadding=1 border=0 width="100%">
+          <tr>
+            <td width="10%" class="headerItem">Current view:</td>
+            <td width="35%" class="headerValue"><a href="../index.html">top level</a> - <a href="index.html">fem</a> - estimators.hpp<span style="font-size: 80%;"> (source / <a href="estimators.hpp.func-sort-c.html">functions</a>)</span></td>
+            <td width="5%"></td>
+            <td width="15%"></td>
+            <td width="10%" class="headerCovTableHead">Hit</td>
+            <td width="10%" class="headerCovTableHead">Total</td>
+            <td width="15%" class="headerCovTableHead">Coverage</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Test:</td>
+            <td class="headerValue">coverage.info</td>
+            <td></td>
+            <td class="headerItem">Lines:</td>
+            <td class="headerCovTableEntry">0</td>
+            <td class="headerCovTableEntry">8</td>
+            <td class="headerCovTableEntryLo">0.0 %</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Date:</td>
+            <td class="headerValue">2023-12-12 08:20:39</td>
+            <td></td>
+            <td class="headerItem">Functions:</td>
+            <td class="headerCovTableEntry">0</td>
+            <td class="headerCovTableEntry">0</td>
+            <td class="headerCovTableEntryHi">-</td>
+          </tr>
+          <tr><td><img src="../glass.png" width=3 height=3 alt=""></td></tr>
+        </table>
+      </td>
+    </tr>
+
+    <tr><td class="ruler"><img src="../glass.png" width=3 height=3 alt=""></td></tr>
+  </table>
+
+  <table cellpadding=0 cellspacing=0 border=0>
+    <tr>
+      <td><br></td>
+    </tr>
+    <tr>
+      <td>
+<pre class="sourceHeading">          Line data    Source code</pre>
+<pre class="source">
+<a name="1"><span class="lineNum">       1 </span>            : // Copyright (c) 2010-2021, Lawrence Livermore National Security, LLC. Produced</a>
+<a name="2"><span class="lineNum">       2 </span>            : // at the Lawrence Livermore National Laboratory. All Rights reserved. See files</a>
+<a name="3"><span class="lineNum">       3 </span>            : // LICENSE and NOTICE for details. LLNL-CODE-806117.</a>
+<a name="4"><span class="lineNum">       4 </span>            : //</a>
+<a name="5"><span class="lineNum">       5 </span>            : // This file is part of the MFEM library. For more information and source code</a>
+<a name="6"><span class="lineNum">       6 </span>            : // availability visit https://mfem.org.</a>
+<a name="7"><span class="lineNum">       7 </span>            : //</a>
+<a name="8"><span class="lineNum">       8 </span>            : // MFEM is free software; you can redistribute it and/or modify it under the</a>
+<a name="9"><span class="lineNum">       9 </span>            : // terms of the BSD-3 license. We welcome feedback and contributions, see file</a>
+<a name="10"><span class="lineNum">      10 </span>            : // CONTRIBUTING.md for details.</a>
+<a name="11"><span class="lineNum">      11 </span>            : </a>
+<a name="12"><span class="lineNum">      12 </span>            : #ifndef MFEM_ERROR_ESTIMATORS</a>
+<a name="13"><span class="lineNum">      13 </span>            : #define MFEM_ERROR_ESTIMATORS</a>
+<a name="14"><span class="lineNum">      14 </span>            : </a>
+<a name="15"><span class="lineNum">      15 </span>            : #include &lt;functional&gt;</a>
+<a name="16"><span class="lineNum">      16 </span>            : </a>
+<a name="17"><span class="lineNum">      17 </span>            : #include &quot;../config/config.hpp&quot;</a>
+<a name="18"><span class="lineNum">      18 </span>            : #include &quot;../linalg/vector.hpp&quot;</a>
+<a name="19"><span class="lineNum">      19 </span>            : #include &quot;bilinearform.hpp&quot;</a>
+<a name="20"><span class="lineNum">      20 </span>            : #ifdef MFEM_USE_MPI</a>
+<a name="21"><span class="lineNum">      21 </span>            : #include &quot;pgridfunc.hpp&quot;</a>
+<a name="22"><span class="lineNum">      22 </span>            : #endif</a>
+<a name="23"><span class="lineNum">      23 </span>            : </a>
+<a name="24"><span class="lineNum">      24 </span>            : namespace mfem</a>
+<a name="25"><span class="lineNum">      25 </span>            : {</a>
+<a name="26"><span class="lineNum">      26 </span>            : </a>
+<a name="27"><span class="lineNum">      27 </span>            : /** @brief Base class for all error estimators.</a>
+<a name="28"><span class="lineNum">      28 </span>            :  */</a>
+<a name="29"><span class="lineNum">      29 </span>            : class AbstractErrorEstimator</a>
+<a name="30"><span class="lineNum">      30 </span>            : {</a>
+<a name="31"><span class="lineNum">      31 </span>            : public:</a>
+<a name="32"><span class="lineNum">      32 </span>            :    virtual ~AbstractErrorEstimator() {}</a>
+<a name="33"><span class="lineNum">      33 </span>            : };</a>
+<a name="34"><span class="lineNum">      34 </span>            : </a>
+<a name="35"><span class="lineNum">      35 </span>            : </a>
+<a name="36"><span class="lineNum">      36 </span>            : /** @brief Base class for all element based error estimators.</a>
+<a name="37"><span class="lineNum">      37 </span>            : </a>
+<a name="38"><span class="lineNum">      38 </span>            :     At a minimum, an ErrorEstimator must be able compute one non-negative real</a>
+<a name="39"><span class="lineNum">      39 </span>            :     (double) number for each element in the Mesh.</a>
+<a name="40"><span class="lineNum">      40 </span>            :  */</a>
+<a name="41"><span class="lineNum">      41 </span>            : class ErrorEstimator : public AbstractErrorEstimator</a>
+<a name="42"><span class="lineNum">      42 </span>            : {</a>
+<a name="43"><span class="lineNum">      43 </span>            : public:</a>
+<a name="44"><span class="lineNum">      44 </span>            :    /// Return the total error from the last error estimate.</a>
+<a name="45"><span class="lineNum">      45 </span>            :    /** @note This method is optional for derived classes to override and the</a>
+<a name="46"><span class="lineNum">      46 </span>            :        base class implementation simply returns 0. */</a>
+<a name="47"><span class="lineNum">      47 </span>            :    virtual double GetTotalError() const { return 0.0; }</a>
+<a name="48"><span class="lineNum">      48 </span>            : </a>
+<a name="49"><span class="lineNum">      49 </span>            :    /// Get a Vector with all element errors.</a>
+<a name="50"><span class="lineNum">      50 </span>            :    virtual const Vector &amp;GetLocalErrors() = 0;</a>
+<a name="51"><span class="lineNum">      51 </span>            : </a>
+<a name="52"><span class="lineNum">      52 </span>            :    /// Force recomputation of the estimates on the next call to GetLocalErrors.</a>
+<a name="53"><span class="lineNum">      53 </span>            :    virtual void Reset() = 0;</a>
+<a name="54"><span class="lineNum">      54 </span>            : </a>
+<a name="55"><span class="lineNum">      55 </span>            :    /// Destruct the error estimator</a>
+<a name="56"><span class="lineNum">      56 </span>            :    virtual ~ErrorEstimator() { }</a>
+<a name="57"><span class="lineNum">      57 </span>            : };</a>
+<a name="58"><span class="lineNum">      58 </span>            : </a>
+<a name="59"><span class="lineNum">      59 </span>            : </a>
+<a name="60"><span class="lineNum">      60 </span>            : /** @brief The AnisotropicErrorEstimator class is the base class for all error</a>
+<a name="61"><span class="lineNum">      61 </span>            :     estimators that compute one non-negative real (double) number and an</a>
+<a name="62"><span class="lineNum">      62 </span>            :     anisotropic flag for every element in the Mesh.</a>
+<a name="63"><span class="lineNum">      63 </span>            :  */</a>
+<a name="64"><span class="lineNum">      64 </span>            : class AnisotropicErrorEstimator : public ErrorEstimator</a>
+<a name="65"><span class="lineNum">      65 </span>            : {</a>
+<a name="66"><span class="lineNum">      66 </span>            : public:</a>
+<a name="67"><span class="lineNum">      67 </span>            :    /** @brief Get an Array&lt;int&gt; with anisotropic flags for all mesh elements.</a>
+<a name="68"><span class="lineNum">      68 </span>            :        @return An empty array when anisotropic estimates are not available or</a>
+<a name="69"><span class="lineNum">      69 </span>            :        enabled. */</a>
+<a name="70"><span class="lineNum">      70 </span>            :    virtual const Array&lt;int&gt; &amp;GetAnisotropicFlags() = 0;</a>
+<a name="71"><span class="lineNum">      71 </span>            : };</a>
+<a name="72"><span class="lineNum">      72 </span>            : </a>
+<a name="73"><span class="lineNum">      73 </span>            : </a>
+<a name="74"><span class="lineNum">      74 </span>            : /** @brief The ZienkiewiczZhuEstimator class implements the Zienkiewicz-Zhu</a>
+<a name="75"><span class="lineNum">      75 </span>            :     error estimation procedure.</a>
+<a name="76"><span class="lineNum">      76 </span>            : </a>
+<a name="77"><span class="lineNum">      77 </span>            :     Zienkiewicz, O.C. and Zhu, J.Z., The superconvergent patch recovery</a>
+<a name="78"><span class="lineNum">      78 </span>            :     and a posteriori error estimates. Part 1: The recovery technique.</a>
+<a name="79"><span class="lineNum">      79 </span>            :     Int. J. Num. Meth. Engng. 33, 1331-1364 (1992).</a>
+<a name="80"><span class="lineNum">      80 </span>            : </a>
+<a name="81"><span class="lineNum">      81 </span>            :     Zienkiewicz, O.C. and Zhu, J.Z., The superconvergent patch recovery</a>
+<a name="82"><span class="lineNum">      82 </span>            :     and a posteriori error estimates. Part 2: Error estimates and adaptivity.</a>
+<a name="83"><span class="lineNum">      83 </span>            :     Int. J. Num. Meth. Engng. 33, 1365-1382 (1992).</a>
+<a name="84"><span class="lineNum">      84 </span>            : </a>
+<a name="85"><span class="lineNum">      85 </span>            :     The required BilinearFormIntegrator must implement the methods</a>
+<a name="86"><span class="lineNum">      86 </span>            :     ComputeElementFlux() and ComputeFluxEnergy().</a>
+<a name="87"><span class="lineNum">      87 </span>            :  */</a>
+<a name="88"><span class="lineNum">      88 </span>            : class ZienkiewiczZhuEstimator : public AnisotropicErrorEstimator</a>
+<a name="89"><span class="lineNum">      89 </span>            : {</a>
+<a name="90"><span class="lineNum">      90 </span>            : protected:</a>
+<a name="91"><span class="lineNum">      91 </span>            :    long current_sequence;</a>
+<a name="92"><span class="lineNum">      92 </span>            :    Vector error_estimates;</a>
+<a name="93"><span class="lineNum">      93 </span>            :    double total_error;</a>
+<a name="94"><span class="lineNum">      94 </span>            :    bool anisotropic;</a>
+<a name="95"><span class="lineNum">      95 </span>            :    Array&lt;int&gt; aniso_flags;</a>
+<a name="96"><span class="lineNum">      96 </span>            :    int flux_averaging; // see SetFluxAveraging()</a>
+<a name="97"><span class="lineNum">      97 </span>            : </a>
+<a name="98"><span class="lineNum">      98 </span>            :    BilinearFormIntegrator *integ; ///&lt; Not owned.</a>
+<a name="99"><span class="lineNum">      99 </span>            :    GridFunction *solution; ///&lt; Not owned.</a>
+<a name="100"><span class="lineNum">     100 </span>            : </a>
+<a name="101"><span class="lineNum">     101 </span>            :    FiniteElementSpace *flux_space; /**&lt; @brief Ownership based on own_flux_fes.</a>
+<a name="102"><span class="lineNum">     102 </span>            :       Its Update() method is called automatically by this class when needed. */</a>
+<a name="103"><span class="lineNum">     103 </span>            :    bool with_coeff;</a>
+<a name="104"><span class="lineNum">     104 </span>            :    bool own_flux_fes; ///&lt; Ownership flag for flux_space.</a>
+<a name="105"><span class="lineNum">     105 </span>            : </a>
+<a name="106"><span class="lineNum">     106 </span>            :    /// Check if the mesh of the solution was modified.</a>
+<a name="107"><span class="lineNum">     107 </span>            :    bool MeshIsModified()</a>
+<a name="108"><span class="lineNum">     108 </span>            :    {</a>
+<a name="109"><span class="lineNum">     109 </span>            :       long mesh_sequence = solution-&gt;FESpace()-&gt;GetMesh()-&gt;GetSequence();</a>
+<a name="110"><span class="lineNum">     110 </span>            :       MFEM_ASSERT(mesh_sequence &gt;= current_sequence, &quot;&quot;);</a>
+<a name="111"><span class="lineNum">     111 </span>            :       return (mesh_sequence &gt; current_sequence);</a>
+<a name="112"><span class="lineNum">     112 </span>            :    }</a>
+<a name="113"><span class="lineNum">     113 </span>            : </a>
+<a name="114"><span class="lineNum">     114 </span>            :    /// Compute the element error estimates.</a>
+<a name="115"><span class="lineNum">     115 </span>            :    void ComputeEstimates();</a>
+<a name="116"><span class="lineNum">     116 </span>            : </a>
+<a name="117"><span class="lineNum">     117 </span>            : public:</a>
+<a name="118"><span class="lineNum">     118 </span>            :    /** @brief Construct a new ZienkiewiczZhuEstimator object.</a>
+<a name="119"><span class="lineNum">     119 </span>            :        @param integ    This BilinearFormIntegrator must implement the methods</a>
+<a name="120"><span class="lineNum">     120 </span>            :                        ComputeElementFlux() and ComputeFluxEnergy().</a>
+<a name="121"><span class="lineNum">     121 </span>            :        @param sol      The solution field whose error is to be estimated.</a>
+<a name="122"><span class="lineNum">     122 </span>            :        @param flux_fes The ZienkiewiczZhuEstimator assumes ownership of this</a>
+<a name="123"><span class="lineNum">     123 </span>            :                        FiniteElementSpace and will call its Update() method when</a>
+<a name="124"><span class="lineNum">     124 </span>            :                        needed.*/</a>
+<a name="125"><span class="lineNum">     125 </span>            :    ZienkiewiczZhuEstimator(BilinearFormIntegrator &amp;integ, GridFunction &amp;sol,</a>
+<a name="126"><span class="lineNum">     126 </span>            :                            FiniteElementSpace *flux_fes)</a>
+<a name="127"><span class="lineNum">     127 </span>            :       : current_sequence(-1),</a>
+<a name="128"><span class="lineNum">     128 </span>            :         total_error(),</a>
+<a name="129"><span class="lineNum">     129 </span>            :         anisotropic(false),</a>
+<a name="130"><span class="lineNum">     130 </span>            :         flux_averaging(0),</a>
+<a name="131"><span class="lineNum">     131 </span>            :         integ(&amp;integ),</a>
+<a name="132"><span class="lineNum">     132 </span>            :         solution(&amp;sol),</a>
+<a name="133"><span class="lineNum">     133 </span>            :         flux_space(flux_fes),</a>
+<a name="134"><span class="lineNum">     134 </span>            :         with_coeff(false),</a>
+<a name="135"><span class="lineNum">     135 </span>            :         own_flux_fes(true)</a>
+<a name="136"><span class="lineNum">     136 </span>            :    { }</a>
+<a name="137"><span class="lineNum">     137 </span>            : </a>
+<a name="138"><span class="lineNum">     138 </span>            :    /** @brief Construct a new ZienkiewiczZhuEstimator object.</a>
+<a name="139"><span class="lineNum">     139 </span>            :        @param integ    This BilinearFormIntegrator must implement the methods</a>
+<a name="140"><span class="lineNum">     140 </span>            :                        ComputeElementFlux() and ComputeFluxEnergy().</a>
+<a name="141"><span class="lineNum">     141 </span>            :        @param sol      The solution field whose error is to be estimated.</a>
+<a name="142"><span class="lineNum">     142 </span>            :        @param flux_fes The ZienkiewiczZhuEstimator does NOT assume ownership of</a>
+<a name="143"><span class="lineNum">     143 </span>            :                        this FiniteElementSpace; will call its Update() method</a>
+<a name="144"><span class="lineNum">     144 </span>            :                        when needed. */</a>
+<a name="145"><span class="lineNum">     145 </span>            :    ZienkiewiczZhuEstimator(BilinearFormIntegrator &amp;integ, GridFunction &amp;sol,</a>
+<a name="146"><span class="lineNum">     146 </span>            :                            FiniteElementSpace &amp;flux_fes)</a>
+<a name="147"><span class="lineNum">     147 </span>            :       : current_sequence(-1),</a>
+<a name="148"><span class="lineNum">     148 </span>            :         total_error(),</a>
+<a name="149"><span class="lineNum">     149 </span>            :         anisotropic(false),</a>
+<a name="150"><span class="lineNum">     150 </span>            :         flux_averaging(0),</a>
+<a name="151"><span class="lineNum">     151 </span>            :         integ(&amp;integ),</a>
+<a name="152"><span class="lineNum">     152 </span>            :         solution(&amp;sol),</a>
+<a name="153"><span class="lineNum">     153 </span>            :         flux_space(&amp;flux_fes),</a>
+<a name="154"><span class="lineNum">     154 </span>            :         with_coeff(false),</a>
+<a name="155"><span class="lineNum">     155 </span>            :         own_flux_fes(false)</a>
+<a name="156"><span class="lineNum">     156 </span>            :    { }</a>
+<a name="157"><span class="lineNum">     157 </span>            : </a>
+<a name="158"><span class="lineNum">     158 </span>            :    /** @brief Consider the coefficient in BilinearFormIntegrator to calculate</a>
+<a name="159"><span class="lineNum">     159 </span>            :        the fluxes for the error estimator.*/</a>
+<a name="160"><span class="lineNum">     160 </span>            :    void SetWithCoeff(bool w_coeff = true) { with_coeff = w_coeff; }</a>
+<a name="161"><span class="lineNum">     161 </span>            : </a>
+<a name="162"><span class="lineNum">     162 </span>            :    /** @brief Enable/disable anisotropic estimates. To enable this option, the</a>
+<a name="163"><span class="lineNum">     163 </span>            :        BilinearFormIntegrator must support the 'd_energy' parameter in its</a>
+<a name="164"><span class="lineNum">     164 </span>            :        ComputeFluxEnergy() method. */</a>
+<a name="165"><span class="lineNum">     165 </span>            :    void SetAnisotropic(bool aniso = true) { anisotropic = aniso; }</a>
+<a name="166"><span class="lineNum">     166 </span>            : </a>
+<a name="167"><span class="lineNum">     167 </span>            :    /** @brief Set the way the flux is averaged (smoothed) across elements.</a>
+<a name="168"><span class="lineNum">     168 </span>            : </a>
+<a name="169"><span class="lineNum">     169 </span>            :        When @a fa is zero (default), averaging is performed globally. When @a fa</a>
+<a name="170"><span class="lineNum">     170 </span>            :        is non-zero, the flux averaging is performed locally for each mesh</a>
+<a name="171"><span class="lineNum">     171 </span>            :        attribute, i.e. the flux is not averaged across interfaces between</a>
+<a name="172"><span class="lineNum">     172 </span>            :        different mesh attributes. */</a>
+<a name="173"><span class="lineNum">     173 </span>            :    void SetFluxAveraging(int fa) { flux_averaging = fa; }</a>
+<a name="174"><span class="lineNum">     174 </span>            : </a>
+<a name="175"><span class="lineNum">     175 </span>            :    /// Return the total error from the last error estimate.</a>
+<a name="176"><span class="lineNum">     176 </span>            :    virtual double GetTotalError() const override { return total_error; }</a>
+<a name="177"><span class="lineNum">     177 </span>            : </a>
+<a name="178"><span class="lineNum">     178 </span>            :    /// Get a Vector with all element errors.</a>
+<a name="179"><span class="lineNum">     179 </span>            :    virtual const Vector &amp;GetLocalErrors() override</a>
+<a name="180"><span class="lineNum">     180 </span>            :    {</a>
+<a name="181"><span class="lineNum">     181 </span>            :       if (MeshIsModified()) { ComputeEstimates(); }</a>
+<a name="182"><span class="lineNum">     182 </span>            :       return error_estimates;</a>
+<a name="183"><span class="lineNum">     183 </span>            :    }</a>
+<a name="184"><span class="lineNum">     184 </span>            : </a>
+<a name="185"><span class="lineNum">     185 </span>            :    /** @brief Get an Array&lt;int&gt; with anisotropic flags for all mesh elements.</a>
+<a name="186"><span class="lineNum">     186 </span>            :        Return an empty array when anisotropic estimates are not available or</a>
+<a name="187"><span class="lineNum">     187 </span>            :        enabled. */</a>
+<a name="188"><span class="lineNum">     188 </span>            :    virtual const Array&lt;int&gt; &amp;GetAnisotropicFlags() override</a>
+<a name="189"><span class="lineNum">     189 </span>            :    {</a>
+<a name="190"><span class="lineNum">     190 </span>            :       if (MeshIsModified()) { ComputeEstimates(); }</a>
+<a name="191"><span class="lineNum">     191 </span>            :       return aniso_flags;</a>
+<a name="192"><span class="lineNum">     192 </span>            :    }</a>
+<a name="193"><span class="lineNum">     193 </span>            : </a>
+<a name="194"><span class="lineNum">     194 </span>            :    /// Reset the error estimator.</a>
+<a name="195"><span class="lineNum">     195 </span>            :    virtual void Reset() override { current_sequence = -1; }</a>
+<a name="196"><span class="lineNum">     196 </span>            : </a>
+<a name="197"><span class="lineNum">     197 </span>            :    /** @brief Destroy a ZienkiewiczZhuEstimator object. Destroys, if owned, the</a>
+<a name="198"><span class="lineNum">     198 </span>            :        FiniteElementSpace, flux_space. */</a>
+<a name="199"><span class="lineNum">     199 </span>            :    virtual ~ZienkiewiczZhuEstimator()</a>
+<a name="200"><span class="lineNum">     200 </span>            :    {</a>
+<a name="201"><span class="lineNum">     201 </span>            :       if (own_flux_fes) { delete flux_space; }</a>
+<a name="202"><span class="lineNum">     202 </span>            :    }</a>
+<a name="203"><span class="lineNum">     203 </span>            : };</a>
+<a name="204"><span class="lineNum">     204 </span>            : </a>
+<a name="205"><span class="lineNum">     205 </span>            : </a>
+<a name="206"><span class="lineNum">     206 </span>            : #ifdef MFEM_USE_MPI</a>
+<a name="207"><span class="lineNum">     207 </span>            : </a>
+<a name="208"><span class="lineNum">     208 </span>            : /** @brief The L2ZienkiewiczZhuEstimator class implements the Zienkiewicz-Zhu</a>
+<a name="209"><span class="lineNum">     209 </span>            :     error estimation procedure where the flux averaging is replaced by a global</a>
+<a name="210"><span class="lineNum">     210 </span>            :     L2 projection (requiring a mass matrix solve).</a>
+<a name="211"><span class="lineNum">     211 </span>            : </a>
+<a name="212"><span class="lineNum">     212 </span>            :     The required BilinearFormIntegrator must implement the methods</a>
+<a name="213"><span class="lineNum">     213 </span>            :     ComputeElementFlux() and ComputeFluxEnergy().</a>
+<a name="214"><span class="lineNum">     214 </span>            : </a>
+<a name="215"><span class="lineNum">     215 </span>            :     Implemented for the parallel case only.</a>
+<a name="216"><span class="lineNum">     216 </span>            :  */</a>
+<a name="217"><span class="lineNum">     217 </span>            : class L2ZienkiewiczZhuEstimator : public ErrorEstimator</a>
+<a name="218"><span class="lineNum">     218 </span>            : {</a>
+<a name="219"><span class="lineNum">     219 </span>            : protected:</a>
+<a name="220"><span class="lineNum">     220 </span>            :    long current_sequence;</a>
+<a name="221"><span class="lineNum">     221 </span>            :    int local_norm_p; ///&lt; Local L_p norm to use, default is 1.</a>
+<a name="222"><span class="lineNum">     222 </span>            :    Vector error_estimates;</a>
+<a name="223"><span class="lineNum">     223 </span>            :    double total_error;</a>
+<a name="224"><span class="lineNum">     224 </span>            : </a>
+<a name="225"><span class="lineNum">     225 </span>            :    BilinearFormIntegrator *integ; ///&lt; Not owned.</a>
+<a name="226"><span class="lineNum">     226 </span>            :    ParGridFunction *solution; ///&lt; Not owned.</a>
+<a name="227"><span class="lineNum">     227 </span>            : </a>
+<a name="228"><span class="lineNum">     228 </span>            :    ParFiniteElementSpace *flux_space; /**&lt; @brief Ownership based on the flag</a>
+<a name="229"><span class="lineNum">     229 </span>            :       own_flux_fes. Its Update() method is called automatically by this class</a>
+<a name="230"><span class="lineNum">     230 </span>            :       when needed. */</a>
+<a name="231"><span class="lineNum">     231 </span>            :    ParFiniteElementSpace *smooth_flux_space; /**&lt; @brief Ownership based on the</a>
+<a name="232"><span class="lineNum">     232 </span>            :       flag own_flux_fes. Its Update() method is called automatically by this</a>
+<a name="233"><span class="lineNum">     233 </span>            :       class when needed.*/</a>
+<a name="234"><span class="lineNum">     234 </span>            :    bool own_flux_fes; ///&lt; Ownership flag for flux_space and smooth_flux_space.</a>
+<a name="235"><span class="lineNum">     235 </span>            : </a>
+<a name="236"><span class="lineNum">     236 </span>            :    /// Initialize with the integrator, solution, and flux finite element spaces.</a>
+<a name="237"><span class="lineNum">     237 </span>            :    void Init(BilinearFormIntegrator &amp;integ,</a>
+<a name="238"><span class="lineNum">     238 </span>            :              ParGridFunction &amp;sol,</a>
+<a name="239"><span class="lineNum">     239 </span>            :              ParFiniteElementSpace *flux_fes,</a>
+<a name="240"><span class="lineNum">     240 </span>            :              ParFiniteElementSpace *smooth_flux_fes)</a>
+<a name="241"><span class="lineNum">     241 </span>            :    {</a>
+<a name="242"><span class="lineNum">     242 </span>            :       current_sequence = -1;</a>
+<a name="243"><span class="lineNum">     243 </span>            :       local_norm_p = 1;</a>
+<a name="244"><span class="lineNum">     244 </span>            :       total_error = 0.0;</a>
+<a name="245"><span class="lineNum">     245 </span>            :       this-&gt;integ = &amp;integ;</a>
+<a name="246"><span class="lineNum">     246 </span>            :       solution = &amp;sol;</a>
+<a name="247"><span class="lineNum">     247 </span>            :       flux_space = flux_fes;</a>
+<a name="248"><span class="lineNum">     248 </span>            :       smooth_flux_space = smooth_flux_fes;</a>
+<a name="249"><span class="lineNum">     249 </span>            :    }</a>
+<a name="250"><span class="lineNum">     250 </span>            : </a>
+<a name="251"><span class="lineNum">     251 </span>            :    /// Check if the mesh of the solution was modified.</a>
+<a name="252"><span class="lineNum">     252 </span>            :    bool MeshIsModified()</a>
+<a name="253"><span class="lineNum">     253 </span>            :    {</a>
+<a name="254"><span class="lineNum">     254 </span>            :       long mesh_sequence = solution-&gt;FESpace()-&gt;GetMesh()-&gt;GetSequence();</a>
+<a name="255"><span class="lineNum">     255 </span>            :       MFEM_ASSERT(mesh_sequence &gt;= current_sequence, &quot;&quot;);</a>
+<a name="256"><span class="lineNum">     256 </span>            :       return (mesh_sequence &gt; current_sequence);</a>
+<a name="257"><span class="lineNum">     257 </span>            :    }</a>
+<a name="258"><span class="lineNum">     258 </span>            : </a>
+<a name="259"><span class="lineNum">     259 </span>            :    /// Compute the element error estimates.</a>
+<a name="260"><span class="lineNum">     260 </span>            :    void ComputeEstimates();</a>
+<a name="261"><span class="lineNum">     261 </span>            : </a>
+<a name="262"><span class="lineNum">     262 </span>            : public:</a>
+<a name="263"><span class="lineNum">     263 </span>            :    /** @brief Construct a new L2ZienkiewiczZhuEstimator object.</a>
+<a name="264"><span class="lineNum">     264 </span>            :        @param integ    This BilinearFormIntegrator must implement the methods</a>
+<a name="265"><span class="lineNum">     265 </span>            :                        ComputeElementFlux() and ComputeFluxEnergy().</a>
+<a name="266"><span class="lineNum">     266 </span>            :        @param sol      The solution field whose error is to be estimated.</a>
+<a name="267"><span class="lineNum">     267 </span>            :        @param flux_fes The L2ZienkiewiczZhuEstimator assumes ownership of this</a>
+<a name="268"><span class="lineNum">     268 </span>            :                        FiniteElementSpace and will call its Update() method when</a>
+<a name="269"><span class="lineNum">     269 </span>            :                        needed.</a>
+<a name="270"><span class="lineNum">     270 </span>            :        @param smooth_flux_fes</a>
+<a name="271"><span class="lineNum">     271 </span>            :                        The L2ZienkiewiczZhuEstimator assumes ownership of this</a>
+<a name="272"><span class="lineNum">     272 </span>            :                        FiniteElementSpace and will call its Update() method when</a>
+<a name="273"><span class="lineNum">     273 </span>            :                        needed. */</a>
+<a name="274"><span class="lineNum">     274 </span>            :    L2ZienkiewiczZhuEstimator(BilinearFormIntegrator &amp;integ,</a>
+<a name="275"><span class="lineNum">     275 </span>            :                              ParGridFunction &amp;sol,</a>
+<a name="276"><span class="lineNum">     276 </span>            :                              ParFiniteElementSpace *flux_fes,</a>
+<a name="277"><span class="lineNum">     277 </span>            :                              ParFiniteElementSpace *smooth_flux_fes)</a>
+<a name="278"><span class="lineNum">     278 </span>            :    { Init(integ, sol, flux_fes, smooth_flux_fes); own_flux_fes = true; }</a>
+<a name="279"><span class="lineNum">     279 </span>            : </a>
+<a name="280"><span class="lineNum">     280 </span>            :    /** @brief Construct a new L2ZienkiewiczZhuEstimator object.</a>
+<a name="281"><span class="lineNum">     281 </span>            :        @param integ    This BilinearFormIntegrator must implement the methods</a>
+<a name="282"><span class="lineNum">     282 </span>            :                        ComputeElementFlux() and ComputeFluxEnergy().</a>
+<a name="283"><span class="lineNum">     283 </span>            :        @param sol      The solution field whose error is to be estimated.</a>
+<a name="284"><span class="lineNum">     284 </span>            :        @param flux_fes The L2ZienkiewiczZhuEstimator does NOT assume ownership</a>
+<a name="285"><span class="lineNum">     285 </span>            :                        of this FiniteElementSpace; will call its Update() method</a>
+<a name="286"><span class="lineNum">     286 </span>            :                        when needed.</a>
+<a name="287"><span class="lineNum">     287 </span>            :        @param smooth_flux_fes</a>
+<a name="288"><span class="lineNum">     288 </span>            :                        The L2ZienkiewiczZhuEstimator does NOT assume ownership</a>
+<a name="289"><span class="lineNum">     289 </span>            :                        of this FiniteElementSpace; will call its Update() method</a>
+<a name="290"><span class="lineNum">     290 </span>            :                        when needed. */</a>
+<a name="291"><span class="lineNum">     291 </span>            :    L2ZienkiewiczZhuEstimator(BilinearFormIntegrator &amp;integ,</a>
+<a name="292"><span class="lineNum">     292 </span>            :                              ParGridFunction &amp;sol,</a>
+<a name="293"><span class="lineNum">     293 </span>            :                              ParFiniteElementSpace &amp;flux_fes,</a>
+<a name="294"><span class="lineNum">     294 </span>            :                              ParFiniteElementSpace &amp;smooth_flux_fes)</a>
+<a name="295"><span class="lineNum">     295 </span>            :    { Init(integ, sol, &amp;flux_fes, &amp;smooth_flux_fes); own_flux_fes = false; }</a>
+<a name="296"><span class="lineNum">     296 </span>            : </a>
+<a name="297"><span class="lineNum">     297 </span>            :    /** @brief Set the exponent, p, of the Lp norm used for computing the local</a>
+<a name="298"><span class="lineNum">     298 </span>            :        element errors. Default value is 1. */</a>
+<a name="299"><span class="lineNum">     299 </span>            :    void SetLocalErrorNormP(int p) { local_norm_p = p; }</a>
+<a name="300"><span class="lineNum">     300 </span>            : </a>
+<a name="301"><span class="lineNum">     301 </span>            :    /// Return the total error from the last error estimate.</a>
+<a name="302"><span class="lineNum">     302 </span>            :    virtual double GetTotalError() const override { return total_error; }</a>
+<a name="303"><span class="lineNum">     303 </span>            : </a>
+<a name="304"><span class="lineNum">     304 </span>            :    /// Get a Vector with all element errors.</a>
+<a name="305"><span class="lineNum">     305 </span>            :    virtual const Vector &amp;GetLocalErrors() override</a>
+<a name="306"><span class="lineNum">     306 </span>            :    {</a>
+<a name="307"><span class="lineNum">     307 </span>            :       if (MeshIsModified()) { ComputeEstimates(); }</a>
+<a name="308"><span class="lineNum">     308 </span>            :       return error_estimates;</a>
+<a name="309"><span class="lineNum">     309 </span>            :    }</a>
+<a name="310"><span class="lineNum">     310 </span>            : </a>
+<a name="311"><span class="lineNum">     311 </span>            :    /// Reset the error estimator.</a>
+<a name="312"><span class="lineNum">     312 </span>            :    virtual void Reset() override { current_sequence = -1; }</a>
+<a name="313"><span class="lineNum">     313 </span>            : </a>
+<a name="314"><span class="lineNum">     314 </span>            :    /** @brief Destroy a L2ZienkiewiczZhuEstimator object. Destroys, if owned,</a>
+<a name="315"><span class="lineNum">     315 </span>            :        the FiniteElementSpace, flux_space. */</a>
+<a name="316"><span class="lineNum">     316 </span>            :    virtual ~L2ZienkiewiczZhuEstimator()</a>
+<a name="317"><span class="lineNum">     317 </span>            :    {</a>
+<a name="318"><span class="lineNum">     318 </span>            :       if (own_flux_fes) { delete flux_space; delete smooth_flux_space; }</a>
+<a name="319"><span class="lineNum">     319 </span>            :    }</a>
+<a name="320"><span class="lineNum">     320 </span>            : };</a>
+<a name="321"><span class="lineNum">     321 </span>            : </a>
+<a name="322"><span class="lineNum">     322 </span>            : #endif // MFEM_USE_MPI</a>
+<a name="323"><span class="lineNum">     323 </span>            : </a>
+<a name="324"><span class="lineNum">     324 </span>            : </a>
+<a name="325"><span class="lineNum">     325 </span>            : /** @brief The LpErrorEstimator class compares the solution to a known</a>
+<a name="326"><span class="lineNum">     326 </span>            :     coefficient.</a>
+<a name="327"><span class="lineNum">     327 </span>            : </a>
+<a name="328"><span class="lineNum">     328 </span>            :     This class can be used, for example, to adapt a mesh to a non-trivial</a>
+<a name="329"><span class="lineNum">     329 </span>            :     initial condition in a time-dependent simulation. It can also be used to</a>
+<a name="330"><span class="lineNum">     330 </span>            :     force refinement in the neighborhood of small features before switching to a</a>
+<a name="331"><span class="lineNum">     331 </span>            :     more traditional error estimator.</a>
+<a name="332"><span class="lineNum">     332 </span>            : </a>
+<a name="333"><span class="lineNum">     333 </span>            :     The LpErrorEstimator supports either scalar or vector coefficients and works</a>
+<a name="334"><span class="lineNum">     334 </span>            :     both in serial and in parallel.</a>
+<a name="335"><span class="lineNum">     335 </span>            : */</a>
+<a name="336"><span class="lineNum">     336 </span>            : class LpErrorEstimator : public ErrorEstimator</a>
+<a name="337"><span class="lineNum">     337 </span>            : {</a>
+<a name="338"><span class="lineNum">     338 </span>            : protected:</a>
+<a name="339"><span class="lineNum">     339 </span>            :    long current_sequence;</a>
+<a name="340"><span class="lineNum">     340 </span>            :    int local_norm_p;</a>
+<a name="341"><span class="lineNum">     341 </span>            :    Vector error_estimates;</a>
+<a name="342"><span class="lineNum">     342 </span>            : </a>
+<a name="343"><span class="lineNum">     343 </span>            :    double total_error = 0.0;</a>
+<a name="344"><span class="lineNum">     344 </span>            : </a>
+<a name="345"><span class="lineNum">     345 </span>            :    Coefficient * coef;</a>
+<a name="346"><span class="lineNum">     346 </span>            :    VectorCoefficient * vcoef;</a>
+<a name="347"><span class="lineNum">     347 </span>            :    GridFunction * sol;</a>
+<a name="348"><span class="lineNum">     348 </span>            : </a>
+<a name="349"><span class="lineNum">     349 </span>            :    /// Check if the mesh of the solution was modified.</a>
+<a name="350"><span class="lineNum">     350 </span>            :    bool MeshIsModified()</a>
+<a name="351"><span class="lineNum">     351 </span>            :    {</a>
+<a name="352"><span class="lineNum">     352 </span>            :       long mesh_sequence = sol-&gt;FESpace()-&gt;GetMesh()-&gt;GetSequence();</a>
+<a name="353"><span class="lineNum">     353 </span>            :       MFEM_ASSERT(mesh_sequence &gt;= current_sequence, &quot;&quot;);</a>
+<a name="354"><span class="lineNum">     354 </span>            :       return (mesh_sequence &gt; current_sequence);</a>
+<a name="355"><span class="lineNum">     355 </span>            :    }</a>
+<a name="356"><span class="lineNum">     356 </span>            : </a>
+<a name="357"><span class="lineNum">     357 </span>            :    /// Compute the element error estimates.</a>
+<a name="358"><span class="lineNum">     358 </span>            :    void ComputeEstimates();</a>
+<a name="359"><span class="lineNum">     359 </span>            : </a>
+<a name="360"><span class="lineNum">     360 </span>            : public:</a>
+<a name="361"><span class="lineNum">     361 </span>            :    /** @brief Construct a new LpErrorEstimator object for a scalar field.</a>
+<a name="362"><span class="lineNum">     362 </span>            :        @param p    Integer which selects which Lp norm to use.</a>
+<a name="363"><span class="lineNum">     363 </span>            :        @param sol  The GridFunction representation of the scalar field.</a>
+<a name="364"><span class="lineNum">     364 </span>            :        Note: the coefficient must be set before use with the SetCoef method.</a>
+<a name="365"><span class="lineNum">     365 </span>            :    */</a>
+<a name="366"><span class="lineNum">     366 </span>            :    LpErrorEstimator(int p, GridFunction &amp;sol)</a>
+<a name="367"><span class="lineNum">     367 </span>            :       : current_sequence(-1), local_norm_p(p),</a>
+<a name="368"><span class="lineNum">     368 </span>            :         error_estimates(0), coef(NULL), vcoef(NULL), sol(&amp;sol) { }</a>
+<a name="369"><span class="lineNum">     369 </span>            : </a>
+<a name="370"><span class="lineNum">     370 </span>            :    /** @brief Construct a new LpErrorEstimator object for a scalar field.</a>
+<a name="371"><span class="lineNum">     371 </span>            :        @param p    Integer which selects which Lp norm to use.</a>
+<a name="372"><span class="lineNum">     372 </span>            :        @param coef The scalar Coefficient to compare to the solution.</a>
+<a name="373"><span class="lineNum">     373 </span>            :        @param sol  The GridFunction representation of the scalar field.</a>
+<a name="374"><span class="lineNum">     374 </span>            :    */</a>
+<a name="375"><span class="lineNum">     375 </span>            :    LpErrorEstimator(int p, Coefficient &amp;coef, GridFunction &amp;sol)</a>
+<a name="376"><span class="lineNum">     376 </span>            :       : current_sequence(-1), local_norm_p(p),</a>
+<a name="377"><span class="lineNum">     377 </span>            :         error_estimates(0), coef(&amp;coef), vcoef(NULL), sol(&amp;sol) { }</a>
+<a name="378"><span class="lineNum">     378 </span>            : </a>
+<a name="379"><span class="lineNum">     379 </span>            :    /** @brief Construct a new LpErrorEstimator object for a vector field.</a>
+<a name="380"><span class="lineNum">     380 </span>            :        @param p    Integer which selects which Lp norm to use.</a>
+<a name="381"><span class="lineNum">     381 </span>            :        @param coef The vector VectorCoefficient to compare to the solution.</a>
+<a name="382"><span class="lineNum">     382 </span>            :        @param sol  The GridFunction representation of the vector field.</a>
+<a name="383"><span class="lineNum">     383 </span>            :    */</a>
+<a name="384"><span class="lineNum">     384 </span>            :    LpErrorEstimator(int p, VectorCoefficient &amp;coef, GridFunction &amp;sol)</a>
+<a name="385"><span class="lineNum">     385 </span>            :       : current_sequence(-1), local_norm_p(p),</a>
+<a name="386"><span class="lineNum">     386 </span>            :         error_estimates(0), coef(NULL), vcoef(&amp;coef), sol(&amp;sol) { }</a>
+<a name="387"><span class="lineNum">     387 </span>            : </a>
+<a name="388"><span class="lineNum">     388 </span>            :    /** @brief Set the exponent, p, of the Lp norm used for computing the local</a>
+<a name="389"><span class="lineNum">     389 </span>            :        element errors. */</a>
+<a name="390"><span class="lineNum">     390 </span>            :    void SetLocalErrorNormP(int p) { local_norm_p = p; }</a>
+<a name="391"><span class="lineNum">     391 </span>            : </a>
+<a name="392"><span class="lineNum">     392 </span>            :    void SetCoef(Coefficient &amp;A) { coef = &amp;A; }</a>
+<a name="393"><span class="lineNum">     393 </span>            :    void SetCoef(VectorCoefficient &amp;A) { vcoef = &amp;A; }</a>
+<a name="394"><span class="lineNum">     394 </span>            : </a>
+<a name="395"><span class="lineNum">     395 </span>            :    /// Reset the error estimator.</a>
+<a name="396"><span class="lineNum">     396 </span>            :    virtual void Reset() override { current_sequence = -1; }</a>
+<a name="397"><span class="lineNum">     397 </span>            : </a>
+<a name="398"><span class="lineNum">     398 </span>            :    /// Get a Vector with all element errors.</a>
+<a name="399"><span class="lineNum">     399 </span>            :    virtual const Vector &amp;GetLocalErrors() override</a>
+<a name="400"><span class="lineNum">     400 </span>            :    {</a>
+<a name="401"><span class="lineNum">     401 </span>            :       if (MeshIsModified()) { ComputeEstimates(); }</a>
+<a name="402"><span class="lineNum">     402 </span>            :       return error_estimates;</a>
+<a name="403"><span class="lineNum">     403 </span>            :    }</a>
+<a name="404"><span class="lineNum">     404 </span>            : </a>
+<a name="405"><span class="lineNum">     405 </span>            :    /// Destructor</a>
+<a name="406"><span class="lineNum">     406 </span>            :    virtual ~LpErrorEstimator() {}</a>
+<a name="407"><span class="lineNum">     407 </span>            : };</a>
+<a name="408"><span class="lineNum">     408 </span>            : </a>
+<a name="409"><span class="lineNum">     409 </span>            : </a>
+<a name="410"><span class="lineNum">     410 </span>            : /** @brief The KellyErrorEstimator class provides a fast error indication</a>
+<a name="411"><span class="lineNum">     411 </span>            :     strategy for smooth scalar parallel problems.</a>
+<a name="412"><span class="lineNum">     412 </span>            : </a>
+<a name="413"><span class="lineNum">     413 </span>            :     The Kelly error indicator is based on the following papers:</a>
+<a name="414"><span class="lineNum">     414 </span>            : </a>
+<a name="415"><span class="lineNum">     415 </span>            :     [1] Kelly, D. W., et al. &quot;A posteriori error analysis and adaptive processes</a>
+<a name="416"><span class="lineNum">     416 </span>            :     in the finite element method: Part I—Error analysis.&quot; International journal</a>
+<a name="417"><span class="lineNum">     417 </span>            :     for numerical methods in engineering 19.11 (1983): 1593-1619.</a>
+<a name="418"><span class="lineNum">     418 </span>            : </a>
+<a name="419"><span class="lineNum">     419 </span>            :     [2] De SR Gago, J. P., et al. &quot;A posteriori error analysis and adaptive</a>
+<a name="420"><span class="lineNum">     420 </span>            :     processes in the finite element method: Part II—Adaptive mesh refinement.&quot;</a>
+<a name="421"><span class="lineNum">     421 </span>            :     International journal for numerical methods in engineering 19.11 (1983):</a>
+<a name="422"><span class="lineNum">     422 </span>            :     1621-1656.</a>
+<a name="423"><span class="lineNum">     423 </span>            : </a>
+<a name="424"><span class="lineNum">     424 </span>            :     It can be roughly described by:</a>
+<a name="425"><span class="lineNum">     425 </span>            :         ||∇(u-uₕ)||ₑ ≅ √( C hₑ ∑ₖ (hₖ ∫ |J[∇uₕ]|²) dS )</a>
+<a name="426"><span class="lineNum">     426 </span>            :     where &quot;e&quot; denotes an element, ||⋅||ₑ the corresponding local norm and k the</a>
+<a name="427"><span class="lineNum">     427 </span>            :     corresponding faces. u is the analytic solution and uₕ the discretized</a>
+<a name="428"><span class="lineNum">     428 </span>            :     solution. hₖ and hₑ are factors dependent on the face and element geometry.</a>
+<a name="429"><span class="lineNum">     429 </span>            :     J is the jump function, i.e. the difference between the limits at each point</a>
+<a name="430"><span class="lineNum">     430 </span>            :     for each side of the face. A custom method to compute hₖ can be provided. It</a>
+<a name="431"><span class="lineNum">     431 </span>            :     is also possible to estimate the error only on a subspace by feeding this</a>
+<a name="432"><span class="lineNum">     432 </span>            :     class an attribute array describing the subspace.</a>
+<a name="433"><span class="lineNum">     433 </span>            : </a>
+<a name="434"><span class="lineNum">     434 </span>            :     @note This algorithm is appropriate only for problems with scalar diffusion</a>
+<a name="435"><span class="lineNum">     435 </span>            :     coefficients (e.g. Poisson problems), because it measures only the flux of</a>
+<a name="436"><span class="lineNum">     436 </span>            :     the gradient of the discrete solution. The current implementation also does</a>
+<a name="437"><span class="lineNum">     437 </span>            :     not include the volume term present in Equation 75 of Kelly et al [1].</a>
+<a name="438"><span class="lineNum">     438 </span>            :     Instead, it includes only the flux term recommended in Equation 82. The</a>
+<a name="439"><span class="lineNum">     439 </span>            :     current implementation also does not include the constant factor &quot;C&quot;. It</a>
+<a name="440"><span class="lineNum">     440 </span>            :     furthermore assumes that the approximation error at the boundary is small</a>
+<a name="441"><span class="lineNum">     441 </span>            :     enough, as the implementation ignores boundary faces.</a>
+<a name="442"><span class="lineNum">     442 </span>            : */</a>
+<a name="443"><span class="lineNum">     443 </span>            : class KellyErrorEstimator final : public ErrorEstimator</a>
+<a name="444"><span class="lineNum">     444 </span>            : {</a>
+<a name="445"><span class="lineNum">     445 </span>            : public:</a>
+<a name="446"><span class="lineNum">     446 </span>            :    /// Function type to compute the local coefficient hₑ of an element.</a>
+<a name="447"><span class="lineNum">     447 </span>            :    using ElementCoefficientFunction =</a>
+<a name="448"><span class="lineNum">     448 </span>            :       std::function&lt;double(Mesh*, const int)&gt;;</a>
+<a name="449"><span class="lineNum">     449 </span>            :    /** @brief Function type to compute the local coefficient hₖ of a face. The</a>
+<a name="450"><span class="lineNum">     450 </span>            :        third argument is true for shared faces and false for local faces. */</a>
+<a name="451"><span class="lineNum">     451 </span>            :    using FaceCoefficientFunction =</a>
+<a name="452"><span class="lineNum">     452 </span>            :       std::function&lt;double(Mesh*, const int, const bool)&gt;;</a>
+<a name="453"><span class="lineNum">     453 </span>            : </a>
+<a name="454"><span class="lineNum">     454 </span>            : private:</a>
+<a name="455"><span class="lineNum">     455 </span>            :    int current_sequence = -1;</a>
+<a name="456"><span class="lineNum">     456 </span>            : </a>
+<a name="457"><span class="lineNum">     457 </span>            :    Vector error_estimates;</a>
+<a name="458"><span class="lineNum">     458 </span>            : </a>
+<a name="459"><span class="lineNum">     459 </span>            :    double total_error = 0.0;</a>
+<a name="460"><span class="lineNum">     460 </span>            : </a>
+<a name="461"><span class="lineNum">     461 </span>            :    Array&lt;int&gt; attributes;</a>
+<a name="462"><span class="lineNum">     462 </span>            : </a>
+<a name="463"><span class="lineNum">     463 </span>            :    /** @brief A method to compute hₑ on per-element basis.</a>
+<a name="464"><span class="lineNum">     464 </span>            : </a>
+<a name="465"><span class="lineNum">     465 </span>            :        This method weights the error approximation on the element level.</a>
+<a name="466"><span class="lineNum">     466 </span>            : </a>
+<a name="467"><span class="lineNum">     467 </span>            :        Defaults to hₑ=1.0.</a>
+<a name="468"><span class="lineNum">     468 </span>            :    */</a>
+<a name="469"><span class="lineNum">     469 </span>            :    ElementCoefficientFunction compute_element_coefficient;</a>
+<a name="470"><span class="lineNum">     470 </span>            : </a>
+<a name="471"><span class="lineNum">     471 </span>            :    /** @brief A method to compute hₖ on per-face basis.</a>
+<a name="472"><span class="lineNum">     472 </span>            : </a>
+<a name="473"><span class="lineNum">     473 </span>            :        This method weights the error approximation on the face level. The</a>
+<a name="474"><span class="lineNum">     474 </span>            :        background here is that classical Kelly error estimator implementations</a>
+<a name="475"><span class="lineNum">     475 </span>            :        approximate the geometrical characteristic hₖ with the face diameter,</a>
+<a name="476"><span class="lineNum">     476 </span>            :        which should be also be a possibility in this implementation.</a>
+<a name="477"><span class="lineNum">     477 </span>            : </a>
+<a name="478"><span class="lineNum">     478 </span>            :        Defaults to hₖ=diameter/2p.</a>
+<a name="479"><span class="lineNum">     479 </span>            :    */</a>
+<a name="480"><span class="lineNum">     480 </span>            :    FaceCoefficientFunction compute_face_coefficient;</a>
+<a name="481"><span class="lineNum">     481 </span>            : </a>
+<a name="482"><span class="lineNum">     482 </span>            :    BilinearFormIntegrator* flux_integrator; ///&lt; Not owned.</a>
+<a name="483"><span class="lineNum">     483 </span>            :    GridFunction* solution;               ///&lt; Not owned.</a>
+<a name="484"><span class="lineNum">     484 </span>            : </a>
+<a name="485"><span class="lineNum">     485 </span>            :    FiniteElementSpace*</a>
+<a name="486"><span class="lineNum">     486 </span>            :    flux_space; /**&lt; @brief Ownership based on own_flux_fes. */</a>
+<a name="487"><span class="lineNum">     487 </span>            :    bool own_flux_fespace; ///&lt; Ownership flag for flux_space.</a>
+<a name="488"><span class="lineNum">     488 </span>            : </a>
+<a name="489"><span class="lineNum">     489 </span>            : #ifdef MFEM_USE_MPI</a>
+<a name="490"><span class="lineNum">     490 </span>            :    const bool isParallel;</a>
+<a name="491"><span class="lineNum">     491 </span>            : #endif</a>
+<a name="492"><span class="lineNum">     492 </span>            : </a>
+<a name="493"><span class="lineNum">     493 </span>            :    /// Check if the mesh of the solution was modified.</a>
+<a name="494"><span class="lineNum">     494 </span><span class="lineNoCov">          0 :    bool MeshIsModified()</span></a>
+<a name="495"><span class="lineNum">     495 </span>            :    {</a>
+<a name="496"><span class="lineNum">     496 </span><span class="lineNoCov">          0 :       long mesh_sequence = solution-&gt;FESpace()-&gt;GetMesh()-&gt;GetSequence();</span></a>
+<a name="497"><span class="lineNum">     497 </span>            :       MFEM_ASSERT(mesh_sequence &gt;= current_sequence,</a>
+<a name="498"><span class="lineNum">     498 </span><span class="lineNoCov">          0 :                   &quot;improper mesh update sequence&quot;);</span></a>
+<a name="499"><span class="lineNum">     499 </span><span class="lineNoCov">          0 :       return (mesh_sequence &gt; current_sequence);</span></a>
+<a name="500"><span class="lineNum">     500 </span>            :    }</a>
+<a name="501"><span class="lineNum">     501 </span>            : </a>
+<a name="502"><span class="lineNum">     502 </span>            :    /** @brief Compute the element error estimates.</a>
+<a name="503"><span class="lineNum">     503 </span>            : </a>
+<a name="504"><span class="lineNum">     504 </span>            :        Algorithm outline:</a>
+<a name="505"><span class="lineNum">     505 </span>            :        1. Compute flux field for each element</a>
+<a name="506"><span class="lineNum">     506 </span>            :        2. Add error contribution from local interior faces</a>
+<a name="507"><span class="lineNum">     507 </span>            :        3. Add error contribution from shared interior faces</a>
+<a name="508"><span class="lineNum">     508 </span>            :        4. Finalize by computing hₖ and scale errors.</a>
+<a name="509"><span class="lineNum">     509 </span>            :    */</a>
+<a name="510"><span class="lineNum">     510 </span>            :    void ComputeEstimates();</a>
+<a name="511"><span class="lineNum">     511 </span>            : </a>
+<a name="512"><span class="lineNum">     512 </span>            : public:</a>
+<a name="513"><span class="lineNum">     513 </span>            :    /** @brief Construct a new KellyErrorEstimator object for a scalar field.</a>
+<a name="514"><span class="lineNum">     514 </span>            :        @param di_         The bilinearform to compute the interface flux.</a>
+<a name="515"><span class="lineNum">     515 </span>            :        @param sol_        The solution field whose error is to be estimated.</a>
+<a name="516"><span class="lineNum">     516 </span>            :        @param flux_fes_   The finite element space for the interface flux.</a>
+<a name="517"><span class="lineNum">     517 </span>            :        @param attributes_ The attributes of the subdomain(s) for which the</a>
+<a name="518"><span class="lineNum">     518 </span>            :                           error should be estimated. An empty array results in</a>
+<a name="519"><span class="lineNum">     519 </span>            :                           estimating the error over the complete domain.</a>
+<a name="520"><span class="lineNum">     520 </span>            :    */</a>
+<a name="521"><span class="lineNum">     521 </span>            :    KellyErrorEstimator(BilinearFormIntegrator&amp; di_, GridFunction&amp; sol_,</a>
+<a name="522"><span class="lineNum">     522 </span>            :                        FiniteElementSpace&amp; flux_fes_,</a>
+<a name="523"><span class="lineNum">     523 </span>            :                        const Array&lt;int&gt; &amp;attributes_ = Array&lt;int&gt;());</a>
+<a name="524"><span class="lineNum">     524 </span>            : </a>
+<a name="525"><span class="lineNum">     525 </span>            :    /** @brief Construct a new KellyErrorEstimator object for a scalar field.</a>
+<a name="526"><span class="lineNum">     526 </span>            :        @param di_         The bilinearform to compute the interface flux.</a>
+<a name="527"><span class="lineNum">     527 </span>            :        @param sol_        The solution field whose error is to be estimated.</a>
+<a name="528"><span class="lineNum">     528 </span>            :        @param flux_fes_   The finite element space for the interface flux.</a>
+<a name="529"><span class="lineNum">     529 </span>            :        @param attributes_ The attributes of the subdomain(s) for which the</a>
+<a name="530"><span class="lineNum">     530 </span>            :                           error should be estimated. An empty array results in</a>
+<a name="531"><span class="lineNum">     531 </span>            :                           estimating the error over the complete domain.</a>
+<a name="532"><span class="lineNum">     532 </span>            :    */</a>
+<a name="533"><span class="lineNum">     533 </span>            :    KellyErrorEstimator(BilinearFormIntegrator&amp; di_, GridFunction&amp; sol_,</a>
+<a name="534"><span class="lineNum">     534 </span>            :                        FiniteElementSpace* flux_fes_,</a>
+<a name="535"><span class="lineNum">     535 </span>            :                        const Array&lt;int&gt; &amp;attributes_ = Array&lt;int&gt;());</a>
+<a name="536"><span class="lineNum">     536 </span>            : </a>
+<a name="537"><span class="lineNum">     537 </span>            :    ~KellyErrorEstimator();</a>
+<a name="538"><span class="lineNum">     538 </span>            : </a>
+<a name="539"><span class="lineNum">     539 </span>            :    /// Get a Vector with all element errors.</a>
+<a name="540"><span class="lineNum">     540 </span><span class="lineNoCov">          0 :    const Vector&amp; GetLocalErrors() override</span></a>
+<a name="541"><span class="lineNum">     541 </span>            :    {</a>
+<a name="542"><span class="lineNum">     542 </span><span class="lineNoCov">          0 :       if (MeshIsModified())</span></a>
+<a name="543"><span class="lineNum">     543 </span>            :       {</a>
+<a name="544"><span class="lineNum">     544 </span><span class="lineNoCov">          0 :          ComputeEstimates();</span></a>
+<a name="545"><span class="lineNum">     545 </span>            :       }</a>
+<a name="546"><span class="lineNum">     546 </span>            :       return error_estimates;</a>
+<a name="547"><span class="lineNum">     547 </span>            :    }</a>
+<a name="548"><span class="lineNum">     548 </span>            : </a>
+<a name="549"><span class="lineNum">     549 </span>            :    /// Reset the error estimator.</a>
+<a name="550"><span class="lineNum">     550 </span>            :    void Reset() override { current_sequence = -1; };</a>
+<a name="551"><span class="lineNum">     551 </span>            : </a>
+<a name="552"><span class="lineNum">     552 </span><span class="lineNoCov">          0 :    virtual double GetTotalError() const override { return total_error; }</span></a>
+<a name="553"><span class="lineNum">     553 </span>            : </a>
+<a name="554"><span class="lineNum">     554 </span>            :    /** @brief Change the method to compute hₑ on a per-element basis.</a>
+<a name="555"><span class="lineNum">     555 </span>            :        @param compute_element_coefficient_</a>
+<a name="556"><span class="lineNum">     556 </span>            :                         A function taking a mesh and an element index to</a>
+<a name="557"><span class="lineNum">     557 </span>            :                         compute the local hₑ for the element.</a>
+<a name="558"><span class="lineNum">     558 </span>            :    */</a>
+<a name="559"><span class="lineNum">     559 </span>            :    void SetElementCoefficientFunction(ElementCoefficientFunction</a>
+<a name="560"><span class="lineNum">     560 </span>            :                                       compute_element_coefficient_)</a>
+<a name="561"><span class="lineNum">     561 </span>            :    {</a>
+<a name="562"><span class="lineNum">     562 </span>            :       compute_element_coefficient = compute_element_coefficient_;</a>
+<a name="563"><span class="lineNum">     563 </span>            :    }</a>
+<a name="564"><span class="lineNum">     564 </span>            : </a>
+<a name="565"><span class="lineNum">     565 </span>            :    /** @brief Change the method to compute hₖ on a per-element basis.</a>
+<a name="566"><span class="lineNum">     566 </span>            :        @param compute_face_coefficient_</a>
+<a name="567"><span class="lineNum">     567 </span>            :                         A function taking a mesh and a face index to</a>
+<a name="568"><span class="lineNum">     568 </span>            :                         compute the local hₖ for the face.</a>
+<a name="569"><span class="lineNum">     569 </span>            :    */</a>
+<a name="570"><span class="lineNum">     570 </span>            :    void SetFaceCoefficientFunction(</a>
+<a name="571"><span class="lineNum">     571 </span>            :       FaceCoefficientFunction</a>
+<a name="572"><span class="lineNum">     572 </span>            :       compute_face_coefficient_)</a>
+<a name="573"><span class="lineNum">     573 </span>            :    {</a>
+<a name="574"><span class="lineNum">     574 </span>            :       compute_face_coefficient = compute_face_coefficient_;</a>
+<a name="575"><span class="lineNum">     575 </span>            :    }</a>
+<a name="576"><span class="lineNum">     576 </span>            : </a>
+<a name="577"><span class="lineNum">     577 </span>            :    /// Change the coefficients back to default as described above.</a>
+<a name="578"><span class="lineNum">     578 </span>            :    void ResetCoefficientFunctions();</a>
+<a name="579"><span class="lineNum">     579 </span>            : };</a>
+<a name="580"><span class="lineNum">     580 </span>            : </a>
+<a name="581"><span class="lineNum">     581 </span>            : } // namespace mfem</a>
+<a name="582"><span class="lineNum">     582 </span>            : </a>
+<a name="583"><span class="lineNum">     583 </span>            : #endif // MFEM_ERROR_ESTIMATORS</a>
+</pre>
+      </td>
+    </tr>
+  </table>
+  <br>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="ruler"><img src="../glass.png" width=3 height=3 alt=""></td></tr>
+    <tr><td class="versionInfo">Generated by: <a href="http://ltp.sourceforge.net/coverage/lcov.php" target="_parent">LCOV version 1.14</a></td></tr>
+  </table>
+  <br>
+
+</body>
+</html>

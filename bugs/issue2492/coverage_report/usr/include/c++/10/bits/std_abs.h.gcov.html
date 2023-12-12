@@ -31,13 +31,13 @@
             <td class="headerValue">coverage.info</td>
             <td></td>
             <td class="headerItem">Lines:</td>
-            <td class="headerCovTableEntry">1</td>
-            <td class="headerCovTableEntry">1</td>
-            <td class="headerCovTableEntryHi">100.0 %</td>
+            <td class="headerCovTableEntry">0</td>
+            <td class="headerCovTableEntry">3</td>
+            <td class="headerCovTableEntryLo">0.0 %</td>
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2023-11-28 14:33:29</td>
+            <td class="headerValue">2023-12-12 08:20:39</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">0</td>
@@ -115,7 +115,7 @@
 <a name="53"><span class="lineNum">      53 </span>            : </a>
 <a name="54"><span class="lineNum">      54 </span>            : #ifndef __CORRECT_ISO_CPP_STDLIB_H_PROTO</a>
 <a name="55"><span class="lineNum">      55 </span>            :   inline long</a>
-<a name="56"><span class="lineNum">      56 </span>            :   abs(long __i) { return __builtin_labs(__i); }</a>
+<a name="56"><span class="lineNum">      56 </span><span class="lineNoCov">          0 :   abs(long __i) { return __builtin_labs(__i); }</span></a>
 <a name="57"><span class="lineNum">      57 </span>            : #endif</a>
 <a name="58"><span class="lineNum">      58 </span>            : </a>
 <a name="59"><span class="lineNum">      59 </span>            : #ifdef _GLIBCXX_USE_LONG_LONG</a>
@@ -130,8 +130,8 @@
 <a name="68"><span class="lineNum">      68 </span>            : </a>
 <a name="69"><span class="lineNum">      69 </span>            : #ifndef __CORRECT_ISO_CPP_MATH_H_PROTO</a>
 <a name="70"><span class="lineNum">      70 </span>            :   inline _GLIBCXX_CONSTEXPR double</a>
-<a name="71"><span class="lineNum">      71 </span>            :   abs(double __x)</a>
-<a name="72"><span class="lineNum">      72 </span><span class="lineCov">     184320 :   { return __builtin_fabs(__x); }</span></a>
+<a name="71"><span class="lineNum">      71 </span><span class="lineNoCov">          0 :   abs(double __x)</span></a>
+<a name="72"><span class="lineNum">      72 </span><span class="lineNoCov">          0 :   { return __builtin_fabs(__x); }</span></a>
 <a name="73"><span class="lineNum">      73 </span>            : </a>
 <a name="74"><span class="lineNum">      74 </span>            :   inline _GLIBCXX_CONSTEXPR float</a>
 <a name="75"><span class="lineNum">      75 </span>            :   abs(float __x)</a>

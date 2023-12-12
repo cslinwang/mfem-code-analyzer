@@ -31,13 +31,13 @@
             <td class="headerValue">coverage.info</td>
             <td></td>
             <td class="headerItem">Lines:</td>
-            <td class="headerCovTableEntry">2</td>
-            <td class="headerCovTableEntry">5</td>
-            <td class="headerCovTableEntryLo">40.0 %</td>
+            <td class="headerCovTableEntry">15</td>
+            <td class="headerCovTableEntry">27</td>
+            <td class="headerCovTableEntryLo">55.6 %</td>
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2023-11-28 14:33:29</td>
+            <td class="headerValue">2023-12-12 08:20:39</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">0</td>
@@ -152,7 +152,7 @@
 <a name="90"><span class="lineNum">      90 </span>            :        *  This does very little apart from providing a virtual base dtor.</a>
 <a name="91"><span class="lineNum">      91 </span>            :       */</a>
 <a name="92"><span class="lineNum">      92 </span>            :       virtual</a>
-<a name="93"><span class="lineNum">      93 </span><span class="lineNoCov">          0 :       ~basic_ostream() { }</span></a>
+<a name="93"><span class="lineNum">      93 </span><span class="lineCov">          1 :       ~basic_ostream() { }</span></a>
 <a name="94"><span class="lineNum">      94 </span>            : </a>
 <a name="95"><span class="lineNum">      95 </span>            :       /// Safe prefix/suffix operations.</a>
 <a name="96"><span class="lineNum">      96 </span>            :       class sentry;</a>
@@ -167,12 +167,12 @@
 <a name="105"><span class="lineNum">     105 </span>            :        *  information, see the iomanip header.</a>
 <a name="106"><span class="lineNum">     106 </span>            :       */</a>
 <a name="107"><span class="lineNum">     107 </span>            :       __ostream_type&amp;</a>
-<a name="108"><span class="lineNum">     108 </span>            :       operator&lt;&lt;(__ostream_type&amp; (*__pf)(__ostream_type&amp;))</a>
+<a name="108"><span class="lineNum">     108 </span><span class="lineCov">         10 :       operator&lt;&lt;(__ostream_type&amp; (*__pf)(__ostream_type&amp;))</span></a>
 <a name="109"><span class="lineNum">     109 </span>            :       {</a>
 <a name="110"><span class="lineNum">     110 </span>            :         // _GLIBCXX_RESOLVE_LIB_DEFECTS</a>
 <a name="111"><span class="lineNum">     111 </span>            :         // DR 60. What is a formatted input function?</a>
 <a name="112"><span class="lineNum">     112 </span>            :         // The inserters for manipulators are *not* formatted output functions.</a>
-<a name="113"><span class="lineNum">     113 </span><span class="lineCov">         68 :         return __pf(*this);</span></a>
+<a name="113"><span class="lineNum">     113 </span><span class="lineCov">         10 :         return __pf(*this);</span></a>
 <a name="114"><span class="lineNum">     114 </span>            :       }</a>
 <a name="115"><span class="lineNum">     115 </span>            : </a>
 <a name="116"><span class="lineNum">     116 </span>            :       __ostream_type&amp;</a>
@@ -186,12 +186,12 @@
 <a name="124"><span class="lineNum">     124 </span>            :       }</a>
 <a name="125"><span class="lineNum">     125 </span>            : </a>
 <a name="126"><span class="lineNum">     126 </span>            :       __ostream_type&amp;</a>
-<a name="127"><span class="lineNum">     127 </span>            :       operator&lt;&lt;(ios_base&amp; (*__pf) (ios_base&amp;))</a>
+<a name="127"><span class="lineNum">     127 </span><span class="lineNoCov">          0 :       operator&lt;&lt;(ios_base&amp; (*__pf) (ios_base&amp;))</span></a>
 <a name="128"><span class="lineNum">     128 </span>            :       {</a>
 <a name="129"><span class="lineNum">     129 </span>            :         // _GLIBCXX_RESOLVE_LIB_DEFECTS</a>
 <a name="130"><span class="lineNum">     130 </span>            :         // DR 60. What is a formatted input function?</a>
 <a name="131"><span class="lineNum">     131 </span>            :         // The inserters for manipulators are *not* formatted output functions.</a>
-<a name="132"><span class="lineNum">     132 </span>            :         __pf(*this);</a>
+<a name="132"><span class="lineNum">     132 </span><span class="lineNoCov">          0 :         __pf(*this);</span></a>
 <a name="133"><span class="lineNum">     133 </span>            :         return *this;</a>
 <a name="134"><span class="lineNum">     134 </span>            :       }</a>
 <a name="135"><span class="lineNum">     135 </span>            :       ///@}</a>
@@ -229,12 +229,12 @@
 <a name="167"><span class="lineNum">     167 </span>            :       { return _M_insert(__n); }</a>
 <a name="168"><span class="lineNum">     168 </span>            : </a>
 <a name="169"><span class="lineNum">     169 </span>            :       __ostream_type&amp;</a>
-<a name="170"><span class="lineNum">     170 </span>            :       operator&lt;&lt;(unsigned long __n)</a>
-<a name="171"><span class="lineNum">     171 </span>            :       { return _M_insert(__n); }</a>
+<a name="170"><span class="lineNum">     170 </span><span class="lineCov">         10 :       operator&lt;&lt;(unsigned long __n)</span></a>
+<a name="171"><span class="lineNum">     171 </span><span class="lineCov">         10 :       { return _M_insert(__n); }</span></a>
 <a name="172"><span class="lineNum">     172 </span>            : </a>
 <a name="173"><span class="lineNum">     173 </span>            :       __ostream_type&amp;</a>
-<a name="174"><span class="lineNum">     174 </span>            :       operator&lt;&lt;(bool __n)</a>
-<a name="175"><span class="lineNum">     175 </span>            :       { return _M_insert(__n); }</a>
+<a name="174"><span class="lineNum">     174 </span><span class="lineNoCov">          0 :       operator&lt;&lt;(bool __n)</span></a>
+<a name="175"><span class="lineNum">     175 </span><span class="lineNoCov">          0 :       { return _M_insert(__n); }</span></a>
 <a name="176"><span class="lineNum">     176 </span>            : </a>
 <a name="177"><span class="lineNum">     177 </span>            :       __ostream_type&amp;</a>
 <a name="178"><span class="lineNum">     178 </span>            :       operator&lt;&lt;(short __n);</a>
@@ -251,21 +251,21 @@
 <a name="189"><span class="lineNum">     189 </span>            :       operator&lt;&lt;(int __n);</a>
 <a name="190"><span class="lineNum">     190 </span>            : </a>
 <a name="191"><span class="lineNum">     191 </span>            :       __ostream_type&amp;</a>
-<a name="192"><span class="lineNum">     192 </span>            :       operator&lt;&lt;(unsigned int __n)</a>
+<a name="192"><span class="lineNum">     192 </span><span class="lineCov">          3 :       operator&lt;&lt;(unsigned int __n)</span></a>
 <a name="193"><span class="lineNum">     193 </span>            :       {</a>
 <a name="194"><span class="lineNum">     194 </span>            :         // _GLIBCXX_RESOLVE_LIB_DEFECTS</a>
 <a name="195"><span class="lineNum">     195 </span>            :         // 117. basic_ostream uses nonexistent num_put member functions.</a>
-<a name="196"><span class="lineNum">     196 </span>            :         return _M_insert(static_cast&lt;unsigned long&gt;(__n));</a>
+<a name="196"><span class="lineNum">     196 </span><span class="lineCov">          3 :         return _M_insert(static_cast&lt;unsigned long&gt;(__n));</span></a>
 <a name="197"><span class="lineNum">     197 </span>            :       }</a>
 <a name="198"><span class="lineNum">     198 </span>            : </a>
 <a name="199"><span class="lineNum">     199 </span>            : #ifdef _GLIBCXX_USE_LONG_LONG</a>
 <a name="200"><span class="lineNum">     200 </span>            :       __ostream_type&amp;</a>
-<a name="201"><span class="lineNum">     201 </span>            :       operator&lt;&lt;(long long __n)</a>
-<a name="202"><span class="lineNum">     202 </span>            :       { return _M_insert(__n); }</a>
+<a name="201"><span class="lineNum">     201 </span><span class="lineNoCov">          0 :       operator&lt;&lt;(long long __n)</span></a>
+<a name="202"><span class="lineNum">     202 </span><span class="lineNoCov">          0 :       { return _M_insert(__n); }</span></a>
 <a name="203"><span class="lineNum">     203 </span>            : </a>
 <a name="204"><span class="lineNum">     204 </span>            :       __ostream_type&amp;</a>
-<a name="205"><span class="lineNum">     205 </span>            :       operator&lt;&lt;(unsigned long long __n)</a>
-<a name="206"><span class="lineNum">     206 </span>            :       { return _M_insert(__n); }</a>
+<a name="205"><span class="lineNum">     205 </span><span class="lineNoCov">          0 :       operator&lt;&lt;(unsigned long long __n)</span></a>
+<a name="206"><span class="lineNum">     206 </span><span class="lineNoCov">          0 :       { return _M_insert(__n); }</span></a>
 <a name="207"><span class="lineNum">     207 </span>            : #endif</a>
 <a name="208"><span class="lineNum">     208 </span>            :       ///@}</a>
 <a name="209"><span class="lineNum">     209 </span>            : </a>
@@ -279,15 +279,15 @@
 <a name="217"><span class="lineNum">     217 </span>            :        *  @c num_get facet) to perform numeric formatting.</a>
 <a name="218"><span class="lineNum">     218 </span>            :       */</a>
 <a name="219"><span class="lineNum">     219 </span>            :       __ostream_type&amp;</a>
-<a name="220"><span class="lineNum">     220 </span>            :       operator&lt;&lt;(double __f)</a>
-<a name="221"><span class="lineNum">     221 </span><span class="lineNoCov">          0 :       { return _M_insert(__f); }</span></a>
+<a name="220"><span class="lineNum">     220 </span><span class="lineCov">         44 :       operator&lt;&lt;(double __f)</span></a>
+<a name="221"><span class="lineNum">     221 </span><span class="lineCov">         44 :       { return _M_insert(__f); }</span></a>
 <a name="222"><span class="lineNum">     222 </span>            : </a>
 <a name="223"><span class="lineNum">     223 </span>            :       __ostream_type&amp;</a>
-<a name="224"><span class="lineNum">     224 </span>            :       operator&lt;&lt;(float __f)</a>
+<a name="224"><span class="lineNum">     224 </span><span class="lineNoCov">          0 :       operator&lt;&lt;(float __f)</span></a>
 <a name="225"><span class="lineNum">     225 </span>            :       {</a>
 <a name="226"><span class="lineNum">     226 </span>            :         // _GLIBCXX_RESOLVE_LIB_DEFECTS</a>
 <a name="227"><span class="lineNum">     227 </span>            :         // 117. basic_ostream uses nonexistent num_put member functions.</a>
-<a name="228"><span class="lineNum">     228 </span>            :         return _M_insert(static_cast&lt;double&gt;(__f));</a>
+<a name="228"><span class="lineNum">     228 </span><span class="lineNoCov">          0 :         return _M_insert(static_cast&lt;double&gt;(__f));</span></a>
 <a name="229"><span class="lineNum">     229 </span>            :       }</a>
 <a name="230"><span class="lineNum">     230 </span>            : </a>
 <a name="231"><span class="lineNum">     231 </span>            :       __ostream_type&amp;</a>
@@ -576,8 +576,8 @@
 <a name="514"><span class="lineNum">     514 </span>            :   // Specialization</a>
 <a name="515"><span class="lineNum">     515 </span>            :   template&lt;typename _Traits&gt;</a>
 <a name="516"><span class="lineNum">     516 </span>            :     inline basic_ostream&lt;char, _Traits&gt;&amp;</a>
-<a name="517"><span class="lineNum">     517 </span>            :     operator&lt;&lt;(basic_ostream&lt;char, _Traits&gt;&amp; __out, char __c)</a>
-<a name="518"><span class="lineNum">     518 </span><span class="lineNoCov">          0 :     { return __ostream_insert(__out, &amp;__c, 1); }</span></a>
+<a name="517"><span class="lineNum">     517 </span><span class="lineCov">         59 :     operator&lt;&lt;(basic_ostream&lt;char, _Traits&gt;&amp; __out, char __c)</span></a>
+<a name="518"><span class="lineNum">     518 </span><span class="lineCov">         59 :     { return __ostream_insert(__out, &amp;__c, 1); }</span></a>
 <a name="519"><span class="lineNum">     519 </span>            : </a>
 <a name="520"><span class="lineNum">     520 </span>            :   // Signed and unsigned</a>
 <a name="521"><span class="lineNum">     521 </span>            :   template&lt;typename _Traits&gt;</a>
@@ -587,8 +587,8 @@
 <a name="525"><span class="lineNum">     525 </span>            : </a>
 <a name="526"><span class="lineNum">     526 </span>            :   template&lt;typename _Traits&gt;</a>
 <a name="527"><span class="lineNum">     527 </span>            :     inline basic_ostream&lt;char, _Traits&gt;&amp;</a>
-<a name="528"><span class="lineNum">     528 </span>            :     operator&lt;&lt;(basic_ostream&lt;char, _Traits&gt;&amp; __out, unsigned char __c)</a>
-<a name="529"><span class="lineNum">     529 </span>            :     { return (__out &lt;&lt; static_cast&lt;char&gt;(__c)); }</a>
+<a name="528"><span class="lineNum">     528 </span><span class="lineNoCov">          0 :     operator&lt;&lt;(basic_ostream&lt;char, _Traits&gt;&amp; __out, unsigned char __c)</span></a>
+<a name="529"><span class="lineNum">     529 </span><span class="lineNoCov">          0 :     { return (__out &lt;&lt; static_cast&lt;char&gt;(__c)); }</span></a>
 <a name="530"><span class="lineNum">     530 </span>            : </a>
 <a name="531"><span class="lineNum">     531 </span>            : #if __cplusplus &gt; 201703L</a>
 <a name="532"><span class="lineNum">     532 </span>            :   // The following deleted overloads prevent formatting character values as</a>
@@ -665,13 +665,13 @@
 <a name="603"><span class="lineNum">     603 </span>            :   // Partial specializations</a>
 <a name="604"><span class="lineNum">     604 </span>            :   template&lt;typename _Traits&gt;</a>
 <a name="605"><span class="lineNum">     605 </span>            :     inline basic_ostream&lt;char, _Traits&gt;&amp;</a>
-<a name="606"><span class="lineNum">     606 </span>            :     operator&lt;&lt;(basic_ostream&lt;char, _Traits&gt;&amp; __out, const char* __s)</a>
+<a name="606"><span class="lineNum">     606 </span><span class="lineCov">         53 :     operator&lt;&lt;(basic_ostream&lt;char, _Traits&gt;&amp; __out, const char* __s)</span></a>
 <a name="607"><span class="lineNum">     607 </span>            :     {</a>
 <a name="608"><span class="lineNum">     608 </span>            :       if (!__s)</a>
-<a name="609"><span class="lineNum">     609 </span>            :         __out.setstate(ios_base::badbit);</a>
+<a name="609"><span class="lineNum">     609 </span><span class="lineCov">         53 :         __out.setstate(ios_base::badbit);</span></a>
 <a name="610"><span class="lineNum">     610 </span>            :       else</a>
-<a name="611"><span class="lineNum">     611 </span><span class="lineCov">        325 :         __ostream_insert(__out, __s,</span></a>
-<a name="612"><span class="lineNum">     612 </span>            :                          static_cast&lt;streamsize&gt;(_Traits::length(__s)));</a>
+<a name="611"><span class="lineNum">     611 </span><span class="lineCov">         53 :         __ostream_insert(__out, __s,</span></a>
+<a name="612"><span class="lineNum">     612 </span><span class="lineCov">         53 :                          static_cast&lt;streamsize&gt;(_Traits::length(__s)));</span></a>
 <a name="613"><span class="lineNum">     613 </span>            :       return __out;</a>
 <a name="614"><span class="lineNum">     614 </span>            :     }</a>
 <a name="615"><span class="lineNum">     615 </span>            : </a>

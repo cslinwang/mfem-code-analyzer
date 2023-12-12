@@ -31,13 +31,13 @@
             <td class="headerValue">coverage.info</td>
             <td></td>
             <td class="headerItem">Lines:</td>
-            <td class="headerCovTableEntry">1</td>
-            <td class="headerCovTableEntry">1</td>
-            <td class="headerCovTableEntryHi">100.0 %</td>
+            <td class="headerCovTableEntry">4</td>
+            <td class="headerCovTableEntry">6</td>
+            <td class="headerCovTableEntryLo">66.7 %</td>
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2023-11-28 14:33:29</td>
+            <td class="headerValue">2023-12-12 08:20:39</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">0</td>
@@ -736,8 +736,8 @@
 <a name="674"><span class="lineNum">     674 </span>            :        *  @return  @c rdbuf()-&gt;str()</a>
 <a name="675"><span class="lineNum">     675 </span>            :       */</a>
 <a name="676"><span class="lineNum">     676 </span>            :       __string_type</a>
-<a name="677"><span class="lineNum">     677 </span>            :       str() const</a>
-<a name="678"><span class="lineNum">     678 </span><span class="lineCov">         63 :       { return _M_stringbuf.str(); }</span></a>
+<a name="677"><span class="lineNum">     677 </span><span class="lineCov">         13 :       str() const</span></a>
+<a name="678"><span class="lineNum">     678 </span><span class="lineCov">         13 :       { return _M_stringbuf.str(); }</span></a>
 <a name="679"><span class="lineNum">     679 </span>            : </a>
 <a name="680"><span class="lineNum">     680 </span>            :       /**</a>
 <a name="681"><span class="lineNum">     681 </span>            :        *  @brief  Setting a new buffer.</a>
@@ -746,8 +746,8 @@
 <a name="684"><span class="lineNum">     684 </span>            :        *  Calls @c rdbuf()-&gt;str(s).</a>
 <a name="685"><span class="lineNum">     685 </span>            :       */</a>
 <a name="686"><span class="lineNum">     686 </span>            :       void</a>
-<a name="687"><span class="lineNum">     687 </span>            :       str(const __string_type&amp; __s)</a>
-<a name="688"><span class="lineNum">     688 </span>            :       { _M_stringbuf.str(__s); }</a>
+<a name="687"><span class="lineNum">     687 </span><span class="lineCov">         13 :       str(const __string_type&amp; __s)</span></a>
+<a name="688"><span class="lineNum">     688 </span><span class="lineCov">         13 :       { _M_stringbuf.str(__s); }</span></a>
 <a name="689"><span class="lineNum">     689 </span>            :     };</a>
 <a name="690"><span class="lineNum">     690 </span>            : </a>
 <a name="691"><span class="lineNum">     691 </span>            : </a>
@@ -890,8 +890,8 @@
 <a name="828"><span class="lineNum">     828 </span>            :        *  @return  @c rdbuf()-&gt;str()</a>
 <a name="829"><span class="lineNum">     829 </span>            :       */</a>
 <a name="830"><span class="lineNum">     830 </span>            :       __string_type</a>
-<a name="831"><span class="lineNum">     831 </span>            :       str() const</a>
-<a name="832"><span class="lineNum">     832 </span>            :       { return _M_stringbuf.str(); }</a>
+<a name="831"><span class="lineNum">     831 </span><span class="lineNoCov">          0 :       str() const</span></a>
+<a name="832"><span class="lineNum">     832 </span><span class="lineNoCov">          0 :       { return _M_stringbuf.str(); }</span></a>
 <a name="833"><span class="lineNum">     833 </span>            : </a>
 <a name="834"><span class="lineNum">     834 </span>            :       /**</a>
 <a name="835"><span class="lineNum">     835 </span>            :        *  @brief  Setting a new buffer.</a>

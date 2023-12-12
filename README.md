@@ -1104,6 +1104,42 @@ make all -j
 cd examples
 mpirun -np 5 ex13p -o 2 > /root/mfem-code-analyzer/get_normal_testcase_covarage/log.txt
 
+### 2492
+复现sha:4937ee34faac8bfbf1b17cfcadc252f3ef238ec6
+/root/mfem-code-analyzer/get_normal_testcase_covarage/add_coverage.sh
+cd tests/unit/
+./unit_tests "3D ProjectBdrCoefficientTangent"
+结果：
+root@f64125032199:~/mfem/tests/unit# ./unit_tests "3D ProjectBdrCoefficientTangent"
+INFO: Test filter: 3D ProjectBdrCoefficientTangent ~[Parallel] ~[MFEMData]
+Filters: 3D ProjectBdrCoefficientTangent ~[Parallel] ~[MFEMData]
+0:0 nd (-4.40748,15.9206,-0.60178) vs. (10.7288,-12.167,-0.0675716) 97.3302
+0:1 nd (-6.19745,12.2406,3.12902) vs. (3.78965,-5.99015,-2.59753) 42.5295
+0:2 nd (-1.06906,2.83886,0.254765) vs. (13.0549,-7.54087,-2.30556) 90.4579
+0:3 nd (-3.6509,7.73068,1.63962) vs. (13.6899,-7.84119,-5.19156) 94.6589
+0:4 nd (-2.8171,9.44491,-0.0982529) vs. (29.4307,-21.8527,-2.47993) 219.94
+0:5 nd (-5.206,13.8244,1.24063) vs. (8.41342,-18.3351,-1.65889) 121.04
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+unit_tests is a Catch v2.13.2 host application.
+Run with -? for options
+
+-------------------------------------------------------------------------------
+3D ProjectBdrCoefficientTangent
+  3D GetVectorValue tests for element type 4
+-------------------------------------------------------------------------------
+/root/mfem/tests/unit/fem/test_project_bdr.cpp:48
+...............................................................................
+
+/root/mfem/tests/unit/fem/test_project_bdr.cpp:118: FAILED:
+  REQUIRE( nd_err == MFEM_Approx(0.0) )
+with expansion:
+  110.9926670492195 == Approx( 0 )
+
+===============================================================================
+test cases: 1 | 1 failed
+assertions: 7 | 6 passed | 1 failed
+
 ### 2413失败
 cd mfem
 make clean

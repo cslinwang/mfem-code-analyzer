@@ -31,13 +31,13 @@
             <td class="headerValue">coverage.info</td>
             <td></td>
             <td class="headerItem">Lines:</td>
-            <td class="headerCovTableEntry">5</td>
-            <td class="headerCovTableEntry">6</td>
-            <td class="headerCovTableEntryMed">83.3 %</td>
+            <td class="headerCovTableEntry">3</td>
+            <td class="headerCovTableEntry">14</td>
+            <td class="headerCovTableEntryLo">21.4 %</td>
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2023-11-28 14:33:29</td>
+            <td class="headerValue">2023-12-12 08:20:39</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">0</td>
@@ -176,8 +176,8 @@
 <a name="114"><span class="lineNum">     114 </span>            :        *  &lt;code&gt;if (!a_stream) ...&lt;/code&gt; and &lt;code&gt;while (a_stream) ...&lt;/code&gt;</a>
 <a name="115"><span class="lineNum">     115 </span>            :       */</a>
 <a name="116"><span class="lineNum">     116 </span>            : #if __cplusplus &gt;= 201103L</a>
-<a name="117"><span class="lineNum">     117 </span>            :       explicit operator bool() const</a>
-<a name="118"><span class="lineNum">     118 </span>            :       { return !this-&gt;fail(); }</a>
+<a name="117"><span class="lineNum">     117 </span><span class="lineNoCov">          0 :       explicit operator bool() const</span></a>
+<a name="118"><span class="lineNum">     118 </span><span class="lineNoCov">          0 :       { return !this-&gt;fail(); }</span></a>
 <a name="119"><span class="lineNum">     119 </span>            : #else</a>
 <a name="120"><span class="lineNum">     120 </span>            :       operator void*() const</a>
 <a name="121"><span class="lineNum">     121 </span>            :       { return this-&gt;fail() ? 0 : const_cast&lt;basic_ios*&gt;(this); }</a>
@@ -196,8 +196,8 @@
 <a name="134"><span class="lineNum">     134 </span>            :        *  users will call one of the interpreting wrappers, e.g., good().</a>
 <a name="135"><span class="lineNum">     135 </span>            :       */</a>
 <a name="136"><span class="lineNum">     136 </span>            :       iostate</a>
-<a name="137"><span class="lineNum">     137 </span>            :       rdstate() const</a>
-<a name="138"><span class="lineNum">     138 </span><span class="lineCov">         21 :       { return _M_streambuf_state; }</span></a>
+<a name="137"><span class="lineNum">     137 </span><span class="lineNoCov">          0 :       rdstate() const</span></a>
+<a name="138"><span class="lineNum">     138 </span><span class="lineNoCov">          0 :       { return _M_streambuf_state; }</span></a>
 <a name="139"><span class="lineNum">     139 </span>            : </a>
 <a name="140"><span class="lineNum">     140 </span>            :       /**</a>
 <a name="141"><span class="lineNum">     141 </span>            :        *  @brief  [Re]sets the error state.</a>
@@ -239,8 +239,8 @@
 <a name="177"><span class="lineNum">     177 </span>            :        *  A wrapper around rdstate.</a>
 <a name="178"><span class="lineNum">     178 </span>            :       */</a>
 <a name="179"><span class="lineNum">     179 </span>            :       bool</a>
-<a name="180"><span class="lineNum">     180 </span>            :       good() const</a>
-<a name="181"><span class="lineNum">     181 </span>            :       { return this-&gt;rdstate() == 0; }</a>
+<a name="180"><span class="lineNum">     180 </span><span class="lineNoCov">          0 :       good() const</span></a>
+<a name="181"><span class="lineNum">     181 </span><span class="lineNoCov">          0 :       { return this-&gt;rdstate() == 0; }</span></a>
 <a name="182"><span class="lineNum">     182 </span>            : </a>
 <a name="183"><span class="lineNum">     183 </span>            :       /**</a>
 <a name="184"><span class="lineNum">     184 </span>            :        *  @brief  Fast error checking.</a>
@@ -260,8 +260,8 @@
 <a name="198"><span class="lineNum">     198 </span>            :        *  Note that other iostate flags may also be set.</a>
 <a name="199"><span class="lineNum">     199 </span>            :       */</a>
 <a name="200"><span class="lineNum">     200 </span>            :       bool</a>
-<a name="201"><span class="lineNum">     201 </span>            :       fail() const</a>
-<a name="202"><span class="lineNum">     202 </span>            :       { return (this-&gt;rdstate() &amp; (badbit | failbit)) != 0; }</a>
+<a name="201"><span class="lineNum">     201 </span><span class="lineNoCov">          0 :       fail() const</span></a>
+<a name="202"><span class="lineNum">     202 </span><span class="lineNoCov">          0 :       { return (this-&gt;rdstate() &amp; (badbit | failbit)) != 0; }</span></a>
 <a name="203"><span class="lineNum">     203 </span>            : </a>
 <a name="204"><span class="lineNum">     204 </span>            :       /**</a>
 <a name="205"><span class="lineNum">     205 </span>            :        *  @brief  Fast error checking.</a>
@@ -341,7 +341,7 @@
 <a name="279"><span class="lineNum">     279 </span>            :        *  destroy the streambuf held by rdbuf().</a>
 <a name="280"><span class="lineNum">     280 </span>            :       */</a>
 <a name="281"><span class="lineNum">     281 </span>            :       virtual</a>
-<a name="282"><span class="lineNum">     282 </span><span class="lineNoCov">          0 :       ~basic_ios() { }</span></a>
+<a name="282"><span class="lineNum">     282 </span><span class="lineCov">          1 :       ~basic_ios() { }</span></a>
 <a name="283"><span class="lineNum">     283 </span>            : </a>
 <a name="284"><span class="lineNum">     284 </span>            :       // Members:</a>
 <a name="285"><span class="lineNum">     285 </span>            :       /**</a>
@@ -380,8 +380,8 @@
 <a name="318"><span class="lineNum">     318 </span>            :        *  This does not change the state of the stream.</a>
 <a name="319"><span class="lineNum">     319 </span>            :       */</a>
 <a name="320"><span class="lineNum">     320 </span>            :       basic_streambuf&lt;_CharT, _Traits&gt;*</a>
-<a name="321"><span class="lineNum">     321 </span>            :       rdbuf() const</a>
-<a name="322"><span class="lineNum">     322 </span>            :       { return _M_streambuf; }</a>
+<a name="321"><span class="lineNum">     321 </span><span class="lineCov">          1 :       rdbuf() const</span></a>
+<a name="322"><span class="lineNum">     322 </span><span class="lineCov">          1 :       { return _M_streambuf; }</span></a>
 <a name="323"><span class="lineNum">     323 </span>            : </a>
 <a name="324"><span class="lineNum">     324 </span>            :       /**</a>
 <a name="325"><span class="lineNum">     325 </span>            :        *  @brief  Changing the underlying buffer.</a>
@@ -449,10 +449,10 @@
 <a name="387"><span class="lineNum">     387 </span>            :        *  used, and Q&lt;P.  It defaults to a space (' ') in the current locale.</a>
 <a name="388"><span class="lineNum">     388 </span>            :       */</a>
 <a name="389"><span class="lineNum">     389 </span>            :       char_type</a>
-<a name="390"><span class="lineNum">     390 </span>            :       fill(char_type __ch)</a>
+<a name="390"><span class="lineNum">     390 </span><span class="lineNoCov">          0 :       fill(char_type __ch)</span></a>
 <a name="391"><span class="lineNum">     391 </span>            :       {</a>
-<a name="392"><span class="lineNum">     392 </span><span class="lineCov">         63 :         char_type __old = this-&gt;fill();</span></a>
-<a name="393"><span class="lineNum">     393 </span><span class="lineCov">         63 :         _M_fill = __ch;</span></a>
+<a name="392"><span class="lineNum">     392 </span><span class="lineNoCov">          0 :         char_type __old = this-&gt;fill();</span></a>
+<a name="393"><span class="lineNum">     393 </span><span class="lineNoCov">          0 :         _M_fill = __ch;</span></a>
 <a name="394"><span class="lineNum">     394 </span>            :         return __old;</a>
 <a name="395"><span class="lineNum">     395 </span>            :       }</a>
 <a name="396"><span class="lineNum">     396 </span>            : </a>
@@ -519,9 +519,9 @@
 <a name="457"><span class="lineNum">     457 </span>            :        *  The default constructor does nothing and is not normally</a>
 <a name="458"><span class="lineNum">     458 </span>            :        *  accessible to users.</a>
 <a name="459"><span class="lineNum">     459 </span>            :       */</a>
-<a name="460"><span class="lineNum">     460 </span><span class="lineCov">         63 :       basic_ios()</span></a>
+<a name="460"><span class="lineNum">     460 </span>            :       basic_ios()</a>
 <a name="461"><span class="lineNum">     461 </span>            :       : ios_base(), _M_tie(0), _M_fill(char_type()), _M_fill_init(false), </a>
-<a name="462"><span class="lineNum">     462 </span><span class="lineCov">         63 :         _M_streambuf(0), _M_ctype(0), _M_num_put(0), _M_num_get(0)</span></a>
+<a name="462"><span class="lineNum">     462 </span>            :         _M_streambuf(0), _M_ctype(0), _M_num_put(0), _M_num_get(0)</a>
 <a name="463"><span class="lineNum">     463 </span>            :       { }</a>
 <a name="464"><span class="lineNum">     464 </span>            : </a>
 <a name="465"><span class="lineNum">     465 </span>            :       /**</a>
