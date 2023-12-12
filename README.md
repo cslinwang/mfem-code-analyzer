@@ -933,6 +933,7 @@ url: https://github.com/mfem/mfem/issues/2413
 mpicxx -O3 -std=c++11 -I.. -I../../hypre/src/hypre/include 2413.cpp -o 2413 -L.. -lmfem -L../../hypre/src/hypre/lib -lHYPRE -L../../metis-4.0 -lmetis -lrt
 
 ### 2144成功.
+复现sha：913361dd0db723d07e9c7492102f8b887acabc48
 切换privious commit和bug sha都可
 /root/mfem/mfem-code-analyzer/get_normal_testcase_covarage/add_coverage.sh
 cd examples
