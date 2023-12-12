@@ -31,18 +31,18 @@
             <td class="headerValue">coverage.info</td>
             <td></td>
             <td class="headerItem">Lines:</td>
+            <td class="headerCovTableEntry">0</td>
             <td class="headerCovTableEntry">13</td>
-            <td class="headerCovTableEntry">13</td>
-            <td class="headerCovTableEntryHi">100.0 %</td>
+            <td class="headerCovTableEntryLo">0.0 %</td>
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2023-11-28 10:00:28</td>
+            <td class="headerValue">2023-12-11 15:02:03</td>
             <td></td>
             <td class="headerItem">Functions:</td>
+            <td class="headerCovTableEntry">0</td>
             <td class="headerCovTableEntry">2</td>
-            <td class="headerCovTableEntry">2</td>
-            <td class="headerCovTableEntryHi">100.0 %</td>
+            <td class="headerCovTableEntryLo">0.0 %</td>
           </tr>
           <tr><td><img src="../../../../../glass.png" width=3 height=3 alt=""></td></tr>
         </table>
@@ -453,7 +453,7 @@
 <a name="391"><span class="lineNum">     391 </span>            : </a>
 <a name="392"><span class="lineNum">     392 </span>            :       bool</a>
 <a name="393"><span class="lineNum">     393 </span>            :       _M_uses_single_bucket(__bucket_type* __bkts) const</a>
-<a name="394"><span class="lineNum">     394 </span><span class="lineCov">          1 :       { return __builtin_expect(__bkts == &amp;_M_single_bucket, false); }</span></a>
+<a name="394"><span class="lineNum">     394 </span><span class="lineNoCov">          0 :       { return __builtin_expect(__bkts == &amp;_M_single_bucket, false); }</span></a>
 <a name="395"><span class="lineNum">     395 </span>            : </a>
 <a name="396"><span class="lineNum">     396 </span>            :       bool</a>
 <a name="397"><span class="lineNum">     397 </span>            :       _M_uses_single_bucket() const</a>
@@ -477,7 +477,7 @@
 <a name="415"><span class="lineNum">     415 </span>            :       void</a>
 <a name="416"><span class="lineNum">     416 </span>            :       _M_deallocate_buckets(__bucket_type* __bkts, size_type __bkt_count)</a>
 <a name="417"><span class="lineNum">     417 </span>            :       {</a>
-<a name="418"><span class="lineNum">     418 </span><span class="lineCov">          1 :         if (_M_uses_single_bucket(__bkts))</span></a>
+<a name="418"><span class="lineNum">     418 </span><span class="lineNoCov">          0 :         if (_M_uses_single_bucket(__bkts))</span></a>
 <a name="419"><span class="lineNum">     419 </span>            :           return;</a>
 <a name="420"><span class="lineNum">     420 </span>            : </a>
 <a name="421"><span class="lineNum">     421 </span>            :         __hashtable_alloc::_M_deallocate_buckets(__bkts, __bkt_count);</a>
@@ -485,7 +485,7 @@
 <a name="423"><span class="lineNum">     423 </span>            : </a>
 <a name="424"><span class="lineNum">     424 </span>            :       void</a>
 <a name="425"><span class="lineNum">     425 </span>            :       _M_deallocate_buckets()</a>
-<a name="426"><span class="lineNum">     426 </span><span class="lineCov">          1 :       { _M_deallocate_buckets(_M_buckets, _M_bucket_count); }</span></a>
+<a name="426"><span class="lineNum">     426 </span><span class="lineNoCov">          0 :       { _M_deallocate_buckets(_M_buckets, _M_bucket_count); }</span></a>
 <a name="427"><span class="lineNum">     427 </span>            : </a>
 <a name="428"><span class="lineNum">     428 </span>            :       // Gets bucket begin, deals with the fact that non-empty buckets contain</a>
 <a name="429"><span class="lineNum">     429 </span>            :       // their before begin node.</a>
@@ -494,7 +494,7 @@
 <a name="432"><span class="lineNum">     432 </span>            : </a>
 <a name="433"><span class="lineNum">     433 </span>            :       __node_type*</a>
 <a name="434"><span class="lineNum">     434 </span>            :       _M_begin() const</a>
-<a name="435"><span class="lineNum">     435 </span><span class="lineCov">          1 :       { return static_cast&lt;__node_type*&gt;(_M_before_begin._M_nxt); }</span></a>
+<a name="435"><span class="lineNum">     435 </span><span class="lineNoCov">          0 :       { return static_cast&lt;__node_type*&gt;(_M_before_begin._M_nxt); }</span></a>
 <a name="436"><span class="lineNum">     436 </span>            : </a>
 <a name="437"><span class="lineNum">     437 </span>            :       // Assign *this using another _Hashtable instance. Whether elements</a>
 <a name="438"><span class="lineNum">     438 </span>            :       // are copied or moved depends on the _Ht reference.</a>
@@ -549,7 +549,7 @@
 <a name="487"><span class="lineNum">     487 </span>            : </a>
 <a name="488"><span class="lineNum">     488 </span>            :     public:</a>
 <a name="489"><span class="lineNum">     489 </span>            :       // Constructor, destructor, assignment, swap</a>
-<a name="490"><span class="lineNum">     490 </span><span class="lineCov">          1 :       _Hashtable() = default;</span></a>
+<a name="490"><span class="lineNum">     490 </span><span class="lineNoCov">          0 :       _Hashtable() = default;</span></a>
 <a name="491"><span class="lineNum">     491 </span>            :       _Hashtable(size_type __bkt_count_hint,</a>
 <a name="492"><span class="lineNum">     492 </span>            :                  const _H1&amp;, const _H2&amp;, const _Hash&amp;,</a>
 <a name="493"><span class="lineNum">     493 </span>            :                  const _Equal&amp;, const _ExtractKey&amp;,</a>
@@ -1497,13 +1497,13 @@
 <a name="1435"><span class="lineNum">    1435 </span>            :            typename _Alloc, typename _ExtractKey, typename _Equal,</a>
 <a name="1436"><span class="lineNum">    1436 </span>            :            typename _H1, typename _H2, typename _Hash, typename _RehashPolicy,</a>
 <a name="1437"><span class="lineNum">    1437 </span>            :            typename _Traits&gt;</a>
-<a name="1438"><span class="lineNum">    1438 </span><span class="lineCov">          1 :     _Hashtable&lt;_Key, _Value, _Alloc, _ExtractKey, _Equal,</span></a>
+<a name="1438"><span class="lineNum">    1438 </span><span class="lineNoCov">          0 :     _Hashtable&lt;_Key, _Value, _Alloc, _ExtractKey, _Equal,</span></a>
 <a name="1439"><span class="lineNum">    1439 </span>            :                _H1, _H2, _Hash, _RehashPolicy, _Traits&gt;::</a>
 <a name="1440"><span class="lineNum">    1440 </span>            :     ~_Hashtable() noexcept</a>
 <a name="1441"><span class="lineNum">    1441 </span>            :     {</a>
-<a name="1442"><span class="lineNum">    1442 </span><span class="lineCov">          1 :       clear();</span></a>
+<a name="1442"><span class="lineNum">    1442 </span><span class="lineNoCov">          0 :       clear();</span></a>
 <a name="1443"><span class="lineNum">    1443 </span>            :       _M_deallocate_buckets();</a>
-<a name="1444"><span class="lineNum">    1444 </span><span class="lineCov">          1 :     }</span></a>
+<a name="1444"><span class="lineNum">    1444 </span><span class="lineNoCov">          0 :     }</span></a>
 <a name="1445"><span class="lineNum">    1445 </span>            : </a>
 <a name="1446"><span class="lineNum">    1446 </span>            :   template&lt;typename _Key, typename _Value,</a>
 <a name="1447"><span class="lineNum">    1447 </span>            :            typename _Alloc, typename _ExtractKey, typename _Equal,</a>
@@ -2140,15 +2140,15 @@
 <a name="2078"><span class="lineNum">    2078 </span>            :            typename _H1, typename _H2, typename _Hash, typename _RehashPolicy,</a>
 <a name="2079"><span class="lineNum">    2079 </span>            :            typename _Traits&gt;</a>
 <a name="2080"><span class="lineNum">    2080 </span>            :     void</a>
-<a name="2081"><span class="lineNum">    2081 </span><span class="lineCov">          1 :     _Hashtable&lt;_Key, _Value, _Alloc, _ExtractKey, _Equal,</span></a>
+<a name="2081"><span class="lineNum">    2081 </span><span class="lineNoCov">          0 :     _Hashtable&lt;_Key, _Value, _Alloc, _ExtractKey, _Equal,</span></a>
 <a name="2082"><span class="lineNum">    2082 </span>            :                _H1, _H2, _Hash, _RehashPolicy, _Traits&gt;::</a>
 <a name="2083"><span class="lineNum">    2083 </span>            :     clear() noexcept</a>
 <a name="2084"><span class="lineNum">    2084 </span>            :     {</a>
 <a name="2085"><span class="lineNum">    2085 </span>            :       this-&gt;_M_deallocate_nodes(_M_begin());</a>
-<a name="2086"><span class="lineNum">    2086 </span><span class="lineCov">          1 :       __builtin_memset(_M_buckets, 0, _M_bucket_count * sizeof(__bucket_type));</span></a>
-<a name="2087"><span class="lineNum">    2087 </span><span class="lineCov">          1 :       _M_element_count = 0;</span></a>
-<a name="2088"><span class="lineNum">    2088 </span><span class="lineCov">          1 :       _M_before_begin._M_nxt = nullptr;</span></a>
-<a name="2089"><span class="lineNum">    2089 </span><span class="lineCov">          1 :     }</span></a>
+<a name="2086"><span class="lineNum">    2086 </span><span class="lineNoCov">          0 :       __builtin_memset(_M_buckets, 0, _M_bucket_count * sizeof(__bucket_type));</span></a>
+<a name="2087"><span class="lineNum">    2087 </span><span class="lineNoCov">          0 :       _M_element_count = 0;</span></a>
+<a name="2088"><span class="lineNum">    2088 </span><span class="lineNoCov">          0 :       _M_before_begin._M_nxt = nullptr;</span></a>
+<a name="2089"><span class="lineNum">    2089 </span><span class="lineNoCov">          0 :     }</span></a>
 <a name="2090"><span class="lineNum">    2090 </span>            : </a>
 <a name="2091"><span class="lineNum">    2091 </span>            :   template&lt;typename _Key, typename _Value,</a>
 <a name="2092"><span class="lineNum">    2092 </span>            :            typename _Alloc, typename _ExtractKey, typename _Equal,</a>

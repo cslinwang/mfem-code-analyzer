@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2023-11-26 14:16:31</td>
+            <td class="headerValue">2023-12-12 04:44:36</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">2</td>
@@ -232,7 +232,7 @@
 <a name="170"><span class="lineNum">     170 </span>            :        transformations. */</a>
 <a name="171"><span class="lineNum">     171 </span>            :    virtual int TransformBack(const Vector &amp;pt, IntegrationPoint &amp;ip) = 0;</a>
 <a name="172"><span class="lineNum">     172 </span>            : </a>
-<a name="173"><span class="lineNum">     173 </span><span class="lineCov">         64 :    virtual ~ElementTransformation() { }</span></a>
+<a name="173"><span class="lineNum">     173 </span><span class="lineCov">        144 :    virtual ~ElementTransformation() { }</span></a>
 <a name="174"><span class="lineNum">     174 </span>            : };</a>
 <a name="175"><span class="lineNum">     175 </span>            : </a>
 <a name="176"><span class="lineNum">     176 </span>            : </a>
@@ -508,7 +508,7 @@
 <a name="446"><span class="lineNum">     446 </span>            :       return inv_tr.Transform(v, ip);</a>
 <a name="447"><span class="lineNum">     447 </span>            :    }</a>
 <a name="448"><span class="lineNum">     448 </span>            : </a>
-<a name="449"><span class="lineNum">     449 </span><span class="lineCov">        128 :    virtual ~IsoparametricTransformation() { }</span></a>
+<a name="449"><span class="lineNum">     449 </span><span class="lineCov">        288 :    virtual ~IsoparametricTransformation() { }</span></a>
 <a name="450"><span class="lineNum">     450 </span>            : </a>
 <a name="451"><span class="lineNum">     451 </span>            :    MFEM_DEPRECATED void FinalizeTransformation() {}</a>
 <a name="452"><span class="lineNum">     452 </span>            : };</a>

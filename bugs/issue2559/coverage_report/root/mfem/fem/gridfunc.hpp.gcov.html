@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2023-11-26 14:16:31</td>
+            <td class="headerValue">2023-12-12 04:44:36</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">1</td>
@@ -136,7 +136,7 @@
 <a name="74"><span class="lineNum">      74 </span>            : </a>
 <a name="75"><span class="lineNum">      75 </span>            : public:</a>
 <a name="76"><span class="lineNum">      76 </span>            : </a>
-<a name="77"><span class="lineNum">      77 </span><span class="lineCov">          4 :    GridFunction() { fes = NULL; fec = NULL; fes_sequence = 0; UseDevice(true); }</span></a>
+<a name="77"><span class="lineNum">      77 </span><span class="lineCov">          9 :    GridFunction() { fes = NULL; fec = NULL; fes_sequence = 0; UseDevice(true); }</span></a>
 <a name="78"><span class="lineNum">      78 </span>            : </a>
 <a name="79"><span class="lineNum">      79 </span>            :    /// Copy constructor. The internal true-dof vector #t_vec is not copied.</a>
 <a name="80"><span class="lineNum">      80 </span>            :    GridFunction(const GridFunction &amp;orig)</a>
@@ -778,7 +778,7 @@
 <a name="716"><span class="lineNum">     716 </span>            :    void SaveSTL(std::ostream &amp;out, int TimesToRefine = 1);</a>
 <a name="717"><span class="lineNum">     717 </span>            : </a>
 <a name="718"><span class="lineNum">     718 </span>            :    /// Destroys grid function.</a>
-<a name="719"><span class="lineNum">     719 </span><span class="lineCov">          4 :    virtual ~GridFunction() { Destroy(); }</span></a>
+<a name="719"><span class="lineNum">     719 </span><span class="lineCov">          9 :    virtual ~GridFunction() { Destroy(); }</span></a>
 <a name="720"><span class="lineNum">     720 </span>            : };</a>
 <a name="721"><span class="lineNum">     721 </span>            : </a>
 <a name="722"><span class="lineNum">     722 </span>            : </a>

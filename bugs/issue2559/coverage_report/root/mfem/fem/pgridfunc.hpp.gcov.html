@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2023-11-26 14:16:31</td>
+            <td class="headerValue">2023-12-12 04:44:36</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">1</td>
@@ -109,7 +109,7 @@
 <a name="47"><span class="lineNum">      47 </span>            :                               Array&lt;int&gt; &amp;attr);</a>
 <a name="48"><span class="lineNum">      48 </span>            : </a>
 <a name="49"><span class="lineNum">      49 </span>            : public:</a>
-<a name="50"><span class="lineNum">      50 </span><span class="lineCov">          4 :    ParGridFunction() { pfes = NULL; }</span></a>
+<a name="50"><span class="lineNum">      50 </span><span class="lineCov">          9 :    ParGridFunction() { pfes = NULL; }</span></a>
 <a name="51"><span class="lineNum">      51 </span>            : </a>
 <a name="52"><span class="lineNum">      52 </span>            :    /// Copy constructor. The internal vector #face_nbr_data is not copied.</a>
 <a name="53"><span class="lineNum">      53 </span>            :    ParGridFunction(const ParGridFunction &amp;orig)</a>
@@ -166,7 +166,7 @@
 <a name="104"><span class="lineNum">     104 </span>            : </a>
 <a name="105"><span class="lineNum">     105 </span>            :    /// Assign constant values to the ParGridFunction data.</a>
 <a name="106"><span class="lineNum">     106 </span>            :    ParGridFunction &amp;operator=(double value)</a>
-<a name="107"><span class="lineNum">     107 </span><span class="lineCov">          4 :    { GridFunction::operator=(value); return *this; }</span></a>
+<a name="107"><span class="lineNum">     107 </span><span class="lineCov">          9 :    { GridFunction::operator=(value); return *this; }</span></a>
 <a name="108"><span class="lineNum">     108 </span>            : </a>
 <a name="109"><span class="lineNum">     109 </span>            :    /// Copy the data from a Vector to the ParGridFunction data.</a>
 <a name="110"><span class="lineNum">     110 </span>            :    ParGridFunction &amp;operator=(const Vector &amp;v)</a>
@@ -500,7 +500,7 @@
 <a name="438"><span class="lineNum">     438 </span>            :    /// Merge the local grid functions</a>
 <a name="439"><span class="lineNum">     439 </span>            :    void SaveAsOne(std::ostream &amp;out = mfem::out) const;</a>
 <a name="440"><span class="lineNum">     440 </span>            : </a>
-<a name="441"><span class="lineNum">     441 </span><span class="lineCov">          8 :    virtual ~ParGridFunction() { }</span></a>
+<a name="441"><span class="lineNum">     441 </span><span class="lineCov">         18 :    virtual ~ParGridFunction() { }</span></a>
 <a name="442"><span class="lineNum">     442 </span>            : };</a>
 <a name="443"><span class="lineNum">     443 </span>            : </a>
 <a name="444"><span class="lineNum">     444 </span>            : </a>

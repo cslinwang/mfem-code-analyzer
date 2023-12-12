@@ -47,7 +47,7 @@ int main(int argc, char *argv[])
 
 
    // Parse command-line options.
-   const char *mesh_file = "../../data/star.mesh";
+   const char *mesh_file = "/root/mfem-code-analyzer/bugs/issue2559/manifold.msh";
    int order = 1;
    bool static_cond = false;
    int ser_ref_levels = 1;

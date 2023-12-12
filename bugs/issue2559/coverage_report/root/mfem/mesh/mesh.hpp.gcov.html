@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2023-11-26 14:16:31</td>
+            <td class="headerValue">2023-12-12 04:44:36</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">1</td>
@@ -904,7 +904,7 @@
 <a name="842"><span class="lineNum">     842 </span>            :    }</a>
 <a name="843"><span class="lineNum">     843 </span>            : </a>
 <a name="844"><span class="lineNum">     844 </span>            :    /// Clear the contents of the Mesh.</a>
-<a name="845"><span class="lineNum">     845 </span><span class="lineCov">          4 :    void Clear() { Destroy(); SetEmpty(); }</span></a>
+<a name="845"><span class="lineNum">     845 </span><span class="lineCov">          9 :    void Clear() { Destroy(); SetEmpty(); }</span></a>
 <a name="846"><span class="lineNum">     846 </span>            : </a>
 <a name="847"><span class="lineNum">     847 </span>            :    /** @brief Get the mesh generator/type.</a>
 <a name="848"><span class="lineNum">     848 </span>            : </a>
@@ -928,7 +928,7 @@
 <a name="866"><span class="lineNum">     866 </span>            :    inline int GetNV() const { return NumOfVertices; }</a>
 <a name="867"><span class="lineNum">     867 </span>            : </a>
 <a name="868"><span class="lineNum">     868 </span>            :    /// Returns number of elements.</a>
-<a name="869"><span class="lineNum">     869 </span><span class="lineCov">          4 :    inline int GetNE() const { return NumOfElements; }</span></a>
+<a name="869"><span class="lineNum">     869 </span><span class="lineCov">          9 :    inline int GetNE() const { return NumOfElements; }</span></a>
 <a name="870"><span class="lineNum">     870 </span>            : </a>
 <a name="871"><span class="lineNum">     871 </span>            :    /// Returns number of boundary elements.</a>
 <a name="872"><span class="lineNum">     872 </span>            :    inline int GetNBE() const { return NumOfBdrElements; }</a>
@@ -993,7 +993,7 @@
 <a name="931"><span class="lineNum">     931 </span>            :    inline int EulerNumber2D() const</a>
 <a name="932"><span class="lineNum">     932 </span>            :    { return NumOfVertices - NumOfEdges + NumOfElements; }</a>
 <a name="933"><span class="lineNum">     933 </span>            : </a>
-<a name="934"><span class="lineNum">     934 </span><span class="lineCov">          4 :    int Dimension() const { return Dim; }</span></a>
+<a name="934"><span class="lineNum">     934 </span><span class="lineCov">          9 :    int Dimension() const { return Dim; }</span></a>
 <a name="935"><span class="lineNum">     935 </span>            :    int SpaceDimension() const { return spaceDim; }</a>
 <a name="936"><span class="lineNum">     936 </span>            : </a>
 <a name="937"><span class="lineNum">     937 </span>            :    /// @brief Return pointer to vertex i's coordinates.</a>
@@ -1620,7 +1620,7 @@
 <a name="1558"><span class="lineNum">    1558 </span>            :    void Swap(Mesh&amp; other, bool non_geometry);</a>
 <a name="1559"><span class="lineNum">    1559 </span>            : </a>
 <a name="1560"><span class="lineNum">    1560 </span>            :    /// Destroys Mesh.</a>
-<a name="1561"><span class="lineNum">    1561 </span><span class="lineCov">         24 :    virtual ~Mesh() { DestroyPointers(); }</span></a>
+<a name="1561"><span class="lineNum">    1561 </span><span class="lineCov">         54 :    virtual ~Mesh() { DestroyPointers(); }</span></a>
 <a name="1562"><span class="lineNum">    1562 </span>            : </a>
 <a name="1563"><span class="lineNum">    1563 </span>            : #ifdef MFEM_DEBUG</a>
 <a name="1564"><span class="lineNum">    1564 </span>            :    /// Output an NCMesh-compatible debug dump.</a>

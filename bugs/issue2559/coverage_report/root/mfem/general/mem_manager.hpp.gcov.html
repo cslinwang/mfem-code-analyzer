@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2023-11-26 14:16:31</td>
+            <td class="headerValue">2023-12-12 04:44:36</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">16</td>
@@ -239,7 +239,7 @@
 <a name="177"><span class="lineNum">     177 </span>            : public:</a>
 <a name="178"><span class="lineNum">     178 </span>            :    /** Default constructor, sets the host pointer to nullptr and the metadata to</a>
 <a name="179"><span class="lineNum">     179 </span>            :        meaningful default values. */</a>
-<a name="180"><span class="lineNum">     180 </span><span class="lineCov">         20 :    Memory() { Reset(); }</span></a>
+<a name="180"><span class="lineNum">     180 </span><span class="lineCov">         50 :    Memory() { Reset(); }</span></a>
 <a name="181"><span class="lineNum">     181 </span>            : </a>
 <a name="182"><span class="lineNum">     182 </span>            :    /// Copy constructor: default.</a>
 <a name="183"><span class="lineNum">     183 </span>            :    Memory(const Memory &amp;orig) = default;</a>
@@ -262,7 +262,7 @@
 <a name="200"><span class="lineNum">     200 </span>            :        @a mt. */</a>
 <a name="201"><span class="lineNum">     201 </span>            :    /** The newly allocated memory is not initialized, however the given</a>
 <a name="202"><span class="lineNum">     202 </span>            :        MemoryType is still set as valid. */</a>
-<a name="203"><span class="lineNum">     203 </span><span class="lineCov">         20 :    Memory(int size, MemoryType mt) { New(size, mt); }</span></a>
+<a name="203"><span class="lineNum">     203 </span><span class="lineCov">         70 :    Memory(int size, MemoryType mt) { New(size, mt); }</span></a>
 <a name="204"><span class="lineNum">     204 </span>            : </a>
 <a name="205"><span class="lineNum">     205 </span>            :    /** @brief Allocate memory for @a size entries with the given host MemoryType</a>
 <a name="206"><span class="lineNum">     206 </span>            :        @a h_mt and device MemoryType @a d_mt. */</a>
@@ -321,14 +321,14 @@
 <a name="259"><span class="lineNum">     259 </span>            :    { flags = flags &amp; ~(OWNS_HOST | OWNS_DEVICE | OWNS_INTERNAL); }</a>
 <a name="260"><span class="lineNum">     260 </span>            : </a>
 <a name="261"><span class="lineNum">     261 </span>            :    /// Read the internal device flag.</a>
-<a name="262"><span class="lineNum">     262 </span><span class="lineCov">         20 :    bool UseDevice() const { return flags &amp; USE_DEVICE; }</span></a>
+<a name="262"><span class="lineNum">     262 </span><span class="lineCov">         70 :    bool UseDevice() const { return flags &amp; USE_DEVICE; }</span></a>
 <a name="263"><span class="lineNum">     263 </span>            : </a>
 <a name="264"><span class="lineNum">     264 </span>            :    /// Set the internal device flag.</a>
 <a name="265"><span class="lineNum">     265 </span>            :    void UseDevice(bool use_dev) const</a>
-<a name="266"><span class="lineNum">     266 </span><span class="lineCov">         20 :    { flags = use_dev ? (flags | USE_DEVICE) : (flags &amp; ~USE_DEVICE); }</span></a>
+<a name="266"><span class="lineNum">     266 </span><span class="lineCov">         70 :    { flags = use_dev ? (flags | USE_DEVICE) : (flags &amp; ~USE_DEVICE); }</span></a>
 <a name="267"><span class="lineNum">     267 </span>            : </a>
 <a name="268"><span class="lineNum">     268 </span>            :    /// Return the size of the allocated memory.</a>
-<a name="269"><span class="lineNum">     269 </span><span class="lineCov">         64 :    int Capacity() const { return capacity; }</span></a>
+<a name="269"><span class="lineNum">     269 </span><span class="lineCov">        224 :    int Capacity() const { return capacity; }</span></a>
 <a name="270"><span class="lineNum">     270 </span>            : </a>
 <a name="271"><span class="lineNum">     271 </span>            :    /// Reset the memory to be empty, ensuring that Delete() will be a no-op.</a>
 <a name="272"><span class="lineNum">     272 </span>            :    /** This is the Memory class equivalent to setting a pointer to NULL, see</a>
@@ -600,7 +600,7 @@
 <a name="538"><span class="lineNum">     538 </span>            : #if __cplusplus &lt; 201703L</a>
 <a name="539"><span class="lineNum">     539 </span>            :    template&lt;bool dummy&gt; struct Alloc&lt;def_align_bytes,dummy&gt;</a>
 <a name="540"><span class="lineNum">     540 </span>            :    {</a>
-<a name="541"><span class="lineNum">     541 </span><span class="lineCov">         28 :       static inline T *New(std::size_t size) { return new T[size]; }</span></a>
+<a name="541"><span class="lineNum">     541 </span><span class="lineCov">         88 :       static inline T *New(std::size_t size) { return new T[size]; }</span></a>
 <a name="542"><span class="lineNum">     542 </span>            :    };</a>
 <a name="543"><span class="lineNum">     543 </span>            : #endif</a>
 <a name="544"><span class="lineNum">     544 </span>            : </a>
@@ -863,7 +863,7 @@
 <a name="801"><span class="lineNum">     801 </span>            :    /// returning the number of printed pointers</a>
 <a name="802"><span class="lineNum">     802 </span>            :    int PrintAliases(std::ostream &amp;out = mfem::out);</a>
 <a name="803"><span class="lineNum">     803 </span>            : </a>
-<a name="804"><span class="lineNum">     804 </span><span class="lineCov">         28 :    static MemoryType GetHostMemoryType() { return host_mem_type; }</span></a>
+<a name="804"><span class="lineNum">     804 </span><span class="lineCov">         68 :    static MemoryType GetHostMemoryType() { return host_mem_type; }</span></a>
 <a name="805"><span class="lineNum">     805 </span>            :    static MemoryType GetDeviceMemoryType() { return device_mem_type; }</a>
 <a name="806"><span class="lineNum">     806 </span>            : };</a>
 <a name="807"><span class="lineNum">     807 </span>            : </a>
@@ -873,42 +873,42 @@
 <a name="811"><span class="lineNum">     811 </span>            : template &lt;typename T&gt;</a>
 <a name="812"><span class="lineNum">     812 </span>            : inline void Memory&lt;T&gt;::Reset()</a>
 <a name="813"><span class="lineNum">     813 </span>            : {</a>
-<a name="814"><span class="lineNum">     814 </span><span class="lineCov">         20 :    h_ptr = NULL;</span></a>
-<a name="815"><span class="lineNum">     815 </span><span class="lineCov">         20 :    h_mt = MemoryManager::GetHostMemoryType();</span></a>
-<a name="816"><span class="lineNum">     816 </span><span class="lineCov">         20 :    capacity = 0;</span></a>
-<a name="817"><span class="lineNum">     817 </span><span class="lineCov">         20 :    flags = 0;</span></a>
+<a name="814"><span class="lineNum">     814 </span><span class="lineCov">         50 :    h_ptr = NULL;</span></a>
+<a name="815"><span class="lineNum">     815 </span><span class="lineCov">         50 :    h_mt = MemoryManager::GetHostMemoryType();</span></a>
+<a name="816"><span class="lineNum">     816 </span><span class="lineCov">         50 :    capacity = 0;</span></a>
+<a name="817"><span class="lineNum">     817 </span><span class="lineCov">         50 :    flags = 0;</span></a>
 <a name="818"><span class="lineNum">     818 </span>            : }</a>
 <a name="819"><span class="lineNum">     819 </span>            : </a>
 <a name="820"><span class="lineNum">     820 </span>            : template &lt;typename T&gt;</a>
 <a name="821"><span class="lineNum">     821 </span>            : inline void Memory&lt;T&gt;::Reset(MemoryType host_mt)</a>
 <a name="822"><span class="lineNum">     822 </span>            : {</a>
-<a name="823"><span class="lineNum">     823 </span><span class="lineCov">      16268 :    h_ptr = NULL;</span></a>
+<a name="823"><span class="lineNum">     823 </span><span class="lineCov">      48377 :    h_ptr = NULL;</span></a>
 <a name="824"><span class="lineNum">     824 </span>            :    h_mt = host_mt;</a>
-<a name="825"><span class="lineNum">     825 </span><span class="lineCov">      16268 :    capacity = 0;</span></a>
-<a name="826"><span class="lineNum">     826 </span><span class="lineCov">      16268 :    flags = 0;</span></a>
+<a name="825"><span class="lineNum">     825 </span><span class="lineCov">      48377 :    capacity = 0;</span></a>
+<a name="826"><span class="lineNum">     826 </span><span class="lineCov">      48377 :    flags = 0;</span></a>
 <a name="827"><span class="lineNum">     827 </span>            : }</a>
 <a name="828"><span class="lineNum">     828 </span>            : </a>
 <a name="829"><span class="lineNum">     829 </span>            : template &lt;typename T&gt;</a>
-<a name="830"><span class="lineNum">     830 </span><span class="lineCov">          8 : inline void Memory&lt;T&gt;::New(int size)</span></a>
+<a name="830"><span class="lineNum">     830 </span><span class="lineCov">         18 : inline void Memory&lt;T&gt;::New(int size)</span></a>
 <a name="831"><span class="lineNum">     831 </span>            : {</a>
-<a name="832"><span class="lineNum">     832 </span><span class="lineCov">          8 :    capacity = size;</span></a>
-<a name="833"><span class="lineNum">     833 </span><span class="lineCov">          8 :    flags = OWNS_HOST | VALID_HOST;</span></a>
-<a name="834"><span class="lineNum">     834 </span><span class="lineCov">          8 :    h_mt = MemoryManager::GetHostMemoryType();</span></a>
-<a name="835"><span class="lineNum">     835 </span><span class="lineCov">          8 :    h_ptr = (h_mt == MemoryType::HOST) ? NewHOST(size) :</span></a>
+<a name="832"><span class="lineNum">     832 </span><span class="lineCov">         18 :    capacity = size;</span></a>
+<a name="833"><span class="lineNum">     833 </span><span class="lineCov">         18 :    flags = OWNS_HOST | VALID_HOST;</span></a>
+<a name="834"><span class="lineNum">     834 </span><span class="lineCov">         18 :    h_mt = MemoryManager::GetHostMemoryType();</span></a>
+<a name="835"><span class="lineNum">     835 </span><span class="lineCov">         18 :    h_ptr = (h_mt == MemoryType::HOST) ? NewHOST(size) :</span></a>
 <a name="836"><span class="lineNum">     836 </span><span class="lineNoCov">          0 :            (T*)MemoryManager::New_(nullptr, size*sizeof(T), h_mt, flags);</span></a>
-<a name="837"><span class="lineNum">     837 </span><span class="lineCov">          8 : }</span></a>
+<a name="837"><span class="lineNum">     837 </span><span class="lineCov">         18 : }</span></a>
 <a name="838"><span class="lineNum">     838 </span>            : </a>
 <a name="839"><span class="lineNum">     839 </span>            : template &lt;typename T&gt;</a>
-<a name="840"><span class="lineNum">     840 </span><span class="lineCov">         20 : inline void Memory&lt;T&gt;::New(int size, MemoryType mt)</span></a>
+<a name="840"><span class="lineNum">     840 </span><span class="lineCov">         70 : inline void Memory&lt;T&gt;::New(int size, MemoryType mt)</span></a>
 <a name="841"><span class="lineNum">     841 </span>            : {</a>
-<a name="842"><span class="lineNum">     842 </span><span class="lineCov">         20 :    capacity = size;</span></a>
-<a name="843"><span class="lineNum">     843 </span><span class="lineCov">         20 :    const size_t bytes = size*sizeof(T);</span></a>
+<a name="842"><span class="lineNum">     842 </span><span class="lineCov">         70 :    capacity = size;</span></a>
+<a name="843"><span class="lineNum">     843 </span><span class="lineCov">         70 :    const size_t bytes = size*sizeof(T);</span></a>
 <a name="844"><span class="lineNum">     844 </span>            :    const bool mt_host = mt == MemoryType::HOST;</a>
-<a name="845"><span class="lineNum">     845 </span><span class="lineCov">         20 :    if (mt_host) { flags = OWNS_HOST | VALID_HOST; }</span></a>
-<a name="846"><span class="lineNum">     846 </span><span class="lineCov">         20 :    h_mt = IsHostMemory(mt) ? mt : MemoryManager::GetDualMemoryType(mt);</span></a>
-<a name="847"><span class="lineNum">     847 </span><span class="lineCov">         20 :    T *h_tmp = (h_mt == MemoryType::HOST) ? NewHOST(size) : nullptr;</span></a>
-<a name="848"><span class="lineNum">     848 </span><span class="lineCov">         20 :    h_ptr = (mt_host) ? h_tmp : (T*)MemoryManager::New_(h_tmp, bytes, mt, flags);</span></a>
-<a name="849"><span class="lineNum">     849 </span><span class="lineCov">         20 : }</span></a>
+<a name="845"><span class="lineNum">     845 </span><span class="lineCov">         70 :    if (mt_host) { flags = OWNS_HOST | VALID_HOST; }</span></a>
+<a name="846"><span class="lineNum">     846 </span><span class="lineCov">         70 :    h_mt = IsHostMemory(mt) ? mt : MemoryManager::GetDualMemoryType(mt);</span></a>
+<a name="847"><span class="lineNum">     847 </span><span class="lineCov">         70 :    T *h_tmp = (h_mt == MemoryType::HOST) ? NewHOST(size) : nullptr;</span></a>
+<a name="848"><span class="lineNum">     848 </span><span class="lineCov">         70 :    h_ptr = (mt_host) ? h_tmp : (T*)MemoryManager::New_(h_tmp, bytes, mt, flags);</span></a>
+<a name="849"><span class="lineNum">     849 </span><span class="lineCov">         70 : }</span></a>
 <a name="850"><span class="lineNum">     850 </span>            : </a>
 <a name="851"><span class="lineNum">     851 </span>            : template &lt;typename T&gt;</a>
 <a name="852"><span class="lineNum">     852 </span>            : inline void Memory&lt;T&gt;::New(int size, MemoryType h_mt, MemoryType d_mt)</a>
@@ -1037,19 +1037,19 @@
 <a name="975"><span class="lineNum">     975 </span>            : }</a>
 <a name="976"><span class="lineNum">     976 </span>            : </a>
 <a name="977"><span class="lineNum">     977 </span>            : template &lt;typename T&gt;</a>
-<a name="978"><span class="lineNum">     978 </span><span class="lineCov">      16268 : inline void Memory&lt;T&gt;::Delete()</span></a>
+<a name="978"><span class="lineNum">     978 </span><span class="lineCov">      48377 : inline void Memory&lt;T&gt;::Delete()</span></a>
 <a name="979"><span class="lineNum">     979 </span>            : {</a>
-<a name="980"><span class="lineNum">     980 </span><span class="lineCov">      16268 :    const bool registered = flags &amp; REGISTERED;</span></a>
-<a name="981"><span class="lineNum">     981 </span><span class="lineCov">      16268 :    const bool mt_host = h_mt == MemoryType::HOST;</span></a>
+<a name="980"><span class="lineNum">     980 </span><span class="lineCov">      48377 :    const bool registered = flags &amp; REGISTERED;</span></a>
+<a name="981"><span class="lineNum">     981 </span><span class="lineCov">      48377 :    const bool mt_host = h_mt == MemoryType::HOST;</span></a>
 <a name="982"><span class="lineNum">     982 </span>            :    const bool std_delete = !registered &amp;&amp; mt_host;</a>
 <a name="983"><span class="lineNum">     983 </span>            : </a>
-<a name="984"><span class="lineNum">     984 </span><span class="lineCov">      16268 :    if (std_delete ||</span></a>
+<a name="984"><span class="lineNum">     984 </span><span class="lineCov">      48377 :    if (std_delete ||</span></a>
 <a name="985"><span class="lineNum">     985 </span><span class="lineNoCov">          0 :        MemoryManager::Delete_((void*)h_ptr, h_mt, flags) == MemoryType::HOST)</span></a>
 <a name="986"><span class="lineNum">     986 </span>            :    {</a>
-<a name="987"><span class="lineNum">     987 </span><span class="lineCov">      16268 :       if (flags &amp; OWNS_HOST) { delete [] h_ptr; }</span></a>
+<a name="987"><span class="lineNum">     987 </span><span class="lineCov">      48377 :       if (flags &amp; OWNS_HOST) { delete [] h_ptr; }</span></a>
 <a name="988"><span class="lineNum">     988 </span>            :    }</a>
 <a name="989"><span class="lineNum">     989 </span>            :    Reset(h_mt);</a>
-<a name="990"><span class="lineNum">     990 </span><span class="lineCov">      16268 : }</span></a>
+<a name="990"><span class="lineNum">     990 </span><span class="lineCov">      48377 : }</span></a>
 <a name="991"><span class="lineNum">     991 </span>            : </a>
 <a name="992"><span class="lineNum">     992 </span>            : template &lt;typename T&gt;</a>
 <a name="993"><span class="lineNum">     993 </span>            : inline void Memory&lt;T&gt;::DeleteDevice(bool copy_to_host)</a>
@@ -1066,7 +1066,7 @@
 <a name="1004"><span class="lineNum">    1004 </span>            : {</a>
 <a name="1005"><span class="lineNum">    1005 </span>            :    MFEM_ASSERT((flags &amp; VALID_HOST) &amp;&amp; !(flags &amp; VALID_DEVICE),</a>
 <a name="1006"><span class="lineNum">    1006 </span>            :                &quot;invalid host pointer access&quot;);</a>
-<a name="1007"><span class="lineNum">    1007 </span><span class="lineCov">         24 :    return h_ptr[idx];</span></a>
+<a name="1007"><span class="lineNum">    1007 </span><span class="lineCov">         54 :    return h_ptr[idx];</span></a>
 <a name="1008"><span class="lineNum">    1008 </span>            : }</a>
 <a name="1009"><span class="lineNum">    1009 </span>            : </a>
 <a name="1010"><span class="lineNum">    1010 </span>            : template &lt;typename T&gt;</a>
@@ -1090,7 +1090,7 @@
 <a name="1028"><span class="lineNum">    1028 </span>            : inline Memory&lt;T&gt;::operator const T*() const</a>
 <a name="1029"><span class="lineNum">    1029 </span>            : {</a>
 <a name="1030"><span class="lineNum">    1030 </span>            :    MFEM_ASSERT(Empty() || (flags &amp; VALID_HOST), &quot;invalid host pointer access&quot;);</a>
-<a name="1031"><span class="lineNum">    1031 </span><span class="lineCov">       3004 :    return h_ptr;</span></a>
+<a name="1031"><span class="lineNum">    1031 </span><span class="lineCov">       9012 :    return h_ptr;</span></a>
 <a name="1032"><span class="lineNum">    1032 </span>            : }</a>
 <a name="1033"><span class="lineNum">    1033 </span>            : </a>
 <a name="1034"><span class="lineNum">    1034 </span>            : template &lt;typename T&gt; template &lt;typename U&gt;</a>
@@ -1175,9 +1175,9 @@
 <a name="1113"><span class="lineNum">    1113 </span>            : }</a>
 <a name="1114"><span class="lineNum">    1114 </span>            : </a>
 <a name="1115"><span class="lineNum">    1115 </span>            : template &lt;typename T&gt;</a>
-<a name="1116"><span class="lineNum">    1116 </span><span class="lineCov">         20 : inline MemoryType Memory&lt;T&gt;::GetMemoryType() const</span></a>
+<a name="1116"><span class="lineNum">    1116 </span><span class="lineCov">         70 : inline MemoryType Memory&lt;T&gt;::GetMemoryType() const</span></a>
 <a name="1117"><span class="lineNum">    1117 </span>            : {</a>
-<a name="1118"><span class="lineNum">    1118 </span><span class="lineCov">         20 :    if (!(flags &amp; VALID_DEVICE)) { return h_mt; }</span></a>
+<a name="1118"><span class="lineNum">    1118 </span><span class="lineCov">         70 :    if (!(flags &amp; VALID_DEVICE)) { return h_mt; }</span></a>
 <a name="1119"><span class="lineNum">    1119 </span><span class="lineNoCov">          0 :    return MemoryManager::GetDeviceMemoryType_(h_ptr, flags &amp; ALIAS);</span></a>
 <a name="1120"><span class="lineNum">    1120 </span>            : }</a>
 <a name="1121"><span class="lineNum">    1121 </span>            : </a>
@@ -1201,16 +1201,16 @@
 <a name="1139"><span class="lineNum">    1139 </span>            : }</a>
 <a name="1140"><span class="lineNum">    1140 </span>            : </a>
 <a name="1141"><span class="lineNum">    1141 </span>            : template &lt;typename T&gt;</a>
-<a name="1142"><span class="lineNum">    1142 </span><span class="lineCov">         20 : inline void Memory&lt;T&gt;::CopyFrom(const Memory &amp;src, int size)</span></a>
+<a name="1142"><span class="lineNum">    1142 </span><span class="lineCov">         70 : inline void Memory&lt;T&gt;::CopyFrom(const Memory &amp;src, int size)</span></a>
 <a name="1143"><span class="lineNum">    1143 </span>            : {</a>
-<a name="1144"><span class="lineNum">    1144 </span><span class="lineCov">         20 :    MFEM_VERIFY(src.capacity&gt;=size &amp;&amp; capacity&gt;=size, &quot;Incorrect size&quot;);</span></a>
-<a name="1145"><span class="lineNum">    1145 </span><span class="lineCov">         20 :    if (!(flags &amp; REGISTERED) &amp;&amp; !(src.flags &amp; REGISTERED))</span></a>
+<a name="1144"><span class="lineNum">    1144 </span><span class="lineCov">         70 :    MFEM_VERIFY(src.capacity&gt;=size &amp;&amp; capacity&gt;=size, &quot;Incorrect size&quot;);</span></a>
+<a name="1145"><span class="lineNum">    1145 </span><span class="lineCov">         70 :    if (!(flags &amp; REGISTERED) &amp;&amp; !(src.flags &amp; REGISTERED))</span></a>
 <a name="1146"><span class="lineNum">    1146 </span>            :    {</a>
-<a name="1147"><span class="lineNum">    1147 </span><span class="lineCov">         20 :       if (h_ptr != src.h_ptr &amp;&amp; size != 0)</span></a>
+<a name="1147"><span class="lineNum">    1147 </span><span class="lineCov">         70 :       if (h_ptr != src.h_ptr &amp;&amp; size != 0)</span></a>
 <a name="1148"><span class="lineNum">    1148 </span>            :       {</a>
 <a name="1149"><span class="lineNum">    1149 </span>            :          MFEM_ASSERT(h_ptr + size &lt;= src.h_ptr || src.h_ptr + size &lt;= h_ptr,</a>
 <a name="1150"><span class="lineNum">    1150 </span>            :                      &quot;data overlaps!&quot;);</a>
-<a name="1151"><span class="lineNum">    1151 </span><span class="lineCov">         16 :          std::memcpy(h_ptr, src, size*sizeof(T));</span></a>
+<a name="1151"><span class="lineNum">    1151 </span><span class="lineCov">         56 :          std::memcpy(h_ptr, src, size*sizeof(T));</span></a>
 <a name="1152"><span class="lineNum">    1152 </span>            :       }</a>
 <a name="1153"><span class="lineNum">    1153 </span>            :       // *this is not registered, so (flags &amp; VALID_HOST) must be true</a>
 <a name="1154"><span class="lineNum">    1154 </span>            :    }</a>
@@ -1218,7 +1218,7 @@
 <a name="1156"><span class="lineNum">    1156 </span>            :    {</a>
 <a name="1157"><span class="lineNum">    1157 </span><span class="lineNoCov">          0 :       MemoryManager::Copy_(h_ptr, src.h_ptr, size*sizeof(T), src.flags, flags);</span></a>
 <a name="1158"><span class="lineNum">    1158 </span>            :    }</a>
-<a name="1159"><span class="lineNum">    1159 </span><span class="lineCov">         20 : }</span></a>
+<a name="1159"><span class="lineNum">    1159 </span><span class="lineCov">         70 : }</span></a>
 <a name="1160"><span class="lineNum">    1160 </span>            : </a>
 <a name="1161"><span class="lineNum">    1161 </span>            : template &lt;typename T&gt;</a>
 <a name="1162"><span class="lineNum">    1162 </span>            : inline void Memory&lt;T&gt;::CopyFromHost(const T *src, int size)</a>

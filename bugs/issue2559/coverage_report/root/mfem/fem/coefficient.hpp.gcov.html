@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2023-11-26 14:16:31</td>
+            <td class="headerValue">2023-12-12 04:44:36</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">0</td>
@@ -104,7 +104,7 @@
 <a name="42"><span class="lineNum">      42 </span>            :    double time;</a>
 <a name="43"><span class="lineNum">      43 </span>            : </a>
 <a name="44"><span class="lineNum">      44 </span>            : public:</a>
-<a name="45"><span class="lineNum">      45 </span><span class="lineCov">          4 :    Coefficient() { time = 0.; }</span></a>
+<a name="45"><span class="lineNum">      45 </span><span class="lineCov">          9 :    Coefficient() { time = 0.; }</span></a>
 <a name="46"><span class="lineNum">      46 </span>            : </a>
 <a name="47"><span class="lineNum">      47 </span>            :    /// Set the time for time dependent coefficients</a>
 <a name="48"><span class="lineNum">      48 </span>            :    virtual void SetTime(double t) { time = t; }</a>
@@ -279,7 +279,7 @@
 <a name="217"><span class="lineNum">     217 </span>            :    /// Define a time-independent coefficient from a std function</a>
 <a name="218"><span class="lineNum">     218 </span>            :    /** \param F time-independent std::function */</a>
 <a name="219"><span class="lineNum">     219 </span>            :    FunctionCoefficient(std::function&lt;double(const Vector &amp;)&gt; F)</a>
-<a name="220"><span class="lineNum">     220 </span><span class="lineCov">          4 :       : Function(std::move(F))</span></a>
+<a name="220"><span class="lineNum">     220 </span><span class="lineCov">          9 :       : Function(std::move(F))</span></a>
 <a name="221"><span class="lineNum">     221 </span>            :    { }</a>
 <a name="222"><span class="lineNum">     222 </span>            : </a>
 <a name="223"><span class="lineNum">     223 </span>            :    /// Define a time-dependent coefficient from a std function</a>

@@ -13,7 +13,7 @@ cd /root/mfem || exit 1
 # make clean
 # git clean -fdx
 # git reset --hard
-# 清楚覆盖率信息
+# 清除覆盖率信息
 find /root/mfem \( -name '*.gcda' -o -name '*.gcov' \) -delete
 
 # 使用 awk 进行替换
@@ -84,3 +84,6 @@ catch.hpp中的：
     constexpr std::size_t sigStackSize = 32768;
 即可
 make test
+
+## 删除gcno文件
+find . -name "*.gcno" -exec rm {} \;

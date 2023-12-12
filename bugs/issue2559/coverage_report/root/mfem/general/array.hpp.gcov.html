@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2023-11-26 14:16:31</td>
+            <td class="headerValue">2023-12-12 04:44:36</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">2</td>
@@ -123,14 +123,14 @@
 <a name="61"><span class="lineNum">      61 </span>            :    friend void Swap&lt;T&gt;(Array&lt;T&gt; &amp;, Array&lt;T&gt; &amp;);</a>
 <a name="62"><span class="lineNum">      62 </span>            : </a>
 <a name="63"><span class="lineNum">      63 </span>            :    /// Creates an empty array</a>
-<a name="64"><span class="lineNum">      64 </span><span class="lineCov">          8 :    inline Array() : size(0) { data.Reset(); }</span></a>
+<a name="64"><span class="lineNum">      64 </span><span class="lineCov">         23 :    inline Array() : size(0) { data.Reset(); }</span></a>
 <a name="65"><span class="lineNum">      65 </span>            : </a>
 <a name="66"><span class="lineNum">      66 </span>            :    /// Creates an empty array with a given MemoryType</a>
 <a name="67"><span class="lineNum">      67 </span>            :    inline Array(MemoryType mt) : size(0) { data.Reset(mt); }</a>
 <a name="68"><span class="lineNum">      68 </span>            : </a>
 <a name="69"><span class="lineNum">      69 </span>            :    /// Creates array of @a asize elements</a>
-<a name="70"><span class="lineNum">      70 </span><span class="lineCov">          4 :    explicit inline Array(int asize)</span></a>
-<a name="71"><span class="lineNum">      71 </span><span class="lineCov">          4 :       : size(asize) { asize &gt; 0 ? data.New(asize) : data.Reset(); }</span></a>
+<a name="70"><span class="lineNum">      70 </span><span class="lineCov">          9 :    explicit inline Array(int asize)</span></a>
+<a name="71"><span class="lineNum">      71 </span><span class="lineCov">          9 :       : size(asize) { asize &gt; 0 ? data.New(asize) : data.Reset(); }</span></a>
 <a name="72"><span class="lineNum">      72 </span>            : </a>
 <a name="73"><span class="lineNum">      73 </span>            :    /// Creates array of @a asize elements with a given MemoryType</a>
 <a name="74"><span class="lineNum">      74 </span>            :    inline Array(int asize, MemoryType mt)</a>
@@ -155,7 +155,7 @@
 <a name="93"><span class="lineNum">      93 </span>            :    explicit inline Array(const CT (&amp;values)[N]);</a>
 <a name="94"><span class="lineNum">      94 </span>            : </a>
 <a name="95"><span class="lineNum">      95 </span>            :    /// Destructor</a>
-<a name="96"><span class="lineNum">      96 </span><span class="lineCov">         24 :    inline ~Array() { TypeAssert(); data.Delete(); }</span></a>
+<a name="96"><span class="lineNum">      96 </span><span class="lineCov">         59 :    inline ~Array() { TypeAssert(); data.Delete(); }</span></a>
 <a name="97"><span class="lineNum">      97 </span>            : </a>
 <a name="98"><span class="lineNum">      98 </span>            :    /// Assignment operator: deep copy from 'src'.</a>
 <a name="99"><span class="lineNum">      99 </span>            :    Array&lt;T&gt; &amp;operator=(const Array&lt;T&gt; &amp;src) { src.Copy(*this); return *this; }</a>
@@ -718,15 +718,15 @@
 <a name="656"><span class="lineNum">     656 </span>            : }</a>
 <a name="657"><span class="lineNum">     657 </span>            : </a>
 <a name="658"><span class="lineNum">     658 </span>            : template &lt;class T&gt;</a>
-<a name="659"><span class="lineNum">     659 </span><span class="lineCov">         20 : inline void Array&lt;T&gt;::GrowSize(int minsize)</span></a>
+<a name="659"><span class="lineNum">     659 </span><span class="lineCov">         70 : inline void Array&lt;T&gt;::GrowSize(int minsize)</span></a>
 <a name="660"><span class="lineNum">     660 </span>            : {</a>
-<a name="661"><span class="lineNum">     661 </span><span class="lineCov">         20 :    const int nsize = std::max(minsize, 2 * data.Capacity());</span></a>
-<a name="662"><span class="lineNum">     662 </span><span class="lineCov">         20 :    Memory&lt;T&gt; p(nsize, data.GetMemoryType());</span></a>
-<a name="663"><span class="lineNum">     663 </span><span class="lineCov">         20 :    p.CopyFrom(data, size);</span></a>
+<a name="661"><span class="lineNum">     661 </span><span class="lineCov">         70 :    const int nsize = std::max(minsize, 2 * data.Capacity());</span></a>
+<a name="662"><span class="lineNum">     662 </span><span class="lineCov">         70 :    Memory&lt;T&gt; p(nsize, data.GetMemoryType());</span></a>
+<a name="663"><span class="lineNum">     663 </span><span class="lineCov">         70 :    p.CopyFrom(data, size);</span></a>
 <a name="664"><span class="lineNum">     664 </span>            :    p.UseDevice(data.UseDevice());</a>
-<a name="665"><span class="lineNum">     665 </span><span class="lineCov">         20 :    data.Delete();</span></a>
-<a name="666"><span class="lineNum">     666 </span><span class="lineCov">         20 :    data = p;</span></a>
-<a name="667"><span class="lineNum">     667 </span><span class="lineCov">         20 : }</span></a>
+<a name="665"><span class="lineNum">     665 </span><span class="lineCov">         70 :    data.Delete();</span></a>
+<a name="666"><span class="lineNum">     666 </span><span class="lineCov">         70 :    data = p;</span></a>
+<a name="667"><span class="lineNum">     667 </span><span class="lineCov">         70 : }</span></a>
 <a name="668"><span class="lineNum">     668 </span>            : </a>
 <a name="669"><span class="lineNum">     669 </span>            : template &lt;typename T&gt; template &lt;typename CT&gt;</a>
 <a name="670"><span class="lineNum">     670 </span>            : inline Array&lt;T&gt; &amp;Array&lt;T&gt;::operator=(const Array&lt;CT&gt; &amp;src)</a>
@@ -740,11 +740,11 @@
 <a name="678"><span class="lineNum">     678 </span>            : inline void Array&lt;T&gt;::SetSize(int nsize)</a>
 <a name="679"><span class="lineNum">     679 </span>            : {</a>
 <a name="680"><span class="lineNum">     680 </span>            :    MFEM_ASSERT( nsize&gt;=0, &quot;Size must be non-negative.  It is &quot; &lt;&lt; nsize );</a>
-<a name="681"><span class="lineNum">     681 </span><span class="lineCov">         44 :    if (nsize &gt; Capacity())</span></a>
+<a name="681"><span class="lineNum">     681 </span><span class="lineCov">        154 :    if (nsize &gt; Capacity())</span></a>
 <a name="682"><span class="lineNum">     682 </span>            :    {</a>
-<a name="683"><span class="lineNum">     683 </span><span class="lineCov">         20 :       GrowSize(nsize);</span></a>
+<a name="683"><span class="lineNum">     683 </span><span class="lineCov">         70 :       GrowSize(nsize);</span></a>
 <a name="684"><span class="lineNum">     684 </span>            :    }</a>
-<a name="685"><span class="lineNum">     685 </span><span class="lineCov">         44 :    size = nsize;</span></a>
+<a name="685"><span class="lineNum">     685 </span><span class="lineCov">        154 :    size = nsize;</span></a>
 <a name="686"><span class="lineNum">     686 </span>            : }</a>
 <a name="687"><span class="lineNum">     687 </span>            : </a>
 <a name="688"><span class="lineNum">     688 </span>            : template &lt;class T&gt;</a>
@@ -809,11 +809,11 @@
 <a name="747"><span class="lineNum">     747 </span>            : }</a>
 <a name="748"><span class="lineNum">     748 </span>            : </a>
 <a name="749"><span class="lineNum">     749 </span>            : template &lt;class T&gt;</a>
-<a name="750"><span class="lineNum">     750 </span><span class="lineCov">         44 : inline int Array&lt;T&gt;::Append(const T &amp;el)</span></a>
+<a name="750"><span class="lineNum">     750 </span><span class="lineCov">        154 : inline int Array&lt;T&gt;::Append(const T &amp;el)</span></a>
 <a name="751"><span class="lineNum">     751 </span>            : {</a>
-<a name="752"><span class="lineNum">     752 </span><span class="lineCov">         44 :    SetSize(size+1);</span></a>
-<a name="753"><span class="lineNum">     753 </span><span class="lineCov">         44 :    data[size-1] = el;</span></a>
-<a name="754"><span class="lineNum">     754 </span><span class="lineCov">         44 :    return size;</span></a>
+<a name="752"><span class="lineNum">     752 </span><span class="lineCov">        154 :    SetSize(size+1);</span></a>
+<a name="753"><span class="lineNum">     753 </span><span class="lineCov">        154 :    data[size-1] = el;</span></a>
+<a name="754"><span class="lineNum">     754 </span><span class="lineCov">        154 :    return size;</span></a>
 <a name="755"><span class="lineNum">     755 </span>            : }</a>
 <a name="756"><span class="lineNum">     756 </span>            : </a>
 <a name="757"><span class="lineNum">     757 </span>            : template &lt;class T&gt;</a>
@@ -951,9 +951,9 @@
 <a name="889"><span class="lineNum">     889 </span>            : template &lt;class T&gt;</a>
 <a name="890"><span class="lineNum">     890 </span>            : inline void Array&lt;T&gt;::operator=(const T &amp;a)</a>
 <a name="891"><span class="lineNum">     891 </span>            : {</a>
-<a name="892"><span class="lineNum">     892 </span><span class="lineCov">         24 :    for (int i = 0; i &lt; size; i++)</span></a>
+<a name="892"><span class="lineNum">     892 </span><span class="lineCov">         54 :    for (int i = 0; i &lt; size; i++)</span></a>
 <a name="893"><span class="lineNum">     893 </span>            :    {</a>
-<a name="894"><span class="lineNum">     894 </span><span class="lineCov">         20 :       data[i] = a;</span></a>
+<a name="894"><span class="lineNum">     894 </span><span class="lineCov">         45 :       data[i] = a;</span></a>
 <a name="895"><span class="lineNum">     895 </span>            :    }</a>
 <a name="896"><span class="lineNum">     896 </span>            : }</a>
 <a name="897"><span class="lineNum">     897 </span>            : </a>

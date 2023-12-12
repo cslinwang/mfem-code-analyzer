@@ -723,15 +723,31 @@ cd mfem
 make clean
 make all -j
 cd examples
-mpicxx -O3 -std=c++11 -I.. -I../../hypre/src/hypre/include tst.cpp -o tst -L.. -lmfem -L../../hypre/src/hypre/lib -lHYPRE -L../../metis-4.0 -lmetis -lrt
-（添加覆盖率的话使用：mpicxx -O3 -std=c++11 -fprofile-arcs -ftest-coverage -I.. -I../../hypre/src/hypre/include tst.cpp -o tst -L.. -lmfem -L../../hypre/src/hypre/lib -lHYPRE -L../../metis-4.0 -lmetis -lrt -lgcov）
+mpicxx -O3 -std=c++11 -fprofile-arcs -ftest-coverage -I.. -I../../hypre/src/hypre/include tst.cpp -o tst -L.. -lmfem -L../../hypre/src/hypre/lib -lHYPRE -L../../metis-4.0 -lmetis -lrt -lgcov
 
 mpirun -np 4 tst -m /root/mfem-code-analyzer/bugs/issue2559/manifold.msh
+结果：
+root@f64125032199:~/mfem/examples# mpirun -np 4 ./tst -m /root/mfem-code-analyzer/bugs/issue2559/manifold.msh
+Options used:
+   --mesh /root/mfem-code-analyzer/bugs/issue2559/manifold.msh
+   --refine-serial 1
+   --refine-parallel 1
+   --order 1
+   --no-visualization
+   --no-static-condensation
+   --relative-tolerance 1e-07
+   --absolute-tolerance 1e-15
+   --linear-iterations 100
 
 ### 1230成功.
 /root/mfem-code-analyzer/get_normal_testcase_covarage/add_coverage.sh
 mpicxx -O3 -std=c++11 -fprofile-arcs -ftest-coverage -I.. -I../../hypre/src/hypre/include 1230.cpp -o 1230 -L.. -lmfem -L../../hypre/src/hypre/lib -lHYPRE -L../../metis-4.0 -lmetis -lrt -lgcov
 mpirun -np 4 1230
+
+### 2599成功.
+/root/mfem-code-analyzer/get_normal_testcase_covarage/add_coverage.sh
+mpicxx -O3 -std=c++11 -fprofile-arcs -ftest-coverage -I.. -I../../hypre/src/hypre/include tst.cpp -o tst -L.. -lmfem -L../../hypre/src/hypre/lib -lHYPRE -L../../metis-4.0 -lmetis -lrt -lgcov
+mpirun -np 4 tst
 
 ### 1238成功.
 rm -rf hypre
