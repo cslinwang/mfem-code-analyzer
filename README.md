@@ -368,7 +368,8 @@ mpicxx  -O3 -std=c++11 -fprofile-arcs -ftest-coverage -I.. -I../../hypre/src/hyp
 mpirun -np 2 2363
 
 ### 2157
-789fe959fddce5ec7f43862666bbf82a4d1174cd的privious commit,替换issue中的用例
+复现sha:afde4abc8d3e3caebbc2127274a0de8097e257db
+替换issue中的用例
 /root/mfem-code-analyzer/get_normal_testcase_covarage/add_coverage.sh
 cd examples
 make 2157
@@ -757,13 +758,106 @@ mpicxx -O3 -std=c++11 -fprofile-arcs -ftest-coverage -I.. -I../../hypre/src/hypr
 valgrind --leak-check=full mpirun -np 2 1238
 
 ### 2343成功.
-切换到34ad9fca157368768af1869e9821876cf259f940
+复现sha:34ad9fca157368768af1869e9821876cf259f940
 先使用三条命令清理，然后注释
 将2343中的用例放入bug版本中
 /root/mfem-code-analyzer/get_normal_testcase_covarage/add_coverage.sh
 cd tests/unit
 ./unit_tests "First order ODE methods"
 结果：
+root@f64125032199:~/mfem/tests/unit# ./unit_tests "First order ODE methods"
+INFO: Test filter: First order ODE methods ~[Parallel] ~[MFEMData]
+Filters: First order ODE methods ~[Parallel] ~[MFEMData]
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+unit_tests is a Catch v2.13.9 host application.
+Run with -? for options
+
+-------------------------------------------------------------------------------
+First order ODE methods
+  AB2Solver()
+-------------------------------------------------------------------------------
+/root/mfem/tests/unit/linalg/test_ode.cpp:303
+...............................................................................
+
+/root/mfem/tests/unit/linalg/test_ode.cpp:306: FAILED:
+  REQUIRE( conv_rate + tol > 2.0 )
+with expansion:
+  1.004674203339746 > 2
+
+-------------------------------------------------------------------------------
+First order ODE methods
+  AB3Solver()
+-------------------------------------------------------------------------------
+/root/mfem/tests/unit/linalg/test_ode.cpp:315
+...............................................................................
+
+/root/mfem/tests/unit/linalg/test_ode.cpp:318: FAILED:
+  REQUIRE( conv_rate + tol > 3.0 )
+with expansion:
+  1.097019196313348 > 3
+
+-------------------------------------------------------------------------------
+First order ODE methods
+  AB4Solver()
+-------------------------------------------------------------------------------
+/root/mfem/tests/unit/linalg/test_ode.cpp:321
+...............................................................................
+
+/root/mfem/tests/unit/linalg/test_ode.cpp:324: FAILED:
+  REQUIRE( conv_rate + tol > 4.0 )
+with expansion:
+  1.096418543144751 > 4
+
+-------------------------------------------------------------------------------
+First order ODE methods
+  AB5Solver()
+-------------------------------------------------------------------------------
+/root/mfem/tests/unit/linalg/test_ode.cpp:327
+...............................................................................
+
+/root/mfem/tests/unit/linalg/test_ode.cpp:330: FAILED:
+  REQUIRE( conv_rate + tol > 5.0 )
+with expansion:
+  1.093047012642808 > 5
+
+-------------------------------------------------------------------------------
+First order ODE methods
+  AM2Solver()
+-------------------------------------------------------------------------------
+/root/mfem/tests/unit/linalg/test_ode.cpp:358
+...............................................................................
+
+/root/mfem/tests/unit/linalg/test_ode.cpp:361: FAILED:
+  REQUIRE( conv_rate + tol > 3.0 )
+with expansion:
+  1.099700679809844 > 3
+
+-------------------------------------------------------------------------------
+First order ODE methods
+  AM3Solver()
+-------------------------------------------------------------------------------
+/root/mfem/tests/unit/linalg/test_ode.cpp:370
+...............................................................................
+
+/root/mfem/tests/unit/linalg/test_ode.cpp:373: FAILED:
+  REQUIRE( conv_rate + tol > 4.0 )
+with expansion:
+  1.098198954704418 > 4
+
+-------------------------------------------------------------------------------
+First order ODE methods
+  AM4Solver()
+-------------------------------------------------------------------------------
+/root/mfem/tests/unit/linalg/test_ode.cpp:376
+...............................................................................
+
+/root/mfem/tests/unit/linalg/test_ode.cpp:379: FAILED:
+  REQUIRE( conv_rate + tol > 5.0 )
+with expansion:
+  1.096064884932531 > 5
+
+===============================================================================
 test cases:  1 |  0 passed | 1 failed
 assertions: 33 | 26 passed | 7 failed
 
