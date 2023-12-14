@@ -9,7 +9,7 @@ int main(int argc, char *argv[])
 
 
     // 2. Load the high-order quad mesh
-    const char *mesh_file = "/root/mfem/mfem/data/star-q2.mesh";
+    const char *mesh_file = "/root/mfem/data/star-q2.mesh";
     Mesh mesh(mesh_file, 1, 1);
 
     // 3. Look at element 0's element transformation's point matrix
