@@ -3358,6 +3358,153 @@ mpirun noticed that process rank 0 with PID 0 on node f64125032199 exited on sig
 ==3720569== For lists of detected and suppressed errors, rerun with: -s
 ==3720569== ERROR SUMMARY: 27 errors from 27 contexts (suppressed: 0 from 0)
 
+### 1871
+复现sha：7083d53dd7e59b2de82800e4571be5241f1fe7ad
+/root/mfem-code-analyzer/get_normal_testcase_covarage/add_coverage.sh
+cd examples
+mpicxx -O3 -std=c++11 --coverage -I.. -I../../hypre/src/hypre/include 1871.cpp -o 1871 -L.. -lmfem -L../../hypre/src/hypre/lib -lHYPRE -L../../metis-4.0 -lmetis -lrt
+mpirun -np 1 ./1871
+结果：
+root@f64125032199:~/mfem/examples# mpirun -np 1 ./1871
+MFEM mesh v1.0
+
+#
+# MFEM Geometry Types (see mesh/geom.hpp):
+#
+# POINT       = 0
+# SEGMENT     = 1
+# TRIANGLE    = 2
+# SQUARE      = 3
+# TETRAHEDRON = 4
+# CUBE        = 5
+# PRISM       = 6
+#
+
+dimension
+2
+
+elements
+4
+1 3 0 1 2 3
+1 3 1 4 5 2
+1 3 2 5 6 7
+1 3 3 2 7 8
+
+boundary
+8
+1 1 0 1
+4 1 3 0
+1 1 1 4
+2 1 4 5
+2 1 5 6
+3 1 6 7
+3 1 7 8
+4 1 8 3
+
+vertices
+9
+2
+0 0
+0.5 0
+0.5 0.5
+0 0.5
+1 0
+1 0.5
+1 1
+0.5 1
+0 1
+FiniteElementSpace
+FiniteElementCollection: RT_2D_P2
+VDim: 1
+Ordering: 1
+
+0
+0
+0
+0.125
+0.125
+0.125
+0.125
+0.125
+0.125
+0
+0
+0
+0
+0
+0
+0.5
+0.5
+0.5
+-0.125
+-0.125
+-0.125
+0.5
+0.5
+0.5
+0.5
+0.5
+0.5
+0.125
+0.125
+0.125
+0.5
+0.5
+0.5
+0
+0
+0
+-0.0095491503
+0.06545085
+-0.0095491503
+0.06545085
+-0.0095491503
+0.06545085
+-0.0095491503
+-0.0095491503
+-0.0095491503
+0.06545085
+0.06545085
+0.06545085
+-0.20364745
+0.37135255
+-0.20364745
+0.37135255
+-0.20364745
+0.37135255
+-0.0095491503
+-0.0095491503
+-0.0095491503
+0.06545085
+0.06545085
+0.06545085
+-0.20364745
+0.37135255
+-0.20364745
+0.37135255
+-0.20364745
+0.37135255
+-0.20364745
+-0.20364745
+-0.20364745
+0.37135255
+0.37135255
+0.37135255
+-0.0095491503
+0.06545085
+-0.0095491503
+0.06545085
+-0.0095491503
+0.06545085
+-0.20364745
+-0.20364745
+-0.20364745
+0.37135255
+0.37135255
+0.37135255
+程序执行完毕。
+执行的进程数: 1
+
 hyper 2.20
 
 ```

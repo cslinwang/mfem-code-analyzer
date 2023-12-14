@@ -1,0 +1,1601 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html lang="en">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>LCOV - coverage.info - /root/mfem/mesh/mesh.hpp</title>
+  <link rel="stylesheet" type="text/css" href="../../../gcov.css">
+</head>
+
+<body>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="title">LCOV - code coverage report</td></tr>
+    <tr><td class="ruler"><img src="../../../glass.png" width=3 height=3 alt=""></td></tr>
+
+    <tr>
+      <td width="100%">
+        <table cellpadding=1 border=0 width="100%">
+          <tr>
+            <td width="10%" class="headerItem">Current view:</td>
+            <td width="35%" class="headerValue"><a href="../../../index.html">top level</a> - <a href="index.html">root/mfem/mesh</a> - mesh.hpp<span style="font-size: 80%;"> (source / <a href="mesh.hpp.func-sort-c.html">functions</a>)</span></td>
+            <td width="5%"></td>
+            <td width="15%"></td>
+            <td width="10%" class="headerCovTableHead">Hit</td>
+            <td width="10%" class="headerCovTableHead">Total</td>
+            <td width="15%" class="headerCovTableHead">Coverage</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Test:</td>
+            <td class="headerValue">coverage.info</td>
+            <td></td>
+            <td class="headerItem">Lines:</td>
+            <td class="headerCovTableEntry">6</td>
+            <td class="headerCovTableEntry">7</td>
+            <td class="headerCovTableEntryMed">85.7 %</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Date:</td>
+            <td class="headerValue">2023-12-14 07:10:32</td>
+            <td></td>
+            <td class="headerItem">Functions:</td>
+            <td class="headerCovTableEntry">1</td>
+            <td class="headerCovTableEntry">3</td>
+            <td class="headerCovTableEntryLo">33.3 %</td>
+          </tr>
+          <tr><td><img src="../../../glass.png" width=3 height=3 alt=""></td></tr>
+        </table>
+      </td>
+    </tr>
+
+    <tr><td class="ruler"><img src="../../../glass.png" width=3 height=3 alt=""></td></tr>
+  </table>
+
+  <table cellpadding=0 cellspacing=0 border=0>
+    <tr>
+      <td><br></td>
+    </tr>
+    <tr>
+      <td>
+<pre class="sourceHeading">          Line data    Source code</pre>
+<pre class="source">
+<a name="1"><span class="lineNum">       1 </span>            : // Copyright (c) 2010-2020, Lawrence Livermore National Security, LLC. Produced</a>
+<a name="2"><span class="lineNum">       2 </span>            : // at the Lawrence Livermore National Laboratory. All Rights reserved. See files</a>
+<a name="3"><span class="lineNum">       3 </span>            : // LICENSE and NOTICE for details. LLNL-CODE-806117.</a>
+<a name="4"><span class="lineNum">       4 </span>            : //</a>
+<a name="5"><span class="lineNum">       5 </span>            : // This file is part of the MFEM library. For more information and source code</a>
+<a name="6"><span class="lineNum">       6 </span>            : // availability visit https://mfem.org.</a>
+<a name="7"><span class="lineNum">       7 </span>            : //</a>
+<a name="8"><span class="lineNum">       8 </span>            : // MFEM is free software; you can redistribute it and/or modify it under the</a>
+<a name="9"><span class="lineNum">       9 </span>            : // terms of the BSD-3 license. We welcome feedback and contributions, see file</a>
+<a name="10"><span class="lineNum">      10 </span>            : // CONTRIBUTING.md for details.</a>
+<a name="11"><span class="lineNum">      11 </span>            : </a>
+<a name="12"><span class="lineNum">      12 </span>            : #ifndef MFEM_MESH</a>
+<a name="13"><span class="lineNum">      13 </span>            : #define MFEM_MESH</a>
+<a name="14"><span class="lineNum">      14 </span>            : </a>
+<a name="15"><span class="lineNum">      15 </span>            : #include &quot;../config/config.hpp&quot;</a>
+<a name="16"><span class="lineNum">      16 </span>            : #include &quot;../general/stable3d.hpp&quot;</a>
+<a name="17"><span class="lineNum">      17 </span>            : #include &quot;../general/globals.hpp&quot;</a>
+<a name="18"><span class="lineNum">      18 </span>            : #include &quot;triangle.hpp&quot;</a>
+<a name="19"><span class="lineNum">      19 </span>            : #include &quot;tetrahedron.hpp&quot;</a>
+<a name="20"><span class="lineNum">      20 </span>            : #include &quot;vertex.hpp&quot;</a>
+<a name="21"><span class="lineNum">      21 </span>            : #include &quot;vtk.hpp&quot;</a>
+<a name="22"><span class="lineNum">      22 </span>            : #include &quot;ncmesh.hpp&quot;</a>
+<a name="23"><span class="lineNum">      23 </span>            : #include &quot;../fem/eltrans.hpp&quot;</a>
+<a name="24"><span class="lineNum">      24 </span>            : #include &quot;../fem/coefficient.hpp&quot;</a>
+<a name="25"><span class="lineNum">      25 </span>            : #include &quot;../general/zstr.hpp&quot;</a>
+<a name="26"><span class="lineNum">      26 </span>            : #ifdef MFEM_USE_ADIOS2</a>
+<a name="27"><span class="lineNum">      27 </span>            : #include &quot;../general/adios2stream.hpp&quot;</a>
+<a name="28"><span class="lineNum">      28 </span>            : #endif</a>
+<a name="29"><span class="lineNum">      29 </span>            : #include &lt;iostream&gt;</a>
+<a name="30"><span class="lineNum">      30 </span>            : </a>
+<a name="31"><span class="lineNum">      31 </span>            : namespace mfem</a>
+<a name="32"><span class="lineNum">      32 </span>            : {</a>
+<a name="33"><span class="lineNum">      33 </span>            : </a>
+<a name="34"><span class="lineNum">      34 </span>            : // Data type mesh</a>
+<a name="35"><span class="lineNum">      35 </span>            : </a>
+<a name="36"><span class="lineNum">      36 </span>            : class GeometricFactors;</a>
+<a name="37"><span class="lineNum">      37 </span>            : class FaceGeometricFactors;</a>
+<a name="38"><span class="lineNum">      38 </span>            : class KnotVector;</a>
+<a name="39"><span class="lineNum">      39 </span>            : class NURBSExtension;</a>
+<a name="40"><span class="lineNum">      40 </span>            : class FiniteElementSpace;</a>
+<a name="41"><span class="lineNum">      41 </span>            : class GridFunction;</a>
+<a name="42"><span class="lineNum">      42 </span>            : struct Refinement;</a>
+<a name="43"><span class="lineNum">      43 </span>            : </a>
+<a name="44"><span class="lineNum">      44 </span>            : /** An enum type to specify if interior or boundary faces are desired. */</a>
+<a name="45"><span class="lineNum">      45 </span>            : enum class FaceType : bool {Interior, Boundary};</a>
+<a name="46"><span class="lineNum">      46 </span>            : </a>
+<a name="47"><span class="lineNum">      47 </span>            : #ifdef MFEM_USE_MPI</a>
+<a name="48"><span class="lineNum">      48 </span>            : class ParMesh;</a>
+<a name="49"><span class="lineNum">      49 </span>            : class ParNCMesh;</a>
+<a name="50"><span class="lineNum">      50 </span>            : #endif</a>
+<a name="51"><span class="lineNum">      51 </span>            : </a>
+<a name="52"><span class="lineNum">      52 </span>            : class Mesh</a>
+<a name="53"><span class="lineNum">      53 </span>            : {</a>
+<a name="54"><span class="lineNum">      54 </span>            : #ifdef MFEM_USE_MPI</a>
+<a name="55"><span class="lineNum">      55 </span>            :    friend class ParMesh;</a>
+<a name="56"><span class="lineNum">      56 </span>            :    friend class ParNCMesh;</a>
+<a name="57"><span class="lineNum">      57 </span>            : #endif</a>
+<a name="58"><span class="lineNum">      58 </span>            :    friend class NCMesh;</a>
+<a name="59"><span class="lineNum">      59 </span>            :    friend class NURBSExtension;</a>
+<a name="60"><span class="lineNum">      60 </span>            : </a>
+<a name="61"><span class="lineNum">      61 </span>            : #ifdef MFEM_USE_ADIOS2</a>
+<a name="62"><span class="lineNum">      62 </span>            :    friend class adios2stream;</a>
+<a name="63"><span class="lineNum">      63 </span>            : #endif</a>
+<a name="64"><span class="lineNum">      64 </span>            : </a>
+<a name="65"><span class="lineNum">      65 </span>            : protected:</a>
+<a name="66"><span class="lineNum">      66 </span>            :    int Dim;</a>
+<a name="67"><span class="lineNum">      67 </span>            :    int spaceDim;</a>
+<a name="68"><span class="lineNum">      68 </span>            : </a>
+<a name="69"><span class="lineNum">      69 </span>            :    int NumOfVertices, NumOfElements, NumOfBdrElements;</a>
+<a name="70"><span class="lineNum">      70 </span>            :    int NumOfEdges, NumOfFaces;</a>
+<a name="71"><span class="lineNum">      71 </span>            :    /** These variables store the number of Interior and Boundary faces. Calling</a>
+<a name="72"><span class="lineNum">      72 </span>            :        fes-&gt;GetMesh()-&gt;GetNBE() doesn't return the expected value in 3D because</a>
+<a name="73"><span class="lineNum">      73 </span>            :        periodic meshes in 3D have some of their faces marked as boundary for</a>
+<a name="74"><span class="lineNum">      74 </span>            :        visualization purpose in GLVis. */</a>
+<a name="75"><span class="lineNum">      75 </span>            :    mutable int nbInteriorFaces, nbBoundaryFaces;</a>
+<a name="76"><span class="lineNum">      76 </span>            : </a>
+<a name="77"><span class="lineNum">      77 </span>            :    int meshgen; // see MeshGenerator()</a>
+<a name="78"><span class="lineNum">      78 </span>            :    int mesh_geoms; // sum of (1 &lt;&lt; geom) for all geom of all dimensions</a>
+<a name="79"><span class="lineNum">      79 </span>            : </a>
+<a name="80"><span class="lineNum">      80 </span>            :    // Counter for Mesh transformations: refinement, derefinement, rebalancing.</a>
+<a name="81"><span class="lineNum">      81 </span>            :    // Used for checking during Update operations on objects depending on the</a>
+<a name="82"><span class="lineNum">      82 </span>            :    // Mesh, such as FiniteElementSpace, GridFunction, etc.</a>
+<a name="83"><span class="lineNum">      83 </span>            :    long sequence;</a>
+<a name="84"><span class="lineNum">      84 </span>            : </a>
+<a name="85"><span class="lineNum">      85 </span>            :    Array&lt;Element *&gt; elements;</a>
+<a name="86"><span class="lineNum">      86 </span>            :    // Vertices are only at the corners of elements, where you would expect them</a>
+<a name="87"><span class="lineNum">      87 </span>            :    // in the lowest-order mesh. In some cases, e.g. in a Mesh that defines the</a>
+<a name="88"><span class="lineNum">      88 </span>            :    // patch topology for a NURBS mesh (see LoadPatchTopo()) the vertices may be</a>
+<a name="89"><span class="lineNum">      89 </span>            :    // empty while NumOfVertices is positive.</a>
+<a name="90"><span class="lineNum">      90 </span>            :    Array&lt;Vertex&gt; vertices;</a>
+<a name="91"><span class="lineNum">      91 </span>            :    Array&lt;Element *&gt; boundary;</a>
+<a name="92"><span class="lineNum">      92 </span>            :    Array&lt;Element *&gt; faces;</a>
+<a name="93"><span class="lineNum">      93 </span>            : </a>
+<a name="94"><span class="lineNum">      94 </span>            :    struct FaceInfo</a>
+<a name="95"><span class="lineNum">      95 </span>            :    {</a>
+<a name="96"><span class="lineNum">      96 </span>            :       // Inf = 64 * LocalFaceIndex + FaceOrientation</a>
+<a name="97"><span class="lineNum">      97 </span>            :       int Elem1No, Elem2No, Elem1Inf, Elem2Inf;</a>
+<a name="98"><span class="lineNum">      98 </span>            :       int NCFace; /* -1 if this is a regular conforming/boundary face;</a>
+<a name="99"><span class="lineNum">      99 </span>            :                      index into 'nc_faces_info' if &gt;= 0. */</a>
+<a name="100"><span class="lineNum">     100 </span>            :    };</a>
+<a name="101"><span class="lineNum">     101 </span>            :    // NOTE: in NC meshes, master faces have Elem2No == -1. Slave faces on the</a>
+<a name="102"><span class="lineNum">     102 </span>            :    // other hand have Elem2No and Elem2Inf set to the master face's element and</a>
+<a name="103"><span class="lineNum">     103 </span>            :    // its local face number.</a>
+<a name="104"><span class="lineNum">     104 </span>            :    //</a>
+<a name="105"><span class="lineNum">     105 </span>            :    // A local face is one generated from a local element and has index i in</a>
+<a name="106"><span class="lineNum">     106 </span>            :    // faces_info such that i &lt; GetNumFaces(). Also, Elem1No always refers to the</a>
+<a name="107"><span class="lineNum">     107 </span>            :    // element (slave or master, in the non-conforming case) that generated the</a>
+<a name="108"><span class="lineNum">     108 </span>            :    // face.</a>
+<a name="109"><span class="lineNum">     109 </span>            :    // Classification of a local (non-ghost) face based on its FaceInfo:</a>
+<a name="110"><span class="lineNum">     110 </span>            :    // - Elem2No &gt;= 0 --&gt; local internal face; can be either:</a>
+<a name="111"><span class="lineNum">     111 </span>            :    //    - NCFace == -1 --&gt; conforming face, or</a>
+<a name="112"><span class="lineNum">     112 </span>            :    //    - NCFace &gt;= 0 --&gt; non-conforming slave face.</a>
+<a name="113"><span class="lineNum">     113 </span>            :    // - Elem2No &lt; 0 --&gt; local &quot;boundary&quot; face; can be one of:</a>
+<a name="114"><span class="lineNum">     114 </span>            :    //    - NCFace == -1 --&gt; conforming face; can be either:</a>
+<a name="115"><span class="lineNum">     115 </span>            :    //       - Elem2Inf &lt; 0 --&gt; true boundary face (no element on side 2)</a>
+<a name="116"><span class="lineNum">     116 </span>            :    //       - Elem2Inf &gt;= 0 --&gt; shared face where element 2 is a face-neighbor</a>
+<a name="117"><span class="lineNum">     117 </span>            :    //         element with index -1-Elem2No. This state is initialized by</a>
+<a name="118"><span class="lineNum">     118 </span>            :    //         ParMesh::ExchangeFaceNbrData().</a>
+<a name="119"><span class="lineNum">     119 </span>            :    //    - NCFace &gt;= 0 --&gt; non-conforming master face. Elem2No is -1 or, in the</a>
+<a name="120"><span class="lineNum">     120 </span>            :    //      case of a shared face, -1-Elem2No is the index of one of the adjacent</a>
+<a name="121"><span class="lineNum">     121 </span>            :    //      (the last one?) slave ghost elements. Elem2Inf is -1.</a>
+<a name="122"><span class="lineNum">     122 </span>            :    //</a>
+<a name="123"><span class="lineNum">     123 </span>            :    // A ghost face is a non-conforming face that is generated by a non-local,</a>
+<a name="124"><span class="lineNum">     124 </span>            :    // i.e. ghost, element. A ghost face has index i in faces_info such that</a>
+<a name="125"><span class="lineNum">     125 </span>            :    // i &gt;= GetNumFaces().</a>
+<a name="126"><span class="lineNum">     126 </span>            :    // Classification of a ghost (non-local) face based on its FaceInfo:</a>
+<a name="127"><span class="lineNum">     127 </span>            :    // - Elem1No == -1 --&gt; master ghost face? These ghost faces also have:</a>
+<a name="128"><span class="lineNum">     128 </span>            :    //   Elem2No == -1, Elem1Inf == Elem2Inf == -1, and NCFace == -1.</a>
+<a name="129"><span class="lineNum">     129 </span>            :    // - Elem1No &gt;= 0 --&gt; slave ghost face; Elem1No is the index of the local</a>
+<a name="130"><span class="lineNum">     130 </span>            :    //   master side element, i.e. side 1 IS NOT the side that generated the</a>
+<a name="131"><span class="lineNum">     131 </span>            :    //   face. Elem2No is &lt; 0 and -1-Elem2No is the index of the ghost</a>
+<a name="132"><span class="lineNum">     132 </span>            :    //   face-neighbor element that generated this slave ghost face. In this</a>
+<a name="133"><span class="lineNum">     133 </span>            :    //   case, Elem2Inf &gt;= 0.</a>
+<a name="134"><span class="lineNum">     134 </span>            :    // Relevant methods: GenerateFaces(), GenerateNCFaceInfo(),</a>
+<a name="135"><span class="lineNum">     135 </span>            :    //                   ParNCMesh::GetFaceNeighbors(),</a>
+<a name="136"><span class="lineNum">     136 </span>            :    //                   ParMesh::ExchangeFaceNbrData()</a>
+<a name="137"><span class="lineNum">     137 </span>            : </a>
+<a name="138"><span class="lineNum">     138 </span>            :    struct NCFaceInfo</a>
+<a name="139"><span class="lineNum">     139 </span>            :    {</a>
+<a name="140"><span class="lineNum">     140 </span>            :       bool Slave; // true if this is a slave face, false if master face</a>
+<a name="141"><span class="lineNum">     141 </span>            :       int MasterFace; // if Slave, this is the index of the master face</a>
+<a name="142"><span class="lineNum">     142 </span>            :       // If not Slave, 'MasterFace' is the local face index of this master face</a>
+<a name="143"><span class="lineNum">     143 </span>            :       // as a face in the unique adjacent element.</a>
+<a name="144"><span class="lineNum">     144 </span>            :       const DenseMatrix* PointMatrix; // if Slave, position within master face</a>
+<a name="145"><span class="lineNum">     145 </span>            :       // (NOTE: PointMatrix points to a matrix owned by NCMesh.)</a>
+<a name="146"><span class="lineNum">     146 </span>            : </a>
+<a name="147"><span class="lineNum">     147 </span>            :       NCFaceInfo() = default;</a>
+<a name="148"><span class="lineNum">     148 </span>            : </a>
+<a name="149"><span class="lineNum">     149 </span>            :       NCFaceInfo(bool slave, int master, const DenseMatrix* pm)</a>
+<a name="150"><span class="lineNum">     150 </span>            :          : Slave(slave), MasterFace(master), PointMatrix(pm) {}</a>
+<a name="151"><span class="lineNum">     151 </span>            :    };</a>
+<a name="152"><span class="lineNum">     152 </span>            : </a>
+<a name="153"><span class="lineNum">     153 </span>            :    Array&lt;FaceInfo&gt; faces_info;</a>
+<a name="154"><span class="lineNum">     154 </span>            :    Array&lt;NCFaceInfo&gt; nc_faces_info;</a>
+<a name="155"><span class="lineNum">     155 </span>            : </a>
+<a name="156"><span class="lineNum">     156 </span>            :    Table *el_to_edge;</a>
+<a name="157"><span class="lineNum">     157 </span>            :    Table *el_to_face;</a>
+<a name="158"><span class="lineNum">     158 </span>            :    Table *el_to_el;</a>
+<a name="159"><span class="lineNum">     159 </span>            :    Array&lt;int&gt; be_to_edge;  // for 2D</a>
+<a name="160"><span class="lineNum">     160 </span>            :    Table *bel_to_edge;     // for 3D</a>
+<a name="161"><span class="lineNum">     161 </span>            :    Array&lt;int&gt; be_to_face;</a>
+<a name="162"><span class="lineNum">     162 </span>            :    mutable Table *face_edge;</a>
+<a name="163"><span class="lineNum">     163 </span>            :    mutable Table *edge_vertex;</a>
+<a name="164"><span class="lineNum">     164 </span>            : </a>
+<a name="165"><span class="lineNum">     165 </span>            :    IsoparametricTransformation Transformation, Transformation2;</a>
+<a name="166"><span class="lineNum">     166 </span>            :    IsoparametricTransformation BdrTransformation;</a>
+<a name="167"><span class="lineNum">     167 </span>            :    IsoparametricTransformation FaceTransformation, EdgeTransformation;</a>
+<a name="168"><span class="lineNum">     168 </span>            :    FaceElementTransformations FaceElemTr;</a>
+<a name="169"><span class="lineNum">     169 </span>            : </a>
+<a name="170"><span class="lineNum">     170 </span>            :    // refinement embeddings for forward compatibility with NCMesh</a>
+<a name="171"><span class="lineNum">     171 </span>            :    CoarseFineTransformations CoarseFineTr;</a>
+<a name="172"><span class="lineNum">     172 </span>            : </a>
+<a name="173"><span class="lineNum">     173 </span>            :    // Nodes are only active for higher order meshes, and share locations with</a>
+<a name="174"><span class="lineNum">     174 </span>            :    // the vertices, plus all the higher- order control points within the</a>
+<a name="175"><span class="lineNum">     175 </span>            :    // element and along the edges and on the faces.</a>
+<a name="176"><span class="lineNum">     176 </span>            :    GridFunction *Nodes;</a>
+<a name="177"><span class="lineNum">     177 </span>            :    int own_nodes;</a>
+<a name="178"><span class="lineNum">     178 </span>            : </a>
+<a name="179"><span class="lineNum">     179 </span>            :    static const int vtk_quadratic_tet[10];</a>
+<a name="180"><span class="lineNum">     180 </span>            :    static const int vtk_quadratic_wedge[18];</a>
+<a name="181"><span class="lineNum">     181 </span>            :    static const int vtk_quadratic_hex[27];</a>
+<a name="182"><span class="lineNum">     182 </span>            : </a>
+<a name="183"><span class="lineNum">     183 </span>            : #ifdef MFEM_USE_MEMALLOC</a>
+<a name="184"><span class="lineNum">     184 </span>            :    friend class Tetrahedron;</a>
+<a name="185"><span class="lineNum">     185 </span>            :    MemAlloc &lt;Tetrahedron, 1024&gt; TetMemory;</a>
+<a name="186"><span class="lineNum">     186 </span>            : #endif</a>
+<a name="187"><span class="lineNum">     187 </span>            : </a>
+<a name="188"><span class="lineNum">     188 </span>            : public:</a>
+<a name="189"><span class="lineNum">     189 </span>            :    typedef Geometry::Constants&lt;Geometry::SEGMENT&gt;     seg_t;</a>
+<a name="190"><span class="lineNum">     190 </span>            :    typedef Geometry::Constants&lt;Geometry::TRIANGLE&gt;    tri_t;</a>
+<a name="191"><span class="lineNum">     191 </span>            :    typedef Geometry::Constants&lt;Geometry::SQUARE&gt;      quad_t;</a>
+<a name="192"><span class="lineNum">     192 </span>            :    typedef Geometry::Constants&lt;Geometry::TETRAHEDRON&gt; tet_t;</a>
+<a name="193"><span class="lineNum">     193 </span>            :    typedef Geometry::Constants&lt;Geometry::CUBE&gt;        hex_t;</a>
+<a name="194"><span class="lineNum">     194 </span>            :    typedef Geometry::Constants&lt;Geometry::PRISM&gt;       pri_t;</a>
+<a name="195"><span class="lineNum">     195 </span>            : </a>
+<a name="196"><span class="lineNum">     196 </span>            :    enum Operation { NONE, REFINE, DEREFINE, REBALANCE };</a>
+<a name="197"><span class="lineNum">     197 </span>            : </a>
+<a name="198"><span class="lineNum">     198 </span>            :    /// A list of all unique element attributes used by the Mesh.</a>
+<a name="199"><span class="lineNum">     199 </span>            :    Array&lt;int&gt; attributes;</a>
+<a name="200"><span class="lineNum">     200 </span>            :    /// A list of all unique boundary attributes used by the Mesh.</a>
+<a name="201"><span class="lineNum">     201 </span>            :    Array&lt;int&gt; bdr_attributes;</a>
+<a name="202"><span class="lineNum">     202 </span>            : </a>
+<a name="203"><span class="lineNum">     203 </span>            :    NURBSExtension *NURBSext; ///&lt; Optional NURBS mesh extension.</a>
+<a name="204"><span class="lineNum">     204 </span>            :    NCMesh *ncmesh;           ///&lt; Optional non-conforming mesh extension.</a>
+<a name="205"><span class="lineNum">     205 </span>            :    Array&lt;GeometricFactors*&gt; geom_factors; ///&lt; Optional geometric factors.</a>
+<a name="206"><span class="lineNum">     206 </span>            :    Array&lt;FaceGeometricFactors*&gt;</a>
+<a name="207"><span class="lineNum">     207 </span>            :    face_geom_factors; ///&lt; Optional face geometric factors.</a>
+<a name="208"><span class="lineNum">     208 </span>            : </a>
+<a name="209"><span class="lineNum">     209 </span>            :    /// Used during initialization only.</a>
+<a name="210"><span class="lineNum">     210 </span>            :    Array&lt;Triple&lt;int, int, int&gt; &gt; tmp_vertex_parents;</a>
+<a name="211"><span class="lineNum">     211 </span>            : </a>
+<a name="212"><span class="lineNum">     212 </span>            :    // Global parameter that can be used to control the removal of unused</a>
+<a name="213"><span class="lineNum">     213 </span>            :    // vertices performed when reading a mesh in MFEM format. The default value</a>
+<a name="214"><span class="lineNum">     214 </span>            :    // (true) is set in mesh_readers.cpp.</a>
+<a name="215"><span class="lineNum">     215 </span>            :    static bool remove_unused_vertices;</a>
+<a name="216"><span class="lineNum">     216 </span>            : </a>
+<a name="217"><span class="lineNum">     217 </span>            : protected:</a>
+<a name="218"><span class="lineNum">     218 </span>            :    Operation last_operation;</a>
+<a name="219"><span class="lineNum">     219 </span>            : </a>
+<a name="220"><span class="lineNum">     220 </span>            :    void Init();</a>
+<a name="221"><span class="lineNum">     221 </span>            :    void InitTables();</a>
+<a name="222"><span class="lineNum">     222 </span>            :    void SetEmpty();  // Init all data members with empty values</a>
+<a name="223"><span class="lineNum">     223 </span>            :    void DestroyTables();</a>
+<a name="224"><span class="lineNum">     224 </span>            :    void DeleteTables() { DestroyTables(); InitTables(); }</a>
+<a name="225"><span class="lineNum">     225 </span>            :    void DestroyPointers(); // Delete data specifically allocated by class Mesh.</a>
+<a name="226"><span class="lineNum">     226 </span>            :    void Destroy();         // Delete all owned data.</a>
+<a name="227"><span class="lineNum">     227 </span>            :    void ResetLazyData();</a>
+<a name="228"><span class="lineNum">     228 </span>            : </a>
+<a name="229"><span class="lineNum">     229 </span>            :    Element *ReadElementWithoutAttr(std::istream &amp;);</a>
+<a name="230"><span class="lineNum">     230 </span>            :    static void PrintElementWithoutAttr(const Element *, std::ostream &amp;);</a>
+<a name="231"><span class="lineNum">     231 </span>            : </a>
+<a name="232"><span class="lineNum">     232 </span>            :    Element *ReadElement(std::istream &amp;);</a>
+<a name="233"><span class="lineNum">     233 </span>            :    static void PrintElement(const Element *, std::ostream &amp;);</a>
+<a name="234"><span class="lineNum">     234 </span>            : </a>
+<a name="235"><span class="lineNum">     235 </span>            :    // Readers for different mesh formats, used in the Load() method.</a>
+<a name="236"><span class="lineNum">     236 </span>            :    // The implementations of these methods are in mesh_readers.cpp.</a>
+<a name="237"><span class="lineNum">     237 </span>            :    void ReadMFEMMesh(std::istream &amp;input, bool mfem_v11, int &amp;curved);</a>
+<a name="238"><span class="lineNum">     238 </span>            :    void ReadLineMesh(std::istream &amp;input);</a>
+<a name="239"><span class="lineNum">     239 </span>            :    void ReadNetgen2DMesh(std::istream &amp;input, int &amp;curved);</a>
+<a name="240"><span class="lineNum">     240 </span>            :    void ReadNetgen3DMesh(std::istream &amp;input);</a>
+<a name="241"><span class="lineNum">     241 </span>            :    void ReadTrueGridMesh(std::istream &amp;input);</a>
+<a name="242"><span class="lineNum">     242 </span>            :    void ReadVTKMesh(std::istream &amp;input, int &amp;curved, int &amp;read_gf,</a>
+<a name="243"><span class="lineNum">     243 </span>            :                     bool &amp;finalize_topo);</a>
+<a name="244"><span class="lineNum">     244 </span>            :    void ReadNURBSMesh(std::istream &amp;input, int &amp;curved, int &amp;read_gf);</a>
+<a name="245"><span class="lineNum">     245 </span>            :    void ReadInlineMesh(std::istream &amp;input, bool generate_edges = false);</a>
+<a name="246"><span class="lineNum">     246 </span>            :    void ReadGmshMesh(std::istream &amp;input, int &amp;curved, int &amp;read_gf);</a>
+<a name="247"><span class="lineNum">     247 </span>            :    /* Note NetCDF (optional library) is used for reading cubit files */</a>
+<a name="248"><span class="lineNum">     248 </span>            : #ifdef MFEM_USE_NETCDF</a>
+<a name="249"><span class="lineNum">     249 </span>            :    void ReadCubit(const char *filename, int &amp;curved, int &amp;read_gf);</a>
+<a name="250"><span class="lineNum">     250 </span>            : #endif</a>
+<a name="251"><span class="lineNum">     251 </span>            : </a>
+<a name="252"><span class="lineNum">     252 </span>            :    /// Determine the mesh generator bitmask #meshgen, see MeshGenerator().</a>
+<a name="253"><span class="lineNum">     253 </span>            :    /** Also, initializes #mesh_geoms. */</a>
+<a name="254"><span class="lineNum">     254 </span>            :    void SetMeshGen();</a>
+<a name="255"><span class="lineNum">     255 </span>            : </a>
+<a name="256"><span class="lineNum">     256 </span>            :    /// Return the length of the segment from node i to node j.</a>
+<a name="257"><span class="lineNum">     257 </span>            :    double GetLength(int i, int j) const;</a>
+<a name="258"><span class="lineNum">     258 </span>            : </a>
+<a name="259"><span class="lineNum">     259 </span>            :    /** Compute the Jacobian of the transformation from the perfect</a>
+<a name="260"><span class="lineNum">     260 </span>            :        reference element at the center of the element. */</a>
+<a name="261"><span class="lineNum">     261 </span>            :    void GetElementJacobian(int i, DenseMatrix &amp;J);</a>
+<a name="262"><span class="lineNum">     262 </span>            : </a>
+<a name="263"><span class="lineNum">     263 </span>            :    void MarkForRefinement();</a>
+<a name="264"><span class="lineNum">     264 </span>            :    void MarkTriMeshForRefinement();</a>
+<a name="265"><span class="lineNum">     265 </span>            :    void GetEdgeOrdering(DSTable &amp;v_to_v, Array&lt;int&gt; &amp;order);</a>
+<a name="266"><span class="lineNum">     266 </span>            :    virtual void MarkTetMeshForRefinement(DSTable &amp;v_to_v);</a>
+<a name="267"><span class="lineNum">     267 </span>            : </a>
+<a name="268"><span class="lineNum">     268 </span>            :    // Methods used to prepare and apply permutation of the mesh nodes assuming</a>
+<a name="269"><span class="lineNum">     269 </span>            :    // that the mesh elements may be rotated (e.g. to mark triangle or tet edges</a>
+<a name="270"><span class="lineNum">     270 </span>            :    // for refinement) between the two calls - PrepareNodeReorder() and</a>
+<a name="271"><span class="lineNum">     271 </span>            :    // DoNodeReorder(). The latter method assumes that the 'faces' have not been</a>
+<a name="272"><span class="lineNum">     272 </span>            :    // updated after the element rotations.</a>
+<a name="273"><span class="lineNum">     273 </span>            :    void PrepareNodeReorder(DSTable **old_v_to_v, Table **old_elem_vert);</a>
+<a name="274"><span class="lineNum">     274 </span>            :    void DoNodeReorder(DSTable *old_v_to_v, Table *old_elem_vert);</a>
+<a name="275"><span class="lineNum">     275 </span>            : </a>
+<a name="276"><span class="lineNum">     276 </span>            :    STable3D *GetFacesTable();</a>
+<a name="277"><span class="lineNum">     277 </span>            :    STable3D *GetElementToFaceTable(int ret_ftbl = 0);</a>
+<a name="278"><span class="lineNum">     278 </span>            : </a>
+<a name="279"><span class="lineNum">     279 </span>            :    /** Red refinement. Element with index i is refined. The default</a>
+<a name="280"><span class="lineNum">     280 </span>            :        red refinement for now is Uniform. */</a>
+<a name="281"><span class="lineNum">     281 </span>            :    void RedRefinement(int i, const DSTable &amp;v_to_v,</a>
+<a name="282"><span class="lineNum">     282 </span>            :                       int *edge1, int *edge2, int *middle)</a>
+<a name="283"><span class="lineNum">     283 </span>            :    { UniformRefinement(i, v_to_v, edge1, edge2, middle); }</a>
+<a name="284"><span class="lineNum">     284 </span>            : </a>
+<a name="285"><span class="lineNum">     285 </span>            :    /** Green refinement. Element with index i is refined. The default</a>
+<a name="286"><span class="lineNum">     286 </span>            :        refinement for now is Bisection. */</a>
+<a name="287"><span class="lineNum">     287 </span>            :    void GreenRefinement(int i, const DSTable &amp;v_to_v,</a>
+<a name="288"><span class="lineNum">     288 </span>            :                         int *edge1, int *edge2, int *middle)</a>
+<a name="289"><span class="lineNum">     289 </span>            :    { Bisection(i, v_to_v, edge1, edge2, middle); }</a>
+<a name="290"><span class="lineNum">     290 </span>            : </a>
+<a name="291"><span class="lineNum">     291 </span>            :    /// Bisect a triangle: element with index @a i is bisected.</a>
+<a name="292"><span class="lineNum">     292 </span>            :    void Bisection(int i, const DSTable &amp;, int *, int *, int *);</a>
+<a name="293"><span class="lineNum">     293 </span>            : </a>
+<a name="294"><span class="lineNum">     294 </span>            :    /// Bisect a tetrahedron: element with index @a i is bisected.</a>
+<a name="295"><span class="lineNum">     295 </span>            :    void Bisection(int i, HashTable&lt;Hashed2&gt; &amp;);</a>
+<a name="296"><span class="lineNum">     296 </span>            : </a>
+<a name="297"><span class="lineNum">     297 </span>            :    /// Bisect a boundary triangle: boundary element with index @a i is bisected.</a>
+<a name="298"><span class="lineNum">     298 </span>            :    void BdrBisection(int i, const HashTable&lt;Hashed2&gt; &amp;);</a>
+<a name="299"><span class="lineNum">     299 </span>            : </a>
+<a name="300"><span class="lineNum">     300 </span>            :    /** Uniform Refinement. Element with index i is refined uniformly. */</a>
+<a name="301"><span class="lineNum">     301 </span>            :    void UniformRefinement(int i, const DSTable &amp;, int *, int *, int *);</a>
+<a name="302"><span class="lineNum">     302 </span>            : </a>
+<a name="303"><span class="lineNum">     303 </span>            :    /** @brief Averages the vertices with given @a indexes and saves the result</a>
+<a name="304"><span class="lineNum">     304 </span>            :        in #vertices[result]. */</a>
+<a name="305"><span class="lineNum">     305 </span>            :    void AverageVertices(const int *indexes, int n, int result);</a>
+<a name="306"><span class="lineNum">     306 </span>            : </a>
+<a name="307"><span class="lineNum">     307 </span>            :    void InitRefinementTransforms();</a>
+<a name="308"><span class="lineNum">     308 </span>            :    int FindCoarseElement(int i);</a>
+<a name="309"><span class="lineNum">     309 </span>            : </a>
+<a name="310"><span class="lineNum">     310 </span>            :    /// Update the nodes of a curved mesh after refinement</a>
+<a name="311"><span class="lineNum">     311 </span>            :    void UpdateNodes();</a>
+<a name="312"><span class="lineNum">     312 </span>            : </a>
+<a name="313"><span class="lineNum">     313 </span>            :    void UniformRefinement2D_base(bool update_nodes = true);</a>
+<a name="314"><span class="lineNum">     314 </span>            : </a>
+<a name="315"><span class="lineNum">     315 </span>            :    /// Refine a mixed 2D mesh uniformly.</a>
+<a name="316"><span class="lineNum">     316 </span>            :    virtual void UniformRefinement2D() { UniformRefinement2D_base(); }</a>
+<a name="317"><span class="lineNum">     317 </span>            : </a>
+<a name="318"><span class="lineNum">     318 </span>            :    /* If @a f2qf is not NULL, adds all quadrilateral faces to @a f2qf which</a>
+<a name="319"><span class="lineNum">     319 </span>            :       represents a &quot;face-to-quad-face&quot; index map. When all faces are quads, the</a>
+<a name="320"><span class="lineNum">     320 </span>            :       array @a f2qf is kept empty since it is not needed. */</a>
+<a name="321"><span class="lineNum">     321 </span>            :    void UniformRefinement3D_base(Array&lt;int&gt; *f2qf = NULL,</a>
+<a name="322"><span class="lineNum">     322 </span>            :                                  DSTable *v_to_v_p = NULL,</a>
+<a name="323"><span class="lineNum">     323 </span>            :                                  bool update_nodes = true);</a>
+<a name="324"><span class="lineNum">     324 </span>            : </a>
+<a name="325"><span class="lineNum">     325 </span>            :    /// Refine a mixed 3D mesh uniformly.</a>
+<a name="326"><span class="lineNum">     326 </span>            :    virtual void UniformRefinement3D() { UniformRefinement3D_base(); }</a>
+<a name="327"><span class="lineNum">     327 </span>            : </a>
+<a name="328"><span class="lineNum">     328 </span>            :    /// Refine NURBS mesh.</a>
+<a name="329"><span class="lineNum">     329 </span>            :    virtual void NURBSUniformRefinement();</a>
+<a name="330"><span class="lineNum">     330 </span>            : </a>
+<a name="331"><span class="lineNum">     331 </span>            :    /// This function is not public anymore. Use GeneralRefinement instead.</a>
+<a name="332"><span class="lineNum">     332 </span>            :    virtual void LocalRefinement(const Array&lt;int&gt; &amp;marked_el, int type = 3);</a>
+<a name="333"><span class="lineNum">     333 </span>            : </a>
+<a name="334"><span class="lineNum">     334 </span>            :    /// This function is not public anymore. Use GeneralRefinement instead.</a>
+<a name="335"><span class="lineNum">     335 </span>            :    virtual void NonconformingRefinement(const Array&lt;Refinement&gt; &amp;refinements,</a>
+<a name="336"><span class="lineNum">     336 </span>            :                                         int nc_limit = 0);</a>
+<a name="337"><span class="lineNum">     337 </span>            : </a>
+<a name="338"><span class="lineNum">     338 </span>            :    /// NC version of GeneralDerefinement.</a>
+<a name="339"><span class="lineNum">     339 </span>            :    virtual bool NonconformingDerefinement(Array&lt;double&gt; &amp;elem_error,</a>
+<a name="340"><span class="lineNum">     340 </span>            :                                           double threshold, int nc_limit = 0,</a>
+<a name="341"><span class="lineNum">     341 </span>            :                                           int op = 1);</a>
+<a name="342"><span class="lineNum">     342 </span>            :    /// Derefinement helper.</a>
+<a name="343"><span class="lineNum">     343 </span>            :    double AggregateError(const Array&lt;double&gt; &amp;elem_error,</a>
+<a name="344"><span class="lineNum">     344 </span>            :                          const int *fine, int nfine, int op);</a>
+<a name="345"><span class="lineNum">     345 </span>            : </a>
+<a name="346"><span class="lineNum">     346 </span>            :    /// Read NURBS patch/macro-element mesh</a>
+<a name="347"><span class="lineNum">     347 </span>            :    void LoadPatchTopo(std::istream &amp;input, Array&lt;int&gt; &amp;edge_to_knot);</a>
+<a name="348"><span class="lineNum">     348 </span>            : </a>
+<a name="349"><span class="lineNum">     349 </span>            :    void UpdateNURBS();</a>
+<a name="350"><span class="lineNum">     350 </span>            : </a>
+<a name="351"><span class="lineNum">     351 </span>            :    void PrintTopo(std::ostream &amp;out, const Array&lt;int&gt; &amp;e_to_k) const;</a>
+<a name="352"><span class="lineNum">     352 </span>            : </a>
+<a name="353"><span class="lineNum">     353 </span>            :    /// Used in GetFaceElementTransformations (...)</a>
+<a name="354"><span class="lineNum">     354 </span>            :    void GetLocalPtToSegTransformation(IsoparametricTransformation &amp;, int);</a>
+<a name="355"><span class="lineNum">     355 </span>            :    void GetLocalSegToTriTransformation (IsoparametricTransformation &amp;loc,</a>
+<a name="356"><span class="lineNum">     356 </span>            :                                         int i);</a>
+<a name="357"><span class="lineNum">     357 </span>            :    void GetLocalSegToQuadTransformation (IsoparametricTransformation &amp;loc,</a>
+<a name="358"><span class="lineNum">     358 </span>            :                                          int i);</a>
+<a name="359"><span class="lineNum">     359 </span>            :    /// Used in GetFaceElementTransformations (...)</a>
+<a name="360"><span class="lineNum">     360 </span>            :    void GetLocalTriToTetTransformation (IsoparametricTransformation &amp;loc,</a>
+<a name="361"><span class="lineNum">     361 </span>            :                                         int i);</a>
+<a name="362"><span class="lineNum">     362 </span>            :    /// Used in GetFaceElementTransformations (...)</a>
+<a name="363"><span class="lineNum">     363 </span>            :    void GetLocalTriToWdgTransformation (IsoparametricTransformation &amp;loc,</a>
+<a name="364"><span class="lineNum">     364 </span>            :                                         int i);</a>
+<a name="365"><span class="lineNum">     365 </span>            :    /// Used in GetFaceElementTransformations (...)</a>
+<a name="366"><span class="lineNum">     366 </span>            :    void GetLocalQuadToHexTransformation (IsoparametricTransformation &amp;loc,</a>
+<a name="367"><span class="lineNum">     367 </span>            :                                          int i);</a>
+<a name="368"><span class="lineNum">     368 </span>            :    /// Used in GetFaceElementTransformations (...)</a>
+<a name="369"><span class="lineNum">     369 </span>            :    void GetLocalQuadToWdgTransformation (IsoparametricTransformation &amp;loc,</a>
+<a name="370"><span class="lineNum">     370 </span>            :                                          int i);</a>
+<a name="371"><span class="lineNum">     371 </span>            : </a>
+<a name="372"><span class="lineNum">     372 </span>            :    /** Used in GetFaceElementTransformations to account for the fact that a</a>
+<a name="373"><span class="lineNum">     373 </span>            :        slave face occupies only a portion of its master face. */</a>
+<a name="374"><span class="lineNum">     374 </span>            :    void ApplyLocalSlaveTransformation(FaceElementTransformations &amp;FT,</a>
+<a name="375"><span class="lineNum">     375 </span>            :                                       const FaceInfo &amp;fi, bool is_ghost);</a>
+<a name="376"><span class="lineNum">     376 </span>            : </a>
+<a name="377"><span class="lineNum">     377 </span>            :    bool IsSlaveFace(const FaceInfo &amp;fi) const;</a>
+<a name="378"><span class="lineNum">     378 </span>            : </a>
+<a name="379"><span class="lineNum">     379 </span>            :    /// Returns the orientation of &quot;test&quot; relative to &quot;base&quot;</a>
+<a name="380"><span class="lineNum">     380 </span>            :    static int GetTriOrientation (const int * base, const int * test);</a>
+<a name="381"><span class="lineNum">     381 </span>            :    /// Returns the orientation of &quot;test&quot; relative to &quot;base&quot;</a>
+<a name="382"><span class="lineNum">     382 </span>            :    static int GetQuadOrientation (const int * base, const int * test);</a>
+<a name="383"><span class="lineNum">     383 </span>            :    /// Returns the orientation of &quot;test&quot; relative to &quot;base&quot;</a>
+<a name="384"><span class="lineNum">     384 </span>            :    static int GetTetOrientation (const int * base, const int * test);</a>
+<a name="385"><span class="lineNum">     385 </span>            : </a>
+<a name="386"><span class="lineNum">     386 </span>            :    static void GetElementArrayEdgeTable(const Array&lt;Element*&gt; &amp;elem_array,</a>
+<a name="387"><span class="lineNum">     387 </span>            :                                         const DSTable &amp;v_to_v,</a>
+<a name="388"><span class="lineNum">     388 </span>            :                                         Table &amp;el_to_edge);</a>
+<a name="389"><span class="lineNum">     389 </span>            : </a>
+<a name="390"><span class="lineNum">     390 </span>            :    /** Return vertex to vertex table. The connections stored in the table</a>
+<a name="391"><span class="lineNum">     391 </span>            :        are from smaller to bigger vertex index, i.e. if i&lt;j and (i, j) is</a>
+<a name="392"><span class="lineNum">     392 </span>            :        in the table, then (j, i) is not stored. */</a>
+<a name="393"><span class="lineNum">     393 </span>            :    void GetVertexToVertexTable(DSTable &amp;) const;</a>
+<a name="394"><span class="lineNum">     394 </span>            : </a>
+<a name="395"><span class="lineNum">     395 </span>            :    /** Return element to edge table and the indices for the boundary edges.</a>
+<a name="396"><span class="lineNum">     396 </span>            :        The entries in the table are ordered according to the order of the</a>
+<a name="397"><span class="lineNum">     397 </span>            :        nodes in the elements. For example, if T is the element to edge table</a>
+<a name="398"><span class="lineNum">     398 </span>            :        T(i, 0) gives the index of edge in element i that connects vertex 0</a>
+<a name="399"><span class="lineNum">     399 </span>            :        to vertex 1, etc. Returns the number of the edges. */</a>
+<a name="400"><span class="lineNum">     400 </span>            :    int GetElementToEdgeTable(Table &amp;, Array&lt;int&gt; &amp;);</a>
+<a name="401"><span class="lineNum">     401 </span>            : </a>
+<a name="402"><span class="lineNum">     402 </span>            :    /// Used in GenerateFaces()</a>
+<a name="403"><span class="lineNum">     403 </span>            :    void AddPointFaceElement(int lf, int gf, int el);</a>
+<a name="404"><span class="lineNum">     404 </span>            : </a>
+<a name="405"><span class="lineNum">     405 </span>            :    void AddSegmentFaceElement (int lf, int gf, int el, int v0, int v1);</a>
+<a name="406"><span class="lineNum">     406 </span>            : </a>
+<a name="407"><span class="lineNum">     407 </span>            :    void AddTriangleFaceElement (int lf, int gf, int el,</a>
+<a name="408"><span class="lineNum">     408 </span>            :                                 int v0, int v1, int v2);</a>
+<a name="409"><span class="lineNum">     409 </span>            : </a>
+<a name="410"><span class="lineNum">     410 </span>            :    void AddQuadFaceElement (int lf, int gf, int el,</a>
+<a name="411"><span class="lineNum">     411 </span>            :                             int v0, int v1, int v2, int v3);</a>
+<a name="412"><span class="lineNum">     412 </span>            :    /** For a serial Mesh, return true if the face is interior. For a parallel</a>
+<a name="413"><span class="lineNum">     413 </span>            :        ParMesh return true if the face is interior or shared. In parallel, this</a>
+<a name="414"><span class="lineNum">     414 </span>            :        method only works if the face neighbor data is exchanged. */</a>
+<a name="415"><span class="lineNum">     415 </span>            :    bool FaceIsTrueInterior(int FaceNo) const</a>
+<a name="416"><span class="lineNum">     416 </span>            :    {</a>
+<a name="417"><span class="lineNum">     417 </span>            :       return FaceIsInterior(FaceNo) || (faces_info[FaceNo].Elem2Inf &gt;= 0);</a>
+<a name="418"><span class="lineNum">     418 </span>            :    }</a>
+<a name="419"><span class="lineNum">     419 </span>            : </a>
+<a name="420"><span class="lineNum">     420 </span>            :    void FreeElement(Element *E);</a>
+<a name="421"><span class="lineNum">     421 </span>            : </a>
+<a name="422"><span class="lineNum">     422 </span>            :    void GenerateFaces();</a>
+<a name="423"><span class="lineNum">     423 </span>            :    void GenerateNCFaceInfo();</a>
+<a name="424"><span class="lineNum">     424 </span>            : </a>
+<a name="425"><span class="lineNum">     425 </span>            :    /// Begin construction of a mesh</a>
+<a name="426"><span class="lineNum">     426 </span>            :    void InitMesh(int _Dim, int _spaceDim, int NVert, int NElem, int NBdrElem);</a>
+<a name="427"><span class="lineNum">     427 </span>            : </a>
+<a name="428"><span class="lineNum">     428 </span>            :    // Used in the methods FinalizeXXXMesh() and FinalizeTopology()</a>
+<a name="429"><span class="lineNum">     429 </span>            :    void FinalizeCheck();</a>
+<a name="430"><span class="lineNum">     430 </span>            : </a>
+<a name="431"><span class="lineNum">     431 </span>            :    void Loader(std::istream &amp;input, int generate_edges = 0,</a>
+<a name="432"><span class="lineNum">     432 </span>            :                std::string parse_tag = &quot;&quot;);</a>
+<a name="433"><span class="lineNum">     433 </span>            : </a>
+<a name="434"><span class="lineNum">     434 </span>            :    // If NURBS mesh, write NURBS format. If NCMesh, write mfem v1.1 format.</a>
+<a name="435"><span class="lineNum">     435 </span>            :    // If section_delimiter is empty, write mfem v1.0 format. Otherwise, write</a>
+<a name="436"><span class="lineNum">     436 </span>            :    // mfem v1.2 format with the given section_delimiter at the end.</a>
+<a name="437"><span class="lineNum">     437 </span>            :    void Printer(std::ostream &amp;out = mfem::out,</a>
+<a name="438"><span class="lineNum">     438 </span>            :                 std::string section_delimiter = &quot;&quot;) const;</a>
+<a name="439"><span class="lineNum">     439 </span>            : </a>
+<a name="440"><span class="lineNum">     440 </span>            :    /** Creates mesh for the parallelepiped [0,sx]x[0,sy]x[0,sz], divided into</a>
+<a name="441"><span class="lineNum">     441 </span>            :        nx*ny*nz hexahedra if type=HEXAHEDRON or into 6*nx*ny*nz tetrahedrons if</a>
+<a name="442"><span class="lineNum">     442 </span>            :        type=TETRAHEDRON. The parameter @a sfc_ordering controls how the elements</a>
+<a name="443"><span class="lineNum">     443 </span>            :        (when type=HEXAHEDRON) are ordered: true - use space-filling curve</a>
+<a name="444"><span class="lineNum">     444 </span>            :        ordering, or false - use lexicographic ordering. */</a>
+<a name="445"><span class="lineNum">     445 </span>            :    void Make3D(int nx, int ny, int nz, Element::Type type,</a>
+<a name="446"><span class="lineNum">     446 </span>            :                double sx, double sy, double sz, bool sfc_ordering);</a>
+<a name="447"><span class="lineNum">     447 </span>            : </a>
+<a name="448"><span class="lineNum">     448 </span>            :    /** Creates mesh for the rectangle [0,sx]x[0,sy], divided into nx*ny</a>
+<a name="449"><span class="lineNum">     449 </span>            :        quadrilaterals if type = QUADRILATERAL or into 2*nx*ny triangles if</a>
+<a name="450"><span class="lineNum">     450 </span>            :        type = TRIANGLE. If generate_edges = 0 (default) edges are not generated,</a>
+<a name="451"><span class="lineNum">     451 </span>            :        if 1 edges are generated. The parameter @a sfc_ordering controls how the</a>
+<a name="452"><span class="lineNum">     452 </span>            :        elements (when type=QUADRILATERAL) are ordered: true - use space-filling</a>
+<a name="453"><span class="lineNum">     453 </span>            :        curve ordering, or false - use lexicographic ordering. */</a>
+<a name="454"><span class="lineNum">     454 </span>            :    void Make2D(int nx, int ny, Element::Type type, double sx, double sy,</a>
+<a name="455"><span class="lineNum">     455 </span>            :                bool generate_edges, bool sfc_ordering);</a>
+<a name="456"><span class="lineNum">     456 </span>            : </a>
+<a name="457"><span class="lineNum">     457 </span>            :    /// Creates a 1D mesh for the interval [0,sx] divided into n equal intervals.</a>
+<a name="458"><span class="lineNum">     458 </span>            :    void Make1D(int n, double sx = 1.0);</a>
+<a name="459"><span class="lineNum">     459 </span>            : </a>
+<a name="460"><span class="lineNum">     460 </span>            :    /// Initialize vertices/elements/boundary/tables from a nonconforming mesh.</a>
+<a name="461"><span class="lineNum">     461 </span>            :    void InitFromNCMesh(const NCMesh &amp;ncmesh);</a>
+<a name="462"><span class="lineNum">     462 </span>            : </a>
+<a name="463"><span class="lineNum">     463 </span>            :    /// Create from a nonconforming mesh.</a>
+<a name="464"><span class="lineNum">     464 </span>            :    explicit Mesh(const NCMesh &amp;ncmesh);</a>
+<a name="465"><span class="lineNum">     465 </span>            : </a>
+<a name="466"><span class="lineNum">     466 </span>            :    /// Swaps internal data with another mesh. By default, non-geometry members</a>
+<a name="467"><span class="lineNum">     467 </span>            :    /// like 'ncmesh' and 'NURBSExt' are only swapped when 'non_geometry' is set.</a>
+<a name="468"><span class="lineNum">     468 </span>            :    void Swap(Mesh&amp; other, bool non_geometry);</a>
+<a name="469"><span class="lineNum">     469 </span>            : </a>
+<a name="470"><span class="lineNum">     470 </span>            :    // used in GetElementData() and GetBdrElementData()</a>
+<a name="471"><span class="lineNum">     471 </span>            :    void GetElementData(const Array&lt;Element*&gt; &amp;elem_array, int geom,</a>
+<a name="472"><span class="lineNum">     472 </span>            :                        Array&lt;int&gt; &amp;elem_vtx, Array&lt;int&gt; &amp;attr) const;</a>
+<a name="473"><span class="lineNum">     473 </span>            : </a>
+<a name="474"><span class="lineNum">     474 </span>            :    double GetElementSize(ElementTransformation *T, int type = 0);</a>
+<a name="475"><span class="lineNum">     475 </span>            : </a>
+<a name="476"><span class="lineNum">     476 </span>            : public:</a>
+<a name="477"><span class="lineNum">     477 </span>            : </a>
+<a name="478"><span class="lineNum">     478 </span>            :    Mesh() { SetEmpty(); }</a>
+<a name="479"><span class="lineNum">     479 </span>            : </a>
+<a name="480"><span class="lineNum">     480 </span>            :    /** Copy constructor. Performs a deep copy of (almost) all data, so that the</a>
+<a name="481"><span class="lineNum">     481 </span>            :        source mesh can be modified (e.g. deleted, refined) without affecting the</a>
+<a name="482"><span class="lineNum">     482 </span>            :        new mesh. If 'copy_nodes' is false, use a shallow (pointer) copy for the</a>
+<a name="483"><span class="lineNum">     483 </span>            :        nodes, if present. */</a>
+<a name="484"><span class="lineNum">     484 </span>            :    explicit Mesh(const Mesh &amp;mesh, bool copy_nodes = true);</a>
+<a name="485"><span class="lineNum">     485 </span>            : </a>
+<a name="486"><span class="lineNum">     486 </span>            :    /// Construct a Mesh from the given primary data.</a>
+<a name="487"><span class="lineNum">     487 </span>            :    /** The array @a vertices is used as external data, i.e. the Mesh does not</a>
+<a name="488"><span class="lineNum">     488 </span>            :        copy the data and will not delete the pointer.</a>
+<a name="489"><span class="lineNum">     489 </span>            : </a>
+<a name="490"><span class="lineNum">     490 </span>            :        The data from the other arrays is copied into the internal Mesh data</a>
+<a name="491"><span class="lineNum">     491 </span>            :        structures.</a>
+<a name="492"><span class="lineNum">     492 </span>            : </a>
+<a name="493"><span class="lineNum">     493 </span>            :        This method calls the method FinalizeTopology(). The method Finalize()</a>
+<a name="494"><span class="lineNum">     494 </span>            :        may be called after this constructor and after optionally setting the</a>
+<a name="495"><span class="lineNum">     495 </span>            :        Mesh nodes. */</a>
+<a name="496"><span class="lineNum">     496 </span>            :    Mesh(double *vertices, int num_vertices,</a>
+<a name="497"><span class="lineNum">     497 </span>            :         int *element_indices, Geometry::Type element_type,</a>
+<a name="498"><span class="lineNum">     498 </span>            :         int *element_attributes, int num_elements,</a>
+<a name="499"><span class="lineNum">     499 </span>            :         int *boundary_indices, Geometry::Type boundary_type,</a>
+<a name="500"><span class="lineNum">     500 </span>            :         int *boundary_attributes, int num_boundary_elements,</a>
+<a name="501"><span class="lineNum">     501 </span>            :         int dimension, int space_dimension= -1);</a>
+<a name="502"><span class="lineNum">     502 </span>            : </a>
+<a name="503"><span class="lineNum">     503 </span>            :    /** @anchor mfem_Mesh_init_ctor</a>
+<a name="504"><span class="lineNum">     504 </span>            :        @brief _Init_ constructor: begin the construction of a Mesh object. */</a>
+<a name="505"><span class="lineNum">     505 </span>            :    Mesh(int _Dim, int NVert, int NElem, int NBdrElem = 0, int _spaceDim = -1)</a>
+<a name="506"><span class="lineNum">     506 </span>            :    {</a>
+<a name="507"><span class="lineNum">     507 </span>            :       if (_spaceDim == -1) { _spaceDim = _Dim; }</a>
+<a name="508"><span class="lineNum">     508 </span>            :       InitMesh(_Dim, _spaceDim, NVert, NElem, NBdrElem);</a>
+<a name="509"><span class="lineNum">     509 </span>            :    }</a>
+<a name="510"><span class="lineNum">     510 </span>            : </a>
+<a name="511"><span class="lineNum">     511 </span>            :    /** @name Methods for Mesh construction.</a>
+<a name="512"><span class="lineNum">     512 </span>            : </a>
+<a name="513"><span class="lineNum">     513 </span>            :        These methods are intended to be used with the @ref mfem_Mesh_init_ctor</a>
+<a name="514"><span class="lineNum">     514 </span>            :        &quot;init constructor&quot;. */</a>
+<a name="515"><span class="lineNum">     515 </span>            :    ///@{</a>
+<a name="516"><span class="lineNum">     516 </span>            : </a>
+<a name="517"><span class="lineNum">     517 </span>            :    Element *NewElement(int geom);</a>
+<a name="518"><span class="lineNum">     518 </span>            : </a>
+<a name="519"><span class="lineNum">     519 </span>            :    int AddVertex(double x, double y = 0.0, double z = 0.0);</a>
+<a name="520"><span class="lineNum">     520 </span>            :    int AddVertex(const double *coords);</a>
+<a name="521"><span class="lineNum">     521 </span>            :    /// Mark vertex @a i as non-conforming, with parent vertices @a p1 and @a p2.</a>
+<a name="522"><span class="lineNum">     522 </span>            :    void AddVertexParents(int i, int p1, int p2);</a>
+<a name="523"><span class="lineNum">     523 </span>            : </a>
+<a name="524"><span class="lineNum">     524 </span>            :    int AddSegment(int v1, int v2, int attr = 1);</a>
+<a name="525"><span class="lineNum">     525 </span>            :    int AddSegment(const int *vi, int attr = 1);</a>
+<a name="526"><span class="lineNum">     526 </span>            : </a>
+<a name="527"><span class="lineNum">     527 </span>            :    int AddTriangle(int v1, int v2, int v3, int attr = 1);</a>
+<a name="528"><span class="lineNum">     528 </span>            :    int AddTriangle(const int *vi, int attr = 1);</a>
+<a name="529"><span class="lineNum">     529 </span>            :    int AddTri(const int *vi, int attr = 1) { return AddTriangle(vi, attr); }</a>
+<a name="530"><span class="lineNum">     530 </span>            : </a>
+<a name="531"><span class="lineNum">     531 </span>            :    int AddQuad(int v1, int v2, int v3, int v4, int attr = 1);</a>
+<a name="532"><span class="lineNum">     532 </span>            :    int AddQuad(const int *vi, int attr = 1);</a>
+<a name="533"><span class="lineNum">     533 </span>            : </a>
+<a name="534"><span class="lineNum">     534 </span>            :    int AddTet(int v1, int v2, int v3, int v4, int attr = 1);</a>
+<a name="535"><span class="lineNum">     535 </span>            :    int AddTet(const int *vi, int attr = 1);</a>
+<a name="536"><span class="lineNum">     536 </span>            : </a>
+<a name="537"><span class="lineNum">     537 </span>            :    int AddWedge(int v1, int v2, int v3, int v4, int v5, int v6, int attr = 1);</a>
+<a name="538"><span class="lineNum">     538 </span>            :    int AddWedge(const int *vi, int attr = 1);</a>
+<a name="539"><span class="lineNum">     539 </span>            : </a>
+<a name="540"><span class="lineNum">     540 </span>            :    int AddHex(int v1, int v2, int v3, int v4, int v5, int v6, int v7, int v8,</a>
+<a name="541"><span class="lineNum">     541 </span>            :               int attr = 1);</a>
+<a name="542"><span class="lineNum">     542 </span>            :    int AddHex(const int *vi, int attr = 1);</a>
+<a name="543"><span class="lineNum">     543 </span>            :    void AddHexAsTets(const int *vi, int attr = 1);</a>
+<a name="544"><span class="lineNum">     544 </span>            :    void AddHexAsWedges(const int *vi, int attr = 1);</a>
+<a name="545"><span class="lineNum">     545 </span>            : </a>
+<a name="546"><span class="lineNum">     546 </span>            :    /// The parameter @a elem should be allocated using the NewElement() method</a>
+<a name="547"><span class="lineNum">     547 </span>            :    int AddElement(Element *elem);</a>
+<a name="548"><span class="lineNum">     548 </span>            :    int AddBdrElement(Element *elem);</a>
+<a name="549"><span class="lineNum">     549 </span>            : </a>
+<a name="550"><span class="lineNum">     550 </span>            :    int AddBdrSegment(int v1, int v2, int attr = 1);</a>
+<a name="551"><span class="lineNum">     551 </span>            :    int AddBdrSegment(const int *vi, int attr = 1);</a>
+<a name="552"><span class="lineNum">     552 </span>            : </a>
+<a name="553"><span class="lineNum">     553 </span>            :    int AddBdrTriangle(int v1, int v2, int v3, int attr = 1);</a>
+<a name="554"><span class="lineNum">     554 </span>            :    int AddBdrTriangle(const int *vi, int attr = 1);</a>
+<a name="555"><span class="lineNum">     555 </span>            : </a>
+<a name="556"><span class="lineNum">     556 </span>            :    int AddBdrQuad(int v1, int v2, int v3, int v4, int attr = 1);</a>
+<a name="557"><span class="lineNum">     557 </span>            :    int AddBdrQuad(const int *vi, int attr = 1);</a>
+<a name="558"><span class="lineNum">     558 </span>            :    void AddBdrQuadAsTriangles(const int *vi, int attr = 1);</a>
+<a name="559"><span class="lineNum">     559 </span>            : </a>
+<a name="560"><span class="lineNum">     560 </span>            :    int AddBdrPoint(int v, int attr = 1);</a>
+<a name="561"><span class="lineNum">     561 </span>            : </a>
+<a name="562"><span class="lineNum">     562 </span>            :    void GenerateBoundaryElements();</a>
+<a name="563"><span class="lineNum">     563 </span>            :    /// Finalize the construction of a triangular Mesh.</a>
+<a name="564"><span class="lineNum">     564 </span>            :    void FinalizeTriMesh(int generate_edges = 0, int refine = 0,</a>
+<a name="565"><span class="lineNum">     565 </span>            :                         bool fix_orientation = true);</a>
+<a name="566"><span class="lineNum">     566 </span>            :    /// Finalize the construction of a quadrilateral Mesh.</a>
+<a name="567"><span class="lineNum">     567 </span>            :    void FinalizeQuadMesh(int generate_edges = 0, int refine = 0,</a>
+<a name="568"><span class="lineNum">     568 </span>            :                          bool fix_orientation = true);</a>
+<a name="569"><span class="lineNum">     569 </span>            :    /// Finalize the construction of a tetrahedral Mesh.</a>
+<a name="570"><span class="lineNum">     570 </span>            :    void FinalizeTetMesh(int generate_edges = 0, int refine = 0,</a>
+<a name="571"><span class="lineNum">     571 </span>            :                         bool fix_orientation = true);</a>
+<a name="572"><span class="lineNum">     572 </span>            :    /// Finalize the construction of a wedge Mesh.</a>
+<a name="573"><span class="lineNum">     573 </span>            :    void FinalizeWedgeMesh(int generate_edges = 0, int refine = 0,</a>
+<a name="574"><span class="lineNum">     574 </span>            :                           bool fix_orientation = true);</a>
+<a name="575"><span class="lineNum">     575 </span>            :    /// Finalize the construction of a hexahedral Mesh.</a>
+<a name="576"><span class="lineNum">     576 </span>            :    void FinalizeHexMesh(int generate_edges = 0, int refine = 0,</a>
+<a name="577"><span class="lineNum">     577 </span>            :                         bool fix_orientation = true);</a>
+<a name="578"><span class="lineNum">     578 </span>            :    /// Finalize the construction of any type of Mesh.</a>
+<a name="579"><span class="lineNum">     579 </span>            :    /** This method calls FinalizeTopology() and Finalize(). */</a>
+<a name="580"><span class="lineNum">     580 </span>            :    void FinalizeMesh(int refine = 0, bool fix_orientation = true);</a>
+<a name="581"><span class="lineNum">     581 </span>            : </a>
+<a name="582"><span class="lineNum">     582 </span>            :    ///@}</a>
+<a name="583"><span class="lineNum">     583 </span>            : </a>
+<a name="584"><span class="lineNum">     584 </span>            :    /** @brief Finalize the construction of the secondary topology (connectivity)</a>
+<a name="585"><span class="lineNum">     585 </span>            :        data of a Mesh. */</a>
+<a name="586"><span class="lineNum">     586 </span>            :    /** This method does not require any actual coordinate data (either vertex</a>
+<a name="587"><span class="lineNum">     587 </span>            :        coordinates for linear meshes or node coordinates for meshes with nodes)</a>
+<a name="588"><span class="lineNum">     588 </span>            :        to be available. However, the data generated by this method is generally</a>
+<a name="589"><span class="lineNum">     589 </span>            :        required by the FiniteElementSpace class.</a>
+<a name="590"><span class="lineNum">     590 </span>            : </a>
+<a name="591"><span class="lineNum">     591 </span>            :        After calling this method, setting the Mesh vertices or nodes, it may be</a>
+<a name="592"><span class="lineNum">     592 </span>            :        appropriate to call the method Finalize(). */</a>
+<a name="593"><span class="lineNum">     593 </span>            :    void FinalizeTopology(bool generate_bdr = true);</a>
+<a name="594"><span class="lineNum">     594 </span>            : </a>
+<a name="595"><span class="lineNum">     595 </span>            :    /// Finalize the construction of a general Mesh.</a>
+<a name="596"><span class="lineNum">     596 </span>            :    /** This method will:</a>
+<a name="597"><span class="lineNum">     597 </span>            :        - check and optionally fix the orientation of regular elements</a>
+<a name="598"><span class="lineNum">     598 </span>            :        - check and fix the orientation of boundary elements</a>
+<a name="599"><span class="lineNum">     599 </span>            :        - assume that #vertices are defined, if #Nodes == NULL</a>
+<a name="600"><span class="lineNum">     600 </span>            :        - assume that #Nodes are defined, if #Nodes != NULL.</a>
+<a name="601"><span class="lineNum">     601 </span>            :        @param[in] refine  If true, prepare the Mesh for conforming refinement of</a>
+<a name="602"><span class="lineNum">     602 </span>            :                           triangular or tetrahedral meshes.</a>
+<a name="603"><span class="lineNum">     603 </span>            :        @param[in] fix_orientation</a>
+<a name="604"><span class="lineNum">     604 </span>            :                           If true, fix the orientation of inverted mesh elements</a>
+<a name="605"><span class="lineNum">     605 </span>            :                           by permuting their vertices.</a>
+<a name="606"><span class="lineNum">     606 </span>            : </a>
+<a name="607"><span class="lineNum">     607 </span>            :        Before calling this method, call FinalizeTopology() and ensure that the</a>
+<a name="608"><span class="lineNum">     608 </span>            :        Mesh vertices or nodes are set. */</a>
+<a name="609"><span class="lineNum">     609 </span>            :    virtual void Finalize(bool refine = false, bool fix_orientation = false);</a>
+<a name="610"><span class="lineNum">     610 </span>            : </a>
+<a name="611"><span class="lineNum">     611 </span>            :    virtual void SetAttributes();</a>
+<a name="612"><span class="lineNum">     612 </span>            : </a>
+<a name="613"><span class="lineNum">     613 </span>            :    /** This is our integration with the Gecko library. The method finds an</a>
+<a name="614"><span class="lineNum">     614 </span>            :        element ordering that will increase memory coherency by putting elements</a>
+<a name="615"><span class="lineNum">     615 </span>            :        that are in physical proximity closer in memory. It can also be used to</a>
+<a name="616"><span class="lineNum">     616 </span>            :        obtain a space-filling curve ordering for ParNCMesh partitioning.</a>
+<a name="617"><span class="lineNum">     617 </span>            :        @param[out] ordering Output element ordering.</a>
+<a name="618"><span class="lineNum">     618 </span>            :        @param iterations Total number of V cycles. The ordering may improve with</a>
+<a name="619"><span class="lineNum">     619 </span>            :        more iterations. The best iteration is returned at the end.</a>
+<a name="620"><span class="lineNum">     620 </span>            :        @param window Initial window size. This determines the number of</a>
+<a name="621"><span class="lineNum">     621 </span>            :        permutations tested at each multigrid level and strongly influences the</a>
+<a name="622"><span class="lineNum">     622 </span>            :        quality of the result, but the cost of increasing 'window' is exponential.</a>
+<a name="623"><span class="lineNum">     623 </span>            :        @param period The window size is incremented every 'period' iterations.</a>
+<a name="624"><span class="lineNum">     624 </span>            :        @param seed Seed for initial random ordering (0 = skip random reorder).</a>
+<a name="625"><span class="lineNum">     625 </span>            :        @param verbose Print the progress of the optimization to mfem::out.</a>
+<a name="626"><span class="lineNum">     626 </span>            :        @param time_limit Optional time limit for the optimization, in seconds.</a>
+<a name="627"><span class="lineNum">     627 </span>            :        When reached, ordering from the best iteration so far is returned</a>
+<a name="628"><span class="lineNum">     628 </span>            :        (0 = no limit).</a>
+<a name="629"><span class="lineNum">     629 </span>            :        @return The final edge product cost of the ordering. The function may be</a>
+<a name="630"><span class="lineNum">     630 </span>            :        called in an external loop with different seeds, and the best ordering can</a>
+<a name="631"><span class="lineNum">     631 </span>            :        then be retained. */</a>
+<a name="632"><span class="lineNum">     632 </span>            :    double GetGeckoElementOrdering(Array&lt;int&gt; &amp;ordering,</a>
+<a name="633"><span class="lineNum">     633 </span>            :                                   int iterations = 4, int window = 4,</a>
+<a name="634"><span class="lineNum">     634 </span>            :                                   int period = 2, int seed = 0,</a>
+<a name="635"><span class="lineNum">     635 </span>            :                                   bool verbose = false, double time_limit = 0);</a>
+<a name="636"><span class="lineNum">     636 </span>            : </a>
+<a name="637"><span class="lineNum">     637 </span>            :    /** Return an ordering of the elements that approximately follows the Hilbert</a>
+<a name="638"><span class="lineNum">     638 </span>            :        curve. The method performs a spatial (Hilbert) sort on the centers of all</a>
+<a name="639"><span class="lineNum">     639 </span>            :        elements and returns the resulting sequence, which can then be passed to</a>
+<a name="640"><span class="lineNum">     640 </span>            :        ReorderElements. This is a cheap alternative to GetGeckoElementOrdering.*/</a>
+<a name="641"><span class="lineNum">     641 </span>            :    void GetHilbertElementOrdering(Array&lt;int&gt; &amp;ordering);</a>
+<a name="642"><span class="lineNum">     642 </span>            : </a>
+<a name="643"><span class="lineNum">     643 </span>            :    /** Rebuilds the mesh with a different order of elements. For each element i,</a>
+<a name="644"><span class="lineNum">     644 </span>            :        the array ordering[i] contains its desired new index. Note that the method</a>
+<a name="645"><span class="lineNum">     645 </span>            :        reorders vertices, edges and faces along with the elements. */</a>
+<a name="646"><span class="lineNum">     646 </span>            :    void ReorderElements(const Array&lt;int&gt; &amp;ordering, bool reorder_vertices = true);</a>
+<a name="647"><span class="lineNum">     647 </span>            : </a>
+<a name="648"><span class="lineNum">     648 </span>            :    /** Creates mesh for the parallelepiped [0,sx]x[0,sy]x[0,sz], divided into</a>
+<a name="649"><span class="lineNum">     649 </span>            :        nx*ny*nz hexahedra if type=HEXAHEDRON or into 6*nx*ny*nz tetrahedrons if</a>
+<a name="650"><span class="lineNum">     650 </span>            :        type=TETRAHEDRON. If sfc_ordering = true (default), elements are ordered</a>
+<a name="651"><span class="lineNum">     651 </span>            :        along a space-filling curve, instead of row by row and layer by layer.</a>
+<a name="652"><span class="lineNum">     652 </span>            :        The parameter @a generate_edges is ignored (for now, it is kept for</a>
+<a name="653"><span class="lineNum">     653 </span>            :        backward compatibility). */</a>
+<a name="654"><span class="lineNum">     654 </span>            :    Mesh(int nx, int ny, int nz, Element::Type type, bool generate_edges = false,</a>
+<a name="655"><span class="lineNum">     655 </span>            :         double sx = 1.0, double sy = 1.0, double sz = 1.0,</a>
+<a name="656"><span class="lineNum">     656 </span>            :         bool sfc_ordering = true)</a>
+<a name="657"><span class="lineNum">     657 </span>            :    {</a>
+<a name="658"><span class="lineNum">     658 </span>            :       Make3D(nx, ny, nz, type, sx, sy, sz, sfc_ordering);</a>
+<a name="659"><span class="lineNum">     659 </span>            :       Finalize(true); // refine = true</a>
+<a name="660"><span class="lineNum">     660 </span>            :    }</a>
+<a name="661"><span class="lineNum">     661 </span>            : </a>
+<a name="662"><span class="lineNum">     662 </span>            :    /** Creates mesh for the rectangle [0,sx]x[0,sy], divided into nx*ny</a>
+<a name="663"><span class="lineNum">     663 </span>            :        quadrilaterals if type = QUADRILATERAL or into 2*nx*ny triangles if</a>
+<a name="664"><span class="lineNum">     664 </span>            :        type = TRIANGLE. If generate_edges = 0 (default) edges are not generated,</a>
+<a name="665"><span class="lineNum">     665 </span>            :        if 1 edges are generated. If scf_ordering = true (default), elements are</a>
+<a name="666"><span class="lineNum">     666 </span>            :        ordered along a space-filling curve, instead of row by row. */</a>
+<a name="667"><span class="lineNum">     667 </span><span class="lineCov">          3 :    Mesh(int nx, int ny, Element::Type type, bool generate_edges = false,</span></a>
+<a name="668"><span class="lineNum">     668 </span>            :         double sx = 1.0, double sy = 1.0, bool sfc_ordering = true)</a>
+<a name="669"><span class="lineNum">     669 </span><span class="lineCov">          3 :    {</span></a>
+<a name="670"><span class="lineNum">     670 </span><span class="lineCov">          3 :       Make2D(nx, ny, type, sx, sy, generate_edges, sfc_ordering);</span></a>
+<a name="671"><span class="lineNum">     671 </span><span class="lineCov">          3 :       Finalize(true); // refine = true</span></a>
+<a name="672"><span class="lineNum">     672 </span><span class="lineCov">          3 :    }</span></a>
+<a name="673"><span class="lineNum">     673 </span>            : </a>
+<a name="674"><span class="lineNum">     674 </span>            :    /** Creates 1D mesh , divided into n equal intervals. */</a>
+<a name="675"><span class="lineNum">     675 </span>            :    explicit Mesh(int n, double sx = 1.0)</a>
+<a name="676"><span class="lineNum">     676 </span>            :    {</a>
+<a name="677"><span class="lineNum">     677 </span>            :       Make1D(n, sx);</a>
+<a name="678"><span class="lineNum">     678 </span>            :       // Finalize(); // reminder: not needed</a>
+<a name="679"><span class="lineNum">     679 </span>            :    }</a>
+<a name="680"><span class="lineNum">     680 </span>            : </a>
+<a name="681"><span class="lineNum">     681 </span>            :    /** Creates mesh by reading a file in MFEM, Netgen, or VTK format. If</a>
+<a name="682"><span class="lineNum">     682 </span>            :        generate_edges = 0 (default) edges are not generated, if 1 edges are</a>
+<a name="683"><span class="lineNum">     683 </span>            :        generated. */</a>
+<a name="684"><span class="lineNum">     684 </span>            :    explicit Mesh(const char *filename, int generate_edges = 0, int refine = 1,</a>
+<a name="685"><span class="lineNum">     685 </span>            :                  bool fix_orientation = true);</a>
+<a name="686"><span class="lineNum">     686 </span>            : </a>
+<a name="687"><span class="lineNum">     687 </span>            :    /** Creates mesh by reading data stream in MFEM, Netgen, or VTK format. If</a>
+<a name="688"><span class="lineNum">     688 </span>            :        generate_edges = 0 (default) edges are not generated, if 1 edges are</a>
+<a name="689"><span class="lineNum">     689 </span>            :        generated. */</a>
+<a name="690"><span class="lineNum">     690 </span>            :    explicit Mesh(std::istream &amp;input, int generate_edges = 0, int refine = 1,</a>
+<a name="691"><span class="lineNum">     691 </span>            :                  bool fix_orientation = true);</a>
+<a name="692"><span class="lineNum">     692 </span>            : </a>
+<a name="693"><span class="lineNum">     693 </span>            :    /// Create a disjoint mesh from the given mesh array</a>
+<a name="694"><span class="lineNum">     694 </span>            :    Mesh(Mesh *mesh_array[], int num_pieces);</a>
+<a name="695"><span class="lineNum">     695 </span>            : </a>
+<a name="696"><span class="lineNum">     696 </span>            :    /// Create a uniformly refined (by any factor) version of @a orig_mesh.</a>
+<a name="697"><span class="lineNum">     697 </span>            :    /** @param[in] orig_mesh  The starting coarse mesh.</a>
+<a name="698"><span class="lineNum">     698 </span>            :        @param[in] ref_factor The refinement factor, an integer &gt; 1.</a>
+<a name="699"><span class="lineNum">     699 </span>            :        @param[in] ref_type   Specify the positions of the new vertices. The</a>
+<a name="700"><span class="lineNum">     700 </span>            :                              options are BasisType::ClosedUniform or</a>
+<a name="701"><span class="lineNum">     701 </span>            :                              BasisType::GaussLobatto.</a>
+<a name="702"><span class="lineNum">     702 </span>            : </a>
+<a name="703"><span class="lineNum">     703 </span>            :        The refinement data which can be accessed with GetRefinementTransforms()</a>
+<a name="704"><span class="lineNum">     704 </span>            :        is set to reflect the performed refinements.</a>
+<a name="705"><span class="lineNum">     705 </span>            : </a>
+<a name="706"><span class="lineNum">     706 </span>            :        @note The constructed Mesh is linear, i.e. it does not have nodes. */</a>
+<a name="707"><span class="lineNum">     707 </span>            :    Mesh(Mesh *orig_mesh, int ref_factor, int ref_type);</a>
+<a name="708"><span class="lineNum">     708 </span>            : </a>
+<a name="709"><span class="lineNum">     709 </span>            :    /** This is similar to the mesh constructor with the same arguments, but here</a>
+<a name="710"><span class="lineNum">     710 </span>            :        the current mesh is destroyed and another one created based on the data</a>
+<a name="711"><span class="lineNum">     711 </span>            :        stream again given in MFEM, Netgen, or VTK format. If generate_edges = 0</a>
+<a name="712"><span class="lineNum">     712 </span>            :        (default) edges are not generated, if 1 edges are generated. */</a>
+<a name="713"><span class="lineNum">     713 </span>            :    /// \see mfem::ifgzstream() for on-the-fly decompression of compressed ascii</a>
+<a name="714"><span class="lineNum">     714 </span>            :    /// inputs.</a>
+<a name="715"><span class="lineNum">     715 </span>            :    virtual void Load(std::istream &amp;input, int generate_edges = 0,</a>
+<a name="716"><span class="lineNum">     716 </span>            :                      int refine = 1, bool fix_orientation = true)</a>
+<a name="717"><span class="lineNum">     717 </span>            :    {</a>
+<a name="718"><span class="lineNum">     718 </span>            :       Loader(input, generate_edges);</a>
+<a name="719"><span class="lineNum">     719 </span>            :       Finalize(refine, fix_orientation);</a>
+<a name="720"><span class="lineNum">     720 </span>            :    }</a>
+<a name="721"><span class="lineNum">     721 </span>            : </a>
+<a name="722"><span class="lineNum">     722 </span>            :    /// Clear the contents of the Mesh.</a>
+<a name="723"><span class="lineNum">     723 </span>            :    void Clear() { Destroy(); SetEmpty(); }</a>
+<a name="724"><span class="lineNum">     724 </span>            : </a>
+<a name="725"><span class="lineNum">     725 </span>            :    /** @brief Get the mesh generator/type.</a>
+<a name="726"><span class="lineNum">     726 </span>            : </a>
+<a name="727"><span class="lineNum">     727 </span>            :        @return A bitmask:</a>
+<a name="728"><span class="lineNum">     728 </span>            :        - bit 0 - simplices are present in the mesh (triangles, tets),</a>
+<a name="729"><span class="lineNum">     729 </span>            :        - bit 1 - tensor product elements are present in the mesh (quads, hexes),</a>
+<a name="730"><span class="lineNum">     730 </span>            :        - bit 2 - the mesh has wedge elements.</a>
+<a name="731"><span class="lineNum">     731 </span>            : </a>
+<a name="732"><span class="lineNum">     732 </span>            :        In parallel, the result takes into account elements on all processors.</a>
+<a name="733"><span class="lineNum">     733 </span>            :    */</a>
+<a name="734"><span class="lineNum">     734 </span>            :    inline int MeshGenerator() { return meshgen; }</a>
+<a name="735"><span class="lineNum">     735 </span>            : </a>
+<a name="736"><span class="lineNum">     736 </span>            :    /** @brief Returns number of vertices.  Vertices are only at the corners of</a>
+<a name="737"><span class="lineNum">     737 </span>            :        elements, where you would expect them in the lowest-order mesh. */</a>
+<a name="738"><span class="lineNum">     738 </span>            :    inline int GetNV() const { return NumOfVertices; }</a>
+<a name="739"><span class="lineNum">     739 </span>            : </a>
+<a name="740"><span class="lineNum">     740 </span>            :    /// Returns number of elements.</a>
+<a name="741"><span class="lineNum">     741 </span>            :    inline int GetNE() const { return NumOfElements; }</a>
+<a name="742"><span class="lineNum">     742 </span>            : </a>
+<a name="743"><span class="lineNum">     743 </span>            :    /// Returns number of boundary elements.</a>
+<a name="744"><span class="lineNum">     744 </span>            :    inline int GetNBE() const { return NumOfBdrElements; }</a>
+<a name="745"><span class="lineNum">     745 </span>            : </a>
+<a name="746"><span class="lineNum">     746 </span>            :    /// Return the number of edges.</a>
+<a name="747"><span class="lineNum">     747 </span>            :    inline int GetNEdges() const { return NumOfEdges; }</a>
+<a name="748"><span class="lineNum">     748 </span>            : </a>
+<a name="749"><span class="lineNum">     749 </span>            :    /// Return the number of faces in a 3D mesh.</a>
+<a name="750"><span class="lineNum">     750 </span>            :    inline int GetNFaces() const { return NumOfFaces; }</a>
+<a name="751"><span class="lineNum">     751 </span>            : </a>
+<a name="752"><span class="lineNum">     752 </span>            :    /// Return the number of faces (3D), edges (2D) or vertices (1D).</a>
+<a name="753"><span class="lineNum">     753 </span>            :    int GetNumFaces() const;</a>
+<a name="754"><span class="lineNum">     754 </span>            : </a>
+<a name="755"><span class="lineNum">     755 </span>            :    /// Returns the number of faces according to the requested type.</a>
+<a name="756"><span class="lineNum">     756 </span>            :    /** If type==Boundary returns only the &quot;true&quot; number of boundary faces</a>
+<a name="757"><span class="lineNum">     757 </span>            :        contrary to GetNBE() that returns &quot;fake&quot; boundary faces associated to</a>
+<a name="758"><span class="lineNum">     758 </span>            :        visualization for GLVis.</a>
+<a name="759"><span class="lineNum">     759 </span>            :        Similarly, if type==Interior, the &quot;fake&quot; boundary faces associated to</a>
+<a name="760"><span class="lineNum">     760 </span>            :        visualization are counted as interior faces. */</a>
+<a name="761"><span class="lineNum">     761 </span>            :    int GetNFbyType(FaceType type) const;</a>
+<a name="762"><span class="lineNum">     762 </span>            : </a>
+<a name="763"><span class="lineNum">     763 </span>            :    /// Utility function: sum integers from all processors (Allreduce).</a>
+<a name="764"><span class="lineNum">     764 </span>            :    virtual long ReduceInt(int value) const { return value; }</a>
+<a name="765"><span class="lineNum">     765 </span>            : </a>
+<a name="766"><span class="lineNum">     766 </span>            :    /// Return the total (global) number of elements.</a>
+<a name="767"><span class="lineNum">     767 </span>            :    long GetGlobalNE() const { return ReduceInt(NumOfElements); }</a>
+<a name="768"><span class="lineNum">     768 </span>            : </a>
+<a name="769"><span class="lineNum">     769 </span>            :    /** @brief Return the mesh geometric factors corresponding to the given</a>
+<a name="770"><span class="lineNum">     770 </span>            :        integration rule. */</a>
+<a name="771"><span class="lineNum">     771 </span>            :    const GeometricFactors* GetGeometricFactors(const IntegrationRule&amp; ir,</a>
+<a name="772"><span class="lineNum">     772 </span>            :                                                const int flags);</a>
+<a name="773"><span class="lineNum">     773 </span>            : </a>
+<a name="774"><span class="lineNum">     774 </span>            :    /** @brief Return the mesh geometric factors for the faces corresponding</a>
+<a name="775"><span class="lineNum">     775 </span>            :         to the given integration rule. */</a>
+<a name="776"><span class="lineNum">     776 </span>            :    const FaceGeometricFactors* GetFaceGeometricFactors(const IntegrationRule&amp; ir,</a>
+<a name="777"><span class="lineNum">     777 </span>            :                                                        const int flags,</a>
+<a name="778"><span class="lineNum">     778 </span>            :                                                        FaceType type);</a>
+<a name="779"><span class="lineNum">     779 </span>            : </a>
+<a name="780"><span class="lineNum">     780 </span>            :    /// Destroy all GeometricFactors stored by the Mesh.</a>
+<a name="781"><span class="lineNum">     781 </span>            :    /** This method can be used to force recomputation of the GeometricFactors,</a>
+<a name="782"><span class="lineNum">     782 </span>            :        for example, after the mesh nodes are modified externally. */</a>
+<a name="783"><span class="lineNum">     783 </span>            :    void DeleteGeometricFactors();</a>
+<a name="784"><span class="lineNum">     784 </span>            : </a>
+<a name="785"><span class="lineNum">     785 </span>            :    /// Equals 1 + num_holes - num_loops</a>
+<a name="786"><span class="lineNum">     786 </span>            :    inline int EulerNumber() const</a>
+<a name="787"><span class="lineNum">     787 </span>            :    { return NumOfVertices - NumOfEdges + NumOfFaces - NumOfElements; }</a>
+<a name="788"><span class="lineNum">     788 </span>            :    /// Equals 1 - num_holes</a>
+<a name="789"><span class="lineNum">     789 </span>            :    inline int EulerNumber2D() const</a>
+<a name="790"><span class="lineNum">     790 </span>            :    { return NumOfVertices - NumOfEdges + NumOfElements; }</a>
+<a name="791"><span class="lineNum">     791 </span>            : </a>
+<a name="792"><span class="lineNum">     792 </span><span class="lineCov">          3 :    int Dimension() const { return Dim; }</span></a>
+<a name="793"><span class="lineNum">     793 </span>            :    int SpaceDimension() const { return spaceDim; }</a>
+<a name="794"><span class="lineNum">     794 </span>            : </a>
+<a name="795"><span class="lineNum">     795 </span>            :    /// @brief Return pointer to vertex i's coordinates.</a>
+<a name="796"><span class="lineNum">     796 </span>            :    /// @warning For high-order meshes (when #Nodes != NULL) vertices may not be</a>
+<a name="797"><span class="lineNum">     797 </span>            :    /// updated and should not be used!</a>
+<a name="798"><span class="lineNum">     798 </span>            :    const double *GetVertex(int i) const { return vertices[i](); }</a>
+<a name="799"><span class="lineNum">     799 </span>            : </a>
+<a name="800"><span class="lineNum">     800 </span>            :    /// @brief Return pointer to vertex i's coordinates.</a>
+<a name="801"><span class="lineNum">     801 </span>            :    /// @warning For high-order meshes (when Nodes != NULL) vertices may not</a>
+<a name="802"><span class="lineNum">     802 </span>            :    /// being updated and should not be used!</a>
+<a name="803"><span class="lineNum">     803 </span>            :    double *GetVertex(int i) { return vertices[i](); }</a>
+<a name="804"><span class="lineNum">     804 </span>            : </a>
+<a name="805"><span class="lineNum">     805 </span>            :    void GetElementData(int geom, Array&lt;int&gt; &amp;elem_vtx, Array&lt;int&gt; &amp;attr) const</a>
+<a name="806"><span class="lineNum">     806 </span>            :    { GetElementData(elements, geom, elem_vtx, attr); }</a>
+<a name="807"><span class="lineNum">     807 </span>            : </a>
+<a name="808"><span class="lineNum">     808 </span>            :    void GetBdrElementData(int geom, Array&lt;int&gt; &amp;bdr_elem_vtx,</a>
+<a name="809"><span class="lineNum">     809 </span>            :                           Array&lt;int&gt; &amp;bdr_attr) const</a>
+<a name="810"><span class="lineNum">     810 </span>            :    { GetElementData(boundary, geom, bdr_elem_vtx, bdr_attr); }</a>
+<a name="811"><span class="lineNum">     811 </span>            : </a>
+<a name="812"><span class="lineNum">     812 </span>            :    /** @brief Set the internal Vertex array to point to the given @a vertices</a>
+<a name="813"><span class="lineNum">     813 </span>            :        array without assuming ownership of the pointer. */</a>
+<a name="814"><span class="lineNum">     814 </span>            :    /** If @a zerocopy is `true`, the vertices must be given as an array of 3</a>
+<a name="815"><span class="lineNum">     815 </span>            :        doubles per vertex. If @a zerocopy is `false` then the current Vertex</a>
+<a name="816"><span class="lineNum">     816 </span>            :        data is first copied to the @a vertices array. */</a>
+<a name="817"><span class="lineNum">     817 </span>            :    void ChangeVertexDataOwnership(double *vertices, int len_vertices,</a>
+<a name="818"><span class="lineNum">     818 </span>            :                                   bool zerocopy = false);</a>
+<a name="819"><span class="lineNum">     819 </span>            : </a>
+<a name="820"><span class="lineNum">     820 </span>            :    const Element* const *GetElementsArray() const</a>
+<a name="821"><span class="lineNum">     821 </span>            :    { return elements.GetData(); }</a>
+<a name="822"><span class="lineNum">     822 </span>            : </a>
+<a name="823"><span class="lineNum">     823 </span>            :    const Element *GetElement(int i) const { return elements[i]; }</a>
+<a name="824"><span class="lineNum">     824 </span>            : </a>
+<a name="825"><span class="lineNum">     825 </span>            :    Element *GetElement(int i) { return elements[i]; }</a>
+<a name="826"><span class="lineNum">     826 </span>            : </a>
+<a name="827"><span class="lineNum">     827 </span>            :    const Element *GetBdrElement(int i) const { return boundary[i]; }</a>
+<a name="828"><span class="lineNum">     828 </span>            : </a>
+<a name="829"><span class="lineNum">     829 </span>            :    Element *GetBdrElement(int i) { return boundary[i]; }</a>
+<a name="830"><span class="lineNum">     830 </span>            : </a>
+<a name="831"><span class="lineNum">     831 </span>            :    const Element *GetFace(int i) const { return faces[i]; }</a>
+<a name="832"><span class="lineNum">     832 </span>            : </a>
+<a name="833"><span class="lineNum">     833 </span>            :    Geometry::Type GetFaceBaseGeometry(int i) const</a>
+<a name="834"><span class="lineNum">     834 </span>            :    {</a>
+<a name="835"><span class="lineNum">     835 </span>            :       return faces[i]-&gt;GetGeometryType();</a>
+<a name="836"><span class="lineNum">     836 </span>            :    }</a>
+<a name="837"><span class="lineNum">     837 </span>            : </a>
+<a name="838"><span class="lineNum">     838 </span>            :    Geometry::Type GetElementBaseGeometry(int i) const</a>
+<a name="839"><span class="lineNum">     839 </span>            :    {</a>
+<a name="840"><span class="lineNum">     840 </span>            :       return elements[i]-&gt;GetGeometryType();</a>
+<a name="841"><span class="lineNum">     841 </span>            :    }</a>
+<a name="842"><span class="lineNum">     842 </span>            : </a>
+<a name="843"><span class="lineNum">     843 </span>            :    Geometry::Type GetBdrElementBaseGeometry(int i) const</a>
+<a name="844"><span class="lineNum">     844 </span>            :    {</a>
+<a name="845"><span class="lineNum">     845 </span>            :       return boundary[i]-&gt;GetGeometryType();</a>
+<a name="846"><span class="lineNum">     846 </span>            :    }</a>
+<a name="847"><span class="lineNum">     847 </span>            : </a>
+<a name="848"><span class="lineNum">     848 </span>            :    /** @brief Return true iff the given @a geom is encountered in the mesh.</a>
+<a name="849"><span class="lineNum">     849 </span>            :        Geometries of dimensions lower than Dimension() are counted as well. */</a>
+<a name="850"><span class="lineNum">     850 </span>            :    bool HasGeometry(Geometry::Type geom) const</a>
+<a name="851"><span class="lineNum">     851 </span>            :    { return mesh_geoms &amp; (1 &lt;&lt; geom); }</a>
+<a name="852"><span class="lineNum">     852 </span>            : </a>
+<a name="853"><span class="lineNum">     853 </span>            :    /** @brief Return the number of geometries of the given dimension present in</a>
+<a name="854"><span class="lineNum">     854 </span>            :        the mesh. */</a>
+<a name="855"><span class="lineNum">     855 </span>            :    /** For a parallel mesh only the local geometries are counted. */</a>
+<a name="856"><span class="lineNum">     856 </span>            :    int GetNumGeometries(int dim) const;</a>
+<a name="857"><span class="lineNum">     857 </span>            : </a>
+<a name="858"><span class="lineNum">     858 </span>            :    /// Return all element geometries of the given dimension present in the mesh.</a>
+<a name="859"><span class="lineNum">     859 </span>            :    /** For a parallel mesh only the local geometries are returned.</a>
+<a name="860"><span class="lineNum">     860 </span>            : </a>
+<a name="861"><span class="lineNum">     861 </span>            :        The returned geometries are sorted. */</a>
+<a name="862"><span class="lineNum">     862 </span>            :    void GetGeometries(int dim, Array&lt;Geometry::Type&gt; &amp;el_geoms) const;</a>
+<a name="863"><span class="lineNum">     863 </span>            : </a>
+<a name="864"><span class="lineNum">     864 </span>            :    /// List of mesh geometries stored as Array&lt;Geometry::Type&gt;.</a>
+<a name="865"><span class="lineNum">     865 </span>            :    class GeometryList : public Array&lt;Geometry::Type&gt;</a>
+<a name="866"><span class="lineNum">     866 </span>            :    {</a>
+<a name="867"><span class="lineNum">     867 </span>            :    protected:</a>
+<a name="868"><span class="lineNum">     868 </span>            :       Geometry::Type geom_buf[Geometry::NumGeom];</a>
+<a name="869"><span class="lineNum">     869 </span>            :    public:</a>
+<a name="870"><span class="lineNum">     870 </span>            :       /// Construct a GeometryList of all element geometries in @a mesh.</a>
+<a name="871"><span class="lineNum">     871 </span>            :       GeometryList(Mesh &amp;mesh)</a>
+<a name="872"><span class="lineNum">     872 </span>            :          : Array&lt;Geometry::Type&gt;(geom_buf, Geometry::NumGeom)</a>
+<a name="873"><span class="lineNum">     873 </span>            :       { mesh.GetGeometries(mesh.Dimension(), *this); }</a>
+<a name="874"><span class="lineNum">     874 </span>            :       /** @brief Construct a GeometryList of all geometries of dimension @a dim</a>
+<a name="875"><span class="lineNum">     875 </span>            :           in @a mesh. */</a>
+<a name="876"><span class="lineNum">     876 </span>            :       GeometryList(Mesh &amp;mesh, int dim)</a>
+<a name="877"><span class="lineNum">     877 </span>            :          : Array&lt;Geometry::Type&gt;(geom_buf, Geometry::NumGeom)</a>
+<a name="878"><span class="lineNum">     878 </span>            :       { mesh.GetGeometries(dim, *this); }</a>
+<a name="879"><span class="lineNum">     879 </span>            :    };</a>
+<a name="880"><span class="lineNum">     880 </span>            : </a>
+<a name="881"><span class="lineNum">     881 </span>            :    /// Returns the indices of the vertices of element i.</a>
+<a name="882"><span class="lineNum">     882 </span>            :    void GetElementVertices(int i, Array&lt;int&gt; &amp;v) const</a>
+<a name="883"><span class="lineNum">     883 </span>            :    { elements[i]-&gt;GetVertices(v); }</a>
+<a name="884"><span class="lineNum">     884 </span>            : </a>
+<a name="885"><span class="lineNum">     885 </span>            :    /// Returns the indices of the vertices of boundary element i.</a>
+<a name="886"><span class="lineNum">     886 </span>            :    void GetBdrElementVertices(int i, Array&lt;int&gt; &amp;v) const</a>
+<a name="887"><span class="lineNum">     887 </span>            :    { boundary[i]-&gt;GetVertices(v); }</a>
+<a name="888"><span class="lineNum">     888 </span>            : </a>
+<a name="889"><span class="lineNum">     889 </span>            :    /// Return the indices and the orientations of all edges of element i.</a>
+<a name="890"><span class="lineNum">     890 </span>            :    void GetElementEdges(int i, Array&lt;int&gt; &amp;edges, Array&lt;int&gt; &amp;cor) const;</a>
+<a name="891"><span class="lineNum">     891 </span>            : </a>
+<a name="892"><span class="lineNum">     892 </span>            :    /// Return the indices and the orientations of all edges of bdr element i.</a>
+<a name="893"><span class="lineNum">     893 </span>            :    void GetBdrElementEdges(int i, Array&lt;int&gt; &amp;edges, Array&lt;int&gt; &amp;cor) const;</a>
+<a name="894"><span class="lineNum">     894 </span>            : </a>
+<a name="895"><span class="lineNum">     895 </span>            :    /** Return the indices and the orientations of all edges of face i.</a>
+<a name="896"><span class="lineNum">     896 </span>            :        Works for both 2D (face=edge) and 3D faces. */</a>
+<a name="897"><span class="lineNum">     897 </span>            :    void GetFaceEdges(int i, Array&lt;int&gt; &amp;, Array&lt;int&gt; &amp;) const;</a>
+<a name="898"><span class="lineNum">     898 </span>            : </a>
+<a name="899"><span class="lineNum">     899 </span>            :    /// Returns the indices of the vertices of face i.</a>
+<a name="900"><span class="lineNum">     900 </span>            :    void GetFaceVertices(int i, Array&lt;int&gt; &amp;vert) const</a>
+<a name="901"><span class="lineNum">     901 </span>            :    {</a>
+<a name="902"><span class="lineNum">     902 </span>            :       if (Dim == 1)</a>
+<a name="903"><span class="lineNum">     903 </span>            :       {</a>
+<a name="904"><span class="lineNum">     904 </span>            :          vert.SetSize(1); vert[0] = i;</a>
+<a name="905"><span class="lineNum">     905 </span>            :       }</a>
+<a name="906"><span class="lineNum">     906 </span>            :       else</a>
+<a name="907"><span class="lineNum">     907 </span>            :       {</a>
+<a name="908"><span class="lineNum">     908 </span>            :          faces[i]-&gt;GetVertices(vert);</a>
+<a name="909"><span class="lineNum">     909 </span>            :       }</a>
+<a name="910"><span class="lineNum">     910 </span>            :    }</a>
+<a name="911"><span class="lineNum">     911 </span>            : </a>
+<a name="912"><span class="lineNum">     912 </span>            :    /// Returns the indices of the vertices of edge i.</a>
+<a name="913"><span class="lineNum">     913 </span>            :    void GetEdgeVertices(int i, Array&lt;int&gt; &amp;vert) const;</a>
+<a name="914"><span class="lineNum">     914 </span>            : </a>
+<a name="915"><span class="lineNum">     915 </span>            :    /// Returns the face-to-edge Table (3D)</a>
+<a name="916"><span class="lineNum">     916 </span>            :    Table *GetFaceEdgeTable() const;</a>
+<a name="917"><span class="lineNum">     917 </span>            : </a>
+<a name="918"><span class="lineNum">     918 </span>            :    /// Returns the edge-to-vertex Table (3D)</a>
+<a name="919"><span class="lineNum">     919 </span>            :    Table *GetEdgeVertexTable() const;</a>
+<a name="920"><span class="lineNum">     920 </span>            : </a>
+<a name="921"><span class="lineNum">     921 </span>            :    /// Return the indices and the orientations of all faces of element i.</a>
+<a name="922"><span class="lineNum">     922 </span>            :    void GetElementFaces(int i, Array&lt;int&gt; &amp;, Array&lt;int&gt; &amp;) const;</a>
+<a name="923"><span class="lineNum">     923 </span>            : </a>
+<a name="924"><span class="lineNum">     924 </span>            :    /// Return the index and the orientation of the face of bdr element i. (3D)</a>
+<a name="925"><span class="lineNum">     925 </span>            :    void GetBdrElementFace(int i, int *, int *) const;</a>
+<a name="926"><span class="lineNum">     926 </span>            : </a>
+<a name="927"><span class="lineNum">     927 </span>            :    /** Return the vertex index of boundary element i. (1D)</a>
+<a name="928"><span class="lineNum">     928 </span>            :        Return the edge index of boundary element i. (2D)</a>
+<a name="929"><span class="lineNum">     929 </span>            :        Return the face index of boundary element i. (3D) */</a>
+<a name="930"><span class="lineNum">     930 </span>            :    int GetBdrElementEdgeIndex(int i) const;</a>
+<a name="931"><span class="lineNum">     931 </span>            : </a>
+<a name="932"><span class="lineNum">     932 </span>            :    /** @brief For the given boundary element, bdr_el, return its adjacent</a>
+<a name="933"><span class="lineNum">     933 </span>            :        element and its info, i.e. 64*local_bdr_index+bdr_orientation. */</a>
+<a name="934"><span class="lineNum">     934 </span>            :    void GetBdrElementAdjacentElement(int bdr_el, int &amp;el, int &amp;info) const;</a>
+<a name="935"><span class="lineNum">     935 </span>            : </a>
+<a name="936"><span class="lineNum">     936 </span>            :    /// Returns the type of element i.</a>
+<a name="937"><span class="lineNum">     937 </span>            :    Element::Type GetElementType(int i) const;</a>
+<a name="938"><span class="lineNum">     938 </span>            : </a>
+<a name="939"><span class="lineNum">     939 </span>            :    /// Returns the type of boundary element i.</a>
+<a name="940"><span class="lineNum">     940 </span>            :    Element::Type GetBdrElementType(int i) const;</a>
+<a name="941"><span class="lineNum">     941 </span>            : </a>
+<a name="942"><span class="lineNum">     942 </span>            :    /* Return point matrix of element i of dimension Dim X #v, where for every</a>
+<a name="943"><span class="lineNum">     943 </span>            :       vertex we give its coordinates in space of dimension Dim. */</a>
+<a name="944"><span class="lineNum">     944 </span>            :    void GetPointMatrix(int i, DenseMatrix &amp;pointmat) const;</a>
+<a name="945"><span class="lineNum">     945 </span>            : </a>
+<a name="946"><span class="lineNum">     946 </span>            :    /* Return point matrix of boundary element i of dimension Dim X #v, where for</a>
+<a name="947"><span class="lineNum">     947 </span>            :       every vertex we give its coordinates in space of dimension Dim. */</a>
+<a name="948"><span class="lineNum">     948 </span>            :    void GetBdrPointMatrix(int i, DenseMatrix &amp;pointmat) const;</a>
+<a name="949"><span class="lineNum">     949 </span>            : </a>
+<a name="950"><span class="lineNum">     950 </span>            :    static FiniteElement *GetTransformationFEforElementType(Element::Type);</a>
+<a name="951"><span class="lineNum">     951 </span>            : </a>
+<a name="952"><span class="lineNum">     952 </span>            :    /** Builds the transformation defining the i-th element in the user-defined</a>
+<a name="953"><span class="lineNum">     953 </span>            :        variable. */</a>
+<a name="954"><span class="lineNum">     954 </span>            :    void GetElementTransformation(int i, IsoparametricTransformation *ElTr);</a>
+<a name="955"><span class="lineNum">     955 </span>            : </a>
+<a name="956"><span class="lineNum">     956 </span>            :    /// Returns the transformation defining the i-th element</a>
+<a name="957"><span class="lineNum">     957 </span>            :    ElementTransformation *GetElementTransformation(int i);</a>
+<a name="958"><span class="lineNum">     958 </span>            : </a>
+<a name="959"><span class="lineNum">     959 </span>            :    /** Return the transformation defining the i-th element assuming</a>
+<a name="960"><span class="lineNum">     960 </span>            :        the position of the vertices/nodes are given by 'nodes'. */</a>
+<a name="961"><span class="lineNum">     961 </span>            :    void GetElementTransformation(int i, const Vector &amp;nodes,</a>
+<a name="962"><span class="lineNum">     962 </span>            :                                  IsoparametricTransformation *ElTr);</a>
+<a name="963"><span class="lineNum">     963 </span>            : </a>
+<a name="964"><span class="lineNum">     964 </span>            :    /// Returns the transformation defining the i-th boundary element</a>
+<a name="965"><span class="lineNum">     965 </span>            :    ElementTransformation * GetBdrElementTransformation(int i);</a>
+<a name="966"><span class="lineNum">     966 </span>            :    void GetBdrElementTransformation(int i, IsoparametricTransformation *ElTr);</a>
+<a name="967"><span class="lineNum">     967 </span>            : </a>
+<a name="968"><span class="lineNum">     968 </span>            :    /** @brief Returns the transformation defining the given face element in a</a>
+<a name="969"><span class="lineNum">     969 </span>            :        user-defined variable. */</a>
+<a name="970"><span class="lineNum">     970 </span>            :    void GetFaceTransformation(int i, IsoparametricTransformation *FTr);</a>
+<a name="971"><span class="lineNum">     971 </span>            : </a>
+<a name="972"><span class="lineNum">     972 </span>            :    /** @brief A helper method that constructs a transformation from the</a>
+<a name="973"><span class="lineNum">     973 </span>            :        reference space of a face to the reference space of an element. */</a>
+<a name="974"><span class="lineNum">     974 </span>            :    /** The local index of the face as a face in the element and its orientation</a>
+<a name="975"><span class="lineNum">     975 </span>            :        are given by the input parameter @a info, as @a info = 64*loc_face_idx +</a>
+<a name="976"><span class="lineNum">     976 </span>            :        loc_face_orientation. */</a>
+<a name="977"><span class="lineNum">     977 </span>            :    void GetLocalFaceTransformation(int face_type, int elem_type,</a>
+<a name="978"><span class="lineNum">     978 </span>            :                                    IsoparametricTransformation &amp;Transf,</a>
+<a name="979"><span class="lineNum">     979 </span>            :                                    int info);</a>
+<a name="980"><span class="lineNum">     980 </span>            : </a>
+<a name="981"><span class="lineNum">     981 </span>            :    /// Returns the transformation defining the given face element</a>
+<a name="982"><span class="lineNum">     982 </span>            :    ElementTransformation *GetFaceTransformation(int FaceNo);</a>
+<a name="983"><span class="lineNum">     983 </span>            : </a>
+<a name="984"><span class="lineNum">     984 </span>            :    /** Returns the transformation defining the given edge element.</a>
+<a name="985"><span class="lineNum">     985 </span>            :        The transformation is stored in a user-defined variable. */</a>
+<a name="986"><span class="lineNum">     986 </span>            :    void GetEdgeTransformation(int i, IsoparametricTransformation *EdTr);</a>
+<a name="987"><span class="lineNum">     987 </span>            : </a>
+<a name="988"><span class="lineNum">     988 </span>            :    /// Returns the transformation defining the given face element</a>
+<a name="989"><span class="lineNum">     989 </span>            :    ElementTransformation *GetEdgeTransformation(int EdgeNo);</a>
+<a name="990"><span class="lineNum">     990 </span>            : </a>
+<a name="991"><span class="lineNum">     991 </span>            :    /// Returns (a pointer to an object containing) the following data:</a>
+<a name="992"><span class="lineNum">     992 </span>            :    ///</a>
+<a name="993"><span class="lineNum">     993 </span>            :    /// 1) Elem1No - the index of the first element that contains this face this</a>
+<a name="994"><span class="lineNum">     994 </span>            :    ///    is the element that has the same outward unit normal vector as the</a>
+<a name="995"><span class="lineNum">     995 </span>            :    ///    face;</a>
+<a name="996"><span class="lineNum">     996 </span>            :    ///</a>
+<a name="997"><span class="lineNum">     997 </span>            :    /// 2) Elem2No - the index of the second element that contains this face this</a>
+<a name="998"><span class="lineNum">     998 </span>            :    ///    element has outward unit normal vector as the face multiplied with -1;</a>
+<a name="999"><span class="lineNum">     999 </span>            :    ///</a>
+<a name="1000"><span class="lineNum">    1000 </span>            :    /// 3) Elem1, Elem2 - pointers to the ElementTransformation's of the first</a>
+<a name="1001"><span class="lineNum">    1001 </span>            :    ///    and the second element respectively;</a>
+<a name="1002"><span class="lineNum">    1002 </span>            :    ///</a>
+<a name="1003"><span class="lineNum">    1003 </span>            :    /// 4) Face - pointer to the ElementTransformation of the face;</a>
+<a name="1004"><span class="lineNum">    1004 </span>            :    ///</a>
+<a name="1005"><span class="lineNum">    1005 </span>            :    /// 5) Loc1, Loc2 - IntegrationPointTransformation's mapping the face</a>
+<a name="1006"><span class="lineNum">    1006 </span>            :    ///    coordinate system to the element coordinate system (both in their</a>
+<a name="1007"><span class="lineNum">    1007 </span>            :    ///    reference elements). Used to transform IntegrationPoints from face to</a>
+<a name="1008"><span class="lineNum">    1008 </span>            :    ///    element. More formally, let:</a>
+<a name="1009"><span class="lineNum">    1009 </span>            :    ///       TL1, TL2 be the transformations represented by Loc1, Loc2,</a>
+<a name="1010"><span class="lineNum">    1010 </span>            :    ///       TE1, TE2 - the transformations represented by Elem1, Elem2,</a>
+<a name="1011"><span class="lineNum">    1011 </span>            :    ///       TF - the transformation represented by Face, then</a>
+<a name="1012"><span class="lineNum">    1012 </span>            :    ///       TF(x) = TE1(TL1(x)) = TE2(TL2(x)) for all x in the reference face.</a>
+<a name="1013"><span class="lineNum">    1013 </span>            :    ///</a>
+<a name="1014"><span class="lineNum">    1014 </span>            :    /// 6) FaceGeom - the base geometry for the face.</a>
+<a name="1015"><span class="lineNum">    1015 </span>            :    ///</a>
+<a name="1016"><span class="lineNum">    1016 </span>            :    /// The mask specifies which fields in the structure to return:</a>
+<a name="1017"><span class="lineNum">    1017 </span>            :    ///    mask &amp; 1 - Elem1, mask &amp; 2 - Elem2</a>
+<a name="1018"><span class="lineNum">    1018 </span>            :    ///    mask &amp; 4 - Loc1, mask &amp; 8 - Loc2, mask &amp; 16 - Face.</a>
+<a name="1019"><span class="lineNum">    1019 </span>            :    /// These mask values are defined in the ConfigMasks enum type as part of the</a>
+<a name="1020"><span class="lineNum">    1020 </span>            :    /// FaceElementTransformations class in fem/eltrans.hpp.</a>
+<a name="1021"><span class="lineNum">    1021 </span>            :    FaceElementTransformations *GetFaceElementTransformations(int FaceNo,</a>
+<a name="1022"><span class="lineNum">    1022 </span>            :                                                              int mask = 31);</a>
+<a name="1023"><span class="lineNum">    1023 </span>            : </a>
+<a name="1024"><span class="lineNum">    1024 </span>            :    FaceElementTransformations *GetInteriorFaceTransformations (int FaceNo)</a>
+<a name="1025"><span class="lineNum">    1025 </span>            :    {</a>
+<a name="1026"><span class="lineNum">    1026 </span>            :       if (faces_info[FaceNo].Elem2No &lt; 0) { return NULL; }</a>
+<a name="1027"><span class="lineNum">    1027 </span>            :       return GetFaceElementTransformations (FaceNo);</a>
+<a name="1028"><span class="lineNum">    1028 </span>            :    }</a>
+<a name="1029"><span class="lineNum">    1029 </span>            : </a>
+<a name="1030"><span class="lineNum">    1030 </span>            :    FaceElementTransformations *GetBdrFaceTransformations (int BdrElemNo);</a>
+<a name="1031"><span class="lineNum">    1031 </span>            : </a>
+<a name="1032"><span class="lineNum">    1032 </span>            :    /// Return true if the given face is interior. @sa FaceIsTrueInterior().</a>
+<a name="1033"><span class="lineNum">    1033 </span>            :    bool FaceIsInterior(int FaceNo) const</a>
+<a name="1034"><span class="lineNum">    1034 </span>            :    {</a>
+<a name="1035"><span class="lineNum">    1035 </span>            :       return (faces_info[FaceNo].Elem2No &gt;= 0);</a>
+<a name="1036"><span class="lineNum">    1036 </span>            :    }</a>
+<a name="1037"><span class="lineNum">    1037 </span>            :    void GetFaceElements (int Face, int *Elem1, int *Elem2) const;</a>
+<a name="1038"><span class="lineNum">    1038 </span>            :    void GetFaceInfos (int Face, int *Inf1, int *Inf2) const;</a>
+<a name="1039"><span class="lineNum">    1039 </span>            : </a>
+<a name="1040"><span class="lineNum">    1040 </span>            :    Geometry::Type GetFaceGeometryType(int Face) const;</a>
+<a name="1041"><span class="lineNum">    1041 </span>            :    Element::Type  GetFaceElementType(int Face) const;</a>
+<a name="1042"><span class="lineNum">    1042 </span>            : </a>
+<a name="1043"><span class="lineNum">    1043 </span>            :    /// Check the orientation of the elements</a>
+<a name="1044"><span class="lineNum">    1044 </span>            :    /** @return The number of elements with wrong orientation. */</a>
+<a name="1045"><span class="lineNum">    1045 </span>            :    int CheckElementOrientation(bool fix_it = true);</a>
+<a name="1046"><span class="lineNum">    1046 </span>            :    /// Check the orientation of the boundary elements</a>
+<a name="1047"><span class="lineNum">    1047 </span>            :    /** @return The number of boundary elements with wrong orientation. */</a>
+<a name="1048"><span class="lineNum">    1048 </span>            :    int CheckBdrElementOrientation(bool fix_it = true);</a>
+<a name="1049"><span class="lineNum">    1049 </span>            : </a>
+<a name="1050"><span class="lineNum">    1050 </span>            :    /// Return the attribute of element i.</a>
+<a name="1051"><span class="lineNum">    1051 </span>            :    int GetAttribute(int i) const { return elements[i]-&gt;GetAttribute(); }</a>
+<a name="1052"><span class="lineNum">    1052 </span>            : </a>
+<a name="1053"><span class="lineNum">    1053 </span>            :    /// Set the attribute of element i.</a>
+<a name="1054"><span class="lineNum">    1054 </span>            :    void SetAttribute(int i, int attr) { elements[i]-&gt;SetAttribute(attr); }</a>
+<a name="1055"><span class="lineNum">    1055 </span>            : </a>
+<a name="1056"><span class="lineNum">    1056 </span>            :    /// Return the attribute of boundary element i.</a>
+<a name="1057"><span class="lineNum">    1057 </span>            :    int GetBdrAttribute(int i) const { return boundary[i]-&gt;GetAttribute(); }</a>
+<a name="1058"><span class="lineNum">    1058 </span>            : </a>
+<a name="1059"><span class="lineNum">    1059 </span>            :    const Table &amp;ElementToElementTable();</a>
+<a name="1060"><span class="lineNum">    1060 </span>            : </a>
+<a name="1061"><span class="lineNum">    1061 </span>            :    const Table &amp;ElementToFaceTable() const;</a>
+<a name="1062"><span class="lineNum">    1062 </span>            : </a>
+<a name="1063"><span class="lineNum">    1063 </span>            :    const Table &amp;ElementToEdgeTable() const;</a>
+<a name="1064"><span class="lineNum">    1064 </span>            : </a>
+<a name="1065"><span class="lineNum">    1065 </span>            :    ///  The returned Table must be destroyed by the caller</a>
+<a name="1066"><span class="lineNum">    1066 </span>            :    Table *GetVertexToElementTable();</a>
+<a name="1067"><span class="lineNum">    1067 </span>            : </a>
+<a name="1068"><span class="lineNum">    1068 </span>            :    /** Return the &quot;face&quot;-element Table. Here &quot;face&quot; refers to face (3D),</a>
+<a name="1069"><span class="lineNum">    1069 </span>            :        edge (2D), or vertex (1D).</a>
+<a name="1070"><span class="lineNum">    1070 </span>            :        The returned Table must be destroyed by the caller. */</a>
+<a name="1071"><span class="lineNum">    1071 </span>            :    Table *GetFaceToElementTable() const;</a>
+<a name="1072"><span class="lineNum">    1072 </span>            : </a>
+<a name="1073"><span class="lineNum">    1073 </span>            :    /** This method modifies a tetrahedral mesh so that Nedelec spaces of order</a>
+<a name="1074"><span class="lineNum">    1074 </span>            :        greater than 1 can be defined on the mesh. Specifically, we</a>
+<a name="1075"><span class="lineNum">    1075 </span>            :        1) rotate all tets in the mesh so that the vertices {v0, v1, v2, v3}</a>
+<a name="1076"><span class="lineNum">    1076 </span>            :        satisfy: v0 &lt; v1 &lt; min(v2, v3).</a>
+<a name="1077"><span class="lineNum">    1077 </span>            :        2) rotate all boundary triangles so that the vertices {v0, v1, v2}</a>
+<a name="1078"><span class="lineNum">    1078 </span>            :        satisfy: v0 &lt; min(v1, v2).</a>
+<a name="1079"><span class="lineNum">    1079 </span>            : </a>
+<a name="1080"><span class="lineNum">    1080 </span>            :        @note Refinement does not work after a call to this method! */</a>
+<a name="1081"><span class="lineNum">    1081 </span>            :    virtual void ReorientTetMesh();</a>
+<a name="1082"><span class="lineNum">    1082 </span>            : </a>
+<a name="1083"><span class="lineNum">    1083 </span>            :    int *CartesianPartitioning(int nxyz[]);</a>
+<a name="1084"><span class="lineNum">    1084 </span>            :    int *GeneratePartitioning(int nparts, int part_method = 1);</a>
+<a name="1085"><span class="lineNum">    1085 </span>            :    void CheckPartitioning(int *partitioning);</a>
+<a name="1086"><span class="lineNum">    1086 </span>            : </a>
+<a name="1087"><span class="lineNum">    1087 </span>            :    void CheckDisplacements(const Vector &amp;displacements, double &amp;tmax);</a>
+<a name="1088"><span class="lineNum">    1088 </span>            : </a>
+<a name="1089"><span class="lineNum">    1089 </span>            :    // Vertices are only at the corners of elements, where you would expect them</a>
+<a name="1090"><span class="lineNum">    1090 </span>            :    // in the lowest-order mesh.</a>
+<a name="1091"><span class="lineNum">    1091 </span>            :    void MoveVertices(const Vector &amp;displacements);</a>
+<a name="1092"><span class="lineNum">    1092 </span>            :    void GetVertices(Vector &amp;vert_coord) const;</a>
+<a name="1093"><span class="lineNum">    1093 </span>            :    void SetVertices(const Vector &amp;vert_coord);</a>
+<a name="1094"><span class="lineNum">    1094 </span>            : </a>
+<a name="1095"><span class="lineNum">    1095 </span>            :    // Nodes are only active for higher order meshes, and share locations with</a>
+<a name="1096"><span class="lineNum">    1096 </span>            :    // the vertices, plus all the higher- order control points within the element</a>
+<a name="1097"><span class="lineNum">    1097 </span>            :    // and along the edges and on the faces.</a>
+<a name="1098"><span class="lineNum">    1098 </span>            :    void GetNode(int i, double *coord) const;</a>
+<a name="1099"><span class="lineNum">    1099 </span>            :    void SetNode(int i, const double *coord);</a>
+<a name="1100"><span class="lineNum">    1100 </span>            : </a>
+<a name="1101"><span class="lineNum">    1101 </span>            :    // Node operations for curved mesh.</a>
+<a name="1102"><span class="lineNum">    1102 </span>            :    // They call the corresponding '...Vertices' method if the</a>
+<a name="1103"><span class="lineNum">    1103 </span>            :    // mesh is not curved (i.e. Nodes == NULL).</a>
+<a name="1104"><span class="lineNum">    1104 </span>            :    void MoveNodes(const Vector &amp;displacements);</a>
+<a name="1105"><span class="lineNum">    1105 </span>            :    void GetNodes(Vector &amp;node_coord) const;</a>
+<a name="1106"><span class="lineNum">    1106 </span>            :    void SetNodes(const Vector &amp;node_coord);</a>
+<a name="1107"><span class="lineNum">    1107 </span>            : </a>
+<a name="1108"><span class="lineNum">    1108 </span>            :    /// Return a pointer to the internal node GridFunction (may be NULL).</a>
+<a name="1109"><span class="lineNum">    1109 </span>            :    GridFunction *GetNodes() { return Nodes; }</a>
+<a name="1110"><span class="lineNum">    1110 </span>            :    const GridFunction *GetNodes() const { return Nodes; }</a>
+<a name="1111"><span class="lineNum">    1111 </span>            :    /// Return the mesh nodes ownership flag.</a>
+<a name="1112"><span class="lineNum">    1112 </span>            :    bool OwnsNodes() const { return own_nodes; }</a>
+<a name="1113"><span class="lineNum">    1113 </span>            :    /// Set the mesh nodes ownership flag.</a>
+<a name="1114"><span class="lineNum">    1114 </span>            :    void SetNodesOwner(bool nodes_owner) { own_nodes = nodes_owner; }</a>
+<a name="1115"><span class="lineNum">    1115 </span>            :    /// Replace the internal node GridFunction with the given GridFunction.</a>
+<a name="1116"><span class="lineNum">    1116 </span>            :    void NewNodes(GridFunction &amp;nodes, bool make_owner = false);</a>
+<a name="1117"><span class="lineNum">    1117 </span>            :    /** Swap the internal node GridFunction pointer and ownership flag members</a>
+<a name="1118"><span class="lineNum">    1118 </span>            :        with the given ones. */</a>
+<a name="1119"><span class="lineNum">    1119 </span>            :    void SwapNodes(GridFunction *&amp;nodes, int &amp;own_nodes_);</a>
+<a name="1120"><span class="lineNum">    1120 </span>            : </a>
+<a name="1121"><span class="lineNum">    1121 </span>            :    /// Return the mesh nodes/vertices projected on the given GridFunction.</a>
+<a name="1122"><span class="lineNum">    1122 </span>            :    void GetNodes(GridFunction &amp;nodes) const;</a>
+<a name="1123"><span class="lineNum">    1123 </span>            :    /** Replace the internal node GridFunction with a new GridFunction defined</a>
+<a name="1124"><span class="lineNum">    1124 </span>            :        on the given FiniteElementSpace. The new node coordinates are projected</a>
+<a name="1125"><span class="lineNum">    1125 </span>            :        (derived) from the current nodes/vertices. */</a>
+<a name="1126"><span class="lineNum">    1126 </span>            :    void SetNodalFESpace(FiniteElementSpace *nfes);</a>
+<a name="1127"><span class="lineNum">    1127 </span>            :    /** Replace the internal node GridFunction with the given GridFunction. The</a>
+<a name="1128"><span class="lineNum">    1128 </span>            :        given GridFunction is updated with node coordinates projected (derived)</a>
+<a name="1129"><span class="lineNum">    1129 </span>            :        from the current nodes/vertices. */</a>
+<a name="1130"><span class="lineNum">    1130 </span>            :    void SetNodalGridFunction(GridFunction *nodes, bool make_owner = false);</a>
+<a name="1131"><span class="lineNum">    1131 </span>            :    /** Return the FiniteElementSpace on which the current mesh nodes are</a>
+<a name="1132"><span class="lineNum">    1132 </span>            :        defined or NULL if the mesh does not have nodes. */</a>
+<a name="1133"><span class="lineNum">    1133 </span>            :    const FiniteElementSpace *GetNodalFESpace() const;</a>
+<a name="1134"><span class="lineNum">    1134 </span>            :    /** Make sure that the mesh has valid nodes, i.e. its geometry is described</a>
+<a name="1135"><span class="lineNum">    1135 </span>            :        by a vector finite element grid function (even if it is a low-order mesh</a>
+<a name="1136"><span class="lineNum">    1136 </span>            :        with straight edges). */</a>
+<a name="1137"><span class="lineNum">    1137 </span>            :    void EnsureNodes();</a>
+<a name="1138"><span class="lineNum">    1138 </span>            : </a>
+<a name="1139"><span class="lineNum">    1139 </span>            :    /** Set the curvature of the mesh nodes using the given polynomial degree,</a>
+<a name="1140"><span class="lineNum">    1140 </span>            :        'order', and optionally: discontinuous or continuous FE space, 'discont',</a>
+<a name="1141"><span class="lineNum">    1141 </span>            :        new space dimension, 'space_dim' (if != -1), and 'ordering'. */</a>
+<a name="1142"><span class="lineNum">    1142 </span>            :    virtual void SetCurvature(int order, bool discont = false, int space_dim = -1,</a>
+<a name="1143"><span class="lineNum">    1143 </span>            :                              int ordering = 1);</a>
+<a name="1144"><span class="lineNum">    1144 </span>            : </a>
+<a name="1145"><span class="lineNum">    1145 </span>            :    /// Refine all mesh elements.</a>
+<a name="1146"><span class="lineNum">    1146 </span>            :    /** @param[in] ref_algo %Refinement algorithm. Currently used only for pure</a>
+<a name="1147"><span class="lineNum">    1147 </span>            :        tetrahedral meshes. If set to zero (default), a tet mesh will be refined</a>
+<a name="1148"><span class="lineNum">    1148 </span>            :        using algorithm A, that produces elements with better quality compared to</a>
+<a name="1149"><span class="lineNum">    1149 </span>            :        algorithm B used when the parameter is non-zero.</a>
+<a name="1150"><span class="lineNum">    1150 </span>            : </a>
+<a name="1151"><span class="lineNum">    1151 </span>            :        For tetrahedral meshes, after using algorithm A, the mesh cannot be</a>
+<a name="1152"><span class="lineNum">    1152 </span>            :        refined locally using methods like GeneralRefinement() unless it is</a>
+<a name="1153"><span class="lineNum">    1153 </span>            :        re-finalized using Finalize() with the parameter @a refine set to true.</a>
+<a name="1154"><span class="lineNum">    1154 </span>            :        Note that calling Finalize() in this way will generally invalidate any</a>
+<a name="1155"><span class="lineNum">    1155 </span>            :        FiniteElementSpace%s and GridFunction%s defined on the mesh. */</a>
+<a name="1156"><span class="lineNum">    1156 </span>            :    void UniformRefinement(int ref_algo = 0);</a>
+<a name="1157"><span class="lineNum">    1157 </span>            : </a>
+<a name="1158"><span class="lineNum">    1158 </span>            :    /** Refine selected mesh elements. Refinement type can be specified for each</a>
+<a name="1159"><span class="lineNum">    1159 </span>            :        element. The function can do conforming refinement of triangles and</a>
+<a name="1160"><span class="lineNum">    1160 </span>            :        tetrahedra and non-conforming refinement (i.e., with hanging-nodes) of</a>
+<a name="1161"><span class="lineNum">    1161 </span>            :        triangles, quadrilaterals and hexahedra. If 'nonconforming' = -1,</a>
+<a name="1162"><span class="lineNum">    1162 </span>            :        suitable refinement method is selected automatically (namely, conforming</a>
+<a name="1163"><span class="lineNum">    1163 </span>            :        refinement for triangles). Use nonconforming = 0/1 to force the method.</a>
+<a name="1164"><span class="lineNum">    1164 </span>            :        For nonconforming refinements, nc_limit optionally specifies the maximum</a>
+<a name="1165"><span class="lineNum">    1165 </span>            :        level of hanging nodes (unlimited by default). */</a>
+<a name="1166"><span class="lineNum">    1166 </span>            :    void GeneralRefinement(const Array&lt;Refinement&gt; &amp;refinements,</a>
+<a name="1167"><span class="lineNum">    1167 </span>            :                           int nonconforming = -1, int nc_limit = 0);</a>
+<a name="1168"><span class="lineNum">    1168 </span>            : </a>
+<a name="1169"><span class="lineNum">    1169 </span>            :    /** Simplified version of GeneralRefinement taking a simple list of elements</a>
+<a name="1170"><span class="lineNum">    1170 </span>            :        to refine, without refinement types. */</a>
+<a name="1171"><span class="lineNum">    1171 </span>            :    void GeneralRefinement(const Array&lt;int&gt; &amp;el_to_refine,</a>
+<a name="1172"><span class="lineNum">    1172 </span>            :                           int nonconforming = -1, int nc_limit = 0);</a>
+<a name="1173"><span class="lineNum">    1173 </span>            : </a>
+<a name="1174"><span class="lineNum">    1174 </span>            :    /// Refine each element with given probability. Uses GeneralRefinement.</a>
+<a name="1175"><span class="lineNum">    1175 </span>            :    void RandomRefinement(double prob, bool aniso = false,</a>
+<a name="1176"><span class="lineNum">    1176 </span>            :                          int nonconforming = -1, int nc_limit = 0);</a>
+<a name="1177"><span class="lineNum">    1177 </span>            : </a>
+<a name="1178"><span class="lineNum">    1178 </span>            :    /// Refine elements sharing the specified vertex. Uses GeneralRefinement.</a>
+<a name="1179"><span class="lineNum">    1179 </span>            :    void RefineAtVertex(const Vertex&amp; vert,</a>
+<a name="1180"><span class="lineNum">    1180 </span>            :                        double eps = 0.0, int nonconforming = -1);</a>
+<a name="1181"><span class="lineNum">    1181 </span>            : </a>
+<a name="1182"><span class="lineNum">    1182 </span>            :    /** Refine element i if elem_error[i] &gt; threshold, for all i.</a>
+<a name="1183"><span class="lineNum">    1183 </span>            :        Returns true if at least one element was refined, false otherwise. */</a>
+<a name="1184"><span class="lineNum">    1184 </span>            :    bool RefineByError(const Array&lt;double&gt; &amp;elem_error, double threshold,</a>
+<a name="1185"><span class="lineNum">    1185 </span>            :                       int nonconforming = -1, int nc_limit = 0);</a>
+<a name="1186"><span class="lineNum">    1186 </span>            : </a>
+<a name="1187"><span class="lineNum">    1187 </span>            :    /** Refine element i if elem_error(i) &gt; threshold, for all i.</a>
+<a name="1188"><span class="lineNum">    1188 </span>            :        Returns true if at least one element was refined, false otherwise. */</a>
+<a name="1189"><span class="lineNum">    1189 </span>            :    bool RefineByError(const Vector &amp;elem_error, double threshold,</a>
+<a name="1190"><span class="lineNum">    1190 </span>            :                       int nonconforming = -1, int nc_limit = 0);</a>
+<a name="1191"><span class="lineNum">    1191 </span>            : </a>
+<a name="1192"><span class="lineNum">    1192 </span>            :    /** Derefine the mesh based on an error measure associated with each</a>
+<a name="1193"><span class="lineNum">    1193 </span>            :        element. A derefinement is performed if the sum of errors of its fine</a>
+<a name="1194"><span class="lineNum">    1194 </span>            :        elements is smaller than 'threshold'. If 'nc_limit' &gt; 0, derefinements</a>
+<a name="1195"><span class="lineNum">    1195 </span>            :        that would increase the maximum level of hanging nodes of the mesh are</a>
+<a name="1196"><span class="lineNum">    1196 </span>            :        skipped. Returns true if the mesh changed, false otherwise. */</a>
+<a name="1197"><span class="lineNum">    1197 </span>            :    bool DerefineByError(Array&lt;double&gt; &amp;elem_error, double threshold,</a>
+<a name="1198"><span class="lineNum">    1198 </span>            :                         int nc_limit = 0, int op = 1);</a>
+<a name="1199"><span class="lineNum">    1199 </span>            : </a>
+<a name="1200"><span class="lineNum">    1200 </span>            :    /// Same as DerefineByError for an error vector.</a>
+<a name="1201"><span class="lineNum">    1201 </span>            :    bool DerefineByError(const Vector &amp;elem_error, double threshold,</a>
+<a name="1202"><span class="lineNum">    1202 </span>            :                         int nc_limit = 0, int op = 1);</a>
+<a name="1203"><span class="lineNum">    1203 </span>            : </a>
+<a name="1204"><span class="lineNum">    1204 </span>            :    ///@{ @name NURBS mesh refinement methods</a>
+<a name="1205"><span class="lineNum">    1205 </span>            :    void KnotInsert(Array&lt;KnotVector *&gt; &amp;kv);</a>
+<a name="1206"><span class="lineNum">    1206 </span>            :    void KnotInsert(Array&lt;Vector *&gt; &amp;kv);</a>
+<a name="1207"><span class="lineNum">    1207 </span>            :    /* For each knot vector:</a>
+<a name="1208"><span class="lineNum">    1208 </span>            :          new_degree = max(old_degree, min(old_degree + rel_degree, degree)). */</a>
+<a name="1209"><span class="lineNum">    1209 </span>            :    void DegreeElevate(int rel_degree, int degree = 16);</a>
+<a name="1210"><span class="lineNum">    1210 </span>            :    ///@}</a>
+<a name="1211"><span class="lineNum">    1211 </span>            : </a>
+<a name="1212"><span class="lineNum">    1212 </span>            :    /** Make sure that a quad/hex mesh is considered to be non-conforming (i.e.,</a>
+<a name="1213"><span class="lineNum">    1213 </span>            :        has an associated NCMesh object). Simplex meshes can be both conforming</a>
+<a name="1214"><span class="lineNum">    1214 </span>            :        (default) or non-conforming. */</a>
+<a name="1215"><span class="lineNum">    1215 </span>            :    void EnsureNCMesh(bool simplices_nonconforming = false);</a>
+<a name="1216"><span class="lineNum">    1216 </span>            : </a>
+<a name="1217"><span class="lineNum">    1217 </span>            :    bool Conforming() const { return ncmesh == NULL; }</a>
+<a name="1218"><span class="lineNum">    1218 </span>            :    bool Nonconforming() const { return ncmesh != NULL; }</a>
+<a name="1219"><span class="lineNum">    1219 </span>            : </a>
+<a name="1220"><span class="lineNum">    1220 </span>            :    /** Return fine element transformations following a mesh refinement.</a>
+<a name="1221"><span class="lineNum">    1221 </span>            :        Space uses this to construct a global interpolation matrix. */</a>
+<a name="1222"><span class="lineNum">    1222 </span>            :    const CoarseFineTransformations &amp;GetRefinementTransforms();</a>
+<a name="1223"><span class="lineNum">    1223 </span>            : </a>
+<a name="1224"><span class="lineNum">    1224 </span>            :    /// Return type of last modification of the mesh.</a>
+<a name="1225"><span class="lineNum">    1225 </span>            :    Operation GetLastOperation() const { return last_operation; }</a>
+<a name="1226"><span class="lineNum">    1226 </span>            : </a>
+<a name="1227"><span class="lineNum">    1227 </span>            :    /** Return update counter. The counter starts at zero and is incremented</a>
+<a name="1228"><span class="lineNum">    1228 </span>            :        each time refinement, derefinement, or rebalancing method is called.</a>
+<a name="1229"><span class="lineNum">    1229 </span>            :        It is used for checking proper sequence of Space:: and GridFunction::</a>
+<a name="1230"><span class="lineNum">    1230 </span>            :        Update() calls. */</a>
+<a name="1231"><span class="lineNum">    1231 </span>            :    long GetSequence() const { return sequence; }</a>
+<a name="1232"><span class="lineNum">    1232 </span>            : </a>
+<a name="1233"><span class="lineNum">    1233 </span>            :    /// Print the mesh to the given stream using Netgen/Truegrid format.</a>
+<a name="1234"><span class="lineNum">    1234 </span>            :    virtual void PrintXG(std::ostream &amp;out = mfem::out) const;</a>
+<a name="1235"><span class="lineNum">    1235 </span>            : </a>
+<a name="1236"><span class="lineNum">    1236 </span>            :    /// Print the mesh to the given stream using the default MFEM mesh format.</a>
+<a name="1237"><span class="lineNum">    1237 </span>            :    /// \see mfem::ofgzstream() for on-the-fly compression of ascii outputs</a>
+<a name="1238"><span class="lineNum">    1238 </span>            :    virtual void Print(std::ostream &amp;out = mfem::out) const { Printer(out); }</a>
+<a name="1239"><span class="lineNum">    1239 </span>            : </a>
+<a name="1240"><span class="lineNum">    1240 </span>            :    /// Print the mesh to the given stream using the adios2 bp format</a>
+<a name="1241"><span class="lineNum">    1241 </span>            : #ifdef MFEM_USE_ADIOS2</a>
+<a name="1242"><span class="lineNum">    1242 </span>            :    virtual void Print(adios2stream &amp;out) const;</a>
+<a name="1243"><span class="lineNum">    1243 </span>            : #endif</a>
+<a name="1244"><span class="lineNum">    1244 </span>            :    /// Print the mesh in VTK format (linear and quadratic meshes only).</a>
+<a name="1245"><span class="lineNum">    1245 </span>            :    /// \see mfem::ofgzstream() for on-the-fly compression of ascii outputs</a>
+<a name="1246"><span class="lineNum">    1246 </span>            :    void PrintVTK(std::ostream &amp;out);</a>
+<a name="1247"><span class="lineNum">    1247 </span>            :    /** Print the mesh in VTK format. The parameter ref &gt; 0 specifies an element</a>
+<a name="1248"><span class="lineNum">    1248 </span>            :        subdivision number (useful for high order fields and curved meshes).</a>
+<a name="1249"><span class="lineNum">    1249 </span>            :        If the optional field_data is set, we also add a FIELD section in the</a>
+<a name="1250"><span class="lineNum">    1250 </span>            :        beginning of the file with additional dataset information. */</a>
+<a name="1251"><span class="lineNum">    1251 </span>            :    /// \see mfem::ofgzstream() for on-the-fly compression of ascii outputs</a>
+<a name="1252"><span class="lineNum">    1252 </span>            :    void PrintVTK(std::ostream &amp;out, int ref, int field_data=0);</a>
+<a name="1253"><span class="lineNum">    1253 </span>            :    /** Print the mesh in VTU format. The parameter ref &gt; 0 specifies an element</a>
+<a name="1254"><span class="lineNum">    1254 </span>            :        subdivision number (useful for high order fields and curved meshes).</a>
+<a name="1255"><span class="lineNum">    1255 </span>            :        If @a bdr_elements is true, then output (only) the boundary elements,</a>
+<a name="1256"><span class="lineNum">    1256 </span>            :        otherwise output only the non-boundary elements. */</a>
+<a name="1257"><span class="lineNum">    1257 </span>            :    void PrintVTU(std::ostream &amp;out,</a>
+<a name="1258"><span class="lineNum">    1258 </span>            :                  int ref=1,</a>
+<a name="1259"><span class="lineNum">    1259 </span>            :                  VTKFormat format=VTKFormat::ASCII,</a>
+<a name="1260"><span class="lineNum">    1260 </span>            :                  bool high_order_output=false,</a>
+<a name="1261"><span class="lineNum">    1261 </span>            :                  int compression_level=0,</a>
+<a name="1262"><span class="lineNum">    1262 </span>            :                  bool bdr_elements=false);</a>
+<a name="1263"><span class="lineNum">    1263 </span>            :    /** Print the mesh in VTU format with file name fname. */</a>
+<a name="1264"><span class="lineNum">    1264 </span>            :    virtual void PrintVTU(std::string fname,</a>
+<a name="1265"><span class="lineNum">    1265 </span>            :                          VTKFormat format=VTKFormat::ASCII,</a>
+<a name="1266"><span class="lineNum">    1266 </span>            :                          bool high_order_output=false,</a>
+<a name="1267"><span class="lineNum">    1267 </span>            :                          int compression_level=0,</a>
+<a name="1268"><span class="lineNum">    1268 </span>            :                          bool bdr=false);</a>
+<a name="1269"><span class="lineNum">    1269 </span>            :    /** Print the boundary elements of the mesh in VTU format, and output the</a>
+<a name="1270"><span class="lineNum">    1270 </span>            :        boundary attributes as a data array (useful for boundary conditions). */</a>
+<a name="1271"><span class="lineNum">    1271 </span>            :    void PrintBdrVTU(std::string fname,</a>
+<a name="1272"><span class="lineNum">    1272 </span>            :                     VTKFormat format=VTKFormat::ASCII,</a>
+<a name="1273"><span class="lineNum">    1273 </span>            :                     bool high_order_output=false,</a>
+<a name="1274"><span class="lineNum">    1274 </span>            :                     int compression_level=0);</a>
+<a name="1275"><span class="lineNum">    1275 </span>            : </a>
+<a name="1276"><span class="lineNum">    1276 </span>            :    void GetElementColoring(Array&lt;int&gt; &amp;colors, int el0 = 0);</a>
+<a name="1277"><span class="lineNum">    1277 </span>            : </a>
+<a name="1278"><span class="lineNum">    1278 </span>            :    /** @brief Prints the mesh with boundary elements given by the boundary of</a>
+<a name="1279"><span class="lineNum">    1279 </span>            :        the subdomains, so that the boundary of subdomain i has boundary</a>
+<a name="1280"><span class="lineNum">    1280 </span>            :        attribute i+1. */</a>
+<a name="1281"><span class="lineNum">    1281 </span>            :    /// \see mfem::ofgzstream() for on-the-fly compression of ascii outputs</a>
+<a name="1282"><span class="lineNum">    1282 </span>            :    void PrintWithPartitioning (int *partitioning,</a>
+<a name="1283"><span class="lineNum">    1283 </span>            :                                std::ostream &amp;out, int elem_attr = 0) const;</a>
+<a name="1284"><span class="lineNum">    1284 </span>            : </a>
+<a name="1285"><span class="lineNum">    1285 </span>            :    void PrintElementsWithPartitioning (int *partitioning,</a>
+<a name="1286"><span class="lineNum">    1286 </span>            :                                        std::ostream &amp;out,</a>
+<a name="1287"><span class="lineNum">    1287 </span>            :                                        int interior_faces = 0);</a>
+<a name="1288"><span class="lineNum">    1288 </span>            : </a>
+<a name="1289"><span class="lineNum">    1289 </span>            :    /// Print set of disjoint surfaces:</a>
+<a name="1290"><span class="lineNum">    1290 </span>            :    /*!</a>
+<a name="1291"><span class="lineNum">    1291 </span>            :     * If Aface_face(i,j) != 0, print face j as a boundary</a>
+<a name="1292"><span class="lineNum">    1292 </span>            :     * element with attribute i+1.</a>
+<a name="1293"><span class="lineNum">    1293 </span>            :     */</a>
+<a name="1294"><span class="lineNum">    1294 </span>            :    void PrintSurfaces(const Table &amp;Aface_face, std::ostream &amp;out) const;</a>
+<a name="1295"><span class="lineNum">    1295 </span>            : </a>
+<a name="1296"><span class="lineNum">    1296 </span>            :    void ScaleSubdomains (double sf);</a>
+<a name="1297"><span class="lineNum">    1297 </span>            :    void ScaleElements (double sf);</a>
+<a name="1298"><span class="lineNum">    1298 </span>            : </a>
+<a name="1299"><span class="lineNum">    1299 </span>            :    void Transform(void (*f)(const Vector&amp;, Vector&amp;));</a>
+<a name="1300"><span class="lineNum">    1300 </span>            :    void Transform(VectorCoefficient &amp;deformation);</a>
+<a name="1301"><span class="lineNum">    1301 </span>            : </a>
+<a name="1302"><span class="lineNum">    1302 </span>            :    /// Remove unused vertices and rebuild mesh connectivity.</a>
+<a name="1303"><span class="lineNum">    1303 </span>            :    void RemoveUnusedVertices();</a>
+<a name="1304"><span class="lineNum">    1304 </span>            : </a>
+<a name="1305"><span class="lineNum">    1305 </span>            :    /** Remove boundary elements that lie in the interior of the mesh, i.e. that</a>
+<a name="1306"><span class="lineNum">    1306 </span>            :        have two adjacent faces in 3D, or edges in 2D. */</a>
+<a name="1307"><span class="lineNum">    1307 </span>            :    void RemoveInternalBoundaries();</a>
+<a name="1308"><span class="lineNum">    1308 </span>            : </a>
+<a name="1309"><span class="lineNum">    1309 </span>            :    /** @brief Get the size of the i-th element relative to the perfect</a>
+<a name="1310"><span class="lineNum">    1310 </span>            :        reference element. */</a>
+<a name="1311"><span class="lineNum">    1311 </span>            :    double GetElementSize(int i, int type = 0);</a>
+<a name="1312"><span class="lineNum">    1312 </span>            : </a>
+<a name="1313"><span class="lineNum">    1313 </span>            :    double GetElementSize(int i, const Vector &amp;dir);</a>
+<a name="1314"><span class="lineNum">    1314 </span>            : </a>
+<a name="1315"><span class="lineNum">    1315 </span>            :    double GetElementVolume(int i);</a>
+<a name="1316"><span class="lineNum">    1316 </span>            : </a>
+<a name="1317"><span class="lineNum">    1317 </span>            :    void GetElementCenter(int i, Vector &amp;center);</a>
+<a name="1318"><span class="lineNum">    1318 </span>            : </a>
+<a name="1319"><span class="lineNum">    1319 </span>            :    /// Returns the minimum and maximum corners of the mesh bounding box.</a>
+<a name="1320"><span class="lineNum">    1320 </span>            :    /** For high-order meshes, the geometry is first refined @a ref times. */</a>
+<a name="1321"><span class="lineNum">    1321 </span>            :    void GetBoundingBox(Vector &amp;min, Vector &amp;max, int ref = 2);</a>
+<a name="1322"><span class="lineNum">    1322 </span>            : </a>
+<a name="1323"><span class="lineNum">    1323 </span>            :    void GetCharacteristics(double &amp;h_min, double &amp;h_max,</a>
+<a name="1324"><span class="lineNum">    1324 </span>            :                            double &amp;kappa_min, double &amp;kappa_max,</a>
+<a name="1325"><span class="lineNum">    1325 </span>            :                            Vector *Vh = NULL, Vector *Vk = NULL);</a>
+<a name="1326"><span class="lineNum">    1326 </span>            : </a>
+<a name="1327"><span class="lineNum">    1327 </span>            :    /// Auxiliary method used by PrintCharacteristics().</a>
+<a name="1328"><span class="lineNum">    1328 </span>            :    /** It is also used in the `mesh-explorer` miniapp. */</a>
+<a name="1329"><span class="lineNum">    1329 </span>            :    static void PrintElementsByGeometry(int dim,</a>
+<a name="1330"><span class="lineNum">    1330 </span>            :                                        const Array&lt;int&gt; &amp;num_elems_by_geom,</a>
+<a name="1331"><span class="lineNum">    1331 </span>            :                                        std::ostream &amp;out);</a>
+<a name="1332"><span class="lineNum">    1332 </span>            : </a>
+<a name="1333"><span class="lineNum">    1333 </span>            :    /** @brief Compute and print mesh characteristics such as number of vertices,</a>
+<a name="1334"><span class="lineNum">    1334 </span>            :        number of elements, number of boundary elements, minimal and maximal</a>
+<a name="1335"><span class="lineNum">    1335 </span>            :        element sizes, minimal and maximal element aspect ratios, etc. */</a>
+<a name="1336"><span class="lineNum">    1336 </span>            :    /** If @a Vh or @a Vk are not NULL, return the element sizes and aspect</a>
+<a name="1337"><span class="lineNum">    1337 </span>            :        ratios for all elements in the given Vector%s. */</a>
+<a name="1338"><span class="lineNum">    1338 </span>            :    void PrintCharacteristics(Vector *Vh = NULL, Vector *Vk = NULL,</a>
+<a name="1339"><span class="lineNum">    1339 </span>            :                              std::ostream &amp;out = mfem::out);</a>
+<a name="1340"><span class="lineNum">    1340 </span>            : </a>
+<a name="1341"><span class="lineNum">    1341 </span>            :    /** @brief In serial, this method calls PrintCharacteristics(). In parallel,</a>
+<a name="1342"><span class="lineNum">    1342 </span>            :        additional information about the parallel decomposition is also printed.</a>
+<a name="1343"><span class="lineNum">    1343 </span>            :    */</a>
+<a name="1344"><span class="lineNum">    1344 </span>            :    virtual void PrintInfo(std::ostream &amp;out = mfem::out)</a>
+<a name="1345"><span class="lineNum">    1345 </span>            :    {</a>
+<a name="1346"><span class="lineNum">    1346 </span>            :       PrintCharacteristics(NULL, NULL, out);</a>
+<a name="1347"><span class="lineNum">    1347 </span>            :    }</a>
+<a name="1348"><span class="lineNum">    1348 </span>            : </a>
+<a name="1349"><span class="lineNum">    1349 </span>            :    void MesquiteSmooth(const int mesquite_option = 0);</a>
+<a name="1350"><span class="lineNum">    1350 </span>            : </a>
+<a name="1351"><span class="lineNum">    1351 </span>            :    /** @brief Find the ids of the elements that contain the given points, and</a>
+<a name="1352"><span class="lineNum">    1352 </span>            :        their corresponding reference coordinates.</a>
+<a name="1353"><span class="lineNum">    1353 </span>            : </a>
+<a name="1354"><span class="lineNum">    1354 </span>            :        The DenseMatrix @a point_mat describes the given points - one point for</a>
+<a name="1355"><span class="lineNum">    1355 </span>            :        each column; it should have SpaceDimension() rows.</a>
+<a name="1356"><span class="lineNum">    1356 </span>            : </a>
+<a name="1357"><span class="lineNum">    1357 </span>            :        The InverseElementTransformation object, @a inv_trans, is used to attempt</a>
+<a name="1358"><span class="lineNum">    1358 </span>            :        the element transformation inversion. If NULL pointer is given, the</a>
+<a name="1359"><span class="lineNum">    1359 </span>            :        method will use a default constructed InverseElementTransformation. Note</a>
+<a name="1360"><span class="lineNum">    1360 </span>            :        that the algorithms in the base class InverseElementTransformation can be</a>
+<a name="1361"><span class="lineNum">    1361 </span>            :        completely overwritten by deriving custom classes that override the</a>
+<a name="1362"><span class="lineNum">    1362 </span>            :        Transform() method.</a>
+<a name="1363"><span class="lineNum">    1363 </span>            : </a>
+<a name="1364"><span class="lineNum">    1364 </span>            :        If no element is found for the i-th point, elem_ids[i] is set to -1.</a>
+<a name="1365"><span class="lineNum">    1365 </span>            : </a>
+<a name="1366"><span class="lineNum">    1366 </span>            :        In the ParMesh implementation, the @a point_mat is expected to be the</a>
+<a name="1367"><span class="lineNum">    1367 </span>            :        same on all ranks. If the i-th point is found by multiple ranks, only one</a>
+<a name="1368"><span class="lineNum">    1368 </span>            :        of them will mark that point as found, i.e. set its elem_ids[i] to a</a>
+<a name="1369"><span class="lineNum">    1369 </span>            :        non-negative number; the other ranks will set their elem_ids[i] to -2 to</a>
+<a name="1370"><span class="lineNum">    1370 </span>            :        indicate that the point was found but assigned to another rank.</a>
+<a name="1371"><span class="lineNum">    1371 </span>            : </a>
+<a name="1372"><span class="lineNum">    1372 </span>            :        @returns The total number of points that were found.</a>
+<a name="1373"><span class="lineNum">    1373 </span>            : </a>
+<a name="1374"><span class="lineNum">    1374 </span>            :        @note This method is not 100 percent reliable, i.e. it is not guaranteed</a>
+<a name="1375"><span class="lineNum">    1375 </span>            :        to find a point, even if it lies inside a mesh element. */</a>
+<a name="1376"><span class="lineNum">    1376 </span>            :    virtual int FindPoints(DenseMatrix&amp; point_mat, Array&lt;int&gt;&amp; elem_ids,</a>
+<a name="1377"><span class="lineNum">    1377 </span>            :                           Array&lt;IntegrationPoint&gt;&amp; ips, bool warn = true,</a>
+<a name="1378"><span class="lineNum">    1378 </span>            :                           InverseElementTransformation *inv_trans = NULL);</a>
+<a name="1379"><span class="lineNum">    1379 </span>            : </a>
+<a name="1380"><span class="lineNum">    1380 </span>            :    /// Destroys Mesh.</a>
+<a name="1381"><span class="lineNum">    1381 </span><span class="lineNoCov">          0 :    virtual ~Mesh() { DestroyPointers(); }</span></a>
+<a name="1382"><span class="lineNum">    1382 </span>            : </a>
+<a name="1383"><span class="lineNum">    1383 </span>            : #ifdef MFEM_DEBUG</a>
+<a name="1384"><span class="lineNum">    1384 </span>            :    /// Output an NCMesh-compatible debug dump.</a>
+<a name="1385"><span class="lineNum">    1385 </span>            :    void DebugDump(std::ostream &amp;out) const;</a>
+<a name="1386"><span class="lineNum">    1386 </span>            : #endif</a>
+<a name="1387"><span class="lineNum">    1387 </span>            : };</a>
+<a name="1388"><span class="lineNum">    1388 </span>            : </a>
+<a name="1389"><span class="lineNum">    1389 </span>            : /** Overload operator&lt;&lt; for std::ostream and Mesh; valid also for the derived</a>
+<a name="1390"><span class="lineNum">    1390 </span>            :     class ParMesh */</a>
+<a name="1391"><span class="lineNum">    1391 </span>            : std::ostream &amp;operator&lt;&lt;(std::ostream &amp;out, const Mesh &amp;mesh);</a>
+<a name="1392"><span class="lineNum">    1392 </span>            : </a>
+<a name="1393"><span class="lineNum">    1393 </span>            : </a>
+<a name="1394"><span class="lineNum">    1394 </span>            : /** @brief Structure for storing mesh geometric factors: coordinates, Jacobians,</a>
+<a name="1395"><span class="lineNum">    1395 </span>            :     and determinants of the Jacobians. */</a>
+<a name="1396"><span class="lineNum">    1396 </span>            : /** Typically objects of this type are constructed and owned by objects of class</a>
+<a name="1397"><span class="lineNum">    1397 </span>            :     Mesh. See Mesh::GetGeometricFactors(). */</a>
+<a name="1398"><span class="lineNum">    1398 </span>            : class GeometricFactors</a>
+<a name="1399"><span class="lineNum">    1399 </span>            : {</a>
+<a name="1400"><span class="lineNum">    1400 </span>            : public:</a>
+<a name="1401"><span class="lineNum">    1401 </span>            :    const Mesh *mesh;</a>
+<a name="1402"><span class="lineNum">    1402 </span>            :    const IntegrationRule *IntRule;</a>
+<a name="1403"><span class="lineNum">    1403 </span>            :    int computed_factors;</a>
+<a name="1404"><span class="lineNum">    1404 </span>            : </a>
+<a name="1405"><span class="lineNum">    1405 </span>            :    enum FactorFlags</a>
+<a name="1406"><span class="lineNum">    1406 </span>            :    {</a>
+<a name="1407"><span class="lineNum">    1407 </span>            :       COORDINATES  = 1 &lt;&lt; 0,</a>
+<a name="1408"><span class="lineNum">    1408 </span>            :       JACOBIANS    = 1 &lt;&lt; 1,</a>
+<a name="1409"><span class="lineNum">    1409 </span>            :       DETERMINANTS = 1 &lt;&lt; 2,</a>
+<a name="1410"><span class="lineNum">    1410 </span>            :    };</a>
+<a name="1411"><span class="lineNum">    1411 </span>            : </a>
+<a name="1412"><span class="lineNum">    1412 </span>            :    GeometricFactors(const Mesh *mesh, const IntegrationRule &amp;ir, int flags);</a>
+<a name="1413"><span class="lineNum">    1413 </span>            : </a>
+<a name="1414"><span class="lineNum">    1414 </span>            :    /// Mapped (physical) coordinates of all quadrature points.</a>
+<a name="1415"><span class="lineNum">    1415 </span>            :    /** This array uses a column-major layout with dimensions (NQ x SDIM x NE)</a>
+<a name="1416"><span class="lineNum">    1416 </span>            :        where</a>
+<a name="1417"><span class="lineNum">    1417 </span>            :        - NQ = number of quadrature points per element,</a>
+<a name="1418"><span class="lineNum">    1418 </span>            :        - SDIM = space dimension of the mesh = mesh.SpaceDimension(), and</a>
+<a name="1419"><span class="lineNum">    1419 </span>            :        - NE = number of elements in the mesh. */</a>
+<a name="1420"><span class="lineNum">    1420 </span>            :    Vector X;</a>
+<a name="1421"><span class="lineNum">    1421 </span>            : </a>
+<a name="1422"><span class="lineNum">    1422 </span>            :    /// Jacobians of the element transformations at all quadrature points.</a>
+<a name="1423"><span class="lineNum">    1423 </span>            :    /** This array uses a column-major layout with dimensions (NQ x SDIM x DIM x</a>
+<a name="1424"><span class="lineNum">    1424 </span>            :        NE) where</a>
+<a name="1425"><span class="lineNum">    1425 </span>            :        - NQ = number of quadrature points per element,</a>
+<a name="1426"><span class="lineNum">    1426 </span>            :        - SDIM = space dimension of the mesh = mesh.SpaceDimension(),</a>
+<a name="1427"><span class="lineNum">    1427 </span>            :        - DIM = dimension of the mesh = mesh.Dimension(), and</a>
+<a name="1428"><span class="lineNum">    1428 </span>            :        - NE = number of elements in the mesh. */</a>
+<a name="1429"><span class="lineNum">    1429 </span>            :    Vector J;</a>
+<a name="1430"><span class="lineNum">    1430 </span>            : </a>
+<a name="1431"><span class="lineNum">    1431 </span>            :    /// Determinants of the Jacobians at all quadrature points.</a>
+<a name="1432"><span class="lineNum">    1432 </span>            :    /** This array uses a column-major layout with dimensions (NQ x NE) where</a>
+<a name="1433"><span class="lineNum">    1433 </span>            :        - NQ = number of quadrature points per element, and</a>
+<a name="1434"><span class="lineNum">    1434 </span>            :        - NE = number of elements in the mesh. */</a>
+<a name="1435"><span class="lineNum">    1435 </span>            :    Vector detJ;</a>
+<a name="1436"><span class="lineNum">    1436 </span>            : };</a>
+<a name="1437"><span class="lineNum">    1437 </span>            : </a>
+<a name="1438"><span class="lineNum">    1438 </span>            : /** @brief Structure for storing face geometric factors: coordinates, Jacobians,</a>
+<a name="1439"><span class="lineNum">    1439 </span>            :     determinants of the Jacobians, and normal vectors. */</a>
+<a name="1440"><span class="lineNum">    1440 </span>            : /** Typically objects of this type are constructed and owned by objects of class</a>
+<a name="1441"><span class="lineNum">    1441 </span>            :     Mesh. See Mesh::GetFaceGeometricFactors(). */</a>
+<a name="1442"><span class="lineNum">    1442 </span>            : class FaceGeometricFactors</a>
+<a name="1443"><span class="lineNum">    1443 </span>            : {</a>
+<a name="1444"><span class="lineNum">    1444 </span>            : public:</a>
+<a name="1445"><span class="lineNum">    1445 </span>            :    const Mesh *mesh;</a>
+<a name="1446"><span class="lineNum">    1446 </span>            :    const IntegrationRule *IntRule;</a>
+<a name="1447"><span class="lineNum">    1447 </span>            :    int computed_factors;</a>
+<a name="1448"><span class="lineNum">    1448 </span>            :    FaceType type;</a>
+<a name="1449"><span class="lineNum">    1449 </span>            : </a>
+<a name="1450"><span class="lineNum">    1450 </span>            :    enum FactorFlags</a>
+<a name="1451"><span class="lineNum">    1451 </span>            :    {</a>
+<a name="1452"><span class="lineNum">    1452 </span>            :       COORDINATES  = 1 &lt;&lt; 0,</a>
+<a name="1453"><span class="lineNum">    1453 </span>            :       JACOBIANS    = 1 &lt;&lt; 1,</a>
+<a name="1454"><span class="lineNum">    1454 </span>            :       DETERMINANTS = 1 &lt;&lt; 2,</a>
+<a name="1455"><span class="lineNum">    1455 </span>            :       NORMALS      = 1 &lt;&lt; 3,</a>
+<a name="1456"><span class="lineNum">    1456 </span>            :    };</a>
+<a name="1457"><span class="lineNum">    1457 </span>            : </a>
+<a name="1458"><span class="lineNum">    1458 </span>            :    FaceGeometricFactors(const Mesh *mesh, const IntegrationRule &amp;ir, int flags,</a>
+<a name="1459"><span class="lineNum">    1459 </span>            :                         FaceType type);</a>
+<a name="1460"><span class="lineNum">    1460 </span>            : </a>
+<a name="1461"><span class="lineNum">    1461 </span>            :    /// Mapped (physical) coordinates of all quadrature points.</a>
+<a name="1462"><span class="lineNum">    1462 </span>            :    /** This array uses a column-major layout with dimensions (NQ x SDIM x NF)</a>
+<a name="1463"><span class="lineNum">    1463 </span>            :        where</a>
+<a name="1464"><span class="lineNum">    1464 </span>            :        - NQ = number of quadrature points per face,</a>
+<a name="1465"><span class="lineNum">    1465 </span>            :        - SDIM = space dimension of the mesh = mesh.SpaceDimension(), and</a>
+<a name="1466"><span class="lineNum">    1466 </span>            :        - NF = number of faces in the mesh. */</a>
+<a name="1467"><span class="lineNum">    1467 </span>            :    Vector X;</a>
+<a name="1468"><span class="lineNum">    1468 </span>            : </a>
+<a name="1469"><span class="lineNum">    1469 </span>            :    /// Jacobians of the element transformations at all quadrature points.</a>
+<a name="1470"><span class="lineNum">    1470 </span>            :    /** This array uses a column-major layout with dimensions (NQ x SDIM x DIM x</a>
+<a name="1471"><span class="lineNum">    1471 </span>            :        NF) where</a>
+<a name="1472"><span class="lineNum">    1472 </span>            :        - NQ = number of quadrature points per face,</a>
+<a name="1473"><span class="lineNum">    1473 </span>            :        - SDIM = space dimension of the mesh = mesh.SpaceDimension(),</a>
+<a name="1474"><span class="lineNum">    1474 </span>            :        - DIM = dimension of the mesh = mesh.Dimension(), and</a>
+<a name="1475"><span class="lineNum">    1475 </span>            :        - NF = number of faces in the mesh. */</a>
+<a name="1476"><span class="lineNum">    1476 </span>            :    Vector J;</a>
+<a name="1477"><span class="lineNum">    1477 </span>            : </a>
+<a name="1478"><span class="lineNum">    1478 </span>            :    /// Determinants of the Jacobians at all quadrature points.</a>
+<a name="1479"><span class="lineNum">    1479 </span>            :    /** This array uses a column-major layout with dimensions (NQ x NF) where</a>
+<a name="1480"><span class="lineNum">    1480 </span>            :        - NQ = number of quadrature points per face, and</a>
+<a name="1481"><span class="lineNum">    1481 </span>            :        - NF = number of faces in the mesh. */</a>
+<a name="1482"><span class="lineNum">    1482 </span>            :    Vector detJ;</a>
+<a name="1483"><span class="lineNum">    1483 </span>            : </a>
+<a name="1484"><span class="lineNum">    1484 </span>            :    /// Normals at all quadrature points.</a>
+<a name="1485"><span class="lineNum">    1485 </span>            :    /** This array uses a column-major layout with dimensions (NQ x DIM x NF) where</a>
+<a name="1486"><span class="lineNum">    1486 </span>            :        - NQ = number of quadrature points per face,</a>
+<a name="1487"><span class="lineNum">    1487 </span>            :        - SDIM = space dimension of the mesh = mesh.SpaceDimension(), and</a>
+<a name="1488"><span class="lineNum">    1488 </span>            :        - NF = number of faces in the mesh. */</a>
+<a name="1489"><span class="lineNum">    1489 </span>            :    Vector normal;</a>
+<a name="1490"><span class="lineNum">    1490 </span>            : };</a>
+<a name="1491"><span class="lineNum">    1491 </span>            : </a>
+<a name="1492"><span class="lineNum">    1492 </span>            : /// Class used to extrude the nodes of a mesh</a>
+<a name="1493"><span class="lineNum">    1493 </span>            : class NodeExtrudeCoefficient : public VectorCoefficient</a>
+<a name="1494"><span class="lineNum">    1494 </span>            : {</a>
+<a name="1495"><span class="lineNum">    1495 </span>            : private:</a>
+<a name="1496"><span class="lineNum">    1496 </span>            :    int n, layer;</a>
+<a name="1497"><span class="lineNum">    1497 </span>            :    double p[2], s;</a>
+<a name="1498"><span class="lineNum">    1498 </span>            :    Vector tip;</a>
+<a name="1499"><span class="lineNum">    1499 </span>            : public:</a>
+<a name="1500"><span class="lineNum">    1500 </span>            :    NodeExtrudeCoefficient(const int dim, const int _n, const double _s);</a>
+<a name="1501"><span class="lineNum">    1501 </span>            :    void SetLayer(const int l) { layer = l; }</a>
+<a name="1502"><span class="lineNum">    1502 </span>            :    using VectorCoefficient::Eval;</a>
+<a name="1503"><span class="lineNum">    1503 </span>            :    virtual void Eval(Vector &amp;V, ElementTransformation &amp;T,</a>
+<a name="1504"><span class="lineNum">    1504 </span>            :                      const IntegrationPoint &amp;ip);</a>
+<a name="1505"><span class="lineNum">    1505 </span>            :    virtual ~NodeExtrudeCoefficient() { }</a>
+<a name="1506"><span class="lineNum">    1506 </span>            : };</a>
+<a name="1507"><span class="lineNum">    1507 </span>            : </a>
+<a name="1508"><span class="lineNum">    1508 </span>            : </a>
+<a name="1509"><span class="lineNum">    1509 </span>            : /// Extrude a 1D mesh</a>
+<a name="1510"><span class="lineNum">    1510 </span>            : Mesh *Extrude1D(Mesh *mesh, const int ny, const double sy,</a>
+<a name="1511"><span class="lineNum">    1511 </span>            :                 const bool closed = false);</a>
+<a name="1512"><span class="lineNum">    1512 </span>            : </a>
+<a name="1513"><span class="lineNum">    1513 </span>            : /// Extrude a 2D mesh</a>
+<a name="1514"><span class="lineNum">    1514 </span>            : Mesh *Extrude2D(Mesh *mesh, const int nz, const double sz);</a>
+<a name="1515"><span class="lineNum">    1515 </span>            : </a>
+<a name="1516"><span class="lineNum">    1516 </span>            : // shift cyclically 3 integers left-to-right</a>
+<a name="1517"><span class="lineNum">    1517 </span>            : inline void ShiftRight(int &amp;a, int &amp;b, int &amp;c)</a>
+<a name="1518"><span class="lineNum">    1518 </span>            : {</a>
+<a name="1519"><span class="lineNum">    1519 </span>            :    int t = a;</a>
+<a name="1520"><span class="lineNum">    1520 </span>            :    a = c;  c = b;  b = t;</a>
+<a name="1521"><span class="lineNum">    1521 </span>            : }</a>
+<a name="1522"><span class="lineNum">    1522 </span>            : </a>
+<a name="1523"><span class="lineNum">    1523 </span>            : }</a>
+<a name="1524"><span class="lineNum">    1524 </span>            : </a>
+<a name="1525"><span class="lineNum">    1525 </span>            : #endif</a>
+</pre>
+      </td>
+    </tr>
+  </table>
+  <br>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="ruler"><img src="../../../glass.png" width=3 height=3 alt=""></td></tr>
+    <tr><td class="versionInfo">Generated by: <a href="http://ltp.sourceforge.net/coverage/lcov.php" target="_parent">LCOV version 1.14</a></td></tr>
+  </table>
+  <br>
+
+</body>
+</html>
