@@ -40,6 +40,8 @@ int main(int argc, char *argv[])
    L2_FECollection l2_fec(order_0, dim);
 
    FiniteElementSpace l2_fes(mesh, &l2_fec, dim);
+   cout << "Finite element space created." << endl;
+   cout << "Total DOFs: " << l2_fes.GetNDofs() << endl;
    GridFunction grid_test(&l2_fes);
 
    Vector coeff(3);
@@ -49,10 +51,14 @@ int main(int argc, char *argv[])
 
    //This line is needed or else it fails when the fes->fe(i)->Project method is called
    coeff.HostReadWrite();
+   cout << "Vector coefficient: " << coeff << endl;
 
    VectorConstantCoefficient vec_coeff(coeff);
    //grid_test.HostReadWrite(); // This line doesn't appear to help any.
    grid_test.ProjectDiscCoefficient(vec_coeff, mfem::GridFunction::ARITHMETIC);
+   cout << "GridFunction max value: " << grid_test.Max() << endl;
+   cout << "GridFunction min value: " << grid_test.Min() << endl;
 
    delete mesh;
+   return 0;
 }

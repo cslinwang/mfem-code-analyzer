@@ -1394,23 +1394,38 @@ make 1413_2
 for i in {1..10000}; do ./1413_2; done
 
 ### 1326失败
-privious commit
-将serior放入examples
-make clean
-make all -j
+复现sha:438a458c3f1893e59930bc97df71d907ddffcade
+将mpi.cpp放入examples
+/root/mfem-code-analyzer/get_normal_testcase_covarage/add_coverage.sh
 cd examples
-make serior
-./serior
+mpicxx -O3 -std=c++11 -fprofile-arcs -ftest-coverage -I.. -I../../hypre/src/hypre/include mpi.cpp -o mpi -L.. -lmfem -L../../hypre/src/hypre/lib -lHYPRE -L../../metis-4.0 -lmetis -lrt -lgcov
+mpirun -np 1 mpi
+结果：
+root@f64125032199:~/mfem/examples# mpirun -np 1 mpi
+Options used:
+   --mesh /root/mfem-code-analyzer/bugs/issue1326/xperiodic-square.mesh
+   --refine 2
+   --refineP 0
+   --order 2
+Generated mesh file: mesh.000000
+Generated solution file: sol_psi.000000
 
-### 1322失败
+### 1322成功
+复现sha:
+323ddecd86c0dc48dc904267268bd8a3b783eb0d
+cd examples
+mpicxx -O3 -std=c++11 -fprofile-arcs -ftest-coverage -I.. -I../../hypre/src/hypre/include 1322.cpp -o 1322 -L.. -lmfem -L../../hypre/src/hypre/lib -lHYPRE -L../../metis-4.0 -lmetis -lrt -lgcov
+./1322
 无论哪个sha都是以下结果：
-root@d8f6458e7cf3:~/mfem/mfem/examples# ./1322
+root@f64125032199:~/mfem/examples# ./1322
 Options used:
    --device cpu
 Device configuration: cpu
-0 0 0 0 0 0 0 0
-1 1 1 1 1 1 1 1
-2 2 2 2 2 2 2 2
+Finite element space created.
+Total DOFs: 8
+Vector coefficient: 0x56416cbe36a0
+GridFunction max value: 2
+GridFunction min value: 0
 
 ### 685成功.
 privious commit

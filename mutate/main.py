@@ -4,6 +4,7 @@ import math
 import joblib
 import os
 import runcmd
+from runcmd import exccmd
 import pandas as pd
 import time
 
@@ -228,24 +229,28 @@ def mutate(need_muta_files, bug_id):
     pre_command = "cd " + project_path + " && "
     start_time = time.time()
 
-    # if not os.path.exists("/home/dpc/Documents/mutateFiles/{:02}".format(bug_id)):
-    #     os.mkdir("/home/dpc/Documents/mutateFiles/{:02}".format(bug_id))
-    # if not os.path.exists("/home/dpc/Documents/project/bug_{:02}".format(bug_id)):
-    #     os.mkdir("/home/dpc/Documents/project/bug_{:02}".format(bug_id))
-
     idx = 1
     for file_name in need_muta_files:
-        # command = "rm -rf /home/dpc/Documents/project/bug_{:02}/iverilog".format(bug_id)
         # runcmd.exccmd(command)
-        # command = "cd /home/dpc/Documents/project/bug_{:02} && cp -r /home/dpc/Documents/backup/bug_{:02}/iverilog .".format(bug_id,bug_id)
         # print(runcmd.exccmd(command))
-
-        command = pre_command + "mucpp applyall " + file_name + " -- -std=c++11"
-        runcmd.exccmd(command)
+        # 如果已经变异,不再变异
+        command = pre_command + "git branch -a"
+        all_branch = exccmd(command)
+        # 如果其中一个分支是变异分支，则跳过
+        is_need_mutate = True
+        for branch_name in all_branch:
+            if branch_name.find("master") != -1:
+                continue
+            if branch_name.endswith('_coefficient'):
+                is_need_mutate = False
+                break
+        if is_need_mutate:
+            command = pre_command + "mucpp applyall " + file_name + " -- -std=c++11"
+            runcmd.exccmd(command)
 
         # 变异完成后，拿到git branch的变异分支
         command = pre_command + "git branch -a"
-        all_branch = runcmd.exccmd(command)
+        all_branch = exccmd(command)
         print("branchs:{}".format(len(all_branch)))
         # 遍历每一个分支，拿到对应分支下的变异文件和变异行号
         success_mutate = 0
@@ -637,6 +642,15 @@ def delete_mutate_brach(bug_hash="93393c5c58ecaa3eb6fb9bbd6a822e7c3fd96be5"):
     runcmd.exccmd(cmd)
 
 
+def prepare_source_code(issue):
+    """
+    准备源代码
+    删除原有项目，重命名issue项目
+    """
+    cmd = "rm -rf /root/mfem && cp -r /root/mfem_"+issue+" /root/mfem"
+    runcmd.exccmd(cmd)
+
+
 # 覆盖率路径
 coverage_file_paths = "/root/mfem-code-analyzer/bugs"
 # 项目名称
@@ -652,8 +666,9 @@ if __name__ == '__main__':
         if bug_id != "issue3566":
             continue
         # delete_mutate_brach(bug_id)
-        need_muta_files = get_coverage_files(bug_id)
-        mutate(need_muta_files, bug_id)
+        # prepare_source_code(bug_id) # 准备源代码
+        need_muta_files = get_coverage_files(bug_id)  # 获得覆盖文件
+        mutate(need_muta_files, bug_id)  # 变异
         get_coverage_mutate(bug_id)
         command = "rm -rf /home/dpc/Documents/mutateFiles/bug_{:02}".format(
             bug_id)

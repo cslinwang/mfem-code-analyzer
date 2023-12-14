@@ -31,13 +31,13 @@
             <td class="headerValue">coverage.info</td>
             <td></td>
             <td class="headerItem">Lines:</td>
-            <td class="headerCovTableEntry">18</td>
-            <td class="headerCovTableEntry">19</td>
-            <td class="headerCovTableEntryHi">94.7 %</td>
+            <td class="headerCovTableEntry">20</td>
+            <td class="headerCovTableEntry">21</td>
+            <td class="headerCovTableEntryHi">95.2 %</td>
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2023-11-28 15:59:23</td>
+            <td class="headerValue">2023-12-14 01:30:43</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">1</td>
@@ -102,22 +102,28 @@
 <a name="40"><span class="lineNum">      40 </span><span class="lineCov">          2 :    L2_FECollection l2_fec(order_0, dim);</span></a>
 <a name="41"><span class="lineNum">      41 </span>            : </a>
 <a name="42"><span class="lineNum">      42 </span><span class="lineCov">          2 :    FiniteElementSpace l2_fes(mesh, &amp;l2_fec, dim);</span></a>
-<a name="43"><span class="lineNum">      43 </span><span class="lineCov">          2 :    GridFunction grid_test(&amp;l2_fes);</span></a>
-<a name="44"><span class="lineNum">      44 </span>            : </a>
-<a name="45"><span class="lineNum">      45 </span>            :    Vector coeff(3);</a>
-<a name="46"><span class="lineNum">      46 </span><span class="lineCov">          1 :    coeff[0] = 0.0;</span></a>
-<a name="47"><span class="lineNum">      47 </span><span class="lineCov">          1 :    coeff[1] = 1.0;</span></a>
-<a name="48"><span class="lineNum">      48 </span><span class="lineCov">          1 :    coeff[2] = 2.0;</span></a>
-<a name="49"><span class="lineNum">      49 </span>            : </a>
-<a name="50"><span class="lineNum">      50 </span>            :    //This line is needed or else it fails when the fes-&gt;fe(i)-&gt;Project method is called</a>
-<a name="51"><span class="lineNum">      51 </span>            :    coeff.HostReadWrite();</a>
-<a name="52"><span class="lineNum">      52 </span>            : </a>
-<a name="53"><span class="lineNum">      53 </span>            :    VectorConstantCoefficient vec_coeff(coeff);</a>
-<a name="54"><span class="lineNum">      54 </span>            :    //grid_test.HostReadWrite(); // This line doesn't appear to help any.</a>
-<a name="55"><span class="lineNum">      55 </span><span class="lineCov">          1 :    grid_test.ProjectDiscCoefficient(vec_coeff, mfem::GridFunction::ARITHMETIC);</span></a>
-<a name="56"><span class="lineNum">      56 </span>            : </a>
-<a name="57"><span class="lineNum">      57 </span><span class="lineCov">          1 :    delete mesh;</span></a>
-<a name="58"><span class="lineNum">      58 </span><span class="lineCov">          1 : }</span></a>
+<a name="43"><span class="lineNum">      43 </span>            :    cout &lt;&lt; &quot;Finite element space created.&quot; &lt;&lt; endl;</a>
+<a name="44"><span class="lineNum">      44 </span><span class="lineCov">          1 :    cout &lt;&lt; &quot;Total DOFs: &quot; &lt;&lt; l2_fes.GetNDofs() &lt;&lt; endl;</span></a>
+<a name="45"><span class="lineNum">      45 </span><span class="lineCov">          2 :    GridFunction grid_test(&amp;l2_fes);</span></a>
+<a name="46"><span class="lineNum">      46 </span>            : </a>
+<a name="47"><span class="lineNum">      47 </span>            :    Vector coeff(3);</a>
+<a name="48"><span class="lineNum">      48 </span><span class="lineCov">          1 :    coeff[0] = 0.0;</span></a>
+<a name="49"><span class="lineNum">      49 </span><span class="lineCov">          1 :    coeff[1] = 1.0;</span></a>
+<a name="50"><span class="lineNum">      50 </span><span class="lineCov">          1 :    coeff[2] = 2.0;</span></a>
+<a name="51"><span class="lineNum">      51 </span>            : </a>
+<a name="52"><span class="lineNum">      52 </span>            :    //This line is needed or else it fails when the fes-&gt;fe(i)-&gt;Project method is called</a>
+<a name="53"><span class="lineNum">      53 </span>            :    coeff.HostReadWrite();</a>
+<a name="54"><span class="lineNum">      54 </span>            :    cout &lt;&lt; &quot;Vector coefficient: &quot; &lt;&lt; coeff &lt;&lt; endl;</a>
+<a name="55"><span class="lineNum">      55 </span>            : </a>
+<a name="56"><span class="lineNum">      56 </span>            :    VectorConstantCoefficient vec_coeff(coeff);</a>
+<a name="57"><span class="lineNum">      57 </span>            :    //grid_test.HostReadWrite(); // This line doesn't appear to help any.</a>
+<a name="58"><span class="lineNum">      58 </span><span class="lineCov">          1 :    grid_test.ProjectDiscCoefficient(vec_coeff, mfem::GridFunction::ARITHMETIC);</span></a>
+<a name="59"><span class="lineNum">      59 </span><span class="lineCov">          1 :    cout &lt;&lt; &quot;GridFunction max value: &quot; &lt;&lt; grid_test.Max() &lt;&lt; endl;</span></a>
+<a name="60"><span class="lineNum">      60 </span><span class="lineCov">          1 :    cout &lt;&lt; &quot;GridFunction min value: &quot; &lt;&lt; grid_test.Min() &lt;&lt; endl;</span></a>
+<a name="61"><span class="lineNum">      61 </span>            : </a>
+<a name="62"><span class="lineNum">      62 </span><span class="lineCov">          1 :    delete mesh;</span></a>
+<a name="63"><span class="lineNum">      63 </span>            :    return 0;</a>
+<a name="64"><span class="lineNum">      64 </span>            : }</a>
 </pre>
       </td>
     </tr>

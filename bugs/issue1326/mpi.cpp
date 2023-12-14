@@ -95,13 +95,22 @@ int main(int argc, char *argv[])
       mesh_name << "mesh." << setfill('0') << setw(6) << myid;
       psi_name << "sol_psi." << setfill('0') << setw(6) << myid;
 
+      // 保存网格文件
       ofstream omesh(mesh_name.str().c_str());
       omesh.precision(8);
       pmesh->Print(omesh);
 
+      // 保存解文件
       ofstream osol3(psi_name.str().c_str());
       osol3.precision(8);
       psi.Save(osol3);
+
+      // 在终端显示文件名
+      if (myid == 0)  // 仅在主进程中显示
+      {
+         cout << "Generated mesh file: " << mesh_name.str() << endl;
+         cout << "Generated solution file: " << psi_name.str() << endl;
+      }
    }
 
    delete pmesh;

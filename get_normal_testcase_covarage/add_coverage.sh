@@ -87,3 +87,5 @@ make test
 
 ## 删除gcno文件
 find . -name "*.gcno" -exec rm {} \;
+# 清除覆盖率信息
+find /root/mfem \( -name '*.gcda' -o -name '*.gcov' \) -delete
