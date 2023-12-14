@@ -2349,6 +2349,26 @@ bug版本使用fix的用例，运行ex19
 /root/mfem/mfem-code-analyzer/get_normal_testcase_covarage/add_coverage.sh
 cd examples
 ./ex19
+结果：
+root@f64125032199:~/mfem/examples# ./ex19
+Options used:
+   --mesh /root/mfem/data/beam-tet.mesh
+   --refine 0
+   --order 2
+   --visualization
+   --relative-tolerance 0.0001
+   --absolute-tolerance 1e-06
+   --newton-iterations 500
+   --shear-modulus 1
+***********************************************************
+dim(u) = 459
+dim(p) = 36
+dim(u+p) = 495
+***********************************************************
+Newton iteration  0 : ||r|| = 2.90593
+Newton iteration  1 : ||r|| = 0.115213, ||r||/||r_0|| = 0.0396474
+Newton iteration  2 : ||r|| = 0.0168574, ||r||/||r_0|| = 0.00580103
+Newton iteration  3 : ||r|| = 6.91198e-05, ||r||/||r_0|| = 2.37858e-05
 
 ### 310成功
 privious commit
@@ -2470,10 +2490,37 @@ cd examples
 mpicxx -O3 -std=c++11 -I.. -I../../hypre/src/hypre/include 2413.cpp -o 2413 -L.. -lmfem -L../../hypre/src/hypre/lib -lHYPRE -L../../metis-4.0 -lmetis -lrt
 
 ### 129成功.
+复现sha:3ecf917a0c7d6cfda06110918ef6be73884a972b
 /root/mfem-code-analyzer/get_normal_testcase_covarage/add_coverage.sh
 mpicxx -O3 -std=c++11 -fprofile-arcs -ftest-coverage -I.. -I../../hypre/src/hypre/include 129.cpp -o 129 -L.. -lmfem -L../../hypre/src/hypre/lib -lHYPRE -L../../metis-4.0 -lmetis -lrt -lgcov
 cd examples
 valgrind ./129
+结果：
+root@f64125032199:~/mfem/examples# valgrind ./129
+==3731662== Memcheck, a memory error detector
+==3731662== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==3731662== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
+==3731662== Command: ./129
+==3731662==
+==3731662== Invalid read of size 8
+==3731662==    at 0x2B6431: mfem::Mesh::Mesh(mfem::Mesh*, int, int) (in /root/mfem/examples/129)
+==3731662==    by 0x270469: main (in /root/mfem/examples/129)
+==3731662==  Address 0x51931c0 is 0 bytes after a block of size 256 alloc'd
+==3731662==    at 0x484A2F3: operator new[](unsigned long) (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==3731662==    by 0x3F422B: mfem::DenseMatrix::SetSize(int, int) (in /root/mfem/examples/129)
+==3731662==    by 0x322913: mfem::IsoparametricTransformation::Transform(mfem::IntegrationRule const&, mfem::DenseMatrix&) (in /root/mfem/examples/129)
+==3731662==    by 0x2B63AD: mfem::Mesh::Mesh(mfem::Mesh*, int, int) (in /root/mfem/examples/129)
+==3731662==    by 0x270469: main (in /root/mfem/examples/129)
+==3731662==
+==3731662==
+==3731662== HEAP SUMMARY:
+==3731662==     in use at exit: 0 bytes in 0 blocks
+==3731662==   total heap usage: 1,280 allocs, 1,280 frees, 235,001 bytes allocated
+==3731662==
+==3731662== All heap blocks were freed -- no leaks are possible
+==3731662==
+==3731662== For lists of detected and suppressed errors, rerun with: -s
+==3731662== ERROR SUMMARY: 20 errors from 1 contexts (suppressed: 0 from 0)
 
 ### 2062失败
 mesh-explorer.cpp中修改mesh路径
@@ -2860,17 +2907,17 @@ mpicxx -O3 -std=c++11 -I.. -I../../hypre/src/hypre/include 1578.cpp -o 1578 -L..
 
 ### 463成功
 v2101
+复现sha:bbac26bffe986f9f4d0cee480dcdd1924ce699d9
 privious commit
 463.cpp放入examples
 cd mfem
 make clean
 make all -j
 cd examples
-mpicxx -O3 -std=c++11 -I.. -I../../hypre/src/hypre/include 463.cpp -o 463 -L.. -lmfem -L../../hypre/src/hypre/lib -lHYPRE -L../../metis-4.0 -lmetis -lrt
-添加覆盖率：mpicxx -O3 -std=c++11 -fprofile-arcs -ftest-coverage -I.. -I../../hypre/src/hypre/include 463.cpp -o 463 -L.. -lmfem -L../../hypre/src/hypre/lib -lHYPRE -L../../metis-4.0 -lmetis -lrt -lgcov
-
+mpicxx -O3 -std=c++11 -fprofile-arcs -ftest-coverage -I.. -I../../hypre/src/hypre/include 463.cpp -o 463 -L.. -lmfem -L../../hypre/src/hypre/lib -lHYPRE -L../../metis-4.0 -lmetis -lrt -lgcov
 mpirun -n 2 ./463
 结果：
+root@f64125032199:~/mfem/examples# mpirun -n 2 ./463
 After creation : Boundary attribute size: 4
 After creation : Boundary attribute size: 4
 After refinement : Boundary attribute size: 4
@@ -2880,6 +2927,7 @@ After derefinement : Boundary attribute size: 3
 
 
 ## 413成功
+复现sha:78d65bd549cfd0aa2bcc2f9d91e0df1aa3f32538
 v2101，修复版本也有这个段错误
 privious commit
 413.cpp放入examples
@@ -2887,12 +2935,428 @@ cd mfem
 make clean
 make all -j
 cd examples
-mpicxx -O3 -std=c++11 -I.. -I../../hypre/src/hypre/include 413.cpp -o 413 -L.. -lmfem -L../../hypre/src/hypre/lib -lHYPRE -L../../metis-4.0 -lmetis -lrt
-包含覆盖率的命令：mpicxx -O3 -std=c++11 --coverage -I.. -I../../hypre/src/hypre/include 413.cpp -o 413 -L.. -lmfem -L../../hypre/src/hypre/lib -lHYPRE -L../../metis-4.0 -lmetis -lrt
+mpicxx -O3 -std=c++11 --coverage -I.. -I../../hypre/src/hypre/include 413.cpp -o 413 -L.. -lmfem -L../../hypre/src/hypre/lib -lHYPRE -L../../metis-4.0 -lmetis -lrt
 valgrind --leak-check=full mpirun -n 2 ./413
 结果：
-mpirun noticed that process rank 0 with PID 0 on node 8403300dc1d0 exited on signal 11 (Segmentation fault).
-### 旧版mfem 复现
+root@f64125032199:~/mfem/examples# valgrind --leak-check=full mpirun -n 2 ./413
+==3720569== Memcheck, a memory error detector
+==3720569== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==3720569== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
+==3720569== Command: mpirun -n 2 ./413
+==3720569==
+hwloc x86 backend cannot work under Valgrind, disabling.
+May be reenabled by dumping CPUIDs with hwloc-gather-cpuid
+and reloading them under Valgrind with HWLOC_CPUID_PATH.
+hwloc x86 backend cannot work under Valgrind, disabling.
+May be reenabled by dumping CPUIDs with hwloc-gather-cpuid
+and reloading them under Valgrind with HWLOC_CPUID_PATH.
+==3720569== Warning: noted but unhandled ioctl 0x5441 with no size/direction hints.
+==3720569==    This could cause spurious value errors to appear.
+==3720569==    See README_MISSING_SYSCALL_OR_IOCTL for guidance on writing a proper wrapper.
+==3720866== Warning: invalid file descriptor 1048564 in syscall close()
+==3720866== Warning: invalid file descriptor 1048565 in syscall close()
+==3720866== Warning: invalid file descriptor 1048566 in syscall close()
+==3720866== Warning: invalid file descriptor 1048567 in syscall close()
+==3720866==    Use --log-fd=<number> to select an alternative log fd.
+==3720866== Warning: invalid file descriptor 1048568 in syscall close()
+==3720866== Warning: invalid file descriptor 1048569 in syscall close()
+==3720869== Warning: invalid file descriptor 1048564 in syscall close()
+==3720869== Warning: invalid file descriptor 1048565 in syscall close()
+==3720869== Warning: invalid file descriptor 1048566 in syscall close()
+==3720869== Warning: invalid file descriptor 1048567 in syscall close()
+==3720869==    Use --log-fd=<number> to select an alternative log fd.
+==3720869== Warning: invalid file descriptor 1048568 in syscall close()
+==3720869== Warning: invalid file descriptor 1048569 in syscall close()
+warning: CSR matrix nnz was not set properly (!= ia[nrow], 1789918880 2)
+warning: CSR matrix nnz was not set properly (!= ia[nrow], -1982660912 2)
+[f64125032199:3720869] *** Process received signal ***
+[f64125032199:3720869] Signal: Segmentation fault (11)
+[f64125032199:3720869] Signal code: Address not mapped (1)
+[f64125032199:3720869] Failing at address: (nil)
+[f64125032199:3720869] [ 0] /lib/x86_64-linux-gnu/libc.so.6(+0x42520)[0x7f8b129de520]
+[f64125032199:3720869] [ 1] ./413(+0x4eca8d)[0x557f891d3a8d]
+[f64125032199:3720869] [ 2] ./413(+0x1b3788)[0x557f88e9a788]
+[f64125032199:3720869] [ 3] ./413(+0x19b92f)[0x557f88e8292f]
+[f64125032199:3720869] [ 4] /lib/x86_64-linux-gnu/libc.so.6(+0x29d90)[0x7f8b129c5d90]
+[f64125032199:3720869] [ 5] /lib/x86_64-linux-gnu/libc.so.6(__libc_start_main+0x80)[0x7f8b129c5e40]
+[f64125032199:3720869] [ 6] ./413(+0x19d605)[0x557f88e84605]
+[f64125032199:3720869] *** End of error message ***
+[f64125032199:3720866] *** Process received signal ***
+[f64125032199:3720866] Signal: Segmentation fault (11)
+[f64125032199:3720866] Signal code: Address not mapped (1)
+[f64125032199:3720866] Failing at address: (nil)
+[f64125032199:3720866] [ 0] /lib/x86_64-linux-gnu/libc.so.6(+0x42520)[0x7f022c30d520]
+[f64125032199:3720866] [ 1] ./413(+0x4eca8d)[0x56256885fa8d]
+[f64125032199:3720866] [ 2] ./413(+0x1b3788)[0x562568526788]
+[f64125032199:3720866] [ 3] ./413(+0x19b92f)[0x56256850e92f]
+[f64125032199:3720866] [ 4] /lib/x86_64-linux-gnu/libc.so.6(+0x29d90)[0x7f022c2f4d90]
+[f64125032199:3720866] [ 5] /lib/x86_64-linux-gnu/libc.so.6(__libc_start_main+0x80)[0x7f022c2f4e40]
+[f64125032199:3720866] [ 6] ./413(+0x19d605)[0x562568510605]
+[f64125032199:3720866] *** End of error message ***
+--------------------------------------------------------------------------
+Primary job  terminated normally, but 1 process returned
+a non-zero exit code. Per user-direction, the job has been aborted.
+--------------------------------------------------------------------------
+--------------------------------------------------------------------------
+mpirun noticed that process rank 0 with PID 0 on node f64125032199 exited on signal 11 (Segmentation fault).
+--------------------------------------------------------------------------
+==3720569==
+==3720569== HEAP SUMMARY:
+==3720569==     in use at exit: 201,775 bytes in 1,385 blocks
+==3720569==   total heap usage: 32,850 allocs, 31,465 frees, 8,192,125 bytes allocated
+==3720569==
+==3720569== 5 bytes in 1 blocks are definitely lost in loss record 11 of 294
+==3720569==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==3720569==    by 0x4AB260E: strdup (strdup.c:42)
+==3720569==    by 0x775A04A: ???
+==3720569==    by 0x76D7383: ???
+==3720569==    by 0x48ACB6C: pmix_server_init (in /usr/lib/x86_64-linux-gnu/libopen-rte.so.40.30.2)
+==3720569==    by 0x5229188: ???
+==3720569==    by 0x48F94CB: orte_init (in /usr/lib/x86_64-linux-gnu/libopen-rte.so.40.30.2)
+==3720569==    by 0x48A6BE4: orte_submit_init (in /usr/lib/x86_64-linux-gnu/libopen-rte.so.40.30.2)
+==3720569==    by 0x1091E3: ??? (in /usr/bin/orterun)
+==3720569==    by 0x4A33D8F: (below main) (libc_start_call_main.h:58)
+==3720569==
+==3720569== 5 bytes in 1 blocks are definitely lost in loss record 12 of 294
+==3720569==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==3720569==    by 0x4AB260E: strdup (strdup.c:42)
+==3720569==    by 0x772ED65: ???
+==3720569==    by 0x772F33C: ???
+==3720569==    by 0x772F7DD: ???
+==3720569==    by 0x778D03F: ???
+==3720569==    by 0x7758490: ???
+==3720569==    by 0x76D4FF5: ???
+==3720569==    by 0x48B05DF: pmix_server_finalize (in /usr/lib/x86_64-linux-gnu/libopen-rte.so.40.30.2)
+==3720569==    by 0x522A6B3: ???
+==3720569==    by 0x4886384: orte_finalize (in /usr/lib/x86_64-linux-gnu/libopen-rte.so.40.30.2)
+==3720569==    by 0x10934F: ??? (in /usr/bin/orterun)
+==3720569==
+==3720569== 12 bytes in 1 blocks are definitely lost in loss record 52 of 294
+==3720569==    at 0x484DCD3: realloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==3720569==    by 0x772A93F: ???
+==3720569==    by 0x772ADB7: ???
+==3720569==    by 0x7734507: ???
+==3720569==    by 0x77597AE: ???
+==3720569==    by 0x76D7383: ???
+==3720569==    by 0x48ACB6C: pmix_server_init (in /usr/lib/x86_64-linux-gnu/libopen-rte.so.40.30.2)
+==3720569==    by 0x5229188: ???
+==3720569==    by 0x48F94CB: orte_init (in /usr/lib/x86_64-linux-gnu/libopen-rte.so.40.30.2)
+==3720569==    by 0x48A6BE4: orte_submit_init (in /usr/lib/x86_64-linux-gnu/libopen-rte.so.40.30.2)
+==3720569==    by 0x1091E3: ??? (in /usr/bin/orterun)
+==3720569==    by 0x4A33D8F: (below main) (libc_start_call_main.h:58)
+==3720569==
+==3720569== 20 bytes in 1 blocks are definitely lost in loss record 96 of 294
+==3720569==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==3720569==    by 0x4AB260E: strdup (strdup.c:42)
+==3720569==    by 0x77C5EB7: ???
+==3720569==    by 0x7759935: ???
+==3720569==    by 0x76D7383: ???
+==3720569==    by 0x48ACB6C: pmix_server_init (in /usr/lib/x86_64-linux-gnu/libopen-rte.so.40.30.2)
+==3720569==    by 0x5229188: ???
+==3720569==    by 0x48F94CB: orte_init (in /usr/lib/x86_64-linux-gnu/libopen-rte.so.40.30.2)
+==3720569==    by 0x48A6BE4: orte_submit_init (in /usr/lib/x86_64-linux-gnu/libopen-rte.so.40.30.2)
+==3720569==    by 0x1091E3: ??? (in /usr/bin/orterun)
+==3720569==    by 0x4A33D8F: (below main) (libc_start_call_main.h:58)
+==3720569==
+==3720569== 23 (16 direct, 7 indirect) bytes in 1 blocks are definitely lost in loss record 103 of 294
+==3720569==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==3720569==    by 0x77295A1: ???
+==3720569==    by 0x77295E8: ???
+==3720569==    by 0x7729777: ???
+==3720569==    by 0x7814FD2: ???
+==3720569==    by 0x77B5991: ???
+==3720569==    by 0x77B5EA1: ???
+==3720569==    by 0x77B5EE3: ???
+==3720569==    by 0x775925B: ???
+==3720569==    by 0x76D7383: ???
+==3720569==    by 0x48ACB6C: pmix_server_init (in /usr/lib/x86_64-linux-gnu/libopen-rte.so.40.30.2)
+==3720569==    by 0x5229188: ???
+==3720569==
+==3720569== 24 bytes in 1 blocks are definitely lost in loss record 120 of 294
+==3720569==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==3720569==    by 0x4A921D7: __vasprintf_internal (vasprintf.c:71)
+==3720569==    by 0x4B40362: __asprintf_chk (asprintf_chk.c:34)
+==3720569==    by 0x772ECDD: ???
+==3720569==    by 0x772F33C: ???
+==3720569==    by 0x772F7DD: ???
+==3720569==    by 0x778D03F: ???
+==3720569==    by 0x7758490: ???
+==3720569==    by 0x76D4FF5: ???
+==3720569==    by 0x48B05DF: pmix_server_finalize (in /usr/lib/x86_64-linux-gnu/libopen-rte.so.40.30.2)
+==3720569==    by 0x522A6B3: ???
+==3720569==    by 0x4886384: orte_finalize (in /usr/lib/x86_64-linux-gnu/libopen-rte.so.40.30.2)
+==3720569==
+==3720569== 24 bytes in 1 blocks are definitely lost in loss record 121 of 294
+==3720569==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==3720569==    by 0x4A921D7: __vasprintf_internal (vasprintf.c:71)
+==3720569==    by 0x4B40362: __asprintf_chk (asprintf_chk.c:34)
+==3720569==    by 0x772ED50: ???
+==3720569==    by 0x772F33C: ???
+==3720569==    by 0x772F7DD: ???
+==3720569==    by 0x778D03F: ???
+==3720569==    by 0x7758490: ???
+==3720569==    by 0x76D4FF5: ???
+==3720569==    by 0x48B05DF: pmix_server_finalize (in /usr/lib/x86_64-linux-gnu/libopen-rte.so.40.30.2)
+==3720569==    by 0x522A6B3: ???
+==3720569==    by 0x4886384: orte_finalize (in /usr/lib/x86_64-linux-gnu/libopen-rte.so.40.30.2)
+==3720569==
+==3720569== 24 bytes in 1 blocks are definitely lost in loss record 122 of 294
+==3720569==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==3720569==    by 0x4AB260E: strdup (strdup.c:42)
+==3720569==    by 0x772EF23: ???
+==3720569==    by 0x772ED78: ???
+==3720569==    by 0x772F33C: ???
+==3720569==    by 0x772F7DD: ???
+==3720569==    by 0x778D03F: ???
+==3720569==    by 0x7758490: ???
+==3720569==    by 0x76D4FF5: ???
+==3720569==    by 0x48B05DF: pmix_server_finalize (in /usr/lib/x86_64-linux-gnu/libopen-rte.so.40.30.2)
+==3720569==    by 0x522A6B3: ???
+==3720569==    by 0x4886384: orte_finalize (in /usr/lib/x86_64-linux-gnu/libopen-rte.so.40.30.2)
+==3720569==
+==3720569== 37 (24 direct, 13 indirect) bytes in 1 blocks are definitely lost in loss record 131 of 294
+==3720569==    at 0x484DCD3: realloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==3720569==    by 0x7729557: ???
+==3720569==    by 0x77295E8: ???
+==3720569==    by 0x7729777: ???
+==3720569==    by 0x78216C2: ???
+==3720569==    by 0x77B5991: ???
+==3720569==    by 0x77B5EA1: ???
+==3720569==    by 0x77B5EE3: ???
+==3720569==    by 0x77597CF: ???
+==3720569==    by 0x76D7383: ???
+==3720569==    by 0x48ACB6C: pmix_server_init (in /usr/lib/x86_64-linux-gnu/libopen-rte.so.40.30.2)
+==3720569==    by 0x5229188: ???
+==3720569==
+==3720569== 38 (24 direct, 14 indirect) bytes in 1 blocks are definitely lost in loss record 132 of 294
+==3720569==    at 0x484DCD3: realloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==3720569==    by 0x7729557: ???
+==3720569==    by 0x77295E8: ???
+==3720569==    by 0x7729777: ???
+==3720569==    by 0x7814F02: ???
+==3720569==    by 0x77B5991: ???
+==3720569==    by 0x77B5EA1: ???
+==3720569==    by 0x77B5EE3: ???
+==3720569==    by 0x775925B: ???
+==3720569==    by 0x76D7383: ???
+==3720569==    by 0x48ACB6C: pmix_server_init (in /usr/lib/x86_64-linux-gnu/libopen-rte.so.40.30.2)
+==3720569==    by 0x5229188: ???
+==3720569==
+==3720569== 64 bytes in 1 blocks are definitely lost in loss record 175 of 294
+==3720569==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==3720569==    by 0x7821217: ???
+==3720569==    by 0x7758FC4: ???
+==3720569==    by 0x76D7383: ???
+==3720569==    by 0x48ACB6C: pmix_server_init (in /usr/lib/x86_64-linux-gnu/libopen-rte.so.40.30.2)
+==3720569==    by 0x5229188: ???
+==3720569==    by 0x48F94CB: orte_init (in /usr/lib/x86_64-linux-gnu/libopen-rte.so.40.30.2)
+==3720569==    by 0x48A6BE4: orte_submit_init (in /usr/lib/x86_64-linux-gnu/libopen-rte.so.40.30.2)
+==3720569==    by 0x1091E3: ??? (in /usr/bin/orterun)
+==3720569==    by 0x4A33D8F: (below main) (libc_start_call_main.h:58)
+==3720569==
+==3720569== 96 (48 direct, 48 indirect) bytes in 1 blocks are definitely lost in loss record 189 of 294
+==3720569==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==3720569==    by 0x77AD8F5: ???
+==3720569==    by 0x77B0A9A: ???
+==3720569==    by 0x77B591D: ???
+==3720569==    by 0x77B5EA1: ???
+==3720569==    by 0x77B5EE3: ???
+==3720569==    by 0x7757C53: ???
+==3720569==    by 0x7758FC4: ???
+==3720569==    by 0x76D7383: ???
+==3720569==    by 0x48ACB6C: pmix_server_init (in /usr/lib/x86_64-linux-gnu/libopen-rte.so.40.30.2)
+==3720569==    by 0x5229188: ???
+==3720569==    by 0x48F94CB: orte_init (in /usr/lib/x86_64-linux-gnu/libopen-rte.so.40.30.2)
+==3720569==
+==3720569== 96 (48 direct, 48 indirect) bytes in 1 blocks are definitely lost in loss record 190 of 294
+==3720569==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==3720569==    by 0x77B083D: ???
+==3720569==    by 0x77B591D: ???
+==3720569==    by 0x77B5EA1: ???
+==3720569==    by 0x77B5EE3: ???
+==3720569==    by 0x775925B: ???
+==3720569==    by 0x76D7383: ???
+==3720569==    by 0x48ACB6C: pmix_server_init (in /usr/lib/x86_64-linux-gnu/libopen-rte.so.40.30.2)
+==3720569==    by 0x5229188: ???
+==3720569==    by 0x48F94CB: orte_init (in /usr/lib/x86_64-linux-gnu/libopen-rte.so.40.30.2)
+==3720569==    by 0x48A6BE4: orte_submit_init (in /usr/lib/x86_64-linux-gnu/libopen-rte.so.40.30.2)
+==3720569==    by 0x1091E3: ??? (in /usr/bin/orterun)
+==3720569==
+==3720569== 99 (88 direct, 11 indirect) bytes in 1 blocks are definitely lost in loss record 191 of 294
+==3720569==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==3720569==    by 0x775A31C: ???
+==3720569==    by 0x76D7383: ???
+==3720569==    by 0x48ACB6C: pmix_server_init (in /usr/lib/x86_64-linux-gnu/libopen-rte.so.40.30.2)
+==3720569==    by 0x5229188: ???
+==3720569==    by 0x48F94CB: orte_init (in /usr/lib/x86_64-linux-gnu/libopen-rte.so.40.30.2)
+==3720569==    by 0x48A6BE4: orte_submit_init (in /usr/lib/x86_64-linux-gnu/libopen-rte.so.40.30.2)
+==3720569==    by 0x1091E3: ??? (in /usr/bin/orterun)
+==3720569==    by 0x4A33D8F: (below main) (libc_start_call_main.h:58)
+==3720569==
+==3720569== 128 (64 direct, 64 indirect) bytes in 1 blocks are definitely lost in loss record 200 of 294
+==3720569==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==3720569==    by 0x78138E7: ???
+==3720569==    by 0x775926C: ???
+==3720569==    by 0x76D7383: ???
+==3720569==    by 0x48ACB6C: pmix_server_init (in /usr/lib/x86_64-linux-gnu/libopen-rte.so.40.30.2)
+==3720569==    by 0x5229188: ???
+==3720569==    by 0x48F94CB: orte_init (in /usr/lib/x86_64-linux-gnu/libopen-rte.so.40.30.2)
+==3720569==    by 0x48A6BE4: orte_submit_init (in /usr/lib/x86_64-linux-gnu/libopen-rte.so.40.30.2)
+==3720569==    by 0x1091E3: ??? (in /usr/bin/orterun)
+==3720569==    by 0x4A33D8F: (below main) (libc_start_call_main.h:58)
+==3720569==
+==3720569== 136 bytes in 1 blocks are definitely lost in loss record 206 of 294
+==3720569==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==3720569==    by 0x48E5D99: orte_rmaps_base_print_mapping (in /usr/lib/x86_64-linux-gnu/libopen-rte.so.40.30.2)
+==3720569==    by 0x48B1EA6: orte_pmix_server_register_nspace (in /usr/lib/x86_64-linux-gnu/libopen-rte.so.40.30.2)
+==3720569==    by 0x48CD8CC: orte_odls_base_default_construct_child_list (in /usr/lib/x86_64-linux-gnu/libopen-rte.so.40.30.2)
+==3720569==    by 0xA3C0C15: ???
+==3720569==    by 0x48A1AAF: orte_daemon_recv (in /usr/lib/x86_64-linux-gnu/libopen-rte.so.40.30.2)
+==3720569==    by 0x48EDE3C: orte_rml_base_process_msg (in /usr/lib/x86_64-linux-gnu/libopen-rte.so.40.30.2)
+==3720569==    by 0x49F2EE7: ??? (in /usr/lib/x86_64-linux-gnu/libevent_core-2.1.so.7.0.1)
+==3720569==    by 0x49F4BF6: event_base_loop (in /usr/lib/x86_64-linux-gnu/libevent_core-2.1.so.7.0.1)
+==3720569==    by 0x10928B: ??? (in /usr/bin/orterun)
+==3720569==    by 0x4A33D8F: (below main) (libc_start_call_main.h:58)
+==3720569==
+==3720569== 260 bytes in 1 blocks are definitely lost in loss record 227 of 294
+==3720569==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==3720569==    by 0x778C226: ???
+==3720569==    by 0x7758A8D: ???
+==3720569==    by 0x76D7383: ???
+==3720569==    by 0x48ACB6C: pmix_server_init (in /usr/lib/x86_64-linux-gnu/libopen-rte.so.40.30.2)
+==3720569==    by 0x5229188: ???
+==3720569==    by 0x48F94CB: orte_init (in /usr/lib/x86_64-linux-gnu/libopen-rte.so.40.30.2)
+==3720569==    by 0x48A6BE4: orte_submit_init (in /usr/lib/x86_64-linux-gnu/libopen-rte.so.40.30.2)
+==3720569==    by 0x1091E3: ??? (in /usr/bin/orterun)
+==3720569==    by 0x4A33D8F: (below main) (libc_start_call_main.h:58)
+==3720569==
+==3720569== 280 (64 direct, 216 indirect) bytes in 1 blocks are definitely lost in loss record 228 of 294
+==3720569==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==3720569==    by 0xA7D8841: ???
+==3720569==    by 0x48D8B3B: orte_plm_base_post_launch (in /usr/lib/x86_64-linux-gnu/libopen-rte.so.40.30.2)
+==3720569==    by 0x49F2EE7: ??? (in /usr/lib/x86_64-linux-gnu/libevent_core-2.1.so.7.0.1)
+==3720569==    by 0x49F4BF6: event_base_loop (in /usr/lib/x86_64-linux-gnu/libevent_core-2.1.so.7.0.1)
+==3720569==    by 0x10928B: ??? (in /usr/bin/orterun)
+==3720569==    by 0x4A33D8F: (below main) (libc_start_call_main.h:58)
+==3720569==
+==3720569== 460 (136 direct, 324 indirect) bytes in 1 blocks are definitely lost in loss record 236 of 294
+==3720569==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==3720569==    by 0x488C882: ??? (in /usr/lib/x86_64-linux-gnu/libopen-rte.so.40.30.2)
+==3720569==    by 0x4891CB8: orte_show_help_norender (in /usr/lib/x86_64-linux-gnu/libopen-rte.so.40.30.2)
+==3720569==    by 0x4891F80: orte_show_help (in /usr/lib/x86_64-linux-gnu/libopen-rte.so.40.30.2)
+==3720569==    by 0x76972CF: ???
+==3720569==    by 0x7697984: ???
+==3720569==    by 0x49F2EE7: ??? (in /usr/lib/x86_64-linux-gnu/libevent_core-2.1.so.7.0.1)
+==3720569==    by 0x49F4BF6: event_base_loop (in /usr/lib/x86_64-linux-gnu/libevent_core-2.1.so.7.0.1)
+==3720569==    by 0x1092F3: ??? (in /usr/bin/orterun)
+==3720569==    by 0x4A33D8F: (below main) (libc_start_call_main.h:58)
+==3720569==
+==3720569== 504 (168 direct, 336 indirect) bytes in 1 blocks are definitely lost in loss record 238 of 294
+==3720569==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==3720569==    by 0x48F212A: orte_state_base_activate_job_state (in /usr/lib/x86_64-linux-gnu/libopen-rte.so.40.30.2)
+==3720569==    by 0x7697856: ???
+==3720569==    by 0x49F2EE7: ??? (in /usr/lib/x86_64-linux-gnu/libevent_core-2.1.so.7.0.1)
+==3720569==    by 0x49F4BF6: event_base_loop (in /usr/lib/x86_64-linux-gnu/libevent_core-2.1.so.7.0.1)
+==3720569==    by 0x1092F3: ??? (in /usr/bin/orterun)
+==3720569==    by 0x4A33D8F: (below main) (libc_start_call_main.h:58)
+==3720569==
+==3720569== 563 (64 direct, 499 indirect) bytes in 1 blocks are definitely lost in loss record 241 of 294
+==3720569==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==3720569==    by 0xA3C857F: ???
+==3720569==    by 0x48EE091: orte_rtc_base_assign (in /usr/lib/x86_64-linux-gnu/libopen-rte.so.40.30.2)
+==3720569==    by 0x48CDC62: orte_odls_base_default_construct_child_list (in /usr/lib/x86_64-linux-gnu/libopen-rte.so.40.30.2)
+==3720569==    by 0xA3C0C15: ???
+==3720569==    by 0x48A1AAF: orte_daemon_recv (in /usr/lib/x86_64-linux-gnu/libopen-rte.so.40.30.2)
+==3720569==    by 0x48EDE3C: orte_rml_base_process_msg (in /usr/lib/x86_64-linux-gnu/libopen-rte.so.40.30.2)
+==3720569==    by 0x49F2EE7: ??? (in /usr/lib/x86_64-linux-gnu/libevent_core-2.1.so.7.0.1)
+==3720569==    by 0x49F4BF6: event_base_loop (in /usr/lib/x86_64-linux-gnu/libevent_core-2.1.so.7.0.1)
+==3720569==    by 0x10928B: ??? (in /usr/bin/orterun)
+==3720569==    by 0x4A33D8F: (below main) (libc_start_call_main.h:58)
+==3720569==
+==3720569== 1,845 (176 direct, 1,669 indirect) bytes in 1 blocks are definitely lost in loss record 274 of 294
+==3720569==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==3720569==    by 0x5229674: ???
+==3720569==    by 0x48F94CB: orte_init (in /usr/lib/x86_64-linux-gnu/libopen-rte.so.40.30.2)
+==3720569==    by 0x48A6BE4: orte_submit_init (in /usr/lib/x86_64-linux-gnu/libopen-rte.so.40.30.2)
+==3720569==    by 0x1091E3: ??? (in /usr/bin/orterun)
+==3720569==    by 0x4A33D8F: (below main) (libc_start_call_main.h:58)
+==3720569==
+==3720569== 2,048 bytes in 1 blocks are definitely lost in loss record 280 of 294
+==3720569==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==3720569==    by 0x495125E: opal_dss_buffer_extend (in /usr/lib/x86_64-linux-gnu/libopen-pal.so.40.30.2)
+==3720569==    by 0x4951564: opal_dss_pack_int32 (in /usr/lib/x86_64-linux-gnu/libopen-pal.so.40.30.2)
+==3720569==    by 0x4951F59: opal_dss_pack (in /usr/lib/x86_64-linux-gnu/libopen-pal.so.40.30.2)
+==3720569==    by 0x48B2A99: orte_pmix_server_register_nspace (in /usr/lib/x86_64-linux-gnu/libopen-rte.so.40.30.2)
+==3720569==    by 0x48CD8CC: orte_odls_base_default_construct_child_list (in /usr/lib/x86_64-linux-gnu/libopen-rte.so.40.30.2)
+==3720569==    by 0xA3C0C15: ???
+==3720569==    by 0x48A1AAF: orte_daemon_recv (in /usr/lib/x86_64-linux-gnu/libopen-rte.so.40.30.2)
+==3720569==    by 0x48EDE3C: orte_rml_base_process_msg (in /usr/lib/x86_64-linux-gnu/libopen-rte.so.40.30.2)
+==3720569==    by 0x49F2EE7: ??? (in /usr/lib/x86_64-linux-gnu/libevent_core-2.1.so.7.0.1)
+==3720569==    by 0x49F4BF6: event_base_loop (in /usr/lib/x86_64-linux-gnu/libevent_core-2.1.so.7.0.1)
+==3720569==    by 0x10928B: ??? (in /usr/bin/orterun)
+==3720569==
+==3720569== 2,048 bytes in 1 blocks are definitely lost in loss record 281 of 294
+==3720569==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==3720569==    by 0x495125E: opal_dss_buffer_extend (in /usr/lib/x86_64-linux-gnu/libopen-pal.so.40.30.2)
+==3720569==    by 0x4951564: opal_dss_pack_int32 (in /usr/lib/x86_64-linux-gnu/libopen-pal.so.40.30.2)
+==3720569==    by 0x4951F59: opal_dss_pack (in /usr/lib/x86_64-linux-gnu/libopen-pal.so.40.30.2)
+==3720569==    by 0x48B2B81: orte_pmix_server_register_nspace (in /usr/lib/x86_64-linux-gnu/libopen-rte.so.40.30.2)
+==3720569==    by 0x48CD8CC: orte_odls_base_default_construct_child_list (in /usr/lib/x86_64-linux-gnu/libopen-rte.so.40.30.2)
+==3720569==    by 0xA3C0C15: ???
+==3720569==    by 0x48A1AAF: orte_daemon_recv (in /usr/lib/x86_64-linux-gnu/libopen-rte.so.40.30.2)
+==3720569==    by 0x48EDE3C: orte_rml_base_process_msg (in /usr/lib/x86_64-linux-gnu/libopen-rte.so.40.30.2)
+==3720569==    by 0x49F2EE7: ??? (in /usr/lib/x86_64-linux-gnu/libevent_core-2.1.so.7.0.1)
+==3720569==    by 0x49F4BF6: event_base_loop (in /usr/lib/x86_64-linux-gnu/libevent_core-2.1.so.7.0.1)
+==3720569==    by 0x10928B: ??? (in /usr/bin/orterun)
+==3720569==
+==3720569== 2,760 (584 direct, 2,176 indirect) bytes in 1 blocks are definitely lost in loss record 283 of 294
+==3720569==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==3720569==    by 0x782D02D: ???
+==3720569==    by 0x782DD59: ???
+==3720569==    by 0x49F2FD7: ??? (in /usr/lib/x86_64-linux-gnu/libevent_core-2.1.so.7.0.1)
+==3720569==    by 0x49F4BF6: event_base_loop (in /usr/lib/x86_64-linux-gnu/libevent_core-2.1.so.7.0.1)
+==3720569==    by 0x7785405: ???
+==3720569==    by 0x4A9EB42: start_thread (pthread_create.c:442)
+==3720569==    by 0x4B2FBB3: clone (clone.S:100)
+==3720569==
+==3720569== 3,202 (72 direct, 3,130 indirect) bytes in 1 blocks are definitely lost in loss record 285 of 294
+==3720569==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==3720569==    by 0x77B6517: ???
+==3720569==    by 0x781543A: ???
+==3720569==    by 0x77B5E8E: ???
+==3720569==    by 0x77B5EE3: ???
+==3720569==    by 0x775925B: ???
+==3720569==    by 0x76D7383: ???
+==3720569==    by 0x48ACB6C: pmix_server_init (in /usr/lib/x86_64-linux-gnu/libopen-rte.so.40.30.2)
+==3720569==    by 0x5229188: ???
+==3720569==    by 0x48F94CB: orte_init (in /usr/lib/x86_64-linux-gnu/libopen-rte.so.40.30.2)
+==3720569==    by 0x48A6BE4: orte_submit_init (in /usr/lib/x86_64-linux-gnu/libopen-rte.so.40.30.2)
+==3720569==    by 0x1091E3: ??? (in /usr/bin/orterun)
+==3720569==
+==3720569== 71,575 (896 direct, 70,679 indirect) bytes in 1 blocks are definitely lost in loss record 293 of 294
+==3720569==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==3720569==    by 0x4C58C1E: ??? (in /usr/lib/x86_64-linux-gnu/libhwloc.so.15.5.2)
+==3720569==    by 0x77344A1: ???
+==3720569==    by 0x77597AE: ???
+==3720569==    by 0x76D7383: ???
+==3720569==    by 0x48ACB6C: pmix_server_init (in /usr/lib/x86_64-linux-gnu/libopen-rte.so.40.30.2)
+==3720569==    by 0x5229188: ???
+==3720569==    by 0x48F94CB: orte_init (in /usr/lib/x86_64-linux-gnu/libopen-rte.so.40.30.2)
+==3720569==    by 0x48A6BE4: orte_submit_init (in /usr/lib/x86_64-linux-gnu/libopen-rte.so.40.30.2)
+==3720569==    by 0x1091E3: ??? (in /usr/bin/orterun)
+==3720569==    by 0x4A33D8F: (below main) (libc_start_call_main.h:58)
+==3720569==
+==3720569== LEAK SUMMARY:
+==3720569==    definitely lost: 7,142 bytes in 27 blocks
+==3720569==    indirectly lost: 79,234 bytes in 1,224 blocks
+==3720569==      possibly lost: 0 bytes in 0 blocks
+==3720569==    still reachable: 115,399 bytes in 134 blocks
+==3720569==         suppressed: 0 bytes in 0 blocks
+==3720569== Reachable blocks (those to which a pointer was found) are not shown.
+==3720569== To see them, rerun with: --leak-check=full --show-leak-kinds=all
+==3720569==
+==3720569== For lists of detected and suppressed errors, rerun with: -s
+==3720569== ERROR SUMMARY: 27 errors from 27 contexts (suppressed: 0 from 0)
 
 hyper 2.20
 
