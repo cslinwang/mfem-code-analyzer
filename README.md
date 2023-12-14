@@ -3505,6 +3505,594 @@ Ordering: 1
 程序执行完毕。
 执行的进程数: 1
 
+### 1769
+复现sha:1cd7ef1599d4a3db0e773da10432d6cff0a32379
+cd tests/unit
+./unit_tests "Element-wise construction"
+结果：
+root@f64125032199:~/mfem/tests/unit# ./unit_tests "Element-wise construction"
+Filters: Element-wise construction ~[Parallel]
+
+
+Verification failed: (boundary.Size() == NumOfBdrElements) is false:
+ --> incorrect number of boundary elements: preallocated: 1, actually added: 0
+ ... in function: void mfem::Mesh::FinalizeCheck()
+ ... in file: mesh/mesh.cpp:1517
+
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+unit_tests is a Catch v2.13.0 host application.
+Run with -? for options
+
+-------------------------------------------------------------------------------
+Element-wise construction
+  Quadrilateral
+-------------------------------------------------------------------------------
+/root/mfem_issue1769/tests/unit/mesh/test_mesh.cpp:19
+...............................................................................
+
+/root/mfem_issue1769/tests/unit/mesh/test_mesh.cpp:19: FAILED:
+due to a fatal error condition:
+  SIGABRT - Abort (abnormal termination) signal
+
+===============================================================================
+test cases: 1 | 1 failed
+assertions: 1 | 1 failed
+
+### 1750
+复现sha:c07ade699505bdda817e82942986e855af13b192
+valgrind --leak-check=full --show-leak-kinds=all ./ex2p -m /root/mfem/data/beam-quad-amr.mesh
+结果：
+root@f64125032199:~/mfem/examples# valgrind --leak-check=full ./ex2p
+==4011180== Memcheck, a memory error detector
+==4011180== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==4011180== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
+==4011180== Command: ./ex2p
+==4011180==
+==4011180== Syscall param socketcall.getsockopt(optlen) points to uninitialised byte(s)
+==4011180==    at 0x4E1279E: getsockopt_syscall (getsockopt.c:29)
+==4011180==    by 0x4E1279E: getsockopt (getsockopt.c:94)
+==4011180==    by 0x5F32157: pmix_ptl_base_set_timeout (in /usr/lib/x86_64-linux-gnu/pmix2/lib/libpmix.so.2.5.2)
+==4011180==    by 0x5F39A1A: pmix_ptl_base_make_connection (in /usr/lib/x86_64-linux-gnu/pmix2/lib/libpmix.so.2.5.2)
+==4011180==    by 0x5F40DF3: ??? (in /usr/lib/x86_64-linux-gnu/pmix2/lib/libpmix.so.2.5.2)
+==4011180==    by 0x5E403C1: PMIx_Init (in /usr/lib/x86_64-linux-gnu/pmix2/lib/libpmix.so.2.5.2)
+==4011180==    by 0x5DCFE4A: ext3x_client_init (in /usr/lib/x86_64-linux-gnu/openmpi/lib/openmpi3/mca_pmix_ext3x.so)
+==4011180==    by 0x55B1E6D: ??? (in /usr/lib/x86_64-linux-gnu/openmpi/lib/openmpi3/mca_ess_singleton.so)
+==4011180==    by 0x505A4CB: orte_init (in /usr/lib/x86_64-linux-gnu/libopen-rte.so.40.30.2)
+==4011180==    by 0x4966418: ompi_mpi_init (in /usr/lib/x86_64-linux-gnu/libmpi.so.40.30.2)
+==4011180==    by 0x48FFC21: PMPI_Init (in /usr/lib/x86_64-linux-gnu/libmpi.so.40.30.2)
+==4011180==    by 0x4DE6C2: mfem::Mpi::Init_(int*, char***) (in /root/mfem/examples/ex2p)
+==4011180==    by 0x4D1B85: main (in /root/mfem/examples/ex2p)
+==4011180==  Address 0x1ffeffdd3c is on thread 1's stack
+==4011180==  in frame #2, created by pmix_ptl_base_make_connection (???:)
+==4011180==
+==4011180== Syscall param socketcall.getsockopt(optlen_out) points to uninitialised byte(s)
+==4011180==    at 0x4E1279E: getsockopt_syscall (getsockopt.c:29)
+==4011180==    by 0x4E1279E: getsockopt (getsockopt.c:94)
+==4011180==    by 0x5F32157: pmix_ptl_base_set_timeout (in /usr/lib/x86_64-linux-gnu/pmix2/lib/libpmix.so.2.5.2)
+==4011180==    by 0x5F39A1A: pmix_ptl_base_make_connection (in /usr/lib/x86_64-linux-gnu/pmix2/lib/libpmix.so.2.5.2)
+==4011180==    by 0x5F40DF3: ??? (in /usr/lib/x86_64-linux-gnu/pmix2/lib/libpmix.so.2.5.2)
+==4011180==    by 0x5E403C1: PMIx_Init (in /usr/lib/x86_64-linux-gnu/pmix2/lib/libpmix.so.2.5.2)
+==4011180==    by 0x5DCFE4A: ext3x_client_init (in /usr/lib/x86_64-linux-gnu/openmpi/lib/openmpi3/mca_pmix_ext3x.so)
+==4011180==    by 0x55B1E6D: ??? (in /usr/lib/x86_64-linux-gnu/openmpi/lib/openmpi3/mca_ess_singleton.so)
+==4011180==    by 0x505A4CB: orte_init (in /usr/lib/x86_64-linux-gnu/libopen-rte.so.40.30.2)
+==4011180==    by 0x4966418: ompi_mpi_init (in /usr/lib/x86_64-linux-gnu/libmpi.so.40.30.2)
+==4011180==    by 0x48FFC21: PMPI_Init (in /usr/lib/x86_64-linux-gnu/libmpi.so.40.30.2)
+==4011180==    by 0x4DE6C2: mfem::Mpi::Init_(int*, char***) (in /root/mfem/examples/ex2p)
+==4011180==    by 0x4D1B85: main (in /root/mfem/examples/ex2p)
+==4011180==  Address 0x1ffeffdd3c is on thread 1's stack
+==4011180==  in frame #2, created by pmix_ptl_base_make_connection (???:)
+==4011180==
+==4011180== Syscall param setsockopt(optlen) contains uninitialised byte(s)
+==4011180==    at 0x4E12C7E: setsockopt_syscall (setsockopt.c:29)
+==4011180==    by 0x4E12C7E: setsockopt (setsockopt.c:95)
+==4011180==    by 0x5F39BA9: pmix_ptl_base_make_connection (in /usr/lib/x86_64-linux-gnu/pmix2/lib/libpmix.so.2.5.2)
+==4011180==    by 0x5F40DF3: ??? (in /usr/lib/x86_64-linux-gnu/pmix2/lib/libpmix.so.2.5.2)
+==4011180==    by 0x5E403C1: PMIx_Init (in /usr/lib/x86_64-linux-gnu/pmix2/lib/libpmix.so.2.5.2)
+==4011180==    by 0x5DCFE4A: ext3x_client_init (in /usr/lib/x86_64-linux-gnu/openmpi/lib/openmpi3/mca_pmix_ext3x.so)
+==4011180==    by 0x55B1E6D: ??? (in /usr/lib/x86_64-linux-gnu/openmpi/lib/openmpi3/mca_ess_singleton.so)
+==4011180==    by 0x505A4CB: orte_init (in /usr/lib/x86_64-linux-gnu/libopen-rte.so.40.30.2)
+==4011180==    by 0x4966418: ompi_mpi_init (in /usr/lib/x86_64-linux-gnu/libmpi.so.40.30.2)
+==4011180==    by 0x48FFC21: PMPI_Init (in /usr/lib/x86_64-linux-gnu/libmpi.so.40.30.2)
+==4011180==    by 0x4DE6C2: mfem::Mpi::Init_(int*, char***) (in /root/mfem/examples/ex2p)
+==4011180==    by 0x4D1B85: main (in /root/mfem/examples/ex2p)
+==4011180==
+hwloc x86 backend cannot work under Valgrind, disabling.
+May be reenabled by dumping CPUIDs with hwloc-gather-cpuid
+and reloading them under Valgrind with HWLOC_CPUID_PATH.
+Options used:
+   --mesh ../data/beam-tri.mesh
+   --order 1
+   --amg-for-systems
+   --no-static-condensation
+   --visualization
+   --by-vdim
+   --device cpu
+Device configuration: cpu
+Memory configuration: host-std
+Number of finite element unknowns: 1170
+Assembling: r.h.s. ... matrix ... done.
+Size of linear system: 1170
+
+
+ Num MPI tasks = 1
+
+ Num OpenMP threads = 1
+
+
+BoomerAMG SETUP PARAMETERS:
+
+ Max levels = 25
+ Num levels = 6
+
+ Strength Threshold = 0.500000
+ Interpolation Truncation Factor = 0.000000
+ Maximum Row Sum Threshold for Dependency Weakening = 0.900000
+
+ Coarsening Type = HMIS
+ measures are determined locally
+
+
+ No global partition option chosen.
+
+ Interpolation = extended+i interpolation
+
+Operator Matrix Information:
+
+             nonzero            entries/row          row sums
+lev    rows  entries sparse   min  max     avg      min         max
+======================================================================
+  0    1170    13152  0.010     6   12    11.2   0.000e+00   1.500e+02
+  1     576     9080  0.027     7   19    15.8  -4.441e-14   1.911e+02
+  2     190     5780  0.160    16   41    30.4  -2.345e-02   2.249e+02
+  3      50     1010  0.404    12   29    20.2  -4.420e-02   2.451e+02
+  4      13      107  0.633     6   13     8.2  -8.789e-04   1.459e+02
+  5       5       21  0.840     3    5     4.2   2.305e-05   4.451e+01
+
+
+Interpolation Matrix Information:
+                    entries/row        min        max            row sums
+lev  rows x cols  min  max  avgW     weight      weight       min         max
+================================================================================
+  0  1170 x 576     0    3   1.9   2.463e-01   8.571e-01   0.000e+00   1.000e+00
+  1   576 x 190     1    4   3.7   4.643e-02   8.773e-01   6.654e-01   1.000e+00
+  2   190 x 50      1    4   2.8   3.008e-02   1.000e+00   2.246e-01   1.000e+00
+  3    50 x 13      1    2   1.6   9.594e-02   1.000e+00   9.594e-02   1.000e+00
+  4    13 x 5       1    2   1.4   1.852e-01   1.000e+00   1.852e-01   1.000e+00
+
+
+     Complexity:    grid = 1.712821
+                operator = 2.216393
+                memory = 2.511861
+
+
+
+
+BoomerAMG SOLVER PARAMETERS:
+
+  Maximum number of cycles:         1
+  Stopping Tolerance:               0.000000e+00
+  Cycle type (1 = V, 2 = W, etc.):  1
+
+  Relaxation Parameters:
+   Visiting Grid:                     down   up  coarse
+            Number of sweeps:            1    1     1
+   Type 0=Jac, 3=hGS, 6=hSGS, 9=GE:      8    8     9
+   Point types, partial sweeps (1=C, -1=F):
+                  Pre-CG relaxation (down):   0
+                   Post-CG relaxation (up):   0
+                             Coarsest grid:   0
+
+=============================================
+Setup phase times:
+=============================================
+PCG Setup:
+  wall clock time = 0.100000 seconds
+  wall MFLOPS     = 0.000000
+  cpu clock time  = 0.098274 seconds
+  cpu MFLOPS      = 0.000000
+
+<C*b,b>: 4.019740e-04
+
+
+Iters       ||r||_C     conv.rate  ||r||_C/||b||_C
+-----    ------------    ---------  ------------
+    1    4.276737e-02    2.133112    2.133112e+00
+    2    2.129509e-02    0.497928    1.062137e+00
+    3    8.861032e-03    0.416107    4.419624e-01
+    4    4.974903e-03    0.561436    2.481336e-01
+    5    3.849219e-03    0.773728    1.919878e-01
+    6    4.416284e-03    1.147320    2.202714e-01
+    7    2.489897e-03    0.563799    1.241888e-01
+    8    6.808610e-04    0.273450    3.395936e-02
+    9    3.395754e-04    0.498744    1.693703e-02
+   10    7.487816e-05    0.220505    3.734704e-03
+   11    1.578149e-05    0.210762    7.871346e-04
+   12    2.770039e-06    0.175525    1.381614e-04
+   13    4.218040e-07    0.152274    2.103835e-05
+   14    5.974071e-08    0.141631    2.979692e-06
+   15    7.115883e-09    0.119113    3.549194e-07
+   16    8.294658e-10    0.116565    4.137133e-08
+   17    9.774856e-11    0.117845    4.875413e-09
+
+
+=============================================
+Solve phase times:
+=============================================
+PCG Solve:
+  wall clock time = 0.090000 seconds
+  wall MFLOPS     = 0.000000
+  cpu clock time  = 0.090896 seconds
+  cpu MFLOPS      = 0.000000
+
+PCG Iterations = 17
+Final PCG Relative Residual Norm = 4.87541e-09
+==4011180==
+==4011180== HEAP SUMMARY:
+==4011180==     in use at exit: 17,396 bytes in 69 blocks
+==4011180==   total heap usage: 40,372 allocs, 40,303 frees, 8,914,278 bytes allocated
+==4011180==
+==4011180== 1 bytes in 1 blocks are definitely lost in loss record 1 of 49
+==4011180==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==4011180==    by 0x4D9360E: strdup (strdup.c:42)
+==4011180==    by 0xA5180F4: ???
+==4011180==    by 0xA5077C3: ???
+==4011180==    by 0x4F6C91F: mca_base_framework_components_register (in /usr/lib/x86_64-linux-gnu/libopen-pal.so.40.30.2)
+==4011180==    by 0x4F6CC95: mca_base_framework_register (in /usr/lib/x86_64-linux-gnu/libopen-pal.so.40.30.2)
+==4011180==    by 0x4F6CCF3: mca_base_framework_open (in /usr/lib/x86_64-linux-gnu/libopen-pal.so.40.30.2)
+==4011180==    by 0x4966823: ompi_mpi_init (in /usr/lib/x86_64-linux-gnu/libmpi.so.40.30.2)
+==4011180==    by 0x48FFC21: PMPI_Init (in /usr/lib/x86_64-linux-gnu/libmpi.so.40.30.2)
+==4011180==    by 0x4DE6C2: mfem::Mpi::Init_(int*, char***) (in /root/mfem/examples/ex2p)
+==4011180==    by 0x4D1B85: main (in /root/mfem/examples/ex2p)
+==4011180==
+==4011180== 5 bytes in 1 blocks are definitely lost in loss record 3 of 49
+==4011180==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==4011180==    by 0x4D9360E: strdup (strdup.c:42)
+==4011180==    by 0x5E31D65: ???
+==4011180==    by 0x5E3233C: ???
+==4011180==    by 0x5E327DD: ???
+==4011180==    by 0x5E9003F: ???
+==4011180==    by 0x5E420C7: ???
+==4011180==    by 0x5DC9C49: ???
+==4011180==    by 0x55B1AE8: ???
+==4011180==    by 0x4FE7384: orte_finalize (in /usr/lib/x86_64-linux-gnu/libopen-rte.so.40.30.2)
+==4011180==    by 0x48DF308: ompi_mpi_finalize (in /usr/lib/x86_64-linux-gnu/libmpi.so.40.30.2)
+==4011180==    by 0x4D8844: mfem::Mpi::~Mpi() (in /root/mfem/examples/ex2p)
+==4011180==
+==4011180== 21 bytes in 1 blocks are definitely lost in loss record 6 of 49
+==4011180==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==4011180==    by 0x4D9360E: strdup (strdup.c:42)
+==4011180==    by 0xA58F570: ???
+==4011180==    by 0x400647D: call_init.part.0 (dl-init.c:70)
+==4011180==    by 0x4006567: call_init (dl-init.c:33)
+==4011180==    by 0x4006567: _dl_init (dl-init.c:117)
+==4011180==    by 0x4E5FC84: _dl_catch_exception (dl-error-skeleton.c:182)
+==4011180==    by 0x400DFF5: dl_open_worker (dl-open.c:808)
+==4011180==    by 0x400DFF5: dl_open_worker (dl-open.c:771)
+==4011180==    by 0x4E5FC27: _dl_catch_exception (dl-error-skeleton.c:208)
+==4011180==    by 0x400E34D: _dl_open (dl-open.c:883)
+==4011180==    by 0x4D7B6BB: dlopen_doit (dlopen.c:56)
+==4011180==    by 0x4E5FC27: _dl_catch_exception (dl-error-skeleton.c:208)
+==4011180==    by 0x4E5FCF2: _dl_catch_error (dl-error-skeleton.c:227)
+==4011180==
+==4011180== 24 bytes in 1 blocks are definitely lost in loss record 7 of 49
+==4011180==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==4011180==    by 0x4D731D7: __vasprintf_internal (vasprintf.c:71)
+==4011180==    by 0x4E21362: __asprintf_chk (asprintf_chk.c:34)
+==4011180==    by 0x5E31CDD: ???
+==4011180==    by 0x5E3233C: ???
+==4011180==    by 0x5E327DD: ???
+==4011180==    by 0x5E9003F: ???
+==4011180==    by 0x5E420C7: ???
+==4011180==    by 0x5DC9C49: ???
+==4011180==    by 0x55B1AE8: ???
+==4011180==    by 0x4FE7384: orte_finalize (in /usr/lib/x86_64-linux-gnu/libopen-rte.so.40.30.2)
+==4011180==    by 0x48DF308: ompi_mpi_finalize (in /usr/lib/x86_64-linux-gnu/libmpi.so.40.30.2)
+==4011180==
+==4011180== 24 bytes in 1 blocks are definitely lost in loss record 8 of 49
+==4011180==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==4011180==    by 0x4D731D7: __vasprintf_internal (vasprintf.c:71)
+==4011180==    by 0x4E21362: __asprintf_chk (asprintf_chk.c:34)
+==4011180==    by 0x5E31D50: ???
+==4011180==    by 0x5E3233C: ???
+==4011180==    by 0x5E327DD: ???
+==4011180==    by 0x5E9003F: ???
+==4011180==    by 0x5E420C7: ???
+==4011180==    by 0x5DC9C49: ???
+==4011180==    by 0x55B1AE8: ???
+==4011180==    by 0x4FE7384: orte_finalize (in /usr/lib/x86_64-linux-gnu/libopen-rte.so.40.30.2)
+==4011180==    by 0x48DF308: ompi_mpi_finalize (in /usr/lib/x86_64-linux-gnu/libmpi.so.40.30.2)
+==4011180==
+==4011180== 24 bytes in 1 blocks are definitely lost in loss record 9 of 49
+==4011180==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==4011180==    by 0x4D9360E: strdup (strdup.c:42)
+==4011180==    by 0x5E31F23: ???
+==4011180==    by 0x5E31D78: ???
+==4011180==    by 0x5E3233C: ???
+==4011180==    by 0x5E327DD: ???
+==4011180==    by 0x5E9003F: ???
+==4011180==    by 0x5E420C7: ???
+==4011180==    by 0x5DC9C49: ???
+==4011180==    by 0x55B1AE8: ???
+==4011180==    by 0x4FE7384: orte_finalize (in /usr/lib/x86_64-linux-gnu/libopen-rte.so.40.30.2)
+==4011180==    by 0x48DF308: ompi_mpi_finalize (in /usr/lib/x86_64-linux-gnu/libmpi.so.40.30.2)
+==4011180==
+==4011180== 30 bytes in 1 blocks are definitely lost in loss record 10 of 49
+==4011180==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==4011180==    by 0xA6054E6: ???
+==4011180==    by 0xA6078F5: ???
+==4011180==    by 0x400647D: call_init.part.0 (dl-init.c:70)
+==4011180==    by 0x4006567: call_init (dl-init.c:33)
+==4011180==    by 0x4006567: _dl_init (dl-init.c:117)
+==4011180==    by 0x4E5FC84: _dl_catch_exception (dl-error-skeleton.c:182)
+==4011180==    by 0x400DFF5: dl_open_worker (dl-open.c:808)
+==4011180==    by 0x400DFF5: dl_open_worker (dl-open.c:771)
+==4011180==    by 0x4E5FC27: _dl_catch_exception (dl-error-skeleton.c:208)
+==4011180==    by 0x400E34D: _dl_open (dl-open.c:883)
+==4011180==    by 0x4D7B6BB: dlopen_doit (dlopen.c:56)
+==4011180==    by 0x4E5FC27: _dl_catch_exception (dl-error-skeleton.c:208)
+==4011180==    by 0x4E5FCF2: _dl_catch_error (dl-error-skeleton.c:227)
+==4011180==
+==4011180== 41 bytes in 1 blocks are definitely lost in loss record 16 of 49
+==4011180==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==4011180==    by 0x4D731D7: __vasprintf_internal (vasprintf.c:71)
+==4011180==    by 0x4E21362: __asprintf_chk (asprintf_chk.c:34)
+==4011180==    by 0x4F8B678: opal_hwloc_base_get_locality_string (in /usr/lib/x86_64-linux-gnu/libopen-pal.so.40.30.2)
+==4011180==    by 0x50260E2: orte_ess_base_proc_binding (in /usr/lib/x86_64-linux-gnu/libopen-rte.so.40.30.2)
+==4011180==    by 0x55B2F03: ???
+==4011180==    by 0x505A4CB: orte_init (in /usr/lib/x86_64-linux-gnu/libopen-rte.so.40.30.2)
+==4011180==    by 0x4966418: ompi_mpi_init (in /usr/lib/x86_64-linux-gnu/libmpi.so.40.30.2)
+==4011180==    by 0x48FFC21: PMPI_Init (in /usr/lib/x86_64-linux-gnu/libmpi.so.40.30.2)
+==4011180==    by 0x4DE6C2: mfem::Mpi::Init_(int*, char***) (in /root/mfem/examples/ex2p)
+==4011180==    by 0x4D1B85: main (in /root/mfem/examples/ex2p)
+==4011180==
+==4011180== 48 bytes in 1 blocks are definitely lost in loss record 19 of 49
+==4011180==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==4011180==    by 0x5EB383D: ???
+==4011180==    by 0x5EB891D: ???
+==4011180==    by 0x5EB8EA1: ???
+==4011180==    by 0x5EB8EE3: ???
+==4011180==    by 0x5E8FA70: ???
+==4011180==    by 0x5E3F63A: ???
+==4011180==    by 0x5DCFE4A: ???
+==4011180==    by 0x55B1E6D: ???
+==4011180==    by 0x505A4CB: orte_init (in /usr/lib/x86_64-linux-gnu/libopen-rte.so.40.30.2)
+==4011180==    by 0x4966418: ompi_mpi_init (in /usr/lib/x86_64-linux-gnu/libmpi.so.40.30.2)
+==4011180==    by 0x48FFC21: PMPI_Init (in /usr/lib/x86_64-linux-gnu/libmpi.so.40.30.2)
+==4011180==
+==4011180== 64 bytes in 1 blocks are definitely lost in loss record 22 of 49
+==4011180==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==4011180==    by 0x5F2B323: ???
+==4011180==    by 0x5E8FA87: ???
+==4011180==    by 0x5E3F63A: ???
+==4011180==    by 0x5DCFE4A: ???
+==4011180==    by 0x55B1E6D: ???
+==4011180==    by 0x505A4CB: orte_init (in /usr/lib/x86_64-linux-gnu/libopen-rte.so.40.30.2)
+==4011180==    by 0x4966418: ompi_mpi_init (in /usr/lib/x86_64-linux-gnu/libmpi.so.40.30.2)
+==4011180==    by 0x48FFC21: PMPI_Init (in /usr/lib/x86_64-linux-gnu/libmpi.so.40.30.2)
+==4011180==    by 0x4DE6C2: mfem::Mpi::Init_(int*, char***) (in /root/mfem/examples/ex2p)
+==4011180==    by 0x4D1B85: main (in /root/mfem/examples/ex2p)
+==4011180==
+==4011180== 88 (24 direct, 64 indirect) bytes in 1 blocks are definitely lost in loss record 25 of 49
+==4011180==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==4011180==    by 0x50988AF: hwloc_bitmap_alloc (in /usr/lib/x86_64-linux-gnu/libhwloc.so.15.5.2)
+==4011180==    by 0x502655B: orte_ess_base_proc_binding (in /usr/lib/x86_64-linux-gnu/libopen-rte.so.40.30.2)
+==4011180==    by 0x55B2F03: ???
+==4011180==    by 0x505A4CB: orte_init (in /usr/lib/x86_64-linux-gnu/libopen-rte.so.40.30.2)
+==4011180==    by 0x4966418: ompi_mpi_init (in /usr/lib/x86_64-linux-gnu/libmpi.so.40.30.2)
+==4011180==    by 0x48FFC21: PMPI_Init (in /usr/lib/x86_64-linux-gnu/libmpi.so.40.30.2)
+==4011180==    by 0x4DE6C2: mfem::Mpi::Init_(int*, char***) (in /root/mfem/examples/ex2p)
+==4011180==    by 0x4D1B85: main (in /root/mfem/examples/ex2p)
+==4011180==
+==4011180== 128 bytes in 1 blocks are definitely lost in loss record 27 of 49
+==4011180==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==4011180==    by 0x5EA70F1: ???
+==4011180==    by 0x5EA70B0: ???
+==4011180==    by 0x5E3F940: ???
+==4011180==    by 0x5DCFE4A: ???
+==4011180==    by 0x55B1E6D: ???
+==4011180==    by 0x505A4CB: orte_init (in /usr/lib/x86_64-linux-gnu/libopen-rte.so.40.30.2)
+==4011180==    by 0x4966418: ompi_mpi_init (in /usr/lib/x86_64-linux-gnu/libmpi.so.40.30.2)
+==4011180==    by 0x48FFC21: PMPI_Init (in /usr/lib/x86_64-linux-gnu/libmpi.so.40.30.2)
+==4011180==    by 0x4DE6C2: mfem::Mpi::Init_(int*, char***) (in /root/mfem/examples/ex2p)
+==4011180==    by 0x4D1B85: main (in /root/mfem/examples/ex2p)
+==4011180==
+==4011180== 128 bytes in 1 blocks are definitely lost in loss record 28 of 49
+==4011180==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==4011180==    by 0x5EA70F1: ???
+==4011180==    by 0x5EA70B0: ???
+==4011180==    by 0x5E3FA40: ???
+==4011180==    by 0x5DCFE4A: ???
+==4011180==    by 0x55B1E6D: ???
+==4011180==    by 0x505A4CB: orte_init (in /usr/lib/x86_64-linux-gnu/libopen-rte.so.40.30.2)
+==4011180==    by 0x4966418: ompi_mpi_init (in /usr/lib/x86_64-linux-gnu/libmpi.so.40.30.2)
+==4011180==    by 0x48FFC21: PMPI_Init (in /usr/lib/x86_64-linux-gnu/libmpi.so.40.30.2)
+==4011180==    by 0x4DE6C2: mfem::Mpi::Init_(int*, char***) (in /root/mfem/examples/ex2p)
+==4011180==    by 0x4D1B85: main (in /root/mfem/examples/ex2p)
+==4011180==
+==4011180== 260 bytes in 1 blocks are definitely lost in loss record 29 of 49
+==4011180==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==4011180==    by 0x5E8F226: ???
+==4011180==    by 0x5E3F63A: ???
+==4011180==    by 0x5DCFE4A: ???
+==4011180==    by 0x55B1E6D: ???
+==4011180==    by 0x505A4CB: orte_init (in /usr/lib/x86_64-linux-gnu/libopen-rte.so.40.30.2)
+==4011180==    by 0x4966418: ompi_mpi_init (in /usr/lib/x86_64-linux-gnu/libmpi.so.40.30.2)
+==4011180==    by 0x48FFC21: PMPI_Init (in /usr/lib/x86_64-linux-gnu/libmpi.so.40.30.2)
+==4011180==    by 0x4DE6C2: mfem::Mpi::Init_(int*, char***) (in /root/mfem/examples/ex2p)
+==4011180==    by 0x4D1B85: main (in /root/mfem/examples/ex2p)
+==4011180==
+==4011180== 552 bytes in 1 blocks are definitely lost in loss record 30 of 49
+==4011180==    at 0x484DA83: calloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==4011180==    by 0x5E47C13: ???
+==4011180==    by 0x5E4822C: ???
+==4011180==    by 0x5DD14B7: ???
+==4011180==    by 0x48CC15A: ompi_proc_complete_init (in /usr/lib/x86_64-linux-gnu/libmpi.so.40.30.2)
+==4011180==    by 0x4966A97: ompi_mpi_init (in /usr/lib/x86_64-linux-gnu/libmpi.so.40.30.2)
+==4011180==    by 0x48FFC21: PMPI_Init (in /usr/lib/x86_64-linux-gnu/libmpi.so.40.30.2)
+==4011180==    by 0x4DE6C2: mfem::Mpi::Init_(int*, char***) (in /root/mfem/examples/ex2p)
+==4011180==    by 0x4D1B85: main (in /root/mfem/examples/ex2p)
+==4011180==
+==4011180== 688 bytes in 1 blocks are definitely lost in loss record 32 of 49
+==4011180==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==4011180==    by 0x4955BC6: ompi_op_base_op_select (in /usr/lib/x86_64-linux-gnu/libmpi.so.40.30.2)
+==4011180==    by 0x48CDF63: ompi_op_init (in /usr/lib/x86_64-linux-gnu/libmpi.so.40.30.2)
+==4011180==    by 0x496675D: ompi_mpi_init (in /usr/lib/x86_64-linux-gnu/libmpi.so.40.30.2)
+==4011180==    by 0x48FFC21: PMPI_Init (in /usr/lib/x86_64-linux-gnu/libmpi.so.40.30.2)
+==4011180==    by 0x4DE6C2: mfem::Mpi::Init_(int*, char***) (in /root/mfem/examples/ex2p)
+==4011180==    by 0x4D1B85: main (in /root/mfem/examples/ex2p)
+==4011180==
+==4011180== 688 bytes in 1 blocks are definitely lost in loss record 33 of 49
+==4011180==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==4011180==    by 0xA4824FB: ???
+==4011180==    by 0x4955EBE: ompi_op_base_op_select (in /usr/lib/x86_64-linux-gnu/libmpi.so.40.30.2)
+==4011180==    by 0x48CDF63: ompi_op_init (in /usr/lib/x86_64-linux-gnu/libmpi.so.40.30.2)
+==4011180==    by 0x496675D: ompi_mpi_init (in /usr/lib/x86_64-linux-gnu/libmpi.so.40.30.2)
+==4011180==    by 0x48FFC21: PMPI_Init (in /usr/lib/x86_64-linux-gnu/libmpi.so.40.30.2)
+==4011180==    by 0x4DE6C2: mfem::Mpi::Init_(int*, char***) (in /root/mfem/examples/ex2p)
+==4011180==    by 0x4D1B85: main (in /root/mfem/examples/ex2p)
+==4011180==
+==4011180== 688 bytes in 1 blocks are definitely lost in loss record 34 of 49
+==4011180==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==4011180==    by 0x4955BC6: ompi_op_base_op_select (in /usr/lib/x86_64-linux-gnu/libmpi.so.40.30.2)
+==4011180==    by 0x48CE02A: ompi_op_init (in /usr/lib/x86_64-linux-gnu/libmpi.so.40.30.2)
+==4011180==    by 0x496675D: ompi_mpi_init (in /usr/lib/x86_64-linux-gnu/libmpi.so.40.30.2)
+==4011180==    by 0x48FFC21: PMPI_Init (in /usr/lib/x86_64-linux-gnu/libmpi.so.40.30.2)
+==4011180==    by 0x4DE6C2: mfem::Mpi::Init_(int*, char***) (in /root/mfem/examples/ex2p)
+==4011180==    by 0x4D1B85: main (in /root/mfem/examples/ex2p)
+==4011180==
+==4011180== 688 bytes in 1 blocks are definitely lost in loss record 35 of 49
+==4011180==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==4011180==    by 0xA4824FB: ???
+==4011180==    by 0x4955EBE: ompi_op_base_op_select (in /usr/lib/x86_64-linux-gnu/libmpi.so.40.30.2)
+==4011180==    by 0x48CE02A: ompi_op_init (in /usr/lib/x86_64-linux-gnu/libmpi.so.40.30.2)
+==4011180==    by 0x496675D: ompi_mpi_init (in /usr/lib/x86_64-linux-gnu/libmpi.so.40.30.2)
+==4011180==    by 0x48FFC21: PMPI_Init (in /usr/lib/x86_64-linux-gnu/libmpi.so.40.30.2)
+==4011180==    by 0x4DE6C2: mfem::Mpi::Init_(int*, char***) (in /root/mfem/examples/ex2p)
+==4011180==    by 0x4D1B85: main (in /root/mfem/examples/ex2p)
+==4011180==
+==4011180== 688 bytes in 1 blocks are definitely lost in loss record 36 of 49
+==4011180==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==4011180==    by 0x4955BC6: ompi_op_base_op_select (in /usr/lib/x86_64-linux-gnu/libmpi.so.40.30.2)
+==4011180==    by 0x48CE0D6: ompi_op_init (in /usr/lib/x86_64-linux-gnu/libmpi.so.40.30.2)
+==4011180==    by 0x496675D: ompi_mpi_init (in /usr/lib/x86_64-linux-gnu/libmpi.so.40.30.2)
+==4011180==    by 0x48FFC21: PMPI_Init (in /usr/lib/x86_64-linux-gnu/libmpi.so.40.30.2)
+==4011180==    by 0x4DE6C2: mfem::Mpi::Init_(int*, char***) (in /root/mfem/examples/ex2p)
+==4011180==    by 0x4D1B85: main (in /root/mfem/examples/ex2p)
+==4011180==
+==4011180== 688 bytes in 1 blocks are definitely lost in loss record 37 of 49
+==4011180==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==4011180==    by 0xA4824FB: ???
+==4011180==    by 0x4955EBE: ompi_op_base_op_select (in /usr/lib/x86_64-linux-gnu/libmpi.so.40.30.2)
+==4011180==    by 0x48CE0D6: ompi_op_init (in /usr/lib/x86_64-linux-gnu/libmpi.so.40.30.2)
+==4011180==    by 0x496675D: ompi_mpi_init (in /usr/lib/x86_64-linux-gnu/libmpi.so.40.30.2)
+==4011180==    by 0x48FFC21: PMPI_Init (in /usr/lib/x86_64-linux-gnu/libmpi.so.40.30.2)
+==4011180==    by 0x4DE6C2: mfem::Mpi::Init_(int*, char***) (in /root/mfem/examples/ex2p)
+==4011180==    by 0x4D1B85: main (in /root/mfem/examples/ex2p)
+==4011180==
+==4011180== 688 bytes in 1 blocks are definitely lost in loss record 38 of 49
+==4011180==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==4011180==    by 0x4955BC6: ompi_op_base_op_select (in /usr/lib/x86_64-linux-gnu/libmpi.so.40.30.2)
+==4011180==    by 0x48CE184: ompi_op_init (in /usr/lib/x86_64-linux-gnu/libmpi.so.40.30.2)
+==4011180==    by 0x496675D: ompi_mpi_init (in /usr/lib/x86_64-linux-gnu/libmpi.so.40.30.2)
+==4011180==    by 0x48FFC21: PMPI_Init (in /usr/lib/x86_64-linux-gnu/libmpi.so.40.30.2)
+==4011180==    by 0x4DE6C2: mfem::Mpi::Init_(int*, char***) (in /root/mfem/examples/ex2p)
+==4011180==    by 0x4D1B85: main (in /root/mfem/examples/ex2p)
+==4011180==
+==4011180== 688 bytes in 1 blocks are definitely lost in loss record 39 of 49
+==4011180==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==4011180==    by 0xA4824FB: ???
+==4011180==    by 0x4955EBE: ompi_op_base_op_select (in /usr/lib/x86_64-linux-gnu/libmpi.so.40.30.2)
+==4011180==    by 0x48CE184: ompi_op_init (in /usr/lib/x86_64-linux-gnu/libmpi.so.40.30.2)
+==4011180==    by 0x496675D: ompi_mpi_init (in /usr/lib/x86_64-linux-gnu/libmpi.so.40.30.2)
+==4011180==    by 0x48FFC21: PMPI_Init (in /usr/lib/x86_64-linux-gnu/libmpi.so.40.30.2)
+==4011180==    by 0x4DE6C2: mfem::Mpi::Init_(int*, char***) (in /root/mfem/examples/ex2p)
+==4011180==    by 0x4D1B85: main (in /root/mfem/examples/ex2p)
+==4011180==
+==4011180== 688 bytes in 1 blocks are definitely lost in loss record 40 of 49
+==4011180==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==4011180==    by 0x4955BC6: ompi_op_base_op_select (in /usr/lib/x86_64-linux-gnu/libmpi.so.40.30.2)
+==4011180==    by 0x48CE2E6: ompi_op_init (in /usr/lib/x86_64-linux-gnu/libmpi.so.40.30.2)
+==4011180==    by 0x496675D: ompi_mpi_init (in /usr/lib/x86_64-linux-gnu/libmpi.so.40.30.2)
+==4011180==    by 0x48FFC21: PMPI_Init (in /usr/lib/x86_64-linux-gnu/libmpi.so.40.30.2)
+==4011180==    by 0x4DE6C2: mfem::Mpi::Init_(int*, char***) (in /root/mfem/examples/ex2p)
+==4011180==    by 0x4D1B85: main (in /root/mfem/examples/ex2p)
+==4011180==
+==4011180== 688 bytes in 1 blocks are definitely lost in loss record 41 of 49
+==4011180==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==4011180==    by 0xA4824FB: ???
+==4011180==    by 0x4955EBE: ompi_op_base_op_select (in /usr/lib/x86_64-linux-gnu/libmpi.so.40.30.2)
+==4011180==    by 0x48CE2E6: ompi_op_init (in /usr/lib/x86_64-linux-gnu/libmpi.so.40.30.2)
+==4011180==    by 0x496675D: ompi_mpi_init (in /usr/lib/x86_64-linux-gnu/libmpi.so.40.30.2)
+==4011180==    by 0x48FFC21: PMPI_Init (in /usr/lib/x86_64-linux-gnu/libmpi.so.40.30.2)
+==4011180==    by 0x4DE6C2: mfem::Mpi::Init_(int*, char***) (in /root/mfem/examples/ex2p)
+==4011180==    by 0x4D1B85: main (in /root/mfem/examples/ex2p)
+==4011180==
+==4011180== 688 bytes in 1 blocks are definitely lost in loss record 42 of 49
+==4011180==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==4011180==    by 0x4955BC6: ompi_op_base_op_select (in /usr/lib/x86_64-linux-gnu/libmpi.so.40.30.2)
+==4011180==    by 0x48CE446: ompi_op_init (in /usr/lib/x86_64-linux-gnu/libmpi.so.40.30.2)
+==4011180==    by 0x496675D: ompi_mpi_init (in /usr/lib/x86_64-linux-gnu/libmpi.so.40.30.2)
+==4011180==    by 0x48FFC21: PMPI_Init (in /usr/lib/x86_64-linux-gnu/libmpi.so.40.30.2)
+==4011180==    by 0x4DE6C2: mfem::Mpi::Init_(int*, char***) (in /root/mfem/examples/ex2p)
+==4011180==    by 0x4D1B85: main (in /root/mfem/examples/ex2p)
+==4011180==
+==4011180== 688 bytes in 1 blocks are definitely lost in loss record 43 of 49
+==4011180==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==4011180==    by 0xA4824FB: ???
+==4011180==    by 0x4955EBE: ompi_op_base_op_select (in /usr/lib/x86_64-linux-gnu/libmpi.so.40.30.2)
+==4011180==    by 0x48CE446: ompi_op_init (in /usr/lib/x86_64-linux-gnu/libmpi.so.40.30.2)
+==4011180==    by 0x496675D: ompi_mpi_init (in /usr/lib/x86_64-linux-gnu/libmpi.so.40.30.2)
+==4011180==    by 0x48FFC21: PMPI_Init (in /usr/lib/x86_64-linux-gnu/libmpi.so.40.30.2)
+==4011180==    by 0x4DE6C2: mfem::Mpi::Init_(int*, char***) (in /root/mfem/examples/ex2p)
+==4011180==    by 0x4D1B85: main (in /root/mfem/examples/ex2p)
+==4011180==
+==4011180== 688 bytes in 1 blocks are definitely lost in loss record 44 of 49
+==4011180==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==4011180==    by 0x4955BC6: ompi_op_base_op_select (in /usr/lib/x86_64-linux-gnu/libmpi.so.40.30.2)
+==4011180==    by 0x48CE5A4: ompi_op_init (in /usr/lib/x86_64-linux-gnu/libmpi.so.40.30.2)
+==4011180==    by 0x496675D: ompi_mpi_init (in /usr/lib/x86_64-linux-gnu/libmpi.so.40.30.2)
+==4011180==    by 0x48FFC21: PMPI_Init (in /usr/lib/x86_64-linux-gnu/libmpi.so.40.30.2)
+==4011180==    by 0x4DE6C2: mfem::Mpi::Init_(int*, char***) (in /root/mfem/examples/ex2p)
+==4011180==    by 0x4D1B85: main (in /root/mfem/examples/ex2p)
+==4011180==
+==4011180== 688 bytes in 1 blocks are definitely lost in loss record 45 of 49
+==4011180==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==4011180==    by 0xA4824FB: ???
+==4011180==    by 0x4955EBE: ompi_op_base_op_select (in /usr/lib/x86_64-linux-gnu/libmpi.so.40.30.2)
+==4011180==    by 0x48CE5A4: ompi_op_init (in /usr/lib/x86_64-linux-gnu/libmpi.so.40.30.2)
+==4011180==    by 0x496675D: ompi_mpi_init (in /usr/lib/x86_64-linux-gnu/libmpi.so.40.30.2)
+==4011180==    by 0x48FFC21: PMPI_Init (in /usr/lib/x86_64-linux-gnu/libmpi.so.40.30.2)
+==4011180==    by 0x4DE6C2: mfem::Mpi::Init_(int*, char***) (in /root/mfem/examples/ex2p)
+==4011180==    by 0x4D1B85: main (in /root/mfem/examples/ex2p)
+==4011180==
+==4011180== 1,896 (136 direct, 1,760 indirect) bytes in 1 blocks are definitely lost in loss record 48 of 49
+==4011180==    at 0x484DA83: calloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==4011180==    by 0x804574E: ???
+==4011180==    by 0x8045E0B: ???
+==4011180==    by 0x8048F56: ???
+==4011180==    by 0x7E5C65D: ???
+==4011180==    by 0x7E5CFA3: ???
+==4011180==    by 0x50B8F05: ??? (in /usr/lib/x86_64-linux-gnu/libhwloc.so.15.5.2)
+==4011180==    by 0x5094AE8: hwloc_topology_load (in /usr/lib/x86_64-linux-gnu/libhwloc.so.15.5.2)
+==4011180==    by 0x4F88CB5: opal_hwloc_base_get_topology (in /usr/lib/x86_64-linux-gnu/libopen-pal.so.40.30.2)
+==4011180==    by 0x5025EF6: orte_ess_base_proc_binding (in /usr/lib/x86_64-linux-gnu/libopen-rte.so.40.30.2)
+==4011180==    by 0x55B2F03: ???
+==4011180==    by 0x505A4CB: orte_init (in /usr/lib/x86_64-linux-gnu/libopen-rte.so.40.30.2)
+==4011180==
+==4011180== LEAK SUMMARY:
+==4011180==    definitely lost: 11,142 bytes in 30 blocks
+==4011180==    indirectly lost: 1,824 bytes in 17 blocks
+==4011180==      possibly lost: 0 bytes in 0 blocks
+==4011180==    still reachable: 4,430 bytes in 22 blocks
+==4011180==         suppressed: 0 bytes in 0 blocks
+==4011180== Reachable blocks (those to which a pointer was found) are not shown.
+==4011180== To see them, rerun with: --leak-check=full --show-leak-kinds=all
+==4011180==
+==4011180== Use --track-origins=yes to see where uninitialised values come from
+==4011180== For lists of detected and suppressed errors, rerun with: -s
+==4011180== ERROR SUMMARY: 33 errors from 33 contexts (suppressed: 0 from 0)
+
 hyper 2.20
 
 ```
