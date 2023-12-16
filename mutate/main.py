@@ -7,6 +7,20 @@ import runcmd
 from runcmd import exccmd
 import pandas as pd
 import time
+import re
+import os
+import shutil
+import subprocess
+import yaml
+import logging
+import sys
+import logging
+import sys
+import os
+from tqdm import tqdm
+from logger_module import info
+
+info("开始运行mutate")
 
 
 def get_coverage_files(bug_id):
@@ -76,137 +90,6 @@ def get_coverage_line(bug_id):
                     coverage_line[now_file_name] = {now_line}
     return coverage_line
 
-# 缩减文件大小，将没有覆盖的行删除，保存缩减后的文件 以及 缩减文件与源文件的映射
-
-
-def get_reduced_files(need_muta_files):
-    f = open("coverage1.info", 'r')
-    lines = f.readlines()
-    f.close()
-
-    for file_name in need_muta_files:
-        origin_f = open(file_name, 'r')
-        origin_lines = origin_f.readlines()
-        origin_f.close()
-
-        need_to_delete_lines = set()
-
-        choose_lines = []
-        for i in range(len(lines)):
-            line = lines[i].strip()
-            if line.endswith(file_name):
-                for j in range(i + 1, len(lines)):
-                    if lines[j].find("end_of_record") != -1:
-                        break
-                    choose_lines.append(lines[j])
-                break
-
-        for line in choose_lines:
-            line = line.strip()
-            if line.startswith("DA:"):
-                line = line.strip().replace("DA:", "")
-                lineNumber, runtimes = map(int, line.split(","))
-
-                if runtimes == 0:  # 删除没有覆盖的有效行
-                    if lineNumber - 1 in need_to_delete_lines:
-                        continue
-
-                    # 考虑两种语法问题的情况
-                    stm = origin_lines[lineNumber - 1].strip()
-
-                    pre_stm = "" if lineNumber == 1 else origin_lines[lineNumber - 2].strip(
-                    )
-                    next_stm = "" if lineNumber == len(
-                        origin_lines) else origin_lines[lineNumber].strip()
-
-                    if pre_stm.endswith(","):  # 如果上一句还没结束
-
-                        candidates = set()
-                        candidates.add(lineNumber - 1)
-                        candidates.add(lineNumber - 2)
-                        # 删除前面行，直到末尾不为逗号
-                        now_lineNum = lineNumber - 3
-                        flag = True
-
-                        if origin_lines[now_lineNum].strip().find("if") != -1 or origin_lines[now_lineNum].strip().find(
-                                "else") != -1:
-                            flag = False
-
-                        while now_lineNum >= 0 and origin_lines[now_lineNum].strip().endswith(","):
-                            if origin_lines[now_lineNum].strip().find("if") != -1 or origin_lines[
-                                    now_lineNum].strip().find("else") != -1:
-                                flag = False
-                            candidates.add(now_lineNum)
-                            now_lineNum -= 1
-                        if flag:
-                            need_to_delete_lines = need_to_delete_lines | candidates
-
-                    if stm.endswith(","):  # 如果这一句还没结束
-                        if stm.find("if") != -1 or stm.find("else") != -1 or pre_stm.find("if") != -1 or pre_stm.find(
-                                "else") != -1:
-                            continue
-
-                        need_to_delete_lines.add(lineNumber - 1)
-                        now_lineNum = lineNumber  # 从下一句开始
-                        while now_lineNum < len(origin_lines) and origin_lines[now_lineNum].strip().endswith(","):
-                            need_to_delete_lines.add(now_lineNum)
-                            now_lineNum += 1
-                        need_to_delete_lines.add(now_lineNum)
-
-                        lineNumber = now_lineNum + 1  # 重新布置光标
-                        stm = origin_lines[lineNumber - 1].strip()
-                        next_stm = "" if lineNumber == len(
-                            origin_lines) else origin_lines[lineNumber].strip()
-
-                    if stm.endswith("{") or next_stm == "{":  # 如果是函数行或分支行
-                        if stm.find("if") != -1 or stm.find("else") != -1 or pre_stm.find("if") != -1 or pre_stm.find(
-                                "else") != -1:
-                            continue
-                        # 找到右括号，删除所有中间语句
-                        symbol_num = 0
-                        if stm.endswith("{"):
-                            symbol_num = 1
-                        need_to_delete_lines.add(lineNumber - 1)  # 删除当前行
-                        # now_lineNum直接对origin_lines索引，从当前行的下一行开始
-                        for now_lineNum in range(lineNumber, len(origin_lines)):
-                            now_line = origin_lines[now_lineNum].strip()
-                            if now_line.startswith("//"):
-                                continue
-                            for char_str in now_line:
-                                if char_str == "{":
-                                    symbol_num += 1
-                                elif char_str == "}":
-                                    symbol_num -= 1
-                            need_to_delete_lines.add(now_lineNum)
-                            if symbol_num == 0:
-                                break
-
-        # 保存缩减后的行到原有行的映射
-        mutate_line2origin_line = dict()
-
-        mutate_line_idx = 0
-        mutate_lines = []
-        for i in range(len(origin_lines)):
-            if i not in need_to_delete_lines:
-                mutate_line2origin_line[mutate_line_idx] = i
-                mutate_lines.append(origin_lines[i])
-                mutate_line_idx += 1
-        # 保存缩减后的文件
-        project_relative_file_name = "reduced_files/" + \
-            file_name[file_name.find("iverilog") + 9:]
-        os.makedirs(os.path.dirname(project_relative_file_name), exist_ok=True)
-        f = open(project_relative_file_name, 'w')
-        f.writelines(mutate_lines)
-        f.close()
-        # 保存缩减后文件和源文件的行映射关系
-        project_relative_file_name = "mutate_line2origin_line/" + \
-            file_name[file_name.find("iverilog") + 9:]
-        os.makedirs(os.path.dirname(project_relative_file_name), exist_ok=True)
-        joblib.dump(mutate_line2origin_line,
-                    project_relative_file_name+".dump")
-
-# git log -p m34_10_1_symbol_search -n 1 > /home/dpc/Documents/gitlog.txt 后获得本次提交修改的行号
-
 
 def get_mutate_line(gitlog):
     for line in gitlog:
@@ -223,7 +106,31 @@ def get_mutate_file(gitlog):
     return ""
 
 
+def save_to_excel(data, file_name):
+    # 创建一个DataFrame对象
+    df = pd.DataFrame(data)
+    if os.path.exists(file_name):
+        os.remove(file_name)
+    # 将DataFrame保存为Excel文件
+    df.to_excel(file_name, index=False)
+
 # 对每一个被覆盖的文件分别进行变异，每次只能变异一个文件，执行后保存变异文件及变异行号
+
+
+def is_mutate_branch(name):
+    """
+    检查提供的字符串是否以 'm' 开头并且包含两个下划线
+
+    参数:
+    name (str): 要检查的字符串
+
+    返回:
+    bool: 如果字符串符合模式，则为 True，否则为 False
+    """
+    pattern = r"m[^_]*_[^_]*_.*"
+    return bool(re.match(pattern, name))
+
+
 def mutate(need_muta_files, bug_id):
     project_path = project_name
     pre_command = "cd " + project_path + " && "
@@ -234,14 +141,16 @@ def mutate(need_muta_files, bug_id):
         # runcmd.exccmd(command)
         # print(runcmd.exccmd(command))
         # 如果已经变异,不再变异
-        command = pre_command + "git branch -a"
+        mutate_file_name = file_name.split("/")[-1].split(".")[0]
+        command = pre_command + \
+            "git checkout master && git branch | grep -i '"+mutate_file_name+"$'"
         all_branch = exccmd(command)
         # 如果其中一个分支是变异分支，则跳过
         is_need_mutate = True
         for branch_name in all_branch:
             if branch_name.find("master") != -1:
                 continue
-            if branch_name.endswith('_coefficient'):
+            if branch_name.endswith(file_name.split("/")[-1].split(".")[0]):
                 is_need_mutate = False
                 break
         if is_need_mutate:
@@ -249,8 +158,11 @@ def mutate(need_muta_files, bug_id):
             runcmd.exccmd(command)
 
         # 变异完成后，拿到git branch的变异分支
-        command = pre_command + "git branch -a"
+        command = pre_command + \
+            "git checkout master && git branch | grep -i '"+mutate_file_name+"$'"
         all_branch = exccmd(command)
+        info(len(all_branch))
+        save_to_excel(all_branch, mutate_result_save_path+"/all_branch.xlsx")
         print("branchs:{}".format(len(all_branch)))
         # 遍历每一个分支，拿到对应分支下的变异文件和变异行号
         success_mutate = 0
@@ -258,19 +170,26 @@ def mutate(need_muta_files, bug_id):
             if branch_name.find("master") != -1:  # 原版本跳过
                 continue
             # 如果变异的不是当前文件，则跳过
-            if file_name[file_name.find("iverilog") + 9:].find(branch_name.split("_")[-1]) == -1:
+
+            a = branch_name.split("_")[-1]
+            if (mutate_file_name not in (branch_name.split("_")[-1])) or not is_mutate_branch(branch_name):
                 print(file_name[file_name.find("iverilog") + 9:])
                 print(branch_name.split("_")[-1])
                 continue
             branch_name = branch_name.strip()
             command = pre_command + "git checkout -f " + branch_name
-            _ = runcmd.exccmd(command)
+            runcmd.exccmd(command)
 
             # 找到修改行
             command = pre_command + "git log -p " + branch_name + " -n 1"
             gitlog = runcmd.exccmd(command)
             mutate_file = get_mutate_file(gitlog)
-            if mutate_file != file_name[file_name.find("iverilog") + 9:]:
+            # mutate_file 是相对路径，需要转换为绝对路径
+            mutate_file = project_path + "/" + mutate_file
+            if mutate_file != file_name:
+                # 删除分支
+                command = pre_command + "git checkout master && git branch -D " + branch_name
+                runcmd.exccmd(command)
                 continue
             mutate_line = get_mutate_line(gitlog)
 
@@ -278,23 +197,29 @@ def mutate(need_muta_files, bug_id):
                 print("not find mutateline.")
                 continue
             # 将变异文件复制到指定目录下,88888为分隔符
-            dir_name = "/home/dpc/Documents/mutateFiles/bug_{:02}".format(
-                bug_id) + "/" + branch_name + "88888" + file_name[file_name.find("iverilog") + 9:].replace("/", "99999")
-            if not os.path.exists(dir_name):
-                os.mkdir(dir_name)
-            command = "cp " + file_name + " " + dir_name + "/"
-            runcmd.exccmd(command)
+        #     dir_name = mutate_file_save_paths+"/bug_{:02}".format(
+        #         bug_id) + "/" + branch_name + "88888" + file_name[file_name.find("iverilog") + 9:].replace("/", "99999")
+        #     if not os.path.exists(dir_name):
+        #         os.mkdir(dir_name)
+        #     command = "cp " + file_name + " " + dir_name + "/"
+        #     runcmd.exccmd(command)
 
-            # 保存变异行
-            f = open(dir_name+"/mutate_line.txt", 'w')
-            f.write(str(mutate_line))
-            f.close()
+        #     # 保存变异行
+        #     f = open(dir_name+"/mutate_line.txt", 'w')
+        #     f.write(str(mutate_line))
+        #     f.close()
             success_mutate += 1
-        print("success_mutate:{}".format(success_mutate))
-        end_time = time.time()
-        print("file " + str(idx) + ":  mutate " + file_name[file_name.find(
-            "iverilog") + 9:] + " complete.  already use " + str((end_time - start_time) // 60) + " minutes.")
+        info("文件{}变异完成,有效变异分支数量:{}".format(file_name, success_mutate))
+        # end_time = time.time()
+        # print("file " + str(idx) + ":  mutate " + file_name[file_name.find(
+        #     "iverilog") + 9:] + " complete.  already use " + str((end_time - start_time) // 60) + " minutes.")
         idx += 1
+    info("变异完成,有效变异文件数量:{}".format(idx))
+    # 复制变异后项目到指定目录
+    command = "cp -r " + project_name + " " + \
+        mutate_project_path+"/mfem_{:02}".format(bug_id)
+    exccmd(command)
+    return 0
 
 # 检验bug行号是否正确，mucpp生成的修改行总是比真实的行少3
 
@@ -658,21 +583,40 @@ project_name = "/root/mfem"
 # 变异结果保存路径
 mutate_file_save_paths = "/root/mfem-code-analyzer/mutateFiles"
 
+mutate_result_save_paths = "/root/mfem-code-analyzer/mutate/result"
+
+mutate_project_path = "/root/mfem_mutate/"
+
+if not os.path.exists(mutate_project_path):
+    os.mkdir(mutate_project_path)
+else:
+    shutil.rmtree(mutate_project_path)
+    os.mkdir(mutate_project_path)
+
 if __name__ == '__main__':
 
     for path_name in os.listdir(coverage_file_paths):
         bug_id = path_name
         # 测试，仅跑issue3566
-        if bug_id != "issue3566":
+        # if bug_id != "issue3566":
+        #     continue
+        # 是否有改bug复现结果
+        bug_project_path = "/root/mfem_"+bug_id
+        if not os.path.exists(bug_project_path):
             continue
         # delete_mutate_brach(bug_id)
-        # prepare_source_code(bug_id) # 准备源代码
+        prepare_source_code(bug_id)  # 准备源代码
+        mutate_result_save_path = os.path.join(
+            mutate_result_save_paths, bug_id)
+        if not os.path.exists(mutate_result_save_path):
+            os.mkdir(mutate_result_save_path)
         need_muta_files = get_coverage_files(bug_id)  # 获得覆盖文件
         mutate(need_muta_files, bug_id)  # 变异
-        get_coverage_mutate(bug_id)
-        command = "rm -rf /home/dpc/Documents/mutateFiles/bug_{:02}".format(
-            bug_id)
-        runcmd.exccmd(command)
+        # get_coverage_mutate(bug_id)
+        # command = "rm -rf /home/dpc/Documents/mutateFiles/bug_{:02}".format(
+        #     bug_id)
+        # runcmd.exccmd(command)
+        a = 1
     # need_muta_files = get_coverage_files(2)
     # mutate(need_muta_files, 2)
     # check_mutate_line(2)

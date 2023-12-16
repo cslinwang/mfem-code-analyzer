@@ -1,6 +1,6 @@
 import os
 import subprocess
-
+from logger_module import info
 # def exccmd(cmd):
 #     p=os.popen(cmd,"r")
 #     rs=[]
@@ -36,4 +36,3 @@ def exccmd(command, timeout=500000):
 # result = exccmd("cd /home/dpc/Documents/project/bug_02/runfile/bin && ./iverilog test.v -o test.o && ./test.o")
 # print("run commend result:")
 # print(result)
-
