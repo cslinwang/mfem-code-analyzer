@@ -1,6 +1,8 @@
 #include "mfem.hpp"
 #include <iostream>
-
+#ifdef __GNUC__
+extern "C" void __gcov_flush(void);
+#endif
 using namespace mfem;
 using namespace std;
 

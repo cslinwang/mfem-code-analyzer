@@ -1,0 +1,223 @@
+mfem issue3712:
+  name: issue3712
+  bug_sha: b5491f763085b3cc917fed34a58ee816c1bc0cc9
+  fix_sha: 92c765ec9d6a6a2d1b895216dee70aa582bb23ee
+  testcase: tests/unit/fem/test_pa_kernels.cpp
+  testname: PA VectorDivergence
+  url: https://github.com/mfem/mfem/commit/92c765ec9d6a6a2d1b895216dee70aa582bb23ee
+
+mfem issue3840:
+  name: issue3840
+  bug_sha: 86ec2bfa8d4b38f06f8699ddd853f785f19aec91
+  fix_sha: 8a9ca138551bb0b3668da6a40cd636985f21039e
+  testcase: tests/unit/mesh/test_psubmesh.cpp
+  testname: ParSubMesh
+  url: https://github.com/mfem/mfem/commit/8a9ca138551bb0b3668da6a40cd636985f21039e
+
+mfem issue3691:
+  name: issue3691
+  bug_sha: d46c2cd5a732e65bd659ff89532ce058bfee31bc
+  fix_sha: a15866e212b167ab83d5384e7326cdd3fa0723b2
+  testcase: tests/unit/mesh/test_ncmesh.cpp
+  testname: FaceEdgeConstraint,P2Q1PureTetHexPri,PNQ2PureTetHexPri
+  url: https://github.com/mfem/mfem/commit/30ce09bf64a310ad3f5f1d2a0acf4722468b5dc4
+
+mfem issue3566:
+  name: issue3566
+  bug_sha: 93393c5c58ecaa3eb6fb9bbd6a822e7c3fd96be5
+  fix_sha: 30ce09bf64a310ad3f5f1d2a0acf4722468b5dc4
+  testcase: tests/unit/mesh/test_submesh.cpp,tests/unit/mesh/test_psubmesh.cpp,tests/unit/fem/test_2d_bilininteg.cpp
+  testname: SubMesh,ParSubMesh,OperatorChebyshevSmoother,2D Bilinear Mass Integrators
+  url: https://github.com/mfem/mfem/commit/30ce09bf64a310ad3f5f1d2a0acf4722468b5dc4
+
+mfem issue3463:
+  name: issue3463
+  bug_sha: edcf6b420517646c803d7c017940a7a77be7b40f
+  fix_sha: 553dc3109f5ddb03505fc7abc54edd08f36d9b3e
+  testcase: tests/unit/linalg/test_direct_solvers.cpp
+  testname: Serial Direct Solvers,Parallel Direct Solvers
+  url: https://github.com/mfem/mfem/commit/553dc3109f5ddb03505fc7abc54edd08f36d9b3e
+
+mfem issue3332:
+  name: issue3332
+  bug_sha: e6ba86462c0db85732c1ac33ce7615d79b555bfd
+  fix_sha: bf8ec1a218589c2eb3bdf3dfba9db7b44329620d
+  testcase: tests/unit/mesh/test_submesh.cpp
+  testname: SubMesh
+  url: https://github.com/mfem/mfem/commit/bf8ec1a218589c2eb3bdf3dfba9db7b44329620d
+
+mfem issue3328:
+  name: issue3328
+  bug_sha: ca6588da7df13b299609098685b8e384abeea4ac
+  fix_sha: acd46692a0270be8f9e255bbcb27e2a3f020199f
+  testcase: tests/unit/fem/test_datacollection.cpp
+  testname: Save and load from collections
+  url: https://github.com/mfem/mfem/commit/acd46692a0270be8f9e255bbcb27e2a3f020199f
+
+mfem issue2884:
+  name: issue2884
+  bug_sha: 6da83899920e0e77d350d5399cb65eb0dbdf8db4
+  fix_sha: 987d2e043bad3a99841b88354dce0c0932cb8642
+  testcase: tests/unit/fem/test_pa_coeff.cpp,tests/unit/fem/test_pa_grad.cpp
+  testname: H1 pa_coeff,Hcurl/Hdiv pa_coeff,Hcurl/Hdiv mixed pa_coeff,ParallelPAGradient,PA Gradient,Nonlinear Convection
+  url: https://github.com/mfem/mfem/commit/987d2e043bad3a99841b88354dce0c0932cb8642
+
+mfem issue2838:
+  name: issue2838
+  bug_sha: 5fe211e3aecf2560c2d1872af425e2ea37c1fa8a
+  fix_sha: 8554fcfa9cdb06c9f036ee0445611c71183738b6
+  testcase: tests/unit/fem/test_pa_kernels.cpp,tests/unit/fem/test_assembly_levels.cpp
+  testname: PA Convection advanced,PA Convection,H1 Assembly Levels,L2 Assembly Levels
+  url: https://github.com/mfem/mfem/commit/8554fcfa9cdb06c9f036ee0445611c71183738b6
+
+mfem issue2779:
+  name: issue2779
+  bug_sha: 86cbbe9d92593f7c118ecf1668c8a27d16c2bc04
+  fix_sha: 2d89962838a5c6509123140d98c8329adc96bcdd
+  testcase: tests/unit/fem/test_var_order.cpp
+  testname: Variable Order FiniteElementSpace
+  url: https://github.com/mfem/mfem/commit/2d89962838a5c6509123140d98c8329adc96bcdd
+
+mfem issue2699:
+  name: issue2699
+  bug_sha: 621081b3a8d388eee3716dee0e32ddf84e6ab504
+  fix_sha: 62eda9466d9daa0bbd7256bcf4f0631cb8c555e8
+  testcase: tests/unit/fem/test_assembly_levels.cpp
+  testname: Serial H1 Full Assembly,Parallel H1 Full Assembly
+  url: https://github.com/mfem/mfem/commit/62eda9466d9daa0bbd7256bcf4f0631cb8c555e8
+
+mfem issue2666:
+  name: issue2666
+  bug_sha: 58db0c0d65ed78228fce4980c07fc084f0deb88c
+  fix_sha: f1c83d85cb933b526fd9ddb3a077f3f30e4f56a4
+  testcase: tests/unit/mesh/test_ncmesh.cpp
+  testname: FaceEdgeConstraint
+  url: https://github.com/mfem/mfem/commit/f1c83d85cb933b526fd9ddb3a077f3f30e4f56a4
+
+mfem issue2492:
+  name: issue2492
+  bug_sha: 4937ee34faac8bfbf1b17cfcadc252f3ef238ec6
+  fix_sha: db6f2b3ce64ea02183679223e4c108a617c62d07
+  testcase: tests/unit/fem/test_project_bdr.cpp
+  testname: 3D ProjectBdrCoefficientTangent
+  url: https://github.com/mfem/mfem/commit/db6f2b3ce64ea02183679223e4c108a617c62d07
+
+mfem issue2413:
+  name: issue2413
+  bug_sha: 22f385cff3104929ca9e57f3085d31d1a30bcb63
+  fix_sha: 3ce96b71c05c93ca5329bb7d6927acf3c78a57c8
+  testcase: examples/superlu/ex1p.cpp
+  testname: ex1p
+  url: https://github.com/mfem/mfem/commit/3ce96b71c05c93ca5329bb7d6927acf3c78a57c8
+
+mfem issue2343:
+  name: issue2343
+  bug_sha: 34ad9fca157368768af1869e9821876cf259f940
+  fix_sha: d4bc14a48a1781ae4f7a16855f98c491f1e98389
+  testcase: tests/unit/linalg/test_ode.cpp
+  testname: First order ODE methods
+  url: https://github.com/mfem/mfem/commit/d4bc14a48a1781ae4f7a16855f98c491f1e98389
+
+mfem issue2231:
+  name: issue2231
+  bug_sha: 68b1955b99942f5bd8422c5aaf51c78ee9ef5ffc
+  fix_sha: dd94dc9d1475e22116eedf5a9c803f452e9b6baa
+  testcase: examples/ex9.cpp
+  testname: ex9
+  url: https://github.com/mfem/mfem/commit/dd94dc9d1475e22116eedf5a9c803f452e9b6baa
+
+mfem issue2152:
+  name: issue2152
+  bug_sha: 72f7f26e08d740f861fa8ade08430c0a55dd5654
+  fix_sha: 5335439a711bf589857651a4ef6bdf927567d83d
+  testcase: tests/unit/fem/test_build_dof_to_arrays.cpp
+  testname: Build Dof To Arrays,Build Dof To Arrays (Parallel)
+  url: https://github.com/mfem/mfem/commit/5335439a711bf589857651a4ef6bdf927567d83d
+
+mfem issue1874:
+  name: issue1874
+  bug_sha: 438a458c3f1893e59930bc97df71d907ddffcade
+  fix_sha: 3454f1061d9bd1c3a4c36baf401c7c6dd435fab8
+  testcase: tests/unit/fem/test_doftrans.cpp,tests/unit/fem/test_3d_bilininteg.cpp,tests/unit/fem/test_build_dof_to_arrays.cpp,tests/unit/fem/test_domain_int.cpp,tests/unit/fem/test_get_value.cpp,tests/unit/fem/test_lin_interp.cpp
+  testname: DoF Transformation Classes,DoF Transformation Functions,VDoF Transformation Class,3D Bilinear Weak Curl Integrators,3D Bilinear Weak Curl Cross Integrators,3D Bilinear Curl Curl Integrators,3D Bilinear Mixed Curl Curl Integrators,3D Bilinear Mixed Cross Curl Curl Integrators,3D Bilinear Mixed Cross Grad Curl Integrators,Build Dof To Arrays,Build Dof To Arrays (Parallel),Domain Integration (Vector Field),Domain Integration in Parallel (Vector Field),3D GetVectorValue in Parallel,Identity Linear Interpolators
+  url: https://github.com/mfem/mfem/commit/6206c775cca216706276a92e33c4a9d772c4b1bd
+
+mfem issue1769:
+  name: issue1769
+  bug_sha: 1cd7ef1599d4a3db0e773da10432d6cff0a32379
+  fix_sha: 27acd4f56df4dc24481dcd24e239effe23541f1e
+  testcase: tests/unit/mesh/test_mesh.cpp
+  testname: Element-wise construction
+  url: https://github.com/mfem/mfem/commit/27acd4f56df4dc24481dcd24e239effe23541f1e
+
+mfem issue1585:
+  name: issue1585
+  bug_sha: 83d34459e8dac3049a374dd13e1992e5c232de4f
+  fix_sha: cb276c033a623a4b3395c9e22a18e9c03b4d762c
+  testcase: tests/unit/fem/test_get_value.cpp
+  testname: 1D GetValue,1D GetValue in Parallel,2D GetValue,2D GetValue in Parallel,3D GetValue,3D GetValue in Parallel
+  url: https://github.com/mfem/mfem/commit/cb276c033a623a4b3395c9e22a18e9c03b4d762c
+
+mfem issue1546:
+  name: issue1546
+  bug_sha: 87e11ed0b941408e197394e5a9836b06fc9bed48
+  fix_sha: 551f5077091db02fae54773728d13eb8f4b67c76
+  testcase: tests/unit/fem/test_get_value.cpp
+  testname: 1D GetValue in Parallel,1D GetValue,2D GetValue,2D GetValue in Parallel,3D GetValue,3D GetValue in Parallel
+  url: https://github.com/mfem/mfem/commit/551f5077091db02fae54773728d13eb8f4b67c76
+
+mfem issue1413:
+  name: issue1413
+  bug_sha: cc49757166a5a1b5b6aa26dc20364881d6d33999
+  fix_sha: 4fc13517f5e8d91ec9c6b0c0d12d4daafb18e316
+  testcase: tests/unit/fem/test_face_elem_trans.cpp,tests/unit/fem/test_get_value.cpp
+  testname: 3D FaceElementTransformations,1D GetValue,2D GetValue,3D GetValue,2D GetVectorValue,3D GetVectorValue
+  url: https://github.com/mfem/mfem/commit/4fc13517f5e8d91ec9c6b0c0d12d4daafb18e316
+
+mfem issue1326:
+  name: issue1326
+  bug_sha: 438a458c3f1893e59930bc97df71d907ddffcade
+  fix_sha: 3454f1061d9bd1c3a4c36baf401c7c6dd435fab8
+  testcase: examples/ex6p.cpp
+  testname: ex6p
+  url: https://github.com/mfem/mfem/commit/3454f1061d9bd1c3a4c36baf401c7c6dd435fab8
+
+mfem issue1284:
+  name: issue1284
+  bug_sha: f0553ab5b16cbdb9ad17a3d18a06480396d05141
+  fix_sha: ae38fca215904de81204d946baf412177a51de93
+  testcase: examples/ex5.cpp
+  testname: ex5
+  url: https://github.com/mfem/mfem/commit/ae38fca215904de81204d946baf412177a51de93
+
+mfem issue1230:
+  name: issue1230
+  bug_sha: 438a458c3f1893e59930bc97df71d907ddffcade
+  fix_sha: 3454f1061d9bd1c3a4c36baf401c7c6dd435fab8
+  testcase: examples/ex6p.cpp
+  testname: ex6p
+  url: https://github.com/mfem/mfem/commit/3454f1061d9bd1c3a4c36baf401c7c6dd435fab8
+
+mfem issue512:
+  name: issue512
+  bug_sha: bfdf9efe313ae21c6bcb73a04eeb7f19ff05f854
+  fix_sha: 761a9269c2d01b5a6c60726f34946c8b03b4633b
+  testcase: examples/ex13p.cpp
+  testname: ex13p
+  url: https://github.com/mfem/mfem/commit/761a9269c2d01b5a6c60726f34946c8b03b4633b
+
+mfem issue443:
+  name: issue443
+  bug_sha: 0b2a456137c59db27b8ad26d4b4f0dd6763b2c09
+  fix_sha: 274bc26e0e22b53548f10afd3640f608cc0d7d05
+  testcase: examples/ex19.cpp
+  testname: ex19
+  url: https://github.com/mfem/mfem/commit/274bc26e0e22b53548f10afd3640f608cc0d7d05
+
+mfem issue64:
+  name: issue64
+  bug_sha: f0553ab5b16cbdb9ad17a3d18a06480396d05141
+  fix_sha: ae38fca215904de81204d946baf412177a51de93
+  testcase: examples/ex5.cpp
+  testname: ex5
+  url: https://github.com/mfem/mfem/commit/ae38fca215904de81204d946baf412177a51de93

@@ -1,0 +1,462 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html lang="en">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>LCOV - coverage.info - fem/intrules.hpp</title>
+  <link rel="stylesheet" type="text/css" href="../gcov.css">
+</head>
+
+<body>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="title">LCOV - code coverage report</td></tr>
+    <tr><td class="ruler"><img src="../glass.png" width=3 height=3 alt=""></td></tr>
+
+    <tr>
+      <td width="100%">
+        <table cellpadding=1 border=0 width="100%">
+          <tr>
+            <td width="10%" class="headerItem">Current view:</td>
+            <td width="35%" class="headerValue"><a href="../index.html">top level</a> - <a href="index.html">fem</a> - intrules.hpp<span style="font-size: 80%;"> (source / <a href="intrules.hpp.func-sort-c.html">functions</a>)</span></td>
+            <td width="5%"></td>
+            <td width="15%"></td>
+            <td width="10%" class="headerCovTableHead">Hit</td>
+            <td width="10%" class="headerCovTableHead">Total</td>
+            <td width="15%" class="headerCovTableHead">Coverage</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Test:</td>
+            <td class="headerValue">coverage.info</td>
+            <td></td>
+            <td class="headerItem">Lines:</td>
+            <td class="headerCovTableEntry">0</td>
+            <td class="headerCovTableEntry">18</td>
+            <td class="headerCovTableEntryLo">0.0 %</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Date:</td>
+            <td class="headerValue">2023-11-27 11:41:49</td>
+            <td></td>
+            <td class="headerItem">Functions:</td>
+            <td class="headerCovTableEntry">0</td>
+            <td class="headerCovTableEntry">1</td>
+            <td class="headerCovTableEntryLo">0.0 %</td>
+          </tr>
+          <tr><td><img src="../glass.png" width=3 height=3 alt=""></td></tr>
+        </table>
+      </td>
+    </tr>
+
+    <tr><td class="ruler"><img src="../glass.png" width=3 height=3 alt=""></td></tr>
+  </table>
+
+  <table cellpadding=0 cellspacing=0 border=0>
+    <tr>
+      <td><br></td>
+    </tr>
+    <tr>
+      <td>
+<pre class="sourceHeading">          Line data    Source code</pre>
+<pre class="source">
+<a name="1"><span class="lineNum">       1 </span>            : // Copyright (c) 2010-2023, Lawrence Livermore National Security, LLC. Produced</a>
+<a name="2"><span class="lineNum">       2 </span>            : // at the Lawrence Livermore National Laboratory. All Rights reserved. See files</a>
+<a name="3"><span class="lineNum">       3 </span>            : // LICENSE and NOTICE for details. LLNL-CODE-806117.</a>
+<a name="4"><span class="lineNum">       4 </span>            : //</a>
+<a name="5"><span class="lineNum">       5 </span>            : // This file is part of the MFEM library. For more information and source code</a>
+<a name="6"><span class="lineNum">       6 </span>            : // availability visit https://mfem.org.</a>
+<a name="7"><span class="lineNum">       7 </span>            : //</a>
+<a name="8"><span class="lineNum">       8 </span>            : // MFEM is free software; you can redistribute it and/or modify it under the</a>
+<a name="9"><span class="lineNum">       9 </span>            : // terms of the BSD-3 license. We welcome feedback and contributions, see file</a>
+<a name="10"><span class="lineNum">      10 </span>            : // CONTRIBUTING.md for details.</a>
+<a name="11"><span class="lineNum">      11 </span>            : </a>
+<a name="12"><span class="lineNum">      12 </span>            : #ifndef MFEM_INTRULES</a>
+<a name="13"><span class="lineNum">      13 </span>            : #define MFEM_INTRULES</a>
+<a name="14"><span class="lineNum">      14 </span>            : </a>
+<a name="15"><span class="lineNum">      15 </span>            : #include &quot;../config/config.hpp&quot;</a>
+<a name="16"><span class="lineNum">      16 </span>            : #include &quot;../general/array.hpp&quot;</a>
+<a name="17"><span class="lineNum">      17 </span>            : </a>
+<a name="18"><span class="lineNum">      18 </span>            : namespace mfem</a>
+<a name="19"><span class="lineNum">      19 </span>            : {</a>
+<a name="20"><span class="lineNum">      20 </span>            : </a>
+<a name="21"><span class="lineNum">      21 </span>            : /* Classes for IntegrationPoint, IntegrationRule, and container class</a>
+<a name="22"><span class="lineNum">      22 </span>            :    IntegrationRules.  Declares the global variable IntRules */</a>
+<a name="23"><span class="lineNum">      23 </span>            : </a>
+<a name="24"><span class="lineNum">      24 </span>            : /// Class for integration point with weight</a>
+<a name="25"><span class="lineNum">      25 </span>            : class IntegrationPoint</a>
+<a name="26"><span class="lineNum">      26 </span>            : {</a>
+<a name="27"><span class="lineNum">      27 </span>            : public:</a>
+<a name="28"><span class="lineNum">      28 </span>            :    double x, y, z, weight;</a>
+<a name="29"><span class="lineNum">      29 </span>            :    int index;</a>
+<a name="30"><span class="lineNum">      30 </span>            : </a>
+<a name="31"><span class="lineNum">      31 </span><span class="lineNoCov">          0 :    void Init(int const i)</span></a>
+<a name="32"><span class="lineNum">      32 </span>            :    {</a>
+<a name="33"><span class="lineNum">      33 </span><span class="lineNoCov">          0 :       x = y = z = weight = 0.0;</span></a>
+<a name="34"><span class="lineNum">      34 </span><span class="lineNoCov">          0 :       index = i;</span></a>
+<a name="35"><span class="lineNum">      35 </span>            :    }</a>
+<a name="36"><span class="lineNum">      36 </span>            : </a>
+<a name="37"><span class="lineNum">      37 </span>            :    void Set(const double *p, const int dim)</a>
+<a name="38"><span class="lineNum">      38 </span>            :    {</a>
+<a name="39"><span class="lineNum">      39 </span>            :       MFEM_ASSERT(1 &lt;= dim &amp;&amp; dim &lt;= 3, &quot;invalid dim: &quot; &lt;&lt; dim);</a>
+<a name="40"><span class="lineNum">      40 </span>            :       x = p[0];</a>
+<a name="41"><span class="lineNum">      41 </span>            :       if (dim &gt; 1)</a>
+<a name="42"><span class="lineNum">      42 </span>            :       {</a>
+<a name="43"><span class="lineNum">      43 </span>            :          y = p[1];</a>
+<a name="44"><span class="lineNum">      44 </span>            :          if (dim &gt; 2)</a>
+<a name="45"><span class="lineNum">      45 </span>            :          {</a>
+<a name="46"><span class="lineNum">      46 </span>            :             z = p[2];</a>
+<a name="47"><span class="lineNum">      47 </span>            :          }</a>
+<a name="48"><span class="lineNum">      48 </span>            :       }</a>
+<a name="49"><span class="lineNum">      49 </span>            :    }</a>
+<a name="50"><span class="lineNum">      50 </span>            : </a>
+<a name="51"><span class="lineNum">      51 </span>            :    void Get(double *p, const int dim) const</a>
+<a name="52"><span class="lineNum">      52 </span>            :    {</a>
+<a name="53"><span class="lineNum">      53 </span>            :       MFEM_ASSERT(1 &lt;= dim &amp;&amp; dim &lt;= 3, &quot;invalid dim: &quot; &lt;&lt; dim);</a>
+<a name="54"><span class="lineNum">      54 </span>            :       p[0] = x;</a>
+<a name="55"><span class="lineNum">      55 </span>            :       if (dim &gt; 1)</a>
+<a name="56"><span class="lineNum">      56 </span>            :       {</a>
+<a name="57"><span class="lineNum">      57 </span>            :          p[1] = y;</a>
+<a name="58"><span class="lineNum">      58 </span>            :          if (dim &gt; 2)</a>
+<a name="59"><span class="lineNum">      59 </span>            :          {</a>
+<a name="60"><span class="lineNum">      60 </span>            :             p[2] = z;</a>
+<a name="61"><span class="lineNum">      61 </span>            :          }</a>
+<a name="62"><span class="lineNum">      62 </span>            :       }</a>
+<a name="63"><span class="lineNum">      63 </span>            :    }</a>
+<a name="64"><span class="lineNum">      64 </span>            : </a>
+<a name="65"><span class="lineNum">      65 </span>            :    void Set(const double x1, const double x2, const double x3, const double w)</a>
+<a name="66"><span class="lineNum">      66 </span>            :    { x = x1; y = x2; z = x3; weight = w; }</a>
+<a name="67"><span class="lineNum">      67 </span>            : </a>
+<a name="68"><span class="lineNum">      68 </span>            :    void Set3w(const double *p) { x = p[0]; y = p[1]; z = p[2]; weight = p[3]; }</a>
+<a name="69"><span class="lineNum">      69 </span>            : </a>
+<a name="70"><span class="lineNum">      70 </span><span class="lineNoCov">          0 :    void Set3(const double x1, const double x2, const double x3)</span></a>
+<a name="71"><span class="lineNum">      71 </span><span class="lineNoCov">          0 :    { x = x1; y = x2; z = x3; }</span></a>
+<a name="72"><span class="lineNum">      72 </span>            : </a>
+<a name="73"><span class="lineNum">      73 </span>            :    void Set3(const double *p) { x = p[0]; y = p[1]; z = p[2]; }</a>
+<a name="74"><span class="lineNum">      74 </span>            : </a>
+<a name="75"><span class="lineNum">      75 </span>            :    void Set2w(const double x1, const double x2, const double w)</a>
+<a name="76"><span class="lineNum">      76 </span>            :    { x = x1; y = x2; weight = w; }</a>
+<a name="77"><span class="lineNum">      77 </span>            : </a>
+<a name="78"><span class="lineNum">      78 </span>            :    void Set2w(const double *p) { x = p[0]; y = p[1]; weight = p[2]; }</a>
+<a name="79"><span class="lineNum">      79 </span>            : </a>
+<a name="80"><span class="lineNum">      80 </span><span class="lineNoCov">          0 :    void Set2(const double x1, const double x2) { x = x1; y = x2; }</span></a>
+<a name="81"><span class="lineNum">      81 </span>            : </a>
+<a name="82"><span class="lineNum">      82 </span>            :    void Set2(const double *p) { x = p[0]; y = p[1]; }</a>
+<a name="83"><span class="lineNum">      83 </span>            : </a>
+<a name="84"><span class="lineNum">      84 </span>            :    void Set1w(const double x1, const double w) { x = x1; weight = w; }</a>
+<a name="85"><span class="lineNum">      85 </span>            : </a>
+<a name="86"><span class="lineNum">      86 </span>            :    void Set1w(const double *p) { x = p[0]; weight = p[1]; }</a>
+<a name="87"><span class="lineNum">      87 </span>            : };</a>
+<a name="88"><span class="lineNum">      88 </span>            : </a>
+<a name="89"><span class="lineNum">      89 </span>            : /// Class for an integration rule - an Array of IntegrationPoint.</a>
+<a name="90"><span class="lineNum">      90 </span>            : class IntegrationRule : public Array&lt;IntegrationPoint&gt;</a>
+<a name="91"><span class="lineNum">      91 </span>            : {</a>
+<a name="92"><span class="lineNum">      92 </span>            : private:</a>
+<a name="93"><span class="lineNum">      93 </span>            :    friend class IntegrationRules;</a>
+<a name="94"><span class="lineNum">      94 </span>            :    int Order;</a>
+<a name="95"><span class="lineNum">      95 </span>            :    /** @brief The quadrature weights gathered as a contiguous array. Created</a>
+<a name="96"><span class="lineNum">      96 </span>            :        by request with the method GetWeights(). */</a>
+<a name="97"><span class="lineNum">      97 </span>            :    mutable Array&lt;double&gt; weights;</a>
+<a name="98"><span class="lineNum">      98 </span>            : </a>
+<a name="99"><span class="lineNum">      99 </span>            :    /// Define n-simplex rule (triangle/tetrahedron for n=2/3) of order (2s+1)</a>
+<a name="100"><span class="lineNum">     100 </span>            :    void GrundmannMollerSimplexRule(int s, int n = 3);</a>
+<a name="101"><span class="lineNum">     101 </span>            : </a>
+<a name="102"><span class="lineNum">     102 </span>            :    void AddTriMidPoint(const int off, const double weight)</a>
+<a name="103"><span class="lineNum">     103 </span>            :    { IntPoint(off).Set2w(1./3., 1./3., weight); }</a>
+<a name="104"><span class="lineNum">     104 </span>            : </a>
+<a name="105"><span class="lineNum">     105 </span>            :    void AddTriPoints3(const int off, const double a, const double b,</a>
+<a name="106"><span class="lineNum">     106 </span>            :                       const double weight)</a>
+<a name="107"><span class="lineNum">     107 </span>            :    {</a>
+<a name="108"><span class="lineNum">     108 </span>            :       IntPoint(off + 0).Set2w(a, a, weight);</a>
+<a name="109"><span class="lineNum">     109 </span>            :       IntPoint(off + 1).Set2w(a, b, weight);</a>
+<a name="110"><span class="lineNum">     110 </span>            :       IntPoint(off + 2).Set2w(b, a, weight);</a>
+<a name="111"><span class="lineNum">     111 </span>            :    }</a>
+<a name="112"><span class="lineNum">     112 </span>            : </a>
+<a name="113"><span class="lineNum">     113 </span>            :    void AddTriPoints3(const int off, const double a, const double weight)</a>
+<a name="114"><span class="lineNum">     114 </span>            :    { AddTriPoints3(off, a, 1. - 2.*a, weight); }</a>
+<a name="115"><span class="lineNum">     115 </span>            : </a>
+<a name="116"><span class="lineNum">     116 </span>            :    void AddTriPoints3b(const int off, const double b, const double weight)</a>
+<a name="117"><span class="lineNum">     117 </span>            :    { AddTriPoints3(off, (1. - b)/2., b, weight); }</a>
+<a name="118"><span class="lineNum">     118 </span>            : </a>
+<a name="119"><span class="lineNum">     119 </span>            :    void AddTriPoints3R(const int off, const double a, const double b,</a>
+<a name="120"><span class="lineNum">     120 </span>            :                        const double c, const double weight)</a>
+<a name="121"><span class="lineNum">     121 </span>            :    {</a>
+<a name="122"><span class="lineNum">     122 </span>            :       IntPoint(off + 0).Set2w(a, b, weight);</a>
+<a name="123"><span class="lineNum">     123 </span>            :       IntPoint(off + 1).Set2w(c, a, weight);</a>
+<a name="124"><span class="lineNum">     124 </span>            :       IntPoint(off + 2).Set2w(b, c, weight);</a>
+<a name="125"><span class="lineNum">     125 </span>            :    }</a>
+<a name="126"><span class="lineNum">     126 </span>            : </a>
+<a name="127"><span class="lineNum">     127 </span>            :    void AddTriPoints3R(const int off, const double a, const double b,</a>
+<a name="128"><span class="lineNum">     128 </span>            :                        const double weight)</a>
+<a name="129"><span class="lineNum">     129 </span>            :    { AddTriPoints3R(off, a, b, 1. - a - b, weight); }</a>
+<a name="130"><span class="lineNum">     130 </span>            : </a>
+<a name="131"><span class="lineNum">     131 </span>            :    void AddTriPoints6(const int off, const double a, const double b,</a>
+<a name="132"><span class="lineNum">     132 </span>            :                       const double c, const double weight)</a>
+<a name="133"><span class="lineNum">     133 </span>            :    {</a>
+<a name="134"><span class="lineNum">     134 </span>            :       IntPoint(off + 0).Set2w(a, b, weight);</a>
+<a name="135"><span class="lineNum">     135 </span>            :       IntPoint(off + 1).Set2w(b, a, weight);</a>
+<a name="136"><span class="lineNum">     136 </span>            :       IntPoint(off + 2).Set2w(a, c, weight);</a>
+<a name="137"><span class="lineNum">     137 </span>            :       IntPoint(off + 3).Set2w(c, a, weight);</a>
+<a name="138"><span class="lineNum">     138 </span>            :       IntPoint(off + 4).Set2w(b, c, weight);</a>
+<a name="139"><span class="lineNum">     139 </span>            :       IntPoint(off + 5).Set2w(c, b, weight);</a>
+<a name="140"><span class="lineNum">     140 </span>            :    }</a>
+<a name="141"><span class="lineNum">     141 </span>            : </a>
+<a name="142"><span class="lineNum">     142 </span>            :    void AddTriPoints6(const int off, const double a, const double b,</a>
+<a name="143"><span class="lineNum">     143 </span>            :                       const double weight)</a>
+<a name="144"><span class="lineNum">     144 </span>            :    { AddTriPoints6(off, a, b, 1. - a - b, weight); }</a>
+<a name="145"><span class="lineNum">     145 </span>            : </a>
+<a name="146"><span class="lineNum">     146 </span>            :    // add the permutations of (a,a,b)</a>
+<a name="147"><span class="lineNum">     147 </span>            :    void AddTetPoints3(const int off, const double a, const double b,</a>
+<a name="148"><span class="lineNum">     148 </span>            :                       const double weight)</a>
+<a name="149"><span class="lineNum">     149 </span>            :    {</a>
+<a name="150"><span class="lineNum">     150 </span>            :       IntPoint(off + 0).Set(a, a, b, weight);</a>
+<a name="151"><span class="lineNum">     151 </span>            :       IntPoint(off + 1).Set(a, b, a, weight);</a>
+<a name="152"><span class="lineNum">     152 </span>            :       IntPoint(off + 2).Set(b, a, a, weight);</a>
+<a name="153"><span class="lineNum">     153 </span>            :    }</a>
+<a name="154"><span class="lineNum">     154 </span>            : </a>
+<a name="155"><span class="lineNum">     155 </span>            :    // add the permutations of (a,b,c)</a>
+<a name="156"><span class="lineNum">     156 </span>            :    void AddTetPoints6(const int off, const double a, const double b,</a>
+<a name="157"><span class="lineNum">     157 </span>            :                       const double c, const double weight)</a>
+<a name="158"><span class="lineNum">     158 </span>            :    {</a>
+<a name="159"><span class="lineNum">     159 </span>            :       IntPoint(off + 0).Set(a, b, c, weight);</a>
+<a name="160"><span class="lineNum">     160 </span>            :       IntPoint(off + 1).Set(a, c, b, weight);</a>
+<a name="161"><span class="lineNum">     161 </span>            :       IntPoint(off + 2).Set(b, c, a, weight);</a>
+<a name="162"><span class="lineNum">     162 </span>            :       IntPoint(off + 3).Set(b, a, c, weight);</a>
+<a name="163"><span class="lineNum">     163 </span>            :       IntPoint(off + 4).Set(c, a, b, weight);</a>
+<a name="164"><span class="lineNum">     164 </span>            :       IntPoint(off + 5).Set(c, b, a, weight);</a>
+<a name="165"><span class="lineNum">     165 </span>            :    }</a>
+<a name="166"><span class="lineNum">     166 </span>            : </a>
+<a name="167"><span class="lineNum">     167 </span>            :    void AddTetMidPoint(const int off, const double weight)</a>
+<a name="168"><span class="lineNum">     168 </span>            :    { IntPoint(off).Set(0.25, 0.25, 0.25, weight); }</a>
+<a name="169"><span class="lineNum">     169 </span>            : </a>
+<a name="170"><span class="lineNum">     170 </span>            :    // given a, add the permutations of (a,a,a,b), where 3*a + b = 1</a>
+<a name="171"><span class="lineNum">     171 </span>            :    void AddTetPoints4(const int off, const double a, const double weight)</a>
+<a name="172"><span class="lineNum">     172 </span>            :    {</a>
+<a name="173"><span class="lineNum">     173 </span>            :       IntPoint(off).Set(a, a, a, weight);</a>
+<a name="174"><span class="lineNum">     174 </span>            :       AddTetPoints3(off + 1, a, 1. - 3.*a, weight);</a>
+<a name="175"><span class="lineNum">     175 </span>            :    }</a>
+<a name="176"><span class="lineNum">     176 </span>            : </a>
+<a name="177"><span class="lineNum">     177 </span>            :    // given b, add the permutations of (a,a,a,b), where 3*a + b = 1</a>
+<a name="178"><span class="lineNum">     178 </span>            :    void AddTetPoints4b(const int off, const double b, const double weight)</a>
+<a name="179"><span class="lineNum">     179 </span>            :    {</a>
+<a name="180"><span class="lineNum">     180 </span>            :       const double a = (1. - b)/3.;</a>
+<a name="181"><span class="lineNum">     181 </span>            :       IntPoint(off).Set(a, a, a, weight);</a>
+<a name="182"><span class="lineNum">     182 </span>            :       AddTetPoints3(off + 1, a, b, weight);</a>
+<a name="183"><span class="lineNum">     183 </span>            :    }</a>
+<a name="184"><span class="lineNum">     184 </span>            : </a>
+<a name="185"><span class="lineNum">     185 </span>            :    // add the permutations of (a,a,b,b), 2*(a + b) = 1</a>
+<a name="186"><span class="lineNum">     186 </span>            :    void AddTetPoints6(const int off, const double a, const double weight)</a>
+<a name="187"><span class="lineNum">     187 </span>            :    {</a>
+<a name="188"><span class="lineNum">     188 </span>            :       const double b = 0.5 - a;</a>
+<a name="189"><span class="lineNum">     189 </span>            :       AddTetPoints3(off,     a, b, weight);</a>
+<a name="190"><span class="lineNum">     190 </span>            :       AddTetPoints3(off + 3, b, a, weight);</a>
+<a name="191"><span class="lineNum">     191 </span>            :    }</a>
+<a name="192"><span class="lineNum">     192 </span>            : </a>
+<a name="193"><span class="lineNum">     193 </span>            :    // given (a,b) or (a,c), add the permutations of (a,a,b,c), 2*a + b + c = 1</a>
+<a name="194"><span class="lineNum">     194 </span>            :    void AddTetPoints12(const int off, const double a, const double bc,</a>
+<a name="195"><span class="lineNum">     195 </span>            :                        const double weight)</a>
+<a name="196"><span class="lineNum">     196 </span>            :    {</a>
+<a name="197"><span class="lineNum">     197 </span>            :       const double cb = 1. - 2*a - bc;</a>
+<a name="198"><span class="lineNum">     198 </span>            :       AddTetPoints3(off,     a, bc, weight);</a>
+<a name="199"><span class="lineNum">     199 </span>            :       AddTetPoints3(off + 3, a, cb, weight);</a>
+<a name="200"><span class="lineNum">     200 </span>            :       AddTetPoints6(off + 6, a, bc, cb, weight);</a>
+<a name="201"><span class="lineNum">     201 </span>            :    }</a>
+<a name="202"><span class="lineNum">     202 </span>            : </a>
+<a name="203"><span class="lineNum">     203 </span>            :    // given (b,c), add the permutations of (a,a,b,c), 2*a + b + c = 1</a>
+<a name="204"><span class="lineNum">     204 </span>            :    void AddTetPoints12bc(const int off, const double b, const double c,</a>
+<a name="205"><span class="lineNum">     205 </span>            :                          const double weight)</a>
+<a name="206"><span class="lineNum">     206 </span>            :    {</a>
+<a name="207"><span class="lineNum">     207 </span>            :       const double a = (1. - b - c)/2.;</a>
+<a name="208"><span class="lineNum">     208 </span>            :       AddTetPoints3(off,     a, b, weight);</a>
+<a name="209"><span class="lineNum">     209 </span>            :       AddTetPoints3(off + 3, a, c, weight);</a>
+<a name="210"><span class="lineNum">     210 </span>            :       AddTetPoints6(off + 6, a, b, c, weight);</a>
+<a name="211"><span class="lineNum">     211 </span>            :    }</a>
+<a name="212"><span class="lineNum">     212 </span>            : </a>
+<a name="213"><span class="lineNum">     213 </span>            : public:</a>
+<a name="214"><span class="lineNum">     214 </span><span class="lineNoCov">          0 :    IntegrationRule() :</span></a>
+<a name="215"><span class="lineNum">     215 </span><span class="lineNoCov">          0 :       Array&lt;IntegrationPoint&gt;(), Order(0) { }</span></a>
+<a name="216"><span class="lineNum">     216 </span>            : </a>
+<a name="217"><span class="lineNum">     217 </span>            :    /// Construct an integration rule with given number of points</a>
+<a name="218"><span class="lineNum">     218 </span><span class="lineNoCov">          0 :    explicit IntegrationRule(int NP) :</span></a>
+<a name="219"><span class="lineNum">     219 </span><span class="lineNoCov">          0 :       Array&lt;IntegrationPoint&gt;(NP), Order(0)</span></a>
+<a name="220"><span class="lineNum">     220 </span>            :    {</a>
+<a name="221"><span class="lineNum">     221 </span><span class="lineNoCov">          0 :       for (int i = 0; i &lt; this-&gt;Size(); i++)</span></a>
+<a name="222"><span class="lineNum">     222 </span>            :       {</a>
+<a name="223"><span class="lineNum">     223 </span><span class="lineNoCov">          0 :          (*this)[i].Init(i);</span></a>
+<a name="224"><span class="lineNum">     224 </span>            :       }</a>
+<a name="225"><span class="lineNum">     225 </span><span class="lineNoCov">          0 :    }</span></a>
+<a name="226"><span class="lineNum">     226 </span>            : </a>
+<a name="227"><span class="lineNum">     227 </span>            :    /// Sets the indices of each quadrature point on initialization.</a>
+<a name="228"><span class="lineNum">     228 </span>            :    /** Note that most calls to IntegrationRule::SetSize should be paired with a</a>
+<a name="229"><span class="lineNum">     229 </span>            :        call to SetPointIndices in order for the indices to be set correctly. */</a>
+<a name="230"><span class="lineNum">     230 </span>            :    void SetPointIndices();</a>
+<a name="231"><span class="lineNum">     231 </span>            : </a>
+<a name="232"><span class="lineNum">     232 </span>            :    /// Tensor product of two 1D integration rules</a>
+<a name="233"><span class="lineNum">     233 </span>            :    IntegrationRule(IntegrationRule &amp;irx, IntegrationRule &amp;iry);</a>
+<a name="234"><span class="lineNum">     234 </span>            : </a>
+<a name="235"><span class="lineNum">     235 </span>            :    /// Tensor product of three 1D integration rules</a>
+<a name="236"><span class="lineNum">     236 </span>            :    IntegrationRule(IntegrationRule &amp;irx, IntegrationRule &amp;iry,</a>
+<a name="237"><span class="lineNum">     237 </span>            :                    IntegrationRule &amp;irz);</a>
+<a name="238"><span class="lineNum">     238 </span>            : </a>
+<a name="239"><span class="lineNum">     239 </span>            :    /// Returns the order of the integration rule</a>
+<a name="240"><span class="lineNum">     240 </span>            :    int GetOrder() const { return Order; }</a>
+<a name="241"><span class="lineNum">     241 </span>            : </a>
+<a name="242"><span class="lineNum">     242 </span>            :    /** @brief Sets the order of the integration rule. This is only for keeping</a>
+<a name="243"><span class="lineNum">     243 </span>            :        order information, it does not alter any data in the IntegrationRule. */</a>
+<a name="244"><span class="lineNum">     244 </span>            :    void SetOrder(const int order) { Order = order; }</a>
+<a name="245"><span class="lineNum">     245 </span>            : </a>
+<a name="246"><span class="lineNum">     246 </span>            :    /// Returns the number of the points in the integration rule</a>
+<a name="247"><span class="lineNum">     247 </span><span class="lineNoCov">          0 :    int GetNPoints() const { return Size(); }</span></a>
+<a name="248"><span class="lineNum">     248 </span>            : </a>
+<a name="249"><span class="lineNum">     249 </span>            :    /// Returns a reference to the i-th integration point</a>
+<a name="250"><span class="lineNum">     250 </span><span class="lineNoCov">          0 :    IntegrationPoint &amp;IntPoint(int i) { return (*this)[i]; }</span></a>
+<a name="251"><span class="lineNum">     251 </span>            : </a>
+<a name="252"><span class="lineNum">     252 </span>            :    /// Returns a const reference to the i-th integration point</a>
+<a name="253"><span class="lineNum">     253 </span><span class="lineNoCov">          0 :    const IntegrationPoint &amp;IntPoint(int i) const { return (*this)[i]; }</span></a>
+<a name="254"><span class="lineNum">     254 </span>            : </a>
+<a name="255"><span class="lineNum">     255 </span>            :    /// Return the quadrature weights in a contiguous array.</a>
+<a name="256"><span class="lineNum">     256 </span>            :    /** If a contiguous array is not required, the weights can be accessed with</a>
+<a name="257"><span class="lineNum">     257 </span>            :        a call like this: `IntPoint(i).weight`. */</a>
+<a name="258"><span class="lineNum">     258 </span>            :    const Array&lt;double&gt; &amp;GetWeights() const;</a>
+<a name="259"><span class="lineNum">     259 </span>            : </a>
+<a name="260"><span class="lineNum">     260 </span>            :    /// Destroys an IntegrationRule object</a>
+<a name="261"><span class="lineNum">     261 </span><span class="lineNoCov">          0 :    ~IntegrationRule() { }</span></a>
+<a name="262"><span class="lineNum">     262 </span>            : };</a>
+<a name="263"><span class="lineNum">     263 </span>            : </a>
+<a name="264"><span class="lineNum">     264 </span>            : /// A Class that defines 1-D numerical quadrature rules on [0,1].</a>
+<a name="265"><span class="lineNum">     265 </span>            : class QuadratureFunctions1D</a>
+<a name="266"><span class="lineNum">     266 </span>            : {</a>
+<a name="267"><span class="lineNum">     267 </span>            : public:</a>
+<a name="268"><span class="lineNum">     268 </span>            :    /** @name Methods for calculating quadrature rules.</a>
+<a name="269"><span class="lineNum">     269 </span>            :        These methods calculate the actual points and weights for the different</a>
+<a name="270"><span class="lineNum">     270 </span>            :        types of quadrature rules. */</a>
+<a name="271"><span class="lineNum">     271 </span>            :    ///@{</a>
+<a name="272"><span class="lineNum">     272 </span>            :    static void GaussLegendre(const int np, IntegrationRule* ir);</a>
+<a name="273"><span class="lineNum">     273 </span>            :    static void GaussLobatto(const int np, IntegrationRule *ir);</a>
+<a name="274"><span class="lineNum">     274 </span>            :    static void OpenUniform(const int np, IntegrationRule *ir);</a>
+<a name="275"><span class="lineNum">     275 </span>            :    static void ClosedUniform(const int np, IntegrationRule *ir);</a>
+<a name="276"><span class="lineNum">     276 </span>            :    static void OpenHalfUniform(const int np, IntegrationRule *ir);</a>
+<a name="277"><span class="lineNum">     277 </span>            :    static void ClosedGL(const int np, IntegrationRule *ir);</a>
+<a name="278"><span class="lineNum">     278 </span>            :    ///@}</a>
+<a name="279"><span class="lineNum">     279 </span>            : </a>
+<a name="280"><span class="lineNum">     280 </span>            :    /// A helper function that will play nice with Poly_1D::OpenPoints and</a>
+<a name="281"><span class="lineNum">     281 </span>            :    /// Poly_1D::ClosedPoints</a>
+<a name="282"><span class="lineNum">     282 </span>            :    static void GivePolyPoints(const int np, double *pts, const int type);</a>
+<a name="283"><span class="lineNum">     283 </span>            : </a>
+<a name="284"><span class="lineNum">     284 </span>            : private:</a>
+<a name="285"><span class="lineNum">     285 </span>            :    static void CalculateUniformWeights(IntegrationRule *ir, const int type);</a>
+<a name="286"><span class="lineNum">     286 </span>            : };</a>
+<a name="287"><span class="lineNum">     287 </span>            : </a>
+<a name="288"><span class="lineNum">     288 </span>            : /// A class container for 1D quadrature type constants.</a>
+<a name="289"><span class="lineNum">     289 </span>            : class Quadrature1D</a>
+<a name="290"><span class="lineNum">     290 </span>            : {</a>
+<a name="291"><span class="lineNum">     291 </span>            : public:</a>
+<a name="292"><span class="lineNum">     292 </span>            :    enum</a>
+<a name="293"><span class="lineNum">     293 </span>            :    {</a>
+<a name="294"><span class="lineNum">     294 </span>            :       Invalid         = -1,</a>
+<a name="295"><span class="lineNum">     295 </span>            :       GaussLegendre   = 0,</a>
+<a name="296"><span class="lineNum">     296 </span>            :       GaussLobatto    = 1,</a>
+<a name="297"><span class="lineNum">     297 </span>            :       OpenUniform     = 2,  ///&lt; aka open Newton-Cotes</a>
+<a name="298"><span class="lineNum">     298 </span>            :       ClosedUniform   = 3,  ///&lt; aka closed Newton-Cotes</a>
+<a name="299"><span class="lineNum">     299 </span>            :       OpenHalfUniform = 4,  ///&lt; aka &quot;open half&quot; Newton-Cotes</a>
+<a name="300"><span class="lineNum">     300 </span>            :       ClosedGL        = 5   ///&lt; aka closed Gauss Legendre</a>
+<a name="301"><span class="lineNum">     301 </span>            :    };</a>
+<a name="302"><span class="lineNum">     302 </span>            :    /** @brief If the Quadrature1D type is not closed return Invalid; otherwise</a>
+<a name="303"><span class="lineNum">     303 </span>            :        return type. */</a>
+<a name="304"><span class="lineNum">     304 </span>            :    static int CheckClosed(int type);</a>
+<a name="305"><span class="lineNum">     305 </span>            :    /** @brief If the Quadrature1D type is not open return Invalid; otherwise</a>
+<a name="306"><span class="lineNum">     306 </span>            :        return type. */</a>
+<a name="307"><span class="lineNum">     307 </span>            :    static int CheckOpen(int type);</a>
+<a name="308"><span class="lineNum">     308 </span>            : };</a>
+<a name="309"><span class="lineNum">     309 </span>            : </a>
+<a name="310"><span class="lineNum">     310 </span>            : /// Container class for integration rules</a>
+<a name="311"><span class="lineNum">     311 </span>            : class IntegrationRules</a>
+<a name="312"><span class="lineNum">     312 </span>            : {</a>
+<a name="313"><span class="lineNum">     313 </span>            : private:</a>
+<a name="314"><span class="lineNum">     314 </span>            :    /// Taken from the Quadrature1D class anonymous enum</a>
+<a name="315"><span class="lineNum">     315 </span>            :    /// Determines the type of numerical quadrature used for</a>
+<a name="316"><span class="lineNum">     316 </span>            :    /// segment, square, and cube geometries</a>
+<a name="317"><span class="lineNum">     317 </span>            :    const int quad_type;</a>
+<a name="318"><span class="lineNum">     318 </span>            : </a>
+<a name="319"><span class="lineNum">     319 </span>            :    int own_rules, refined;</a>
+<a name="320"><span class="lineNum">     320 </span>            : </a>
+<a name="321"><span class="lineNum">     321 </span>            :    Array&lt;IntegrationRule *&gt; PointIntRules;</a>
+<a name="322"><span class="lineNum">     322 </span>            :    Array&lt;IntegrationRule *&gt; SegmentIntRules;</a>
+<a name="323"><span class="lineNum">     323 </span>            :    Array&lt;IntegrationRule *&gt; TriangleIntRules;</a>
+<a name="324"><span class="lineNum">     324 </span>            :    Array&lt;IntegrationRule *&gt; SquareIntRules;</a>
+<a name="325"><span class="lineNum">     325 </span>            :    Array&lt;IntegrationRule *&gt; TetrahedronIntRules;</a>
+<a name="326"><span class="lineNum">     326 </span>            :    Array&lt;IntegrationRule *&gt; PyramidIntRules;</a>
+<a name="327"><span class="lineNum">     327 </span>            :    Array&lt;IntegrationRule *&gt; PrismIntRules;</a>
+<a name="328"><span class="lineNum">     328 </span>            :    Array&lt;IntegrationRule *&gt; CubeIntRules;</a>
+<a name="329"><span class="lineNum">     329 </span>            : </a>
+<a name="330"><span class="lineNum">     330 </span>            :    void AllocIntRule(Array&lt;IntegrationRule *&gt; &amp;ir_array, int Order)</a>
+<a name="331"><span class="lineNum">     331 </span>            :    {</a>
+<a name="332"><span class="lineNum">     332 </span>            :       if (ir_array.Size() &lt;= Order)</a>
+<a name="333"><span class="lineNum">     333 </span>            :       {</a>
+<a name="334"><span class="lineNum">     334 </span>            :          ir_array.SetSize(Order + 1, NULL);</a>
+<a name="335"><span class="lineNum">     335 </span>            :       }</a>
+<a name="336"><span class="lineNum">     336 </span>            :    }</a>
+<a name="337"><span class="lineNum">     337 </span>            :    bool HaveIntRule(Array&lt;IntegrationRule *&gt; &amp;ir_array, int Order)</a>
+<a name="338"><span class="lineNum">     338 </span>            :    {</a>
+<a name="339"><span class="lineNum">     339 </span>            :       return (ir_array.Size() &gt; Order &amp;&amp; ir_array[Order] != NULL);</a>
+<a name="340"><span class="lineNum">     340 </span>            :    }</a>
+<a name="341"><span class="lineNum">     341 </span>            :    int GetSegmentRealOrder(int Order) const</a>
+<a name="342"><span class="lineNum">     342 </span>            :    {</a>
+<a name="343"><span class="lineNum">     343 </span>            :       return Order | 1; // valid for all quad_type's</a>
+<a name="344"><span class="lineNum">     344 </span>            :    }</a>
+<a name="345"><span class="lineNum">     345 </span>            : </a>
+<a name="346"><span class="lineNum">     346 </span>            :    /// The following methods allocate new IntegrationRule objects without</a>
+<a name="347"><span class="lineNum">     347 </span>            :    /// checking if they already exist.  To avoid memory leaks use</a>
+<a name="348"><span class="lineNum">     348 </span>            :    /// IntegrationRules::Get(int GeomType, int Order) instead.</a>
+<a name="349"><span class="lineNum">     349 </span>            :    IntegrationRule *GenerateIntegrationRule(int GeomType, int Order);</a>
+<a name="350"><span class="lineNum">     350 </span>            :    IntegrationRule *PointIntegrationRule(int Order);</a>
+<a name="351"><span class="lineNum">     351 </span>            :    IntegrationRule *SegmentIntegrationRule(int Order);</a>
+<a name="352"><span class="lineNum">     352 </span>            :    IntegrationRule *TriangleIntegrationRule(int Order);</a>
+<a name="353"><span class="lineNum">     353 </span>            :    IntegrationRule *SquareIntegrationRule(int Order);</a>
+<a name="354"><span class="lineNum">     354 </span>            :    IntegrationRule *TetrahedronIntegrationRule(int Order);</a>
+<a name="355"><span class="lineNum">     355 </span>            :    IntegrationRule *PyramidIntegrationRule(int Order);</a>
+<a name="356"><span class="lineNum">     356 </span>            :    IntegrationRule *PrismIntegrationRule(int Order);</a>
+<a name="357"><span class="lineNum">     357 </span>            :    IntegrationRule *CubeIntegrationRule(int Order);</a>
+<a name="358"><span class="lineNum">     358 </span>            : </a>
+<a name="359"><span class="lineNum">     359 </span>            :    void DeleteIntRuleArray(Array&lt;IntegrationRule *&gt; &amp;ir_array);</a>
+<a name="360"><span class="lineNum">     360 </span>            : </a>
+<a name="361"><span class="lineNum">     361 </span>            : public:</a>
+<a name="362"><span class="lineNum">     362 </span>            :    /// Sets initial sizes for the integration rule arrays, but rules</a>
+<a name="363"><span class="lineNum">     363 </span>            :    /// are defined the first time they are requested with the Get method.</a>
+<a name="364"><span class="lineNum">     364 </span>            :    explicit IntegrationRules(int Ref = 0,</a>
+<a name="365"><span class="lineNum">     365 </span>            :                              int type = Quadrature1D::GaussLegendre);</a>
+<a name="366"><span class="lineNum">     366 </span>            : </a>
+<a name="367"><span class="lineNum">     367 </span>            :    /// Returns an integration rule for given GeomType and Order.</a>
+<a name="368"><span class="lineNum">     368 </span>            :    const IntegrationRule &amp;Get(int GeomType, int Order);</a>
+<a name="369"><span class="lineNum">     369 </span>            : </a>
+<a name="370"><span class="lineNum">     370 </span>            :    void Set(int GeomType, int Order, IntegrationRule &amp;IntRule);</a>
+<a name="371"><span class="lineNum">     371 </span>            : </a>
+<a name="372"><span class="lineNum">     372 </span><span class="lineNoCov">          0 :    void SetOwnRules(int o) { own_rules = o; }</span></a>
+<a name="373"><span class="lineNum">     373 </span>            : </a>
+<a name="374"><span class="lineNum">     374 </span>            :    /// Destroys an IntegrationRules object</a>
+<a name="375"><span class="lineNum">     375 </span>            :    ~IntegrationRules();</a>
+<a name="376"><span class="lineNum">     376 </span>            : };</a>
+<a name="377"><span class="lineNum">     377 </span>            : </a>
+<a name="378"><span class="lineNum">     378 </span>            : /// A global object with all integration rules (defined in intrules.cpp)</a>
+<a name="379"><span class="lineNum">     379 </span>            : extern MFEM_EXPORT IntegrationRules IntRules;</a>
+<a name="380"><span class="lineNum">     380 </span>            : </a>
+<a name="381"><span class="lineNum">     381 </span>            : /// A global object with all refined integration rules</a>
+<a name="382"><span class="lineNum">     382 </span>            : extern MFEM_EXPORT IntegrationRules RefinedIntRules;</a>
+<a name="383"><span class="lineNum">     383 </span>            : </a>
+<a name="384"><span class="lineNum">     384 </span>            : }</a>
+<a name="385"><span class="lineNum">     385 </span>            : </a>
+<a name="386"><span class="lineNum">     386 </span>            : #endif</a>
+</pre>
+      </td>
+    </tr>
+  </table>
+  <br>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="ruler"><img src="../glass.png" width=3 height=3 alt=""></td></tr>
+    <tr><td class="versionInfo">Generated by: <a href="http://ltp.sourceforge.net/coverage/lcov.php" target="_parent">LCOV version 1.14</a></td></tr>
+  </table>
+  <br>
+
+</body>
+</html>
