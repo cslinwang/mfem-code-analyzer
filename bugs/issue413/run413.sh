@@ -1,18 +1,5 @@
-# 编译 cd
-# /root/mfem_issue3436/ 这个路径要改，改成 cd /root/mfem 因为到时候要复制一份，重命名成mfem运行。
-# 现在是临时测试
-# cd /root/mfem_issue413/
-cd /root/mfem/
-make clean
-find /root/mfem \( -name '*.gcda' -o -name '*.gcov' \) -delete
+# 运行
+cd /root/mfem/examples
 export OMPI_ALLOW_RUN_AS_ROOT=1
 export OMPI_ALLOW_RUN_AS_ROOT_CONFIRM=1
-# make all -j
-# make serial -j 编译串行
-# make parallel -j 编译并行
-make examples -j
-# make parallel -j
-# 运行
-cd examples
-mpicxx -O3 -std=c++11 --coverage -I.. -I../../hypre/src/hypre/include 413.cpp -o 413 -L.. -lmfem -L../../hypre/src/hypre/lib -lHYPRE -L../../metis-4.0 -lmetis -lrt
 valgrind --leak-check=full mpirun -n 2 ./413

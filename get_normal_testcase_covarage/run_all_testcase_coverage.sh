@@ -37,7 +37,7 @@ echo "开始编译MFEM..."
 ./switch_sha.sh $git_sha
 # 编译
 ./add_coverage.sh
-编译并检查是否出现特定错误
+# 编译并检查是否出现特定错误
 compile_status=$?
 
 # 检查编译状态

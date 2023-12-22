@@ -589,9 +589,7 @@ mutate_project_path = "/root/mfem_mutate/"
 
 if not os.path.exists(mutate_project_path):
     os.mkdir(mutate_project_path)
-else:
-    shutil.rmtree(mutate_project_path)
-    os.mkdir(mutate_project_path)
+
 
 if __name__ == '__main__':
 
@@ -603,6 +601,9 @@ if __name__ == '__main__':
         # 是否有改bug复现结果
         bug_project_path = "/root/mfem_"+bug_id
         if not os.path.exists(bug_project_path):
+            continue
+        # 跳过已经变异的bug
+        if os.path.exists(mutate_project_path+"/mfem_{:02}".format(bug_id)):
             continue
         # delete_mutate_brach(bug_id)
         prepare_source_code(bug_id)  # 准备源代码
