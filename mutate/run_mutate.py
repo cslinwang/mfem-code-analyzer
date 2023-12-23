@@ -317,7 +317,11 @@ def run_example_tests(bug_id, branch_name, mutate_file, mutate_line):
 
 def run_unit_tests(bug_id, branch_name, mutate_file, mutate_line):
     print("开始运行unit_tests样例...")
-    os.chdir('/root/mfem/tests/unit')
+    if os.path.exists('/root/mfem/tests/unit'):
+        os.chdir('/root/mfem/tests/unit')
+    else:
+        info("没有编译unit_tests，跳过")
+        return
     count = 0
     # 如果没有编译unit_tests，跳过
     if not os.path.exists('./unit_tests'):
