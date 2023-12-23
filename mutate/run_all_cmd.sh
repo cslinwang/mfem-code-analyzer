@@ -1,6 +1,12 @@
 issue1230  issue129   issue1326  issue1769  issue1887  issue1928  issue2119  issue2152  issue2343  issue2563  issue2699  issue2779  issue2878  issue3332  issue3566  issue443  issue512
 issue1284  issue1322  issue1750  issue1871  issue1896  issue2035  issue2144  issue2157  issue2492  issue2599  issue2703  issue2838  issue3328  issue3436  issue413   issue463  issue685
 
+# 如何更新
+cd /root/mfem-code-analyzer
+git reset --hard HEAD
+git clean -fd
+git pull
+
 # ocsar10
 # issue3566
 docker run -it -d -p 7001:22 --name myissue3566 cslinwang/mfem:v2.4.1222
