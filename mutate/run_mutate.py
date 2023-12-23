@@ -1,4 +1,5 @@
 #!/usr/local/bin/python3
+import argparse
 import math
 
 import joblib
@@ -44,7 +45,7 @@ def save_issues_to_excel(filename="issues.xlsx"):
 
     # 将 DataFrame 保存为 Excel 文件
     df.to_excel(filename, index=False)
-    issue_info_list.clear()
+    # issue_info_list.clear()
 
 
 def get_coverage_files(bug_id):
@@ -178,15 +179,16 @@ def mutate(need_muta_files, bug_id):
         #         is_need_mutate = False
         #         break
         # if is_need_mutate:
-        #     command = pre_command + "mucpp applyall " + file_name + " -- -std=c++11"
-        #     runcmd.exccmd(command)
+        command = pre_command + "mucpp applyall " + file_name + " -- -std=c++11"
+        runcmd.exccmd(command)
 
         # 变异完成后，拿到git branch的变异分支
         command = pre_command + \
             "git checkout master && git branch | grep -i '"+mutate_file_name+"$'"
         all_branch = exccmd(command)
-        info(len(all_branch))
-        save_to_excel(all_branch, mutate_result_save_path+"/all_branch.xlsx")
+        info("文件{}变异完成,有效变异分支数量:{}".format(file_name, len(all_branch)))
+        save_to_excel(all_branch, mutate_result_save_path +
+                      "/all_branch_"+mutate_file_name+".xlsx")
         print("branchs:{}".format(len(all_branch)))
         # 遍历每一个分支，拿到对应分支下的变异文件和变异行号
         success_mutate = 0
@@ -215,6 +217,7 @@ def mutate(need_muta_files, bug_id):
                 # runcmd.exccmd(command)
                 continue
             mutate_line = get_mutate_line(gitlog)
+            mutate_line = mutate_line + 3  # mucpp生成的修改行总是比真实的行少3
 
             if mutate_line == None:  # 没找到修改行直接跳过
                 print("not find mutateline.")
@@ -235,6 +238,14 @@ def mutate(need_muta_files, bug_id):
 # 检验bug行号是否正确，mucpp生成的修改行总是比真实的行少3
 
 
+def origin_res(bug_id):
+    project_path = project_name
+    pre_command = "cd " + project_path + " && "
+    start_time = time.time()
+    run_mutated_project(bug_id, 'bug', 'bug', -1)
+    return 0
+
+
 def run_mutated_project(bug_id, branch_name, mutate_file, mutate_line):
     # 运行变异的bug用例
     precmd = "cd " + project_name
@@ -242,7 +253,23 @@ def run_mutated_project(bug_id, branch_name, mutate_file, mutate_line):
         bug_id+"/run"+bug_id.split("issue")[-1]+"_compile.sh"
     cmd = precmd + " && " + shell_path
     exccmd(cmd)
-    # 运行所有正常用例
+    # 运行bug用例
+    shell_path = "/root/mfem-code-analyzer/bugs"+"/" + \
+        bug_id+"/run"+bug_id.split("issue")[-1]+".sh"
+    start_time = time.time()
+    result = subprocess.run(
+        ['bash', shell_path], input='c', text=True, capture_output=True)
+    end_time = time.time()
+    duration = end_time - start_time
+    if mutate_line != -1:
+        issue_info = IssueInfo(bug_id, branch_name, mutate_file,
+                               mutate_line, "bug", result, duration, 0)
+        issue_info_list.append(issue_info)
+    else:
+        issue_info = IssueInfo(bug_id, branch_name, mutate_file,
+                               mutate_line,  "bug", result, duration, 0)
+        issue_info_list.append(issue_info)
+        normal_result_map["bug"] = result
     # 运行example用例
     run_example_tests(bug_id, branch_name, mutate_file, mutate_line)
     # 运行unit用例
@@ -267,9 +294,18 @@ def run_example_tests(bug_id, branch_name, mutate_file, mutate_line):
                 ['./' + testcase], input='c', text=True, capture_output=True)
             end_time = time.time()
             duration = end_time - start_time
-            issue_info = IssueInfo(bug_id, branch_name, mutate_file,
-                                   mutate_line, testcase, result, duration, 0)
-            issue_info_list.append(issue_info)
+            if mutate_line != -1:
+                if testcase in normal_result_map:
+                    if result == normal_result_map[testcase]:
+                        result = "normal"
+                issue_info = IssueInfo(bug_id, branch_name, mutate_file,
+                                       mutate_line, testcase, result, duration, 0)
+                issue_info_list.append(issue_info)
+            else:
+                issue_info = IssueInfo(bug_id, branch_name, mutate_file,
+                                       mutate_line, testcase, result, duration, 0)
+                issue_info_list.append(issue_info)
+                normal_result_map[testcase] = result
             print(f"测试 {testcase} 运行时间：{duration} 秒")
             print(f"运行结果：\n{result.stdout}")
             # save_issues_to_excel(mutate_result_save_path+"/runres.xlsx")
@@ -292,21 +328,30 @@ def run_unit_tests(bug_id, branch_name, mutate_file, mutate_line):
         ['./unit_tests', '--list-test-names-only'], capture_output=True, text=True)
     test_names = test_names.stdout.strip().split('\n')[1:]  # 跳过第一行
 
-    for test_name in test_names:
+    for testcase in test_names:
         count += 1
-        print(f"正在执行测试：{test_name}")
+        print(f"正在执行测试：{testcase}")
         start_time = time.time()
         result = subprocess.run(
-            ['./unit_tests', test_name], capture_output=True, text=True)
+            ['./unit_tests', testcase], capture_output=True, text=True)
         end_time = time.time()
         duration = end_time - start_time
+        if mutate_line != -1:
+            if testcase in normal_result_map:
+                if result == normal_result_map[testcase]:
+                    result = "normal"
+            issue_info = IssueInfo(bug_id, branch_name, mutate_file,
+                                   mutate_line, testcase, result, duration, 0)
+            issue_info_list.append(issue_info)
+        else:
+            issue_info = IssueInfo(bug_id, branch_name, mutate_file,
+                                   mutate_line, testcase, result, duration, 0)
+            issue_info_list.append(issue_info)
+            normal_result_map[testcase] = result
 
-        issue_info = IssueInfo(bug_id, branch_name, mutate_file,
-                               mutate_line, test_name, result, duration, 0)
-        issue_info_list.append(issue_info)
-        info("测试 {} 运行时间：{} 秒".format(test_name, duration))
+        info("测试 {} 运行时间：{} 秒".format(testcase, duration))
         info("运行结果：\n{}".format(result.stdout))
-        print(f"测试 {test_name} 运行时间：{duration} 秒")
+        print(f"测试 {testcase} 运行时间：{duration} 秒")
         print(f"运行结果：\n{result.stdout}")
 
     info("unit_tests样例共计 {} 个。".format(count))
@@ -377,8 +422,9 @@ def prepare_source_code(issue):
     准备源代码
     删除原有项目，重命名issue项目
     """
-    issue_path = mutate_project_path+"/mfem_{:02}".format(bug_id)
-    cmd = "rm -rf /root/mfem && cp -r "+issue_path+" /root/mfem"
+    # issue_path = mutate_project_path+"/mfem_{:02}".format(bug_id)
+    # cmd = "rm -rf /root/mfem && cp -r "+issue_path+" /root/mfem"
+    cmd = "rm -rf /root/mfem && cp -r /root/mfem_"+issue+" /root/mfem"
     runcmd.exccmd(cmd)
 
 
@@ -390,7 +436,7 @@ project_name = "/root/mfem"
 mutate_file_save_paths = "/root/mfem-code-analyzer/mutateFiles"
 
 mutate_result_save_paths = "/root/mfem-code-analyzer/mutate/result"
-
+mutate_result_save_path = ""
 mutate_project_path = "/root/mfem_mutate/"
 
 if not os.path.exists(mutate_project_path):
@@ -399,38 +445,40 @@ if not os.path.exists(mutate_project_path):
 # 每个测试用例运行结果
 issue_info_list = []
 
+normal_result_map = dict()
+
+# 创建解析器
+parser = argparse.ArgumentParser(description='Run tests for specified files.')
+# 添加一个参数，可以传入零个或多个值，设定默认值
+parser.add_argument('filenames', nargs='*', default=['issue3566'],
+                    help='List of file names to run tests on')
+
+args = parser.parse_args()
+
+# 解析参数
+args = parser.parse_args()
+
 if __name__ == '__main__':
+    info("开始运行mutate")
+    info("参数:{}".format(args.filenames))
 
     for path_name in os.listdir(coverage_file_paths):
         issue_info_list = []
         bug_id = path_name
         # 测试，仅跑issue3566
-        if bug_id in ['issue3566', 'issue1230', 'issue1230']:
+        if bug_id not in args.filenames:
             continue
         # 是否有改bug复现结果
         bug_project_path = "/root/mfem_"+bug_id
         # 跳过已经变异的bug
-        if not os.path.exists(mutate_project_path+"/mfem_{:02}".format(bug_id)):
-            continue
+        # if not os.path.exists(mutate_project_path+"/mfem_{:02}".format(bug_id)):
+        #     continue
         # delete_mutate_brach(bug_id)
         prepare_source_code(bug_id)  # 准备源代码
+        origin_res(bug_id)  # 运行原始bug用例
         mutate_result_save_path = os.path.join(
             mutate_result_save_paths, bug_id)
         if not os.path.exists(mutate_result_save_path):
             os.mkdir(mutate_result_save_path)
         need_muta_files = get_coverage_files(bug_id)  # 获得覆盖文件
         mutate(need_muta_files, bug_id)  # 变异
-        # get_coverage_mutate(bug_id)
-        # command = "rm -rf /home/dpc/Documents/mutateFiles/bug_{:02}".format(
-        #     bug_id)
-        # runcmd.exccmd(command)
-        a = 1
-    # need_muta_files = get_coverage_files(2)
-    # mutate(need_muta_files, 2)
-    # check_mutate_line(2)
-
-    # need_muta_files = get_coverage_files(79)
-    # mutate(need_muta_files,79)
-    # check_mutate_line(79)
-    # get_coverage_mutate(79)
-    # replace_mutate_file("/home/dpc/Documents/coverageMutateFiles/bug_46","/home/dpc/Documents/project/bug_46/iverilog","/home/dpc/Documents/project/bug_46/",46)
