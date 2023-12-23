@@ -290,6 +290,13 @@ def run_example_tests(bug_id, branch_name, mutate_file, mutate_line):
             count += 1
             print(f"正在执行：{testcase}")
             start_time = time.time()
+            result = ''
+            try:
+                result = subprocess.run(
+                    ['./' + testcase], input='c', text=True, capture_output=True, timeout=600)
+            except subprocess.TimeoutExpired:
+                info("测试 {} 运行超时".format(testcase))
+                result = "timeout"
             result = subprocess.run(
                 ['./' + testcase], input='c', text=True, capture_output=True)
             end_time = time.time()
@@ -336,8 +343,13 @@ def run_unit_tests(bug_id, branch_name, mutate_file, mutate_line):
         count += 1
         print(f"正在执行测试：{testcase}")
         start_time = time.time()
-        result = subprocess.run(
-            ['./unit_tests', testcase], capture_output=True, text=True)
+        result = ''
+        try:
+            result = subprocess.run(
+                ['./unit_tests', testcase], capture_output=True, text=True, timeout=600)
+        except subprocess.TimeoutExpired:
+            info("测试 {} 运行超时".format(testcase))
+            result = "timeout"
         end_time = time.time()
         duration = end_time - start_time
         if mutate_line != -1:
@@ -454,7 +466,7 @@ normal_result_map = dict()
 # 创建解析器
 parser = argparse.ArgumentParser(description='Run tests for specified files.')
 # 添加一个参数，可以传入零个或多个值，设定默认值
-parser.add_argument('filenames', nargs='*', default=['issue3566'],
+parser.add_argument('filenames', nargs='*', default=['issue685'],
                     help='List of file names to run tests on')
 
 args = parser.parse_args()
@@ -479,7 +491,7 @@ if __name__ == '__main__':
         #     continue
         # delete_mutate_brach(bug_id)
         prepare_source_code(bug_id)  # 准备源代码
-        origin_res(bug_id)  # 运行原始bug用例
+        # origin_res(bug_id)  # 运行原始bug用例
         mutate_result_save_path = os.path.join(
             mutate_result_save_paths, bug_id)
         if not os.path.exists(mutate_result_save_path):
