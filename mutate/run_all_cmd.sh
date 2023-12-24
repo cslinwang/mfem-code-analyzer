@@ -6,6 +6,8 @@ cd /root/mfem-code-analyzer
 git reset --hard HEAD
 git clean -fd
 git pull
+cp /root/mfem-code-analyzer/mutate/.screenrc ~/.screenrc
+screen -r
 
 # 如何设置中文
 先更新代码，然后退出screen，然后执行

@@ -2343,6 +2343,13 @@ Number of unknowns: 510227
 Average reduction factor = 0.82946
 Reached the maximum number of dofs. Stop.
 
+### 1742成功
+复现sha:0be90bbb2617bbb07009fe45cb999e112e17b37e
+/root/mfem-code-analyzer/get_normal_testcase_covarage/add_coverage.sh
+cd examples
+make 1742
+./1742
+
 ### 443成功.
 
 bug版本使用fix的用例，运行ex19

@@ -45,7 +45,7 @@ def save_issues_to_excel(filename="issues.xlsx"):
 
     # 将 DataFrame 保存为 Excel 文件
     df.to_excel(filename, index=False)
-    # issue_info_list.clear()
+    issue_info_list.clear()
 
 
 def get_coverage_files(bug_id):
@@ -247,6 +247,10 @@ def origin_res(bug_id):
 
 
 def run_mutated_project(bug_id, branch_name, mutate_file, mutate_line):
+    # 首先检测是否有结果
+    if os.path.exists(mutate_result_save_path +
+                      "/runres"+bug_id+"_"+branch_name+".xlsx"):
+        return 0
     # 运行变异的bug用例
     precmd = "cd " + project_name
     shell_path = "/root/mfem-code-analyzer/bugs"+"/" + \
@@ -348,7 +352,7 @@ def run_unit_tests(bug_id, branch_name, mutate_file, mutate_line):
         start_time = time.time()
         result = ''
         process = subprocess.Popen(
-                ['./' + testcase], stdin=subprocess.PIPE, text=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+            ['./' + testcase], stdin=subprocess.PIPE, text=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         try:
             result = process.communicate(input='c', timeout=600)
         except subprocess.TimeoutExpired:
@@ -472,7 +476,7 @@ normal_result_map = dict()
 # 创建解析器
 parser = argparse.ArgumentParser(description='Run tests for specified files.')
 # 添加一个参数，可以传入零个或多个值，设定默认值
-parser.add_argument('filenames', nargs='*', default=['issue685'],
+parser.add_argument('filenames', nargs='*', default=['issue1284'],
                     help='List of file names to run tests on')
 
 args = parser.parse_args()
@@ -497,7 +501,7 @@ if __name__ == '__main__':
         #     continue
         # delete_mutate_brach(bug_id)
         prepare_source_code(bug_id)  # 准备源代码
-        origin_res(bug_id)  # 运行原始bug用例
+        # origin_res(bug_id)  # 运行原始bug用例
         mutate_result_save_path = os.path.join(
             mutate_result_save_paths, bug_id)
         if not os.path.exists(mutate_result_save_path):
