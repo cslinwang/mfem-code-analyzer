@@ -501,7 +501,7 @@ if __name__ == '__main__':
         #     continue
         # delete_mutate_brach(bug_id)
         prepare_source_code(bug_id)  # 准备源代码
-        # origin_res(bug_id)  # 运行原始bug用例
+        origin_res(bug_id)  # 运行原始bug用例
         mutate_result_save_path = os.path.join(
             mutate_result_save_paths, bug_id)
         if not os.path.exists(mutate_result_save_path):
