@@ -291,11 +291,14 @@ def run_example_tests(bug_id, branch_name, mutate_file, mutate_line):
             print(f"正在执行：{testcase}")
             start_time = time.time()
             result = ''
+            process = subprocess.Popen(
+                ['./' + testcase], stdin=subprocess.PIPE, text=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
             try:
-                result = subprocess.run(
-                    ['./' + testcase], input='c', text=True, capture_output=True, timeout=600)
+                result = process.communicate(input='c', timeout=600)
             except subprocess.TimeoutExpired:
-                info("测试 {} 运行超时".format(testcase))
+                print("测试 {} 运行超时".format(testcase))
+                process.kill()  # 杀死超时的进程
+                stdout, stderr = process.communicate()  # 获取进程的输出
                 result = "timeout"
             result = subprocess.run(
                 ['./' + testcase], input='c', text=True, capture_output=True)
@@ -344,11 +347,14 @@ def run_unit_tests(bug_id, branch_name, mutate_file, mutate_line):
         print(f"正在执行测试：{testcase}")
         start_time = time.time()
         result = ''
+        process = subprocess.Popen(
+                ['./' + testcase], stdin=subprocess.PIPE, text=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         try:
-            result = subprocess.run(
-                ['./unit_tests', testcase], capture_output=True, text=True, timeout=600)
+            result = process.communicate(input='c', timeout=600)
         except subprocess.TimeoutExpired:
-            info("测试 {} 运行超时".format(testcase))
+            print("测试 {} 运行超时".format(testcase))
+            process.kill()  # 杀死超时的进程
+            stdout, stderr = process.communicate()  # 获取进程的输出
             result = "timeout"
         end_time = time.time()
         duration = end_time - start_time
@@ -491,7 +497,7 @@ if __name__ == '__main__':
         #     continue
         # delete_mutate_brach(bug_id)
         prepare_source_code(bug_id)  # 准备源代码
-        # origin_res(bug_id)  # 运行原始bug用例
+        origin_res(bug_id)  # 运行原始bug用例
         mutate_result_save_path = os.path.join(
             mutate_result_save_paths, bug_id)
         if not os.path.exists(mutate_result_save_path):
