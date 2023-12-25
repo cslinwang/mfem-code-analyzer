@@ -21,7 +21,7 @@ import os
 from tqdm import tqdm
 from logger_module import info
 
-info("开始运行mutate")
+info("Start running mutate")
 
 
 class IssueInfo:
@@ -186,7 +186,8 @@ def mutate(need_muta_files, bug_id):
         command = pre_command + \
             "git checkout master && git branch | grep -i '"+mutate_file_name+"$'"
         all_branch = exccmd(command)
-        info("文件{}变异完成,有效变异分支数量:{}".format(file_name, len(all_branch)))
+        info("Mutation of file {} completed, number of effective mutated branches: {}".format(
+            file_name, len(all_branch)))
         save_to_excel(all_branch, mutate_result_save_path +
                       "/all_branch_"+mutate_file_name+".xlsx")
         print("branchs:{}".format(len(all_branch)))
@@ -226,12 +227,13 @@ def mutate(need_muta_files, bug_id):
             # 运行变异后的项目，并存储结果。
             run_mutated_project(bug_id, branch_name, mutate_file, mutate_line)
 
-        info("文件{}变异完成,有效变异分支数量:{}".format(file_name, success_mutate))
+        info("Mutation of file {} completed, number of effective mutated branches: {}".format(
+            file_name, success_mutate))
         # end_time = time.time()
         # print("file " + str(idx) + ":  mutate " + file_name[file_name.find(
         #     "iverilog") + 9:] + " complete.  already use " + str((end_time - start_time) // 60) + " minutes.")
         idx += 1
-    info("变异完成,有效变异文件数量:{}".format(idx))
+    info("Mutation completed, number of effective mutated files: {}".format(idx))
     save_issues_to_excel(mutate_result_save_path+"/runres.xlsx")
     return 0
 
@@ -284,15 +286,14 @@ def run_mutated_project(bug_id, branch_name, mutate_file, mutate_line):
 
 
 def run_example_tests(bug_id, branch_name, mutate_file, mutate_line):
-    print("开始运行样例...")
-    print("开始运行example样例...")
+    print("Starting to run example cases...")
     os.chdir(os.path.expanduser('~/mfem/examples'))
     count = 0
 
     for testcase in os.listdir('.'):
         if os.path.isfile(testcase) and os.access(testcase, os.X_OK):
             count += 1
-            print(f"正在执行：{testcase}")
+            print(f"Executing: {testcase}")
             start_time = time.time()
             result = ''
             process = subprocess.Popen(
@@ -300,7 +301,7 @@ def run_example_tests(bug_id, branch_name, mutate_file, mutate_line):
             try:
                 result = process.communicate(input='c', timeout=600)
             except subprocess.TimeoutExpired:
-                print("测试 {} 运行超时".format(testcase))
+                print("Test {} ran out of time".format(testcase))
                 process.kill()  # 杀死超时的进程
                 stdout, stderr = process.communicate()  # 获取进程的输出
                 result = "timeout"
@@ -320,27 +321,25 @@ def run_example_tests(bug_id, branch_name, mutate_file, mutate_line):
                                        mutate_line, testcase, result, duration, 0)
                 issue_info_list.append(issue_info)
                 normal_result_map[testcase] = result
-            print(f"测试 {testcase} 运行时间：{duration} 秒")
-            print(f"运行结果：\n{result.stdout}")
+            print(f"Test {testcase} execution time: {duration} seconds")
+            print(f"Execution result:\n{result}")
             # save_issues_to_excel(mutate_result_save_path+"/runres.xlsx")
-    print(f"example样例共计 {count} 个。")
-    print("example样例运行完毕。")
-    info("example样例共计 {} 个。".format(count))
-    info("example样例运行完毕。")
+
+        info(f"A total of {count} example cases.")
+        info("Example cases execution completed.")
 
 
 def run_unit_tests(bug_id, branch_name, mutate_file, mutate_line):
-    print("开始运行unit_tests样例...")
+    print("Starting to run unit_tests cases...")
     if os.path.exists('/root/mfem/tests/unit'):
         os.chdir('/root/mfem/tests/unit')
     else:
-        info("没有编译unit_tests，跳过")
+        info("unit_tests not compiled, skipping")
         return
     count = 0
     # 如果没有编译unit_tests，跳过
     if not os.path.exists('./unit_tests'):
-        print("没有编译unit_tests，跳过")
-        info("没有编译unit_tests，跳过")
+        info("unit_tests not compiled, skipping")
         return
     test_names = subprocess.run(
         ['./unit_tests', '--list-test-names-only'], capture_output=True, text=True)
@@ -348,15 +347,15 @@ def run_unit_tests(bug_id, branch_name, mutate_file, mutate_line):
 
     for testcase in test_names:
         count += 1
-        print(f"正在执行测试：{testcase}")
+        print(f"Executing test: {testcase}")
         start_time = time.time()
         result = ''
         process = subprocess.Popen(
-            ['./' + testcase], stdin=subprocess.PIPE, text=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+            ['./unit_tests', testcase], stdin=subprocess.PIPE, text=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         try:
             result = process.communicate(input='c', timeout=600)
         except subprocess.TimeoutExpired:
-            print("测试 {} 运行超时".format(testcase))
+            print("Test {} timed out".format(testcase))
             process.kill()  # 杀死超时的进程
             stdout, stderr = process.communicate()  # 获取进程的输出
             result = "timeout"
@@ -375,15 +374,11 @@ def run_unit_tests(bug_id, branch_name, mutate_file, mutate_line):
             issue_info_list.append(issue_info)
             normal_result_map[testcase] = result
 
-        info("测试 {} 运行时间：{} 秒".format(testcase, duration))
-        info("运行结果：\n{}".format(result.stdout))
-        print(f"测试 {testcase} 运行时间：{duration} 秒")
-        print(f"运行结果：\n{result.stdout}")
+        info("Test {} execution time: {} seconds".format(testcase, duration))
+        info("Execution result:\n{}".format(result))
 
-    info("unit_tests样例共计 {} 个。".format(count))
-    info("unit_tests样例运行完毕。")
-    print(f"unit_tests样例共计 {count} 个。")
-    print("unit_tests样例运行完毕。")
+    info("Total of {} unit_tests cases.".format(count))
+    info("unit_tests cases execution completed.")
 
 
 def check_mutate_line(bug_id):
@@ -476,7 +471,7 @@ normal_result_map = dict()
 # 创建解析器
 parser = argparse.ArgumentParser(description='Run tests for specified files.')
 # 添加一个参数，可以传入零个或多个值，设定默认值
-parser.add_argument('filenames', nargs='*', default=['issue1284'],
+parser.add_argument('filenames', nargs='*', default=['issue3566'],
                     help='List of file names to run tests on')
 
 args = parser.parse_args()
@@ -485,8 +480,8 @@ args = parser.parse_args()
 args = parser.parse_args()
 
 if __name__ == '__main__':
-    info("开始运行mutate")
-    info("参数:{}".format(args.filenames))
+    info("Start running mutate")
+    info("Run Issue: {}".format(args.filenames))
 
     for path_name in os.listdir(coverage_file_paths):
         issue_info_list = []
@@ -496,15 +491,11 @@ if __name__ == '__main__':
             continue
         # 是否有改bug复现结果
         bug_project_path = "/root/mfem_"+bug_id
-        # 跳过已经变异的bug
-        # if not os.path.exists(mutate_project_path+"/mfem_{:02}".format(bug_id)):
-        #     continue
-        # delete_mutate_brach(bug_id)
-        prepare_source_code(bug_id)  # 准备源代码
-        origin_res(bug_id)  # 运行原始bug用例
         mutate_result_save_path = os.path.join(
             mutate_result_save_paths, bug_id)
         if not os.path.exists(mutate_result_save_path):
             os.mkdir(mutate_result_save_path)
+        prepare_source_code(bug_id)  # 准备源代码
+        origin_res(bug_id)  # 运行原始bug用例
         need_muta_files = get_coverage_files(bug_id)  # 获得覆盖文件
         mutate(need_muta_files, bug_id)  # 变异
