@@ -3,9 +3,12 @@ issue1284  issue1322  issue1750  issue1871  issue1896  issue2035  issue2144  iss
 
 # 如何更新
 cd /root/mfem-code-analyzer
+cp /root/mfem-code-analyzer/mutate/result ~/result
 git reset --hard HEAD
 git clean -fd
 git pull
+cp ~/result /root/mfem-code-analyzer/mutate/result
+
 cp /root/mfem-code-analyzer/mutate/.screenrc ~/.screenrc
 screen -r
 
