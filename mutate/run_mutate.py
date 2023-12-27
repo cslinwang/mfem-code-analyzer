@@ -10,7 +10,7 @@ script_path = '/root/mfem-code-analyzer/mutate/run_mutate_script.py'
 # issue_name parameter
 
 # Monitoring interval in seconds
-monitor_interval = 600  # 10 minutes
+monitor_interval = 3600  # 10 minutes
 
 # Subprocess variable
 process = None

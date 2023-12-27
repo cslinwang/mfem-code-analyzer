@@ -320,7 +320,7 @@ def run_example_tests(bug_id, branch_name, mutate_file, mutate_line):
             process = subprocess.Popen(
                 ['./' + testcase], stdin=subprocess.PIPE, text=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
             try:
-                result = process.communicate(input='c', timeout=600)
+                result = process.communicate(input='c', timeout=900)
             except subprocess.TimeoutExpired:
                 print("Test {} ran out of time".format(testcase))
                 process.kill()  # 杀死超时的进程
@@ -374,7 +374,7 @@ def run_unit_tests(bug_id, branch_name, mutate_file, mutate_line):
         process = subprocess.Popen(
             ['./unit_tests', testcase], stdin=subprocess.PIPE, text=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         try:
-            result = process.communicate(input='c', timeout=600)
+            result = process.communicate(input='c', timeout=900)
         except subprocess.TimeoutExpired:
             print("Test {} timed out".format(testcase))
             process.kill()  # 杀死超时的进程
