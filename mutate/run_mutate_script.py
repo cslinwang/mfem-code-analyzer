@@ -13,7 +13,6 @@ import os
 import shutil
 import subprocess
 import yaml
-import logging
 import sys
 import logging
 import sys
@@ -21,7 +20,8 @@ import os
 from tqdm import tqdm
 from logger_module import info
 import psutil
-
+import os
+import signal
 
 info("Start running mutate")
 
@@ -158,7 +158,60 @@ def is_mutate_branch(name):
     return bool(re.match(pattern, name))
 
 
+def mutate_all_files(need_muta_files, bug_id):
+    project_path = project_name
+    pre_command = "cd " + project_path + " && "
+    if os.path.exists(mutateed_project_path):
+        info("Mutation of issue {} already exists, skip mutation".format(bug_id))
+        return 0
+    else:
+        info("Mutation of issue {} start".format(bug_id))
+        for file_name in need_muta_files:
+            info("Mutation of file {} start".format(file_name))
+            mutate_file_name = file_name.split("/")[-1].split(".")[0]
+            command = pre_command + \
+                "git checkout master && git branch | grep -i '"+mutate_file_name+"$'"
+            command = pre_command + "mucpp applyall " + file_name + " -- -std=c++11"
+            run_cmd_with_timeout(command, timeout=10000)
+        # 创建文件
+
+        return
+
+
+def run_cmd_with_timeout(cmd, timeout=900):
+    process = subprocess.Popen(
+        [cmd], shell=True, stdin=subprocess.PIPE, text=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    try:
+        result = process.communicate(input='c', timeout=timeout)
+    except subprocess.TimeoutExpired:
+        info("cmd {} ran out of time".format(cmd))
+        # 如果超时，则尝试终止进程
+        process.terminate()
+        # 等待一段时间，让进程有机会响应终止信号
+        time.sleep(1)
+
+        # 如果进程仍然在运行，则强制杀死它
+        if process.poll() is None:
+            process.kill()
+            stdout, stderr = process.communicate()
+
+        result = "timeout"
+    return process.returncode, result
+
+
+def run_cmd_with_timeout_and_retry(cmd, timeout=900, retries=10):
+    for attempt in range(retries):
+        returncode, result = run_cmd_with_timeout(cmd, timeout)
+        if returncode == 0:
+            return (returncode, result)
+        else:
+            info(f"Retry {attempt + 1} for command {cmd}")
+    return (returncode, result)
+
+
 def mutate(need_muta_files, bug_id):
+    # 编译所有文件
+    # mutate_all_files(need_muta_files, bug_id)
     project_path = project_name
     pre_command = "cd " + project_path + " && "
     start_time = time.time()
@@ -172,18 +225,24 @@ def mutate(need_muta_files, bug_id):
         command = pre_command + \
             "git checkout master && git branch | grep -i '"+mutate_file_name+"$'"
         all_branch = exccmd(command)
-        # 如果其中一个分支是变异分支，则跳过
-        # is_need_mutate = True
-        # for branch_name in all_branch:
-        #     if branch_name.find("master") != -1:
-        #         continue
-        #     if branch_name.endswith(file_name.split("/")[-1].split(".")[0]):
-        #         is_need_mutate = False
-        #         break
-        # if is_need_mutate:
-        command = pre_command + "mucpp applyall " + file_name + " -- -std=c++11"
-        runcmd.exccmd(command)
-
+        mutateed_project_file_path = os.path.join(mutateed_project_path, file_name.split('/')[-1].split('.')[0])
+        if os.path.exists(mutateed_project_file_path+'/mfem'):
+            info("Mutation of file {} already exists, skip mutation".format(file_name))
+            command = pre_command + "rm -rf /root/mfem && cp -r "+mutateed_project_file_path + \
+                " " + project_path.split("/")[-1]
+            runcmd.exccmd(command)
+        else:
+            info("Mutation of file {} start".format(file_name))
+            mutate_file_name = file_name.split("/")[-1].split(".")[0]
+            command = pre_command + \
+                "git checkout master && git branch | grep -i '"+mutate_file_name+"$'"
+            command = pre_command + "mucpp applyall " + file_name + " -- -std=c++11"
+            run_cmd_with_timeout(command, timeout=10000)
+            if not os.path.exists(mutateed_project_file_path):
+                os.makedirs(mutateed_project_file_path)
+            command = pre_command + "cp -r "+project_path + \
+                " " + mutateed_project_file_path
+            runcmd.exccmd(command)
         # 变异完成后，拿到git branch的变异分支
         command = pre_command + \
             "git checkout master && git branch | grep -i '"+mutate_file_name+"$'"
@@ -270,8 +329,8 @@ def monitor_cpu(threshold=80, interval=1):
 
 def run_mutated_project(bug_id, branch_name, mutate_file, mutate_line):
     # 首先检测是否有结果
-    if os.path.exists(mutate_result_save_path +
-                      "/runres"+bug_id+"_"+branch_name+".xlsx"):
+    if branch_name != "bug" and os.path.exists(mutate_result_save_path +
+                                               "/runres"+bug_id+"_"+branch_name+".xlsx"):
         return 0
     # 运行变异的bug用例
     precmd = "cd " + project_name
@@ -279,7 +338,23 @@ def run_mutated_project(bug_id, branch_name, mutate_file, mutate_line):
         bug_id+"/run"+bug_id.split("issue")[-1]+"_compile.sh"
     cmd = precmd + " && " + shell_path
     monitor_cpu()
-    exccmd(cmd)
+    run_cmd_with_timeout_and_retry(cmd, timeout=300)
+    # process = subprocess.Popen(
+    #     [cmd], shell=True, stdin=subprocess.PIPE, text=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    # try:
+    #     result = process.communicate(input='c', timeout=1000)
+    # except subprocess.TimeoutExpired:
+    #     print("Compile {} ran out of time".format(bug_id))
+    #     process.terminate()
+    #     # 等待一段时间，让进程有机会响应终止信号
+    #     time.sleep(1)
+
+    #     # 如果进程仍然在运行，则强制杀死它
+    #     if process.poll() is None:
+    #         process.kill()
+    #         stdout, stderr = process.communicate()
+
+    #     result = "timeout"
     # 运行bug用例
     shell_path = "/root/mfem-code-analyzer/bugs"+"/" + \
         bug_id+"/run"+bug_id.split("issue")[-1]+".sh"
@@ -317,17 +392,18 @@ def run_example_tests(bug_id, branch_name, mutate_file, mutate_line):
             print(f"Executing: {testcase}")
             start_time = time.time()
             result = ''
-            process = subprocess.Popen(
-                ['./' + testcase], stdin=subprocess.PIPE, text=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-            try:
-                result = process.communicate(input='c', timeout=900)
-            except subprocess.TimeoutExpired:
-                print("Test {} ran out of time".format(testcase))
-                process.kill()  # 杀死超时的进程
-                stdout, stderr = process.communicate()  # 获取进程的输出
-                result = "timeout"
-            result = subprocess.run(
-                ['./' + testcase], input='c', text=True, capture_output=True)
+            # process = subprocess.Popen(
+            #     ['./' + testcase], stdin=subprocess.PIPE, text=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+            # try:
+            #     result = process.communicate(input='c', timeout=900)
+            # except subprocess.TimeoutExpired:
+            #     print("Test {} ran out of time".format(testcase))
+            #     process.kill()  # 杀死超时的进程
+            #     stdout, stderr = process.communicate()  # 获取进程的输出
+            #     result = "timeout"
+            _, result = run_cmd_with_timeout('./' + testcase, timeout=600)
+            # result = subprocess.run(
+            #     ['./' + testcase], input='c', text=True, capture_output=True)
             end_time = time.time()
             duration = end_time - start_time
             if mutate_line != -1:
@@ -371,15 +447,16 @@ def run_unit_tests(bug_id, branch_name, mutate_file, mutate_line):
         print(f"Executing test: {testcase}")
         start_time = time.time()
         result = ''
-        process = subprocess.Popen(
-            ['./unit_tests', testcase], stdin=subprocess.PIPE, text=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-        try:
-            result = process.communicate(input='c', timeout=900)
-        except subprocess.TimeoutExpired:
-            print("Test {} timed out".format(testcase))
-            process.kill()  # 杀死超时的进程
-            stdout, stderr = process.communicate()  # 获取进程的输出
-            result = "timeout"
+        # process = subprocess.Popen(
+        #     ['./unit_tests', testcase], stdin=subprocess.PIPE, text=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        # try:
+        #     result = process.communicate(input='c', timeout=900)
+        # except subprocess.TimeoutExpired:
+        #     print("Test {} timed out".format(testcase))
+        #     process.kill()  # 杀死超时的进程
+        #     stdout, stderr = process.communicate()  # 获取进程的输出
+        #     result = "timeout"
+        _, result = run_cmd_with_timeout("./unit_tests "+testcase, timeout=600)
         end_time = time.time()
         duration = end_time - start_time
         if mutate_line != -1:
@@ -496,14 +573,13 @@ parser.add_argument('filenames', nargs='*', default=['issue3566'],
                     help='List of file names to run tests on')
 
 args = parser.parse_args()
-
+mutateed_project_path = ""
 # 解析参数
 args = parser.parse_args()
 
 if __name__ == '__main__':
     info("Start running mutate")
     info("Run Issue: {}".format(args.filenames))
-
     for path_name in os.listdir(coverage_file_paths):
         issue_info_list = []
         bug_id = path_name
@@ -514,6 +590,8 @@ if __name__ == '__main__':
         bug_project_path = "/root/mfem_"+bug_id
         mutate_result_save_path = os.path.join(
             mutate_result_save_paths, bug_id)
+        mutateed_project_path = os.path.join(
+            "/root/mutated_project", path_name)
         if not os.path.exists(mutate_result_save_path):
             os.mkdir(mutate_result_save_path)
         prepare_source_code(bug_id)  # 准备源代码

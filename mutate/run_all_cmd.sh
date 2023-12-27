@@ -7,6 +7,7 @@ cp /root/mfem-code-analyzer/mutate/result ~/result
 git reset --hard HEAD
 git clean -fd
 git pull
+rm -rf /root/mfem-code-analyzer/mutate/result
 cp ~/result /root/mfem-code-analyzer/mutate/result
 
 cp /root/mfem-code-analyzer/mutate/.screenrc ~/.screenrc
